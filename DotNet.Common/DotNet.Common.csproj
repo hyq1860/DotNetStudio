@@ -58,6 +58,14 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="zxing, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\net40\zxing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\net40\zxing.presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
@@ -168,6 +176,7 @@
     <Compile Include="Logging\ProviderSetting.cs" />
     <Compile Include="Pager\HtmlPager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QrCode\QrCodeHelper.cs" />
     <Compile Include="Reflection\DynamicMethodHandle.cs" />
     <Compile Include="Reflection\DynamicMethodHandlerFactory.cs" />
     <Compile Include="Reflection\MethodCacheKey.cs" />
@@ -220,6 +229,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

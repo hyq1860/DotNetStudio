@@ -64,9 +64,9 @@
       <Project>{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}</Project>
       <Name>DotNet.CloudFarm.Domain.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DotNet.CloudFarm.Domain\DotNet.CloudFarm.Domain.csproj">
-      <Project>{F8B3979B-0DD7-4A5C-B6D5-E0B768D233B7}</Project>
-      <Name>DotNet.CloudFarm.Domain</Name>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.Impl\DotNet.CloudFarm.Domain.Impl.csproj">
+      <Project>{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA}</Project>
+      <Name>DotNet.CloudFarm.Domain.Impl</Name>
     </ProjectReference>
     <ProjectReference Include="..\DotNet.IoC\DotNet.IoC.csproj">
       <Project>{14cb43b9-12f3-49b9-9994-1e9f99bdff69}</Project>
