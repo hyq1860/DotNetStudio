@@ -15,22 +15,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.WebSite.MVC", "DotNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Practices.ServiceLocation", "Microsoft.Practices.ServiceLocation\Microsoft.Practices.ServiceLocation.csproj", "{FAF6D6B2-1EC9-4A1B-83BB-48F772E948CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.WebSite", "DotNet.CloudFarm.WebSite\DotNet.CloudFarm.WebSite.csproj", "{E8BE6E01-3C55-4495-B2E2-3EABD6D34093}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC96EB87-59D7-4618-8D23-F7825CF95CD0}"
 	ProjectSection(SolutionItems) = preProject
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.Contract", "DotNet.CloudFarm.Domain.Contract\DotNet.CloudFarm.Domain.Contract.csproj", "{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CloudFarm", "CloudFarm", "{B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.Model", "DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj", "{BA5478CC-902C-49E0-A63C-6FF87553A240}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.WebSite", "DotNet.CloudFarm.WebSite\DotNet.CloudFarm.WebSite.csproj", "{E8BE6E01-3C55-4495-B2E2-3EABD6D34093}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.ViewModel", "DotNet.CloudFarm.Domain.ViewModel\DotNet.CloudFarm.Domain.ViewModel.csproj", "{086488B7-67F1-4F13-BCC6-98C51B144D7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.Model", "DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj", "{BA5478CC-902C-49E0-A63C-6FF87553A240}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.Impl", "DotNet.CloudFarm.Domain.Impl\DotNet.CloudFarm.Domain.Impl.csproj", "{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.DTO", "DotNet.CloudFarm.Domain.DTO\DotNet.CloudFarm.Domain.DTO.csproj", "{D0893D9B-26C1-4EDB-A668-DA970AC8759F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.Contract", "DotNet.CloudFarm.Domain.Contract\DotNet.CloudFarm.Domain.Contract.csproj", "{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,18 +68,14 @@ Global
 		{E8BE6E01-3C55-4495-B2E2-3EABD6D34093}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8BE6E01-3C55-4495-B2E2-3EABD6D34093}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8BE6E01-3C55-4495-B2E2-3EABD6D34093}.Release|Any CPU.Build.0 = Release|Any CPU
-		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Release|Any CPU.Build.0 = Release|Any CPU
 		{086488B7-67F1-4F13-BCC6-98C51B144D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{086488B7-67F1-4F13-BCC6-98C51B144D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{086488B7-67F1-4F13-BCC6-98C51B144D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{086488B7-67F1-4F13-BCC6-98C51B144D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5478CC-902C-49E0-A63C-6FF87553A240}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,8 +84,20 @@ Global
 		{D0893D9B-26C1-4EDB-A668-DA970AC8759F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0893D9B-26C1-4EDB-A668-DA970AC8759F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0893D9B-26C1-4EDB-A668-DA970AC8759F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E8BE6E01-3C55-4495-B2E2-3EABD6D34093} = {B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}
+		{086488B7-67F1-4F13-BCC6-98C51B144D7D} = {B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}
+		{BA5478CC-902C-49E0-A63C-6FF87553A240} = {B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}
+		{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA} = {B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}
+		{D0893D9B-26C1-4EDB-A668-DA970AC8759F} = {B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}
+		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF} = {B93AF9C4-15EF-4E5B-A9C9-13D0B0DC6148}
 	EndGlobalSection
 EndGlobal

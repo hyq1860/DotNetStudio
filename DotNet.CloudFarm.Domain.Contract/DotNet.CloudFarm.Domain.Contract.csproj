@@ -39,9 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserService.cs" />
+    <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="User\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj">
+      <Project>{BA5478CC-902C-49E0-A63C-6FF87553A240}</Project>
+      <Name>DotNet.CloudFarm.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
+      <Project>{55e1d54c-fbd4-4d79-97bb-a0f00dc14fb7}</Project>
+      <Name>DotNet.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

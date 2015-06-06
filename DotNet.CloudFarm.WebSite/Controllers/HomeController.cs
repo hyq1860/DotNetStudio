@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract;
+using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.WebSite.MVC;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -15,7 +17,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Index()
         {
-            string json = UserService.Login();
+            var result = UserService.Login(new LoginUser() {Mobile = "13716457768", Captcha = "123456"});
             return View();
         }
 

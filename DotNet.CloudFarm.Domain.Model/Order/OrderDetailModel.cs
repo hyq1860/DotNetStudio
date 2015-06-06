@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNet.CloudFarm.Domain.Contract
+namespace DotNet.CloudFarm.Domain.Model.Order
 {
-    public interface IUserService
+    public class OrderDetailModel
     {
-        string Login();
     }
 }

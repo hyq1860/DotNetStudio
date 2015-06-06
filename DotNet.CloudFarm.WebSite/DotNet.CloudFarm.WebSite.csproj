@@ -270,6 +270,14 @@
       <Project>{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}</Project>
       <Name>DotNet.CloudFarm.Domain.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj">
+      <Project>{BA5478CC-902C-49E0-A63C-6FF87553A240}</Project>
+      <Name>DotNet.CloudFarm.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
+      <Project>{55e1d54c-fbd4-4d79-97bb-a0f00dc14fb7}</Project>
+      <Name>DotNet.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNet.IoC\DotNet.IoC.csproj">
       <Project>{14CB43B9-12F3-49B9-9994-1E9F99BDFF69}</Project>
       <Name>DotNet.IoC</Name>
