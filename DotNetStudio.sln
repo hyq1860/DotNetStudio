@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.DTO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.CloudFarm.Domain.Contract", "DotNet.CloudFarm.Domain.Contract\DotNet.CloudFarm.Domain.Contract.csproj", "{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.Identity", "DotNet.Identity\DotNet.Identity.csproj", "{365238B7-DE36-4172-B8C8-5004E9C0ECAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{376A16E0-B3C6-477C-A295-4BC5E71E1AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{365238B7-DE36-4172-B8C8-5004E9C0ECAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{365238B7-DE36-4172-B8C8-5004E9C0ECAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{365238B7-DE36-4172-B8C8-5004E9C0ECAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{365238B7-DE36-4172-B8C8-5004E9C0ECAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
