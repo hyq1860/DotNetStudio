@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using MongoDB;
 using MongoDB.Driver;
 
 namespace DotNet.Data
