@@ -14,7 +14,7 @@ namespace DotNet.CloudFarm.Domain.Impl.User
     {
         public Result<LoginUser> Login(LoginUser loginUser)
         {
-            throw new NotImplementedException();
+            return new Result<LoginUser>();
         }
 
         public Result<LoginUser> GetCaptcha(string mobile)
