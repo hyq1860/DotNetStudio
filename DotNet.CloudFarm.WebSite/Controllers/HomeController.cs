@@ -20,7 +20,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult Index()
         {
             //数据库
-            //new UserDataAccess().GetUsers();
+            new UserDataAccess().GetUsers();
 
             //读取配置文件 配置文件在网站Configs文件夹下的Params.config
             var test=ConfigHelper.ParamsConfig.GetParamValue("test");
