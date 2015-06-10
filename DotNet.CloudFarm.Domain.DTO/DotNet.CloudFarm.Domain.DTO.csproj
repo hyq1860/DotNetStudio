@@ -40,6 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\UserDataAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.Contract\DotNet.CloudFarm.Domain.Contract.csproj">
+      <Project>{376a16e0-b3c6-477c-a295-4bc5e71e1aff}</Project>
+      <Name>DotNet.CloudFarm.Domain.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj">
+      <Project>{53e3c58a-e08f-4594-a9ed-5ec9a0d97085}</Project>
+      <Name>DotNet.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

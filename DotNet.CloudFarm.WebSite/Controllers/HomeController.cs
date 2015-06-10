@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.DTO.User;
 using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.WebSite.Infrastructure.Config;
 using DotNet.WebSite.MVC;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -17,6 +19,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Index()
         {
+            //数据库
+            //new UserDataAccess().GetUsers();
+
+            //读取配置文件 配置文件在网站Configs文件夹下的Params.config
+            var test=ConfigHelper.ParamsConfig.GetParamValue("test");
+
             var result = UserService.Login(new LoginUser() {Mobile = "13716457768", Captcha = "123456"});
             return View();
         }

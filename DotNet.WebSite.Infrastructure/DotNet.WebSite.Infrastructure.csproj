@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ConfigHelper.cs" />
     <Compile Include="Ioc\NinjectBoottrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\DotNet.CloudFarm.Domain.Impl\DotNet.CloudFarm.Domain.Impl.csproj">
       <Project>{31B5B352-2D25-4103-A9A4-B1DA91DCA2BA}</Project>
       <Name>DotNet.CloudFarm.Domain.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
+      <Project>{55E1D54C-FBD4-4D79-97BB-A0F00DC14FB7}</Project>
+      <Name>DotNet.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\DotNet.IoC\DotNet.IoC.csproj">
       <Project>{14cb43b9-12f3-49b9-9994-1e9f99bdff69}</Project>

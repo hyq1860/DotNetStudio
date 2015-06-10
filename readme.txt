@@ -11,3 +11,5 @@ Install-Package ZXing.Net
 Install-Package Microsoft.AspNet.Identity.Core
 
 Install-Package ICSharpCode.SharpZipLib.dll
+
+Install-Package RequireJS 
