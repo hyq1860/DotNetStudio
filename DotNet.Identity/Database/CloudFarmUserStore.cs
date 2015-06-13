@@ -7,59 +7,52 @@ using Microsoft.AspNet.Identity;
 
 namespace DotNet.Identity.Database
 {
-    public class UserStore:IUserStore<IdentityUser>,IUserPasswordStore<IdentityUser>
+    /// <summary>
+    /// yangke用户认证的数据库实现
+    /// </summary>
+    public class CloudFarmUserStore : IUserStore<CloudFarmIdentityUser>, IUserPasswordStore<CloudFarmIdentityUser>
     {
-        public UserStore()
-        {
-            
-        }
-
-        public UserStore(string databaseConnectionString)
-        {
-            
-        }
-
         public void Dispose()
         {
             throw new NotImplementedException();
         }
 
-        public Task CreateAsync(IdentityUser user)
+        public Task CreateAsync(CloudFarmIdentityUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(IdentityUser user)
+        public Task UpdateAsync(CloudFarmIdentityUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(IdentityUser user)
+        public Task DeleteAsync(CloudFarmIdentityUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IdentityUser> FindByIdAsync(string userId)
+        public Task<CloudFarmIdentityUser> FindByIdAsync(string userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IdentityUser> FindByNameAsync(string userName)
+        public Task<CloudFarmIdentityUser> FindByNameAsync(string userName)
         {
             throw new NotImplementedException();
         }
 
-        public Task SetPasswordHashAsync(IdentityUser user, string passwordHash)
+        public Task SetPasswordHashAsync(CloudFarmIdentityUser user, string passwordHash)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> GetPasswordHashAsync(IdentityUser user)
+        public Task<string> GetPasswordHashAsync(CloudFarmIdentityUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> HasPasswordAsync(IdentityUser user)
+        public Task<bool> HasPasswordAsync(CloudFarmIdentityUser user)
         {
             throw new NotImplementedException();
         }

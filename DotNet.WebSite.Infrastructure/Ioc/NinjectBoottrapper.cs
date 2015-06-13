@@ -24,7 +24,8 @@ namespace DotNet.WebSite.Infrastructure.Ioc
             get
             {
                 var settings = new NinjectSettings { LoadExtensions = false, InjectAttribute = typeof(NinjectServiceAttribute) };
-                return new StandardKernel(settings,new RegisterServiceModule());
+                var kernel = new StandardKernel(settings, new RegisterServiceModule());
+                return kernel;
             }
         }
     }

@@ -5,6 +5,8 @@ Install-Package log4net
 
 Install-Package Ninject
 
+Install-Package Ninject.MVC5
+
 Install-Package ZXing.Net
 
 

@@ -1,22 +1,15 @@
-﻿using DotNet.IoC;
-using DotNet.WebSite.Infrastructure.Ioc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-namespace DotNet.CloudFarm.WebSite
+namespace NugetMvc5Site
 {
     public partial class Startup
     {
         // 有关配置身份验证的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            
-            //app.CreatePerOwinContext(CreateKernel);
-            //app.UseNinjectMiddleware(CreateKernel);
-            //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-
             // 使应用程序可以使用 Cookie 来存储已登录用户的信息
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
