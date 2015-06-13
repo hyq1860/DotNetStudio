@@ -14,7 +14,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 {
     public class HomeController : Controller
     {
-        [NinjectService]
+        [Ninject.Inject]
         public IUserService UserService { get; set; }
 
         public ActionResult Index()
