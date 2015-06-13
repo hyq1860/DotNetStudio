@@ -10,10 +10,17 @@ using DotNet.Common.Models;
 
 namespace DotNet.CloudFarm.Domain.Impl.User
 {
-    public class UserService:IUserService 
+    public class UserService:IUserService
     {
+        private IUserDataAccess UserDataAccess;
+        public UserService(IUserDataAccess userDataAccess)
+        {
+            UserDataAccess = userDataAccess;
+        }
+
         public Result<LoginUser> Login(LoginUser loginUser)
         {
+            UserDataAccess.Login();
             return new Result<LoginUser>();
         }
 

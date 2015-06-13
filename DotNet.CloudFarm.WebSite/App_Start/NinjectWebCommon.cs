@@ -1,4 +1,5 @@
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.DTO.User;
 using DotNet.CloudFarm.Domain.Impl.User;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Start")]
@@ -66,6 +67,7 @@ namespace DotNet.CloudFarm.WebSite.App_Start
         {
             //业务接口注入点
             kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IUserDataAccess>().To<UserDataAccess>();
         }        
     }
 }

@@ -24,5 +24,10 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             }
             
         }
+
+        public void Login()
+        {
+            GetUsers();
+        }
     }
 }

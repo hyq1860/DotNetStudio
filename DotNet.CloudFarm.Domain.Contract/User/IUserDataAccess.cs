@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,5 +9,6 @@ namespace DotNet.CloudFarm.Domain.Contract.User
 {
     public interface IUserDataAccess
     {
+        void Login();
     }
 }
