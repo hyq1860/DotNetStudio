@@ -448,13 +448,13 @@ namespace DotNet.Data
 						, operationCommand.CommandType
 						, operationCommand.CommandText
 						, dbParameters);
-				    return result == null ? default(T) : (T)result;
+                    return (result == null || result == DBNull.Value) ? default(T) : (T)result;
 				}
 				else
 				{
                     var result=DatabaseHelper.ExecuteScalar(DbFactory,this.dbTransaction, operationCommand.CommandType
 						, operationCommand.CommandText, dbParameters);
-                    return result == null ? default(T) : (T)result;
+                    return (result == null || result == DBNull.Value) ? default(T) : (T)result;
 				}
 			}
 			catch

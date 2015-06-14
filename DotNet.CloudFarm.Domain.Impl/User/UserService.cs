@@ -14,15 +14,15 @@ namespace DotNet.CloudFarm.Domain.Impl.User
 {
     public class UserService:IUserService
     {
-        private IUserDataAccess UserDataAccess;
+        private IUserDataAccess userDataAccess;
         public UserService(IUserDataAccess userDataAccess)
         {
-            UserDataAccess = userDataAccess;
+            this.userDataAccess = userDataAccess;
         }
 
         public Result<LoginUser> Login(LoginUser loginUser)
         {
-            UserDataAccess.Login();
+            userDataAccess.Login();
             return new Result<LoginUser>();
         }
 
@@ -34,6 +34,16 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         public PagedList<MessageModel> GetMessages(int userId, int pageIndex, int pageSize)
         {
             throw new NotImplementedException();
+        }
+
+        public UserModel GetUserByUserId(int userId)
+        {
+            return userDataAccess.GetUserByUserId(userId);
+        }
+
+        public int Insert(UserModel userModel)
+        {
+            return userDataAccess.Insert(userModel);
         }
     }
 }

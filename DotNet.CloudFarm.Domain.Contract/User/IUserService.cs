@@ -29,5 +29,14 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="pageSize">每页多少数据</param>
         /// <returns></returns>
         PagedList<MessageModel> GetMessages(int userId,int pageIndex,int pageSize);
+
+        /// <summary>
+        /// 根据userid获取用户信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        UserModel GetUserByUserId(int userId);
+
+        int Insert(UserModel userModel);
     }
 }

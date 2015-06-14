@@ -49,6 +49,10 @@
       <Project>{376a16e0-b3c6-477c-a295-4bc5e71e1aff}</Project>
       <Name>DotNet.CloudFarm.Domain.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj">
+      <Project>{BA5478CC-902C-49E0-A63C-6FF87553A240}</Project>
+      <Name>DotNet.CloudFarm.Domain.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj">
       <Project>{53e3c58a-e08f-4594-a9ed-5ec9a0d97085}</Project>
       <Name>DotNet.Data</Name>
