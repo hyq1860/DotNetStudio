@@ -24,3 +24,6 @@ http://www.cnblogs.com/ancms/category/700546.html
 
 领域驱动
 http://www.cnblogs.com/yubaolee/p/4552646.html
+
+identity资料
+http://www.asp.net/identity/overview/getting-started
