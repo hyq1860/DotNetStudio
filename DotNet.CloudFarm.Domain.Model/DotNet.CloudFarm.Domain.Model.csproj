@@ -40,12 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Message\MessageModel.cs" />
-    <Compile Include="Order\OrderDetailModel.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderPayModel.cs" />
     <Compile Include="Product\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\LoginUser.cs" />
+    <Compile Include="User\UserCaptchaModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />

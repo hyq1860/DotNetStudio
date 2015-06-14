@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.Common.Collections;
 using DotNet.Common.Models;
 
 namespace DotNet.CloudFarm.Domain.Impl.User
@@ -25,6 +27,11 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         }
 
         public Result<LoginUser> GetCaptcha(string mobile)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedList<MessageModel> GetMessages(int userId, int pageIndex, int pageSize)
         {
             throw new NotImplementedException();
         }

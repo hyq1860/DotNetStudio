@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Order\IOrderDataAccess.cs" />
     <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="Product\IProductDataAccess.cs" />
+    <Compile Include="Product\IProductService.cs" />
     <Compile Include="User\IUserDataAccess.cs" />
     <Compile Include="User\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

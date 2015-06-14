@@ -1,5 +1,11 @@
+using DotNet.CloudFarm.Domain.Contract.Order;
+using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.DTO.Order;
+using DotNet.CloudFarm.Domain.DTO.Product;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.Order;
+using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.User;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Start")]
@@ -66,8 +72,19 @@ namespace DotNet.CloudFarm.WebSite.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             //业务接口注入点
+
+            //用户服务
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IUserDataAccess>().To<UserDataAccess>();
+
+            //商品服务
+            kernel.Bind<IProductService>().To<ProductService>();
+            kernel.Bind<IProductDataAccess>().To<ProductDataAccess>();
+
+            //订单服务
+            kernel.Bind<IOrderService>().To<OrderService>();
+            kernel.Bind<IOrderDataAccess>().To<OrderDataAccess>();
+
         }        
     }
 }

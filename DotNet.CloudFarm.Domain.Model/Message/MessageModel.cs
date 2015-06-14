@@ -14,9 +14,19 @@ namespace DotNet.CloudFarm.Domain.Model.Message
         public long MessageId { get; set; }
 
         /// <summary>
+        /// 用户编号
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
         /// 消息内容
         /// </summary>
         public string Content { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
 
         /// <summary>
         /// 短消息状态 0 未读 1 已读

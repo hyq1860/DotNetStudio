@@ -8,6 +8,9 @@ using DotNet.Data;
 
 namespace DotNet.CloudFarm.Domain.DTO.User
 {
+    /// <summary>
+    /// 用户数据访问层
+    /// </summary>
     public class UserDataAccess : IUserDataAccess
     {
         public void GetUsers()

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DotNet.CloudFarm.Domain.Contract.Order
 {
-    public class IOrderDataAccess
+    /// <summary>
+    /// 订单数据访问接口
+    /// </summary>
+    public interface IOrderDataAccess
     {
     }
 }

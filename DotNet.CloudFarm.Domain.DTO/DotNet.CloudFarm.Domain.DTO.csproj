@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Order\OrderDataAccess.cs" />
+    <Compile Include="Product\ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\UserDataAccess.cs" />
   </ItemGroup>

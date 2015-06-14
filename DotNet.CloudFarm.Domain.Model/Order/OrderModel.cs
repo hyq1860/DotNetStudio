@@ -24,16 +24,31 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         /// <summary>
         /// 下单时间
         /// </summary>
-        public DateTime InDate { get; set; }
+        public DateTime CreateTime { get; set; }
 
         /// <summary>
-        /// 编辑时间
+        /// 产品id
         /// </summary>
-        public DateTime EditDate { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
-        /// 订单详情集合
+        /// 购买数量
         /// </summary>
-        public List<OrderDetailModel> OrderDetails { get; set; } 
+        public int ProductCount { get; set; }
+
+        /// <summary>
+        /// 购买单价
+        /// </summary>
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// 订单状态
+        /// </summary>
+        public int Status { get; set; }
+
+        /// <summary>
+        /// 支付方式 0-微信支付；1-线下支付
+        /// </summary>
+        public int PayType { get; set; }
     }
 }

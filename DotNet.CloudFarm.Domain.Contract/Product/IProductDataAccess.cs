@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNet.CloudFarm.Domain.Model.Order
+namespace DotNet.CloudFarm.Domain.Contract.Product
 {
-    public class OrderDetailModel
+    public interface IProductDataAccess
     {
     }
 }

@@ -1,4 +1,6 @@
-﻿using DotNet.CloudFarm.Domain.Model.User;
+﻿using DotNet.CloudFarm.Domain.Model.Message;
+using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.Common.Collections;
 using DotNet.Common.Models;
 
 namespace DotNet.CloudFarm.Domain.Contract.User
@@ -18,5 +20,14 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="mobile"></param>
         /// <returns></returns>
         Result<LoginUser> GetCaptcha(string mobile);
+
+        /// <summary>
+        /// 根据用户id获取用户消息列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex">第几页</param>
+        /// <param name="pageSize">每页多少数据</param>
+        /// <returns></returns>
+        PagedList<MessageModel> GetMessages(int userId,int pageIndex,int pageSize);
     }
 }
