@@ -32,5 +32,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="userId"></param>
         /// <returns></returns>
         UserModel GetUserByUserId(int userId);
+
+        /// <summary>
+        /// 根据用户名查找用户
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        UserModel GetUser(string userName);
     }
 }

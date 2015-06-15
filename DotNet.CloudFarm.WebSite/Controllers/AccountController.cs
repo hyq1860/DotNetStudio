@@ -35,7 +35,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Login()
         {
-            UserService.Login(new LoginUser());
+            var result= UserManager.FindByNameAsync("13716457768");
+            if (result.Result!=null)
+            {
+                UserService.Login(new LoginUser());
+            }
+            else
+            {
+                
+            }
+            
             return View();
         }
     }

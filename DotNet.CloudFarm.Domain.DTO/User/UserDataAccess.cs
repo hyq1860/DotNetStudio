@@ -66,6 +66,33 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             return user;
         }
 
+        public UserModel GetUser(string userName)
+        {
+            var user = new UserModel();
+            using (var cmd = DataCommandManager.GetDataCommand("GetUserByName"))
+            {
+                cmd.SetParameterValue("@Mobile", userName);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        user.UserId = !Convert.IsDBNull(dr["ID"]) ? int.Parse(dr["ID"].ToString()) : 0;
+                        user.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
+                        user.WxOpenId = !Convert.IsDBNull(dr["WxOpenId"]) ? dr["WxOpenId"].ToString() : string.Empty;
+                        user.WxNickName = !Convert.IsDBNull(dr["WxNickName"]) ? dr["WxNickName"].ToString() : string.Empty;
+                        user.WxSex = !Convert.IsDBNull(dr["WxSex"]) ? int.Parse(dr["WxSex"].ToString()) : 0;
+                        user.WxHeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;
+                        user.WxSubTime = !Convert.IsDBNull(dr["WxSubTime"]) ? Convert.ToDateTime(dr["WxSubTime"]) : DateTime.MinValue;
+                        user.WxUnionId = !Convert.IsDBNull(dr["WxUnionId"]) ? dr["WxUnionId"].ToString() : string.Empty;
+                        user.WxRemark = !Convert.IsDBNull(dr["WxRemark"]) ? dr["WxRemark"].ToString() : string.Empty;
+                        user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
+                        user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                    }
+                }
+            }
+            return user;
+        }
+
         public int Insert(UserModel userModel)
         {
             using (var cmd = DataCommandManager.GetDataCommand("InsertUser"))

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model.User;
 using Microsoft.AspNet.Identity;
 
 namespace DotNet.Identity.Database
@@ -12,6 +14,9 @@ namespace DotNet.Identity.Database
     /// </summary>
     public class CloudFarmUserStore : IUserStore<CloudFarmIdentityUser>, IUserPasswordStore<CloudFarmIdentityUser>
     {
+        [Ninject.Inject]
+        private IUserService userService;
+
         public void Dispose()
         {
             throw new NotImplementedException();
@@ -19,6 +24,7 @@ namespace DotNet.Identity.Database
 
         public Task CreateAsync(CloudFarmIdentityUser user)
         {
+            //userService.Insert(new UserModel() {Mobile = user.UserName});
             throw new NotImplementedException();
         }
 
@@ -37,9 +43,15 @@ namespace DotNet.Identity.Database
             throw new NotImplementedException();
         }
 
-        public Task<CloudFarmIdentityUser> FindByNameAsync(string userName)
+        public async Task<CloudFarmIdentityUser> FindByNameAsync(string userName)
         {
-            throw new NotImplementedException();
+            CloudFarmIdentityUser user = null;
+            var userModel = userService.GetUser(userName);
+            if (userModel != null && userModel.UserId > 0)
+            {
+                user= new CloudFarmIdentityUser() {UserName = userModel.Mobile};
+            }
+            return user;
         }
 
         public Task SetPasswordHashAsync(CloudFarmIdentityUser user, string passwordHash)

@@ -41,6 +41,11 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             return userDataAccess.GetUserByUserId(userId);
         }
 
+        public UserModel GetUser(string userName)
+        {
+            return userDataAccess.GetUser(userName);
+        }
+
         public int Insert(UserModel userModel)
         {
             return userDataAccess.Insert(userModel);
