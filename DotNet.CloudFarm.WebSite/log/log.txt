@@ -1,0 +1,4 @@
+INFO  2015-06-15 21:32:14,701 [WeixinController] test
+INFO  2015-06-15 21:58:45,156 [WeixinController] signature1|timestamp1|nonce1|signatureasdf
+INFO  2015-06-15 21:58:51,736 [WeixinController] signature1|timestamp1|nonce1|signatureasdf
+INFO  2015-06-15 22:03:12,789 [WeixinController] signature1|timestamp1|nonce1|signatureasdf
