@@ -9,6 +9,9 @@ using System.Web.Http;
 
 namespace DotNet.CloudFarm.WebSite.Models
 {
+    /// <summary>
+    /// 纯文本返回结果实体类（用于不想返回xml或json的情况）
+    /// </summary>
     public class TextResult : IHttpActionResult
     {
         string _value;

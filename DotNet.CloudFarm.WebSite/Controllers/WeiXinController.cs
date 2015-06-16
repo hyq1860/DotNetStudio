@@ -41,7 +41,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
         }
 
-
+        /// <summary>
+        /// 用于给微信提供服务器验证的方法
+        /// </summary>
+        /// <param name="signature"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="nonce"></param>
+        /// <param name="echostr"></param>
+        /// <returns>直接返回请求参数echostr即可以验证通过</returns>
         public IHttpActionResult GetSign(string signature, string timestamp, string nonce, string echostr)
         {
             logger.Info("signature" + signature + "|" + "timestamp" + timestamp + "|" + "nonce" + nonce + "|" + "signature" + echostr);
