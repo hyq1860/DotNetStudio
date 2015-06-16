@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DotNet.CloudFarm.Domain.Contract.User;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -12,11 +13,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     {
         log4net.ILog logger = log4net.LogManager.GetLogger("WeixinController");
 
+        [Ninject.Inject]
+        public IUserService UserService { get; set; }
+
         // GET: api/WeiXin
         public IEnumerable<string> Get()
         {
             //logger.Info("test");
-
+            //var user=UserService.GetUserByUserId(3);
             return new string[] { "value1", "value2" };
         }
 
