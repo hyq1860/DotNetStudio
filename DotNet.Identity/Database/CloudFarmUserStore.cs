@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using Microsoft.AspNet.Identity;
 
@@ -15,7 +17,7 @@ namespace DotNet.Identity.Database
     public class CloudFarmUserStore : IUserStore<CloudFarmIdentityUser>, IUserPasswordStore<CloudFarmIdentityUser>
     {
         [Ninject.Inject]
-        private IUserService userService;
+        private IUserService userService=new UserService(new UserDataAccess());
 
         public void Dispose()
         {
@@ -25,7 +27,10 @@ namespace DotNet.Identity.Database
         public Task CreateAsync(CloudFarmIdentityUser user)
         {
             //userService.Insert(new UserModel() {Mobile = user.UserName});
-            throw new NotImplementedException();
+            return Task.Factory.StartNew(() =>
+            {
+                userService.Insert(new UserModel() {Mobile = user.UserName});
+            });
         }
 
         public Task UpdateAsync(CloudFarmIdentityUser user)
@@ -43,15 +48,19 @@ namespace DotNet.Identity.Database
             throw new NotImplementedException();
         }
 
-        public async Task<CloudFarmIdentityUser> FindByNameAsync(string userName)
+        public Task<CloudFarmIdentityUser> FindByNameAsync(string userName)
         {
             CloudFarmIdentityUser user = null;
-            var userModel = userService.GetUser(userName);
-            if (userModel != null && userModel.UserId > 0)
+            
+            return Task.Factory.StartNew(() =>
             {
-                user= new CloudFarmIdentityUser() {UserName = userModel.Mobile};
-            }
-            return user;
+                var userModel = userService.GetUser(userName);
+                if (userModel != null && userModel.UserId > 0)
+                {
+                    user = new CloudFarmIdentityUser() { UserName = userModel.Mobile,Id = userModel.UserId.ToString()};
+                }
+                return user;
+            });
         }
 
         public Task SetPasswordHashAsync(CloudFarmIdentityUser user, string passwordHash)

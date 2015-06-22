@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -15,12 +17,13 @@ using DotNet.Identity.Database;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
-    
-    public class AccountController : Controller
+
+    public class AccountController : BaseController
     {
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
         {
+            UserService=new UserService(new UserDataAccess());
         }
 
         public AccountController(UserManager<CloudFarmIdentityUser> userManager)
@@ -33,19 +36,61 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [Ninject.Inject]
         public IUserService UserService { get; set; }
 
-        public ActionResult Login()
+        [HttpPost]
+        public async Task<JsonResult> Login(LoginUser loginUser)
         {
-            var result= UserManager.FindByNameAsync("13716457768");
-            if (result.Result!=null)
+            var jsonResult = new JsonResult();
+            var result = UserManager.FindByNameAsync(loginUser.Mobile);
+            if (result!=null)
             {
-                UserService.Login(new LoginUser());
+                await SignInAsync(result.Result, true);
+                jsonResult.Data = new { IsSuccess = true };
             }
             else
             {
-                
+                jsonResult.Data = new { IsSuccess = false };
             }
-            
+
+            return jsonResult;
+        }
+
+        public JsonResult GetMobileCaptcha(string mobile)
+        {
+            var result=UserService.GetCaptcha(mobile);
+
+            return new JsonResult();
+        }
+
+        public ActionResult Login()
+        {
             return View();
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
+        private async Task SignInAsync(CloudFarmIdentityUser user, bool isPersistent)
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
     }
 }

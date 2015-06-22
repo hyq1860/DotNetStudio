@@ -28,7 +28,12 @@ namespace DotNet.CloudFarm.Domain.Impl.User
 
         public Result<LoginUser> GetCaptcha(string mobile)
         {
-            throw new NotImplementedException();
+            //计算出验证码
+
+            //调用验证码发送接口
+
+            //写入验证码发送表
+            return new Result<LoginUser>();
         }
 
         public PagedList<MessageModel> GetMessages(int userId, int pageIndex, int pageSize)

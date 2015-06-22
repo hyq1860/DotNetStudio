@@ -1,15 +1,83 @@
 ﻿@model DotNet.CloudFarm.WebSite.Models.LoginViewModel
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "登录";
 }
-
-<div>
-    手机号：<input type="tel" name="UserName"/>
-    验证码：<input type="text" name="MobileCaptcha"/>
-    <input type="button" value="登录"/>
+<div class="sheep_guest login">
+    <!--logo-->
+    <div class="logo"></div>
+    <!--口号-->
+    <p class="from"></p>
+    <!--绑定微信号-->
+    <div class="login_content">
+        <!--输入手机号-->
+        <div class="login_content1">
+            <div class="opacity_box"></div>
+            <div class="tele_num_box clearfix">
+                <span class="span1"></span>
+                <input id="Mobile" name="Mobile" type="text" value="请输入手机号" />
+                <span class="span2"></span>
+            </div>
+        </div>
+        <!--输入验证码-->
+        <div class="get_yzm clearfix">
+            <div class="login_content1 login_content2">
+                <div class="opacity_box"></div>
+                <div class="tele_num_box clearfix">
+                    <span class="span1"></span>
+                    <input id="Captcha" name="Captcha" type="text" value="请输入验证码" />
+                    <span class="span2"></span>
+                </div>
+            </div>
+            <div class="get_yzm_btn" id="get_yzm_btn"><a href="#">获取验证码</a></div>
+        </div>
+        <!--进入我的牧场-->
+        <div class="go_myfarm" id="goto_myfarm"><a href="#">进入我的牧场</a></div>
+        <!--绑定微信号-->
+        <div class="go_myfarm bdwxh"><a href="#">绑定微信号</a></div>
+    </div>
 </div>
 
-@section Scripts {
+<script type="text/javascript">
+    $(function() {
+        //绑定事件
+
+        //获取验证码
+        $("#get_yzm_btn").on("click", function() {
+            $.ajax({
+                url: "/account/GetMobileCaptcha",
+                type: "post",
+                data: { Mobile: $("#Mobile").val() },
+                success: function (data) {
+                    
+                }
+            });
+        });
+
+
+        //登录
+        $("#goto_myfarm").on("click", function () {
+            alert("haha");
+            $.ajax({
+                url:"/account/login",
+                type: "post",
+                data: { Mobile: $("#Mobile").val(), Captcha: $("#Captcha").val() },
+                success:function(data) {
+                    if (data.IsSuccess) {
+                        location.href = "/home/default";
+                    } else {
+                        alert("登录失败");
+                    }
+                }
+            });
+        });
+
+    })
+
+
+</script>
+
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotNet.CloudFarm.Domain.ViewModel
 {
-    public class Class1
+    public class LoginViewModel
     {
     }
 }

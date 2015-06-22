@@ -22,7 +22,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
 
         public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize, int status)
         {
-            throw new NotImplementedException();
+            return productDataAccess.GetProducts(pageIndex, pageSize, status);
         }
     }
 }

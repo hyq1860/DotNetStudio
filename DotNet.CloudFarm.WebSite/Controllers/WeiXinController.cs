@@ -9,7 +9,7 @@ using DotNet.CloudFarm.Domain.Contract.User;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
-    public class WeiXinController : ApiController
+    public class WeiXinController : BaseApiController
     {
         log4net.ILog logger = log4net.LogManager.GetLogger("WeixinController");
 
@@ -19,6 +19,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         // GET: api/WeiXin
         public IEnumerable<string> Get()
         {
+            
             //logger.Info("test");
             //var user=UserService.GetUserByUserId(3);
             return new string[] { "value1", "value2" };

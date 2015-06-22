@@ -21,7 +21,9 @@ namespace DotNet.CloudFarm.WebSite
             //    name: "DefaultApi",
             //    routeTemplate: "{controller}/{id}",
             //    defaults: new { id = RouteParameter.Optional, controller = "values" });
-            //app.UseNinjectMiddleware(NinjectWebCommon.CreateKernel).UseNinjectWebApi(webApiConfiguration);
+            //app.UseNinjectMiddleware(NinjectWebCommon.CreateKernel);
+            //app.UseWebApi(GlobalConfiguration.Configuration);
+            //app.UseWebApi(webApiConfiguration);
         }
     }
 }

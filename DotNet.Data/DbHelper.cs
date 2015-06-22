@@ -150,6 +150,15 @@ namespace DotNet.Data
                 return _factory;
             }
         }
+
+        /// <summary>
+        /// 创建数据库连接
+        /// </summary>
+        public static IDbConnection DbConnection
+        {
+            get { return Factory.CreateConnection(); }
+        }
+
         #endregion
 
         #region 私有方法

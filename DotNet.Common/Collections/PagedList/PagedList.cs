@@ -23,7 +23,31 @@ namespace DotNet.Common.Collections
 
         public int PageSize { get; set; }
 
-        public int PageCount { get; set; }
+        private int pageCount;
+        public int PageCount
+        {
+            get
+            {
+                PageSize = PageSize >= 0 ? PageSize : 10;
+
+                if (pageCount == 0)
+                {
+                    int modPageCount = TotalCount%PageSize;
+                    if (modPageCount == 0)
+                    {
+                        pageCount = modPageCount;
+                    }
+                    else
+                    {
+                        pageCount = modPageCount + 1;
+                    }
+                    return pageCount;
+                }
+
+                return pageCount;
+            }
+            set { pageCount = value; }
+        }
 
         /// <summary>
         /// Constructor
