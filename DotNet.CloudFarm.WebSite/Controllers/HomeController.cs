@@ -8,6 +8,7 @@ using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.DTO.User;
 using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.WebSite.Infrastructure.Config;
 using DotNet.WebSite.MVC;
 using Microsoft.AspNet.Identity;
@@ -45,12 +46,26 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult Data()
         {
             var result = new JsonResult();
-
-            ProductService.GetProducts(1, 5, 1);
-
+            var homeViewModel = new HomeViewModel
+            {
+                Products = ProductService.GetProducts(1, 5, 1), 
+                SheepCount = 188
+            };
+            result.Data = homeViewModel;
             return result;
         }
 
+        public JsonResult GetProductById(int productId)
+        {
+            var result = new JsonResult();
+
+            if (productId > 0)
+            {
+                result.Data = ProductService.GetProductById(productId);
+            }
+            
+            return result;
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -356,6 +356,10 @@
       <Project>{BA5478CC-902C-49E0-A63C-6FF87553A240}</Project>
       <Name>DotNet.CloudFarm.Domain.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.ViewModel\DotNet.CloudFarm.Domain.ViewModel.csproj">
+      <Project>{086488B7-67F1-4F13-BCC6-98C51B144D7D}</Project>
+      <Name>DotNet.CloudFarm.Domain.ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
       <Project>{55e1d54c-fbd4-4d79-97bb-a0f00dc14fb7}</Project>
       <Name>DotNet.Common</Name>

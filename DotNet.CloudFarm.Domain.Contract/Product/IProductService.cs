@@ -22,5 +22,12 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         /// <param name="status">产品状态</param>
         /// <returns></returns>
         PagedList<ProductModel> GetProducts(int pageIndex,int pageSize,int status);
+
+        /// <summary>
+        /// 根据商品id获取商品详情
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        ProductModel GetProductById(int productId);
     }
 }

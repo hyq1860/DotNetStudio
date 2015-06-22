@@ -8,7 +8,7 @@
         <!--天气状况左边-->
         <div class="realtime_pasture_l">
             <span class="span1">我的羊只</span>
-            <span class="span2">158</span>
+            <span class="span2"><!--ko text:SheepCount--><!--/ko--></span>
         </div>
         <!--天气状况右边-->
         <div class="realtime_pasture_r">
@@ -28,25 +28,26 @@
     </div>
     <!--天气状况结束-->
     <!--羊只认领-->
-    <div class="Claim_sheep">
+    <div class="Claim_sheep" data-bind="foreach:Products">
+        
         <div class="Claim_sheep1">
             <div class="Claim_sheep1_box">
                 <div class="hot_sale"></div>
-                <p class="p1">羊客第5期·认领</p>
+                <p class="p1"><!--ko text:Name--><!--/ko-->·认领</p>
                 <p class="p2">出身内蒙古，混在华尔街；羊只认购火热进行中</p>
                 <div class="Claim_sheep1_box_content">
                     <ul class="clearfix">
                         <li class="li1"><img src="/images/no_pic.jpg"></li>
-                        <li><span class="span1">￥<em>5000</em>/只</span><span class="span2">价格</span></li>
-                        <li><span class="span1">￥<em>5000</em>元</span><span class="span2">预计收益</span></li>
-                        <li><span class="span1"><em>2000</em>只</span><span class="span2">本期投放</span></li>
-                        <li class="last_li"><span class="span1"><em>999</em>只</span><span class="span2">已认购</span></li>
+                        <li><span class="span1">￥<em><!--ko text:SheepPrice--><!--/ko--></em>/只</span><span class="span2">价格</span></li>
+                        <li><span class="span1">￥<em><!--ko text:Earning--><!--/ko--></em>元</span><span class="span2">预计收益</span></li>
+                        <li><span class="span1"><em><!--ko text:Stock--><!--/ko--></em>只</span><span class="span2">本期投放</span></li>
+                        <li class="last_li"><span class="span1"><em><!--ko text:SaledCount--><!--/ko--></em>只</span><span class="span2">已认购</span></li>
                     </ul>
 
                 </div>
                 <div class="detail clearfix">
                     <div class="detail_l">
-                        <a href="#">详情</a>
+                        <a href="#" data-bind="click:$parent.ViewProduct">详情</a>
                     </div>
                     <div class="detail_r">
                         <a href="#">立刻认领羊只</a>
@@ -54,33 +55,6 @@
                 </div>
             </div>
         </div>
-        <!--即将开始-->
-        <div class="Claim_sheep1">
-            <div class="Claim_sheep1_box">
-                <div class="hot_sale coming_soon"></div>
-                <p class="p1">羊客第5期·认领</p>
-                <p class="p2">出身内蒙古，混在华尔街；羊只认购火热进行中</p>
-                <div class="Claim_sheep1_box_content">
-                    <ul class="clearfix">
-                        <li class="li1"><img src="/images/no_pic.jpg"></li>
-                        <li><span class="span1">￥<em>5000</em>/只</span><span class="span2">价格</span></li>
-                        <li><span class="span1">￥<em>5000</em>元</span><span class="span2">预计收益</span></li>
-                        <li><span class="span1"><em>2000</em>只</span><span class="span2">本期投放</span></li>
-                        <li class="last_li"><span class="span1"><em>999</em>只</span><span class="span2">已认购</span></li>
-                    </ul>
-
-                </div>
-                <div class="detail clearfix">
-                    <div class="detail_l">
-                        <a href="#">详情</a>
-                    </div>
-                    <div class="detail_r">
-                        <a href="#">立刻认领羊只</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--即将开始结束-->
     </div>
     <!--羊只认领结束-->
 
@@ -102,16 +76,40 @@
 
         //首页展示商品集合
         self.Products = ko.observableArray([]);
+
+        self.ViewProduct=function(product) {
+            console.log(product);
+        }
     }
+
+    var homeViewModel = new HomeViewModel();
 
     //初始化首页的数据
     function initHomeData() {
         $.ajax({
-            url: "/home/GetMobileCaptcha",
+            url: "/home/data",
             type: "post",
             data: { Mobile: $("#Mobile").val() },
             success: function (data) {
+                if (data) {
+                    homeViewModel.SheepCount(data.SheepCount);
+                    homeViewModel.Products(data.Products);
+                    ko.applyBindings(homeViewModel);
+                }
+            }
+        });
+    }
 
+    function getProductById(productId) {
+        $.ajax({
+            url: "/home/GetProductById",
+            type: "post",
+            data: { productId: productId },
+            success: function (data) {
+                if (data) {
+
+                    //ko.applyBindings(homeViewModel);
+                }
             }
         });
     }
