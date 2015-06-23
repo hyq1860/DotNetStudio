@@ -91,7 +91,7 @@
 .detail_l_active{ border:1px solid #f6b23c; position:relative;}
 .detail_l_active a{ color:#738880; background:url(../images/bg.png) no-repeat right center; background-size:25rem 25rem; background-position:-9.7rem -23.8rem; padding-right:1.5rem;}
 .down_up_arrow {background:url(../images/bg.png) no-repeat -22.2rem 0rem / 25rem 25rem;bottom: -0.8rem;height: 0.8rem;left: 48%;position: absolute;width:1.2rem;}
-.detail_content{ width:100%; position:absolute; top:6rem; left:0rem; z-index:100; background:#fff; border:1px solid #ff9500;}
+.detail_content{ width:100%;top:6rem; left:0rem; z-index:100; background:#fff; border:1px solid #ff9500;}
 .detail_content table th{ border-bottom:1px solid #ff9500; text-align:left; padding:0.5rem 1rem; font-size:1.4rem; color:#999; font-weight:normal;}
 .detail_content table .th2{ color:#333;}
 .detail_content table td{text-align:left; padding:0.5rem 1rem; font-size:1.4rem; color:#999; border-bottom:1px solid #eee;}
@@ -125,3 +125,38 @@
 .quit_login a{color:#666; font-size:1.6rem; display:inline-block; width:100%; height:5rem; line-height:5rem;}
 .bottom_float .active_my span{ background-position: 0.2rem -12.2rem;}
 .bottom_float .active_my p{ color:#ff9500;}
+/*钱包*/
+.wallet{font-family:"微软雅黑"; color:#fff; margin: 0 auto 8rem;}
+.wallet_top_content{ position:absolute; top:10%; width:100%;}
+.wallet_top_content_l{ float:left; margin-left:1.5rem;}
+.wallet_top_content_r{ float:right; margin-right:1.5rem;}
+.wallet_top_content_l .p1{ font-size:1.2rem;}
+.wallet_top_content_l .p2{ font-size:5rem; margin-top:2rem; font-family:"Arial";}
+.wallet_top_content_r p{ text-align:right; line-height:3rem;}
+@media screen and (max-width:320px){.wallet_top_content_r p{ text-align:right; line-height:2.4rem;}}
+.wallet_top_content_r p span{ display:block;}
+/*投资报表*/
+.tzbb{ margin-top:1.5rem; background:#fff; padding-top:1rem; border-bottom:1px solid #d0d0d0;}
+.tzbb_box{ width:94%; margin:0rem 3%;}
+.tzbb_box h3{ font-size:1.4rem; line-height:3rem; border-bottom:1px solid #eee; color:#666;}
+.tzbb_box ul{ margin:1rem 0rem;}
+.tzbb_box ul li{ width:33.3%; float:left; padding:0.5rem 0rem; border-right:1px solid #eee;}
+.tzbb_box ul li span{ display:block; line-height:3rem; font-size:1.2rem; color:#bbb; width:100%; text-align:center;}
+.tzbb_box ul li .span2{ color:#738880; font-size:1.4rem;}
+.Settlement{ width:94%; margin:1.5rem 3%; height:5rem; line-height:5rem; background:#3fb76e; border-radius:0.3rem; text-align:center;}
+.Settlement a{ font-size:1.6rem; color:#fff; display:inline-block; width:100%; height:100%;}
+.bottom_float .active_wallet span{background-position: 0.2rem -16.3rem;}
+.bottom_float .active_wallet p{ color:#ff9500;}
+/*育肥状态*/
+.fattening_state{ width:100%; background:#faf5f2; padding:1rem 0rem 2rem 0rem;}
+.fattening_statebox{ width:94%; margin:0rem 3%;} 
+.fattening_statebox h3{  color: #666;font-size: 1.4rem;line-height: 3rem;}
+.sheep_grow{ width:100%; margin-top:2rem; vertical-align:bottom; height:8rem;}
+.sheep_grow li{ float:left; width:20%; text-align:center; height:8rem; position:relative;}
+.sheep_grow .li1 img{ width:50%; height:auto; position:absolute; left:25%; bottom:0rem;}
+.sheep_grow .li2 img{ width:60%; height:auto; position:absolute; left:20%; bottom:0rem;}
+.sheep_grow .li3 img{ width:70%; height:auto; position:absolute; left:15%; bottom:0rem;}
+.sheep_grow .li4 img{ width:80%; height:auto; position:absolute; left:10%; bottom:0rem;}
+.sheep_grow .li5 img{ width:90%; height:auto; position:absolute; left:5%; bottom:0rem;}
+.progress_bar{ width:100%; height:2rem; margin-top:1rem; background:url(../images/step_bg.png) no-repeat; background-size:100% 2rem; position:relative;}
+.progress_bar span{ display:block; height:1.5rem; width:20%; background:linear-gradient( left,#f76624,#ff9900); background:-moz-linear-gradient( left,#f76624,#ff9900); background:-o-linear-gradient( left,#f76624,#ff9900); background:-webkit-linear-gradient( left,#f76624,#ff9900); border-radius:10px; position:absolute; top:0.4rem; left:0rem; }

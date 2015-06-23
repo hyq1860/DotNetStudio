@@ -14,10 +14,17 @@ namespace DotNet.CloudFarm.WebSite
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+            name: "WeiXin",
+            url: "Weixin/{action}/{id}",
+            defaults: new { controller = "WeiXin", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Default", id = UrlParameter.Optional }
             );
+
         }
     }
 }

@@ -140,6 +140,15 @@
       <HintPath>..\packages\Ninject.Web.WebApi.OwinHost.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.OwinHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Senparc.Weixin">
+      <HintPath>..\packages\Senparc.Weixin.3.3.6\lib\net40\Senparc.Weixin.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP">
+      <HintPath>..\packages\Senparc.Weixin.MP.11.3.2\lib\net40\Senparc.Weixin.MP.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP.MvcExtension">
+      <HintPath>..\packages\Senparc.Weixin.MP.MVC.3.1.0\lib\net40\Senparc.Weixin.MP.MvcExtension.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -244,6 +253,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CustomMessageContext.cs" />
+    <Compile Include="Models\CustomMessageHandler.cs" />
     <Compile Include="Models\TextResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -255,8 +266,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\reset.css" />
     <Content Include="Content\sheep_guest.css" />
-    <Content Include="css\reset.css" />
-    <Content Include="css\sheep_guest.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -278,6 +287,7 @@
     <Content Include="html\index_detail.html" />
     <Content Include="html\login.html" />
     <Content Include="html\my.html" />
+    <Content Include="html\wallet.html" />
     <Content Include="Icon.png" />
     <Content Include="images\arrow.png" />
     <Content Include="images\bg.jpg" />
@@ -285,11 +295,18 @@
     <Content Include="images\bg2.jpg" />
     <Content Include="images\bg2.png" />
     <Content Include="images\bg3.jpg" />
+    <Content Include="images\bg4.jpg" />
     <Content Include="images\from.png" />
     <Content Include="images\from2.png" />
     <Content Include="images\no_pic.jpg" />
     <Content Include="images\opacity_bg.png" />
+    <Content Include="images\sheep_step_03.png" />
+    <Content Include="images\sheep_step_07.png" />
+    <Content Include="images\sheep_step_10.png" />
+    <Content Include="images\sheep_step_13.png" />
+    <Content Include="images\sheep_step_17.png" />
     <Content Include="images\ssmc.png" />
+    <Content Include="images\step_bg.png" />
     <Content Include="images\tx.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -334,6 +351,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Weixin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
