@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    
+</div>
+
+<script type="text/javascript">
+    function OrderViewModel() {
+        var self = this;
+
+        //购买的商品
+        self.Product = ko.observable();
+
+        //认购排行榜
+        self.BuyTops = ko.observableArray([]);
+    }
+
+    function OrderProductViewModel() {
+        var self = this;
+
+        self.Name = ko.observable();
+
+        self.Price = ko.observable();
+
+        self.Stock = ko.observable();
+
+        self.Count = ko.observable();
+
+        self.TotalPrice = ko.pureComputed(function() {
+            return self.Count() * self.Price();
+        });
+    }
+
+    function BuyTopViewModel() {
+        var self = this;
+
+        //排名名次
+        self.Rank = ko.observable();
+
+        //头像
+        self.HeadUrl = ko.observable();
+
+        //认购者姓名
+        self.Name = ko.observable();
+
+        //认购者数量
+        self.Count = ko.observable();
+    }
+
+</script>

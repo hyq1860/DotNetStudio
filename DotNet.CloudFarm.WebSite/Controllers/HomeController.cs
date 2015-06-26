@@ -80,5 +80,18 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
+        public ActionResult Product()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 确认订单
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Order(int? productId)
+        {
+            return View();
+        }
     }
 }

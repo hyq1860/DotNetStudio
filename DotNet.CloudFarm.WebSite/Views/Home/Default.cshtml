@@ -50,8 +50,67 @@
                         <a href="#" data-bind="click:$parent.ViewProduct">详情</a>
                     </div>
                     <div class="detail_r">
-                        <a href="#">立刻认领羊只</a>
+                        <a  data-bind="attr:{href:'@Url.Action("order","home")'+'?id='+Id}">立刻认领羊只</a>
                     </div>
+                </div>
+                <div class="detail_content">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <th width="40%">项目名称</th>
+                            <th class="th2" width="60%">顺手牵羊第【<em>1</em>】期</th>
+                        </tr>
+                        <tr>
+                            <td>预期收益</td>
+                            <td class="td2">三个半月【<em>5%</em>】；年化【<em><!--ko text:YearEarningRate--><!--/ko-->%</em>】</td>
+                        </tr>
+                        <tr>
+                            <td>项目持续期</td>
+                            <td class="td2">自项目募集成功之日起【<em><!--ko text:EarningDay--><!--/ko--></em>】个自然日</td>
+                        </tr>
+                        <tr>
+                            <td>项目总份额</td>
+                            <td class="td2">【<em><!--ko text:Stock--><!--/ko--></em>】份</td>
+                        </tr>
+                        <tr>
+                            <td>每份项目份额认购价格</td>
+                            <td class="td2">人民币【<em><!--ko text:SheepPrice--><!--/ko--></em>】元；小羊费用：【<em>100</em>】元，饲料费：【<em><!--ko text:FeedPrice--><!--/ko--></em>】元；人工费：【<em><!--ko text:WorkPrice--><!--/ko--></em>】元</td>
+                        </tr>
+                        <tr>
+                            <td>申购期限</td>
+                            <td class="td2">自<em>2015</em>年【<em>6</em>】月【<em>8</em>】日至【<em>6</em>】月【<em>9</em>】日</td>
+                        </tr>
+                        <tr>
+                            <td>申购期限</td>
+                            <td class="td2">自<em>2015</em>年【<em>6</em>】月【<em>8</em>】日至【<em>6</em>】月【<em>9</em>】日</td>
+                        </tr>
+                        <tr>
+                            <td>项目收益预期支付日</td>
+                            <td class="td2"><em>2015</em>年【<em>6</em>】月【<em>8</em>】日</td>
+                        </tr>
+                        <tr>
+                            <td>收益支付方式</td>
+                            <td class="td2">1、现金，每份份额预计收益为【<em>1000</em>】元；<br />2、与现金等额的羊肉，每份份额预计可得羊肉为【<em>50</em>】kg。</td>
+                        </tr>
+                        <tr>
+                            <td>该期项目羊羔数量</td>
+                            <td class="td2">【<em>1000</em>】只待育肥羊</td>
+                        </tr>
+
+                        <tr>
+                            <td>羊羔品种</td>
+                            <td class="td2"><!--ko text:SheepType--><!--/ko--></td>
+                        </tr>
+
+                        <tr>
+                            <td>预期育肥时间</td>
+                            <td class="td2">3个半月</td>
+                        </tr>
+
+                        <tr>
+                            <td>育肥厂</td>
+                            <td class="td2"><!--ko text:SheepFactory--><!--/ko--></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -80,6 +139,48 @@
         self.ViewProduct=function(product) {
             console.log(product);
         }
+    }
+
+    function ProductViewModel() {
+        var self = this;
+
+        self.Id = ko.observable();
+
+        //产品名称
+        self.Name = ko.observable();
+
+        //产品数量
+        self.Stock = ko.observable();
+
+        //当前期销量数量
+        self.SaledCount = ko.observable();
+
+        //单价
+        self.Price = ko.observable();
+
+        //羊金额
+        self.SheepPrice = ko.observable();
+
+        //饲料金额
+        self.FeedPrice = ko.observable();
+
+        //人工成本
+        self.WorkPrice = ko.observable();
+
+        //预期年化收益率
+        self.YearEarningRate = ko.observable();
+
+        //预期收益
+        self.EarningRate = ko.observable();
+
+        //活动持续时间 天
+        self.EarningDay = ko.observable();
+
+        //羊类型
+        self.SheepType = ko.observable();
+
+        //育肥场
+        self.SheepFactory = ko.observable();
     }
 
     var homeViewModel = new HomeViewModel();
