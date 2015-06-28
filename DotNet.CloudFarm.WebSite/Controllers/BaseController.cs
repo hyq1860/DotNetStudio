@@ -14,7 +14,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     /// </summary>
     public class BaseController:Controller
     {
-        [Ninject.Inject]
+        public BaseController()
+        {
+            
+        }
+
+        public BaseController(IUserService userService)
+        {
+            this.UserService = userService;
+        }
+
         private IUserService UserService { get; set; }
 
         public UserModel UserInfo
@@ -23,7 +32,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             {
                 if (this.User.Identity.IsAuthenticated)
                 {
-                    return UserService.GetUserByUserId(int.Parse(this.User.Identity.GetUserId()));
+                    var userId = int.Parse(this.User.Identity.GetUserId());
+                    return UserService.GetUserByUserId(userId);
                 }
                 return null;
             }

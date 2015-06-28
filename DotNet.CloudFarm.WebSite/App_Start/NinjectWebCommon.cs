@@ -7,6 +7,7 @@ using DotNet.CloudFarm.Domain.DTO.User;
 using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.User;
+using DotNet.CloudFarm.WebSite.Controllers;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Stop")]
@@ -71,6 +72,7 @@ namespace DotNet.CloudFarm.WebSite.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            
             //业务接口注入点
 
             //用户服务

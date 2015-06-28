@@ -349,6 +349,10 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\My\Index.cshtml" />
     <Content Include="Views\Home\Order.cshtml" />
+    <Content Include="Views\Home\MyCenter.cshtml" />
+    <Content Include="Views\Home\OrderList.cshtml" />
+    <Content Include="Views\Home\MessageList.cshtml" />
+    <Content Include="Views\Home\Contract.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,6 +17,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 {
     public class HomeController : BaseController
     {
+        public HomeController(IUserService userService):base(userService)
+        {
+            
+        }
+
         [Ninject.Inject]
         public IUserService UserService { get; set; }
 
@@ -90,6 +95,31 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult Order(int? productId)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 用户中心首页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MyCenter()
+        {
+            var myCenterViewModel = new MyCenterViewModel {User = UserInfo, IsHasNoReadMessage = true};
+            return View(myCenterViewModel);
+        }
+
+        public ActionResult OrderList()
+        {
+            return View();
+        }
+
+        public ActionResult MessageList()
+        {
+            return View();
+        }
+
+        public ActionResult Contract()
         {
             return View();
         }

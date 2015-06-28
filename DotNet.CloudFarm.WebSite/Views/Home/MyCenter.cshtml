@@ -1,0 +1,51 @@
+﻿@using DotNet.CloudFarm.Domain.ViewModel
+@using DotNet.Common.Utility
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+<div class="sheep_guest my">
+    <!--ko with:User-->
+    <div class="my_top">
+        <div class="my_top_pic"><img src="/images/bg3.jpg">
+        </div>
+        <div class="tx_box clearfix">
+            <span class="span1"><img src="/images/tx.png" data-bind="attr:{href:WxHeadUrl}"></span>
+            <span class="span2"><!--ko text:Mobile--><!--/ko--></span>
+        </div>
+        <div class="lastest_farm"><a href="#"></a>
+        </div>
+        <div class="my_top_opacity"></div>
+        <div class="my_top_from"></div>
+    </div>
+    <!--/ko-->
+    <div class="my_list">
+        <ul>
+            <li class="li1 clearfix"><a href="@Url.Action("MessageList","Home")"><span class="span_logo"></span><span class="span1">我的消息</span><span class="span2"></span></a></li>
+            <li class="li2 clearfix"><a href="@Url.Action("OrderList","Home")"><span class="span_logo"></span><span class="span1">我的订单</span><span class="span2"></span></a></li>
+            <li class="li3 clearfix"><a href="@Url.Action("Contract", "Home")"><span class="span_logo"></span><span class="span1">我的合同</span><span class="span2"></span></a></li>
+        </ul>
+    </div>
+    <div class="quit_login"><a href="#">退出登录</a>
+    </div>
+</div>
+<script type="text/javascript">
+    function MyCenterViewModel() {
+        var self = this;
+
+        //用户信息
+        self.User = ko.observable();
+
+        //是否有消息
+        self.IsHasMessage = ko.observable();
+    }
+
+    $(function() {
+        var myCenter=@Html.Raw(JsonHelper.ToJson(Model));
+        var myCenterViewModel = new MyCenterViewModel();
+        if (myCenter) {
+            myCenterViewModel.User(myCenter.User);
+        }
+        ko.applyBindings(myCenterViewModel);
+    });
+</script>
