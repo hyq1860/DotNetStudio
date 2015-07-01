@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>消息</title>
+<link type="text/css" rel="stylesheet" href="/Content/reset.css" />
+<link type="text/css" rel="stylesheet" href="/Content/sheep_guest.css" />
+<style type="text/css">
+/*即时购买*/
+.purchase_claim{ margin-bottom:8rem;}
+.purchase_claim_section1{ background:#fff; padding-bottom:2rem;}
+.purchase_claim_section1box{ width:94%; margin:0rem 3%;}
+.purchase_claim_section1box h3{ line-height:5rem; font-size:1.6rem; color:#006a53;}
+.purchase_claim_section1box h3 span{ padding-left:1rem; border-left:2px solid #006a53}
+.periods_l{ float:left; width:8rem; height:8rem;}
+.periods_l img{ display:inline-block;width:8rem; height:8rem;}
+@media screen and (max-width:320px){.periods_l{width:7rem; height:7rem;}}
+@media screen and (max-width:320px){.periods_l img{width:7rem; height:7rem;}}
+.periods_r{ float:left; margin-left:1rem; max-width:70%; font-size:1.4rem; color:#333;}
+.periods_r p{ margin-bottom:0.9rem;}
+.left_sheep{ margin-top:1.5rem; width:100%; border:1px solid #eee;}
+.left_sheep_content{ width:94%; margin:1rem 3%;}
+.left_sheep_content p{font-size:1.4rem; color:#333; margin-bottom:1rem;}
+.left_sheep_content .p1 .span1,.order_num_l{ float:left;}
+.left_sheep_content .p1 .span2,.order_num_r{ float:right;}
+.order_num_r{ width:10.5rem; height:3rem; border:1px solid #eee;}
+.order_num{ height:3rem; line-height:3rem; border-bottom:1px solid #eee; padding-bottom:4rem;}
+.order_num_r span{ display:inline-block; width:3rem; height:3rem; line-height:3rem; text-align:center; border-right:1px solid #eee; font-size:22px;}
+.order_num_r .span2{ border-left:1px solid #eee; border-right:none; }
+.order_num_r input{ width:4rem; border-style:none;}
+.purchase_claim_section2{ width:94%; margin:-1.3rem 3% 0rem; background:#fff; border-radius:3px;}
+.ranking_List{ position:relative;}
+.ranking_List_box{background:url(images/bg2.png) no-repeat; width:15rem; height:3rem; line-height:3rem; text-align:center; background-size:26.4rem 26rem;background-position:-12rem -6.5rem; font-size:1.4rem; color:#fff; margin:0 auto; top:1rem;}
+.purchase_claim_section2 ul{ width:94%; padding:2rem 0rem 0rem 0rem; margin:0rem 3%;}
+.purchase_claim_section2 ul li{ height:5rem; line-height:5rem; border-bottom:1px dashed #eee;}
+.purchase_claim_section2 ul i,.purchase_claim_section2 ul img,.purchase_claim_section2 ul .span1{ float:left;}
+.purchase_claim_section2 ul .span2{ float:right; font-size:1.6rem; color:#ff612a;}
+.purchase_claim_section2 ul img{ display:inline-block; width:3rem; height:3rem; margin:1rem;}
+.purchase_claim_section2 ul .span1{ font-size:1.6rem; color:#666;}
+.purchase_claim_section2 ul .loading_more { border-bottom:none;}
+.loading_more a{ text-align:center; display:block; font-size:1.6rem; color:#999;}
+.read_agree{ height:6rem; line-height:6rem; width:94%; margin:0rem 3% 0rem 3%; font-size:1.6rem; color:#333;}
+.read_agree .no_agree{ float:left; width:1.6rem; height:1.6rem; background:url(images/bg2.png) no-repeat; background-size:25rem 25rem;background-position:-12rem -13.2rem; margin-top:2.4rem;}
+.read_agree .agree_ment{ float:left; width:1.6rem; height:1.5rem; background:url(images/bg2.png) no-repeat; background-size:25rem 25rem;background-position:-12rem -17.6rem; margin-top:2.4rem;}
+.read_agree .span2{ float:left; margin-left:1rem;}
+.sure_book{ width:94%; height:5rem; line-height:5rem; background:#3fb76e; border-radius:3px; margin:1rem 3% 2rem 3%; text-align:center;}
+.sure_book a{ color:#fff; font-size:1.6rem; display:inline-block; width:100%; height:100%;}
+/*支付方式*/
+.order_num2{ line-height:4rem;border-bottom:1px solid #eee;}
+.order_total{ line-height:4rem;}
+.pay_way .purchase_claim_section1{ padding-bottom:0rem;}
+.to_pay{ margin-top:1.5rem; background:#fff; padding-bottom:1.5rem;}
+.to_pay_box{ width:94%; margin:0rem 3%;}
+.to_pay_box h3{ height:5rem; line-height:5rem; color:#999; font-size:1.4rem;}
+.choice_pay_zfb,.choice_pay_zz{ float:left; width:45%;}
+.choice_pay_zfb{ margin-right:4%;}
+.choice_pay_zfb img,.choice_pay_zz img{ width:100%; height:auto;}
+/*支付成功*/
+.pay_sucess_box{ width:100%; background:#3fb76e; padding-bottom:1.5rem;}
+.pay_sucess_box p{ color:#fff;}
+.pay_sucess_box .p1{ font-size:1.6rem; width:100%; text-align:center; line-height:3rem;}
+.sucess_content{ width:94%; margin:1rem 3% 0rem 3%; border:1px solid #fff;}
+.pay_sucess_box .p2{ margin:1rem 0rem 0.5rem 2%; font-size:1.4rem;}
+.pay_sucess_box .p3{ margin:0rem 0rem 1rem 2%; font-size:1.4rem;}
+.search_order{ width:100%; padding:1rem 0rem; background:#fff;}
+.search_order a{ width:45%; display:inline-block; height:5rem;line-height:5rem; text-align:center;font-size:1.6rem; color:#3fb76e; border:1px solid #3fb76e;}
+.search_order .a1{ margin:0rem 4% 0rem 3%;}
+/*消息*/
+.message_ul{ background:#fff;}
+.message_ul li{ width:100%; border-bottom:1px solid #eee; padding:1rem 0rem;}
+.li_l{ float:left; width:20%; display:table;}
+.li_l span{ display:inline-block; width:5rem; height:5rem; display: table-cell; vertical-align:middle;}
+.li_l span img{ display:inline-block; width:5rem; height:5rem;}
+.li_r{ width:70%; padding-left:2%; border-left:1px dashed #eee; float:left;}
+.li_r span{ display:block;}
+.li_r .span1{ font-size:1.6rem; color:#333;}
+.li_r .span2{ font-size:1.4rem; color:#999;}
+</style>
+</head>
+
+<body style="background:#eee;">
+<div class="sheep_guest message">
+	<ul class="message_ul">
+    	<li class="clearfix">
+        	<p class="li_l"><span class="no_read"><img src="/images/no_read.png"></span></p>
+            <p class="li_r"><span class="span1">未读消息</span><span class="span2">您的订单已经生成，请点击订单号进行支付。订单号为：20132298485</span></p>
+        </li>
+    </ul>
+</div>
+<div class="bottom_float">
+	<ul class="clearfix">
+    	<li class="li1"><a href="#"><span></span><p>购买</p></a></li>
+        <li class="li2"><a href="#"><span></span><p>钱包</p></a></li>
+        <li class="li3 active_my"><a href="#"><span></span><p>我的</p></a></li>
+    </ul>
+</div>
+</body>
+</html>

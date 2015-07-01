@@ -173,7 +173,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             });
             subButton.sub_button.Add(new SingleViewButton()
             {
-                url = "http://www.baidu.com",
+                url = "http://101.200.233.5/",
                 name = "Url跳转"
             });
             btnGroup.button.Add(subButton);
