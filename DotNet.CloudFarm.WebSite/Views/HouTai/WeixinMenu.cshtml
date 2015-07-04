@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
+    ViewBag.Title = "微信菜单管理";
+}
+    @using Senparc.Weixin.MP.Entities.Menu;
+
+<div id="content" class="span10">
+    <!-- content starts -->
+
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-th-list"></i> 菜单列表</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable datatable">
+                    <thead>
+                        <tr>
+                            <th>一级菜单名称</th>
+                            <th>类型</th>
+                            <th>二级菜单</th>
+                            <th>编辑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.MenuList != null)
+                        {
+                            foreach (IBaseButton btnInGroup in ViewBag.MenuList.button)
+                            {
+                                if (btnInGroup.ToString() == "Senparc.Weixin.MP.Entities.Menu.SubButton")
+                                {
+                                    var btn = btnInGroup as SubButton;
+                                    <tr>
+                                        <td>@btn.name</td>
+                                        <td class="center">一级菜单</td>
+                                        <td class="center">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>名称</th>
+                                                        <th>类型</th>
+                                                        <th>编辑</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach(var b in btn.sub_button)
+                                                    {
+                                                    <tr>
+                                                        <td>@b.name</td>
+                                                        <td>@b.type</td>
+                                                        <td>
+                                                            <a class="btn btn-info" href="#">
+                                                                <i class="icon-edit icon-white"></i>
+                                                                编辑
+                                                            </a>
+                                                            <a class="btn btn-danger" href="#">
+                                                                <i class="icon-trash icon-white"></i>
+                                                                删除
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                    </tbody>
+                                            </table>
+                                        </td>
+                                        <td class="center">
+                                            <a class="btn btn-success" href="#">
+                                                <i class="icon-zoom-in icon-white"></i>
+                                                增加二级菜单
+                                            </a>
+                                            <a class="btn btn-info" href="#">
+                                                <i class="icon-edit icon-white"></i>
+                                                编辑
+                                            </a>
+                                            <a class="btn btn-danger" href="#">
+                                                <i class="icon-trash icon-white"></i>
+                                                删除
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                else if (btnInGroup.ToString() == "Senparc.Weixin.MP.Entities.Menu.SingleClickButton")
+                                {
+                                    var btn = btnInGroup as SingleClickButton;
+                                    <tr>
+                                        <td>@btn.name</td>
+                                        <td class="center">@btn.type</td>
+                                        <td class="center">无</td>
+                                        <td class="center">
+                                            <a class="btn btn-info" href="#">
+                                                <i class="icon-edit icon-white"></i>
+                                                编辑
+                                            </a>
+                                            <a class="btn btn-danger" href="#">
+                                                <i class="icon-trash icon-white"></i>
+                                                删除
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        }
+                        
+
+                        
+            
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+
+    <!-- content ends -->
+</div>
+<script type="text/javascript" >
+
+</script>
