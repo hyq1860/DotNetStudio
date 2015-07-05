@@ -505,7 +505,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Contract.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -519,6 +519,10 @@
     <Content Include="Views\HouTai\_LeftMenu.cshtml" />
     <Content Include="Views\Home\Pay.cshtml" />
     <Content Include="Views\Home\PaySuccess.cshtml" />
+    <Content Include="Views\Home\Wallet.cshtml" />
+    <Content Include="Views\Home\MyCenter.cshtml" />
+    <Content Include="Views\Home\OrderList.cshtml" />
+    <Content Include="Views\Home\MessageList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

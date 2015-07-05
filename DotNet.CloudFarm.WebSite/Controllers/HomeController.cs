@@ -152,5 +152,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 我的钱包
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Wallet()
+        {
+            return View();
+        }
     }
 }
