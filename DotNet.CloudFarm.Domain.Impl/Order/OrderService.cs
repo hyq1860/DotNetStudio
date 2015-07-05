@@ -23,12 +23,12 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         public PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            return orderDataAccess.GetOrderList(userId, pageIndex, pageSize);
         }
 
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)
         {
-            throw new NotImplementedException();
+            return orderDataAccess.SubmitOrder(orderModel);
         }
 
         public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
