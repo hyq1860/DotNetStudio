@@ -30,5 +30,10 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         {
             throw new NotImplementedException();
         }
+
+        public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
+        {
+            return orderDataAccess.GetTopOrderList(top, pageIndex, pageSize);
+        }
     }
 }

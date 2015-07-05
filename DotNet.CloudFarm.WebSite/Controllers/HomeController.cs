@@ -96,6 +96,35 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Order(int? productId)
         {
+            var confirmOrderViewModel = new ConfirmOrderViewModel();
+            if (productId.HasValue)
+            {
+                confirmOrderViewModel.Product = ProductService.GetProductById(productId.Value);
+            }
+            else
+            {
+                return RedirectToAction("Default", "Home");
+            }
+            return View(confirmOrderViewModel);
+        }
+
+        public ActionResult SubmitOrder(ConfirmOrderViewModel confirmOrderViewModel)
+        {
+
+            return new JsonResult();
+        }
+
+        /// <summary>
+        /// 支付页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Pay()
+        {
+            return View();
+        }
+
+        public ActionResult PaySuccess()
+        {
             return View();
         }
 

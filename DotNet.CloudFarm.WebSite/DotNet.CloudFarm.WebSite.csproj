@@ -304,6 +304,9 @@
     <Content Include="images\houtai\ajax-loaders\Thumbs.db" />
     <Content Include="images\houtai\logo_20.jpg" />
     <Content Include="images\houtai\iphone-style-checkboxes\Thumbs.db" />
+    <Content Include="Configs\Data\DataCommand_Order.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="html\index.html" />
@@ -514,6 +517,8 @@
     <Content Include="Views\HouTai\Index.cshtml" />
     <Content Include="Views\HouTai\WeixinMenu.cshtml" />
     <Content Include="Views\HouTai\_LeftMenu.cshtml" />
+    <Content Include="Views\Home\Pay.cshtml" />
+    <Content Include="Views\Home\PaySuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
