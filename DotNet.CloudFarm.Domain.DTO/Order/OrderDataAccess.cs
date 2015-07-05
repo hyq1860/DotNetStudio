@@ -92,7 +92,9 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
 
         public PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var result = new PagedList<OrderModel>(new List<OrderModel>(), pageIndex,pageSize);
+
+            return result;
         }
     }
 }

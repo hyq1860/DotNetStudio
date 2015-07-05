@@ -28,9 +28,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Message
             return messageDataAccess.SendSms(userId, content);
         }
 
-        public Result<PagedList<MessageModel>> GetMessages(int userId, int pageIndex, int pageSize, int status)
+        public Result<PagedList<MessageModel>> GetMessages(int userId, int pageIndex, int pageSize)
         {
-            return messageDataAccess.GetMessages(userId, pageIndex, pageSize, status);
+            return messageDataAccess.GetMessages(userId, pageIndex, pageSize);
         }
     }
 }

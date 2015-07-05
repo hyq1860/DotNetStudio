@@ -27,6 +27,6 @@ namespace DotNet.CloudFarm.Domain.Contract.Message
         /// <param name="pageSize"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        Result<PagedList<MessageModel>> GetMessages(int userId, int pageIndex, int pageSize, int status);
+        Result<PagedList<MessageModel>> GetMessages(int userId, int pageIndex, int pageSize);
     }
 }

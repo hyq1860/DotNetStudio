@@ -21,9 +21,13 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             this.orderDataAccess = orderDataAccess;
         }
 
-        public PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize)
+        public Result<PagedList<OrderModel>> GetOrderList(int userId, int pageIndex, int pageSize)
         {
-            return orderDataAccess.GetOrderList(userId, pageIndex, pageSize);
+            var result = new Result<PagedList<OrderModel>>
+            {
+                Data = orderDataAccess.GetOrderList(userId, pageIndex, pageSize)
+            };
+            return result;
         }
 
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)

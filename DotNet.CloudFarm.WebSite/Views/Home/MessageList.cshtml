@@ -1,4 +1,6 @@
-﻿@{
+﻿@using DotNet.Common.Utility
+@model DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.Model.Message.MessageModel>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,3 +12,18 @@
         </li>
     </ul>
 </div>
+<script type="text/javascript">
+    var messageListServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
+    function MessageListViewModel() {
+        var self = this;
+
+        self.Messages = ko.observableArray();
+
+        
+
+    }
+
+    $(function() {
+
+    });
+</script>

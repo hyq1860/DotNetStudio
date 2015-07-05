@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.Model.Order.OrderModel>  
 
 <div class="sheep_guest my_order">
     <section class="my_order_section1">
@@ -40,3 +41,19 @@
         <div class="how_about_order"><a href="#" class="a1 reed_btn">赎回</a></div>
     </section>
 </div>
+<script type="text/javascript">
+    var orderListServiceJson=@Html.Raw(Model);
+
+    function OrderListViewModel() {
+        var self = this;
+
+        //订单列表
+        self.OrderList = ko.observableArray();
+    }
+
+    $(function() {
+        var orderListViewModel = new OrderListViewModel();
+
+        ko.applyBindings(orderListViewModel);
+    });
+</script>

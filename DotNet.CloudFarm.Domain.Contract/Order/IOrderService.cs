@@ -21,7 +21,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        PagedList<OrderModel> GetOrderList(int userId,int pageIndex,int pageSize);
+        Result<PagedList<OrderModel>> GetOrderList(int userId, int pageIndex, int pageSize);
 
         /// <summary>
         /// 提交订单

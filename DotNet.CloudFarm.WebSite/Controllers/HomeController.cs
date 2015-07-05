@@ -4,9 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract;
+using DotNet.CloudFarm.Domain.Contract.Message;
+using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.WebSite.Infrastructure.Config;
@@ -27,6 +30,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         [Ninject.Inject]
         public IProductService ProductService { get; set; }
+
+        [Ninject.Inject]
+        public IMessageService MessageService { get; set; }
+
+        [Ninject.Inject]
+        public IOrderService OrderService { get; set; }
 
         public ActionResult Default()
         {
@@ -138,14 +147,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(myCenterViewModel);
         }
 
-        public ActionResult OrderList()
+        public ActionResult OrderList(int pageIndex=1,int pageSize=10)
         {
-            return View();
+            var result = OrderService.GetOrderList(this.UserInfo.UserId, pageIndex, pageSize);
+            return View(result.Data);
         }
 
-        public ActionResult MessageList()
+        public ActionResult MessageList(int pageIndex=1,int pageSize=10)
         {
-            return View();
+            var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
+            return View(result.Data);
         }
 
         public ActionResult Contract()
@@ -158,6 +169,25 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult Wallet()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 转账
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TransferAccount()
+        {
+            
+            return View();
+        }
+
+        /// <summary>
+        /// 结算
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Redeem()
         {
             return View();
         }

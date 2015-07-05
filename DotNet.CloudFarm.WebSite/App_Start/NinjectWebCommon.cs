@@ -1,9 +1,12 @@
+using DotNet.CloudFarm.Domain.Contract.Message;
 using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.DTO.Message;
 using DotNet.CloudFarm.Domain.DTO.Order;
 using DotNet.CloudFarm.Domain.DTO.Product;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.Message;
 using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.User;
@@ -74,6 +77,10 @@ namespace DotNet.CloudFarm.WebSite.App_Start
         {
             
             //业务接口注入点
+
+            //消息
+            kernel.Bind<IMessageDataAccess>().To<MessageDataAccess>();
+            kernel.Bind<IMessageService>().To<MessageService>();
 
             //用户服务
             kernel.Bind<IUserService>().To<UserService>();
