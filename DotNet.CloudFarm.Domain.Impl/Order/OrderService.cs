@@ -21,14 +21,23 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             this.orderDataAccess = orderDataAccess;
         }
 
-        public PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize)
+        public Result<PagedList<OrderModel>> GetOrderList(int userId, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var result = new Result<PagedList<OrderModel>>
+            {
+                Data = orderDataAccess.GetOrderList(userId, pageIndex, pageSize)
+            };
+            return result;
         }
 
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)
         {
-            throw new NotImplementedException();
+            return orderDataAccess.SubmitOrder(orderModel);
+        }
+
+        public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
+        {
+            return orderDataAccess.GetTopOrderList(top, pageIndex, pageSize);
         }
     }
 }

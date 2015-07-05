@@ -1,13 +1,70 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using DotNet.Common.Utility
+@model DotNet.CloudFarm.Domain.ViewModel.ConfirmOrderViewModel
+<div class="sheep_guest purchase_claim">
+    <section class="purchase_claim_section1">
+        <!--ko with:Product-->
+        <div class="purchase_claim_section1box">
+            <h3><span><!--ko text:Name--><!--/ko--></span></h3>
+            <div class="periods clearfix">
+                <div class="periods_l"><img src="/images/no_pic.jpg">
+                </div>
+                <div class="periods_r">
+                    <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
+                    <p>单价：<span><em><!--ko text:SheepPrice--><!--/ko--></em>/只</span></p>
+                    <p>活动期限：<span><em>2015-05-28</em>至<em>06-01</em></span></p>
+                    <p style="margin-bottom: 0px;">剩余数量：<span><!--ko text:ExistCount--><!--/ko-->只</span></p>
+                </div>
+            </div>
+            <div class="left_sheep">
+                <div class="left_sheep_content">
+                    <!--<p class="p1 clearfix"><span class="span1">剩余数量</span><span class="span2">1000只</span></p>-->
+                    <div class="order_numbox clearfix">
+                        <div class="order_num">
+                            <div class="order_num_l">订购数量</div>
+                            <div class="order_num_r"><span class="span1">+</span><input type="text" placeholder="" data-bind="value:$parent.Count"><span class="span2">-</span></div>
+                        </div>
+                        <p class="p1 clearfix"><span class="span1">合计</span><span class="span2">10000只</span></p>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+        <!--/ko-->
+    </section>
+    <div class="ranking_List"><div class="ranking_List_box">认购排行榜</div></div>
+    <section class="purchase_claim_section2">
+        <ul>
+            <li class="li1 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
+            <li class="li2 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
+            <li class="li3 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
+            <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
+            <li class="loading_more"><a href="#">加载更多</a></li>
+        </ul>
+    </section>
+    <section class="purchase_claim_section3">
+        <div class="pk_box clearfix">
+            <div class="pk_box_l">
+                <p class="p1">您的累计收益</p>
+                <p class="p2">50000元</p>
+            </div>
+            <div class="pk_box_m">
 
-<div>
-    
+            </div>
+            <div class="pk_box_r">
+                <p class="p1">打败全国羊客中的</p>
+                <p class="p2">50%</p>
+            </div>
+        </div>
+    </section>
+    <div class="read_agree clearfix"><label><span class="no_agree"></span><span class="span2">阅读并同意<a href="#" style="color:#3388ff;">《用户协议》</a></span></label></div><!--当同意协议时 使用agree_ment的类名-->
+    <div class="sure_book"><a href="#" data-bind="click:SubmitOrder">确认订单</a></div>
 </div>
 
 <script type="text/javascript">
+    
     function OrderViewModel() {
         var self = this;
 
@@ -16,6 +73,22 @@
 
         //认购排行榜
         self.BuyTops = ko.observableArray([]);
+
+        //提交订单
+        self.SubmitOrder=function() {
+            console.log(ko.toJSON(self));
+            confirmOrderServiceJson.Count = self.Product().Count();
+            $.ajax({
+                url: "/home/SubmitOrder",
+                type: "post",
+                data: confirmOrderServiceJson,
+                success: function (data) {
+                    if (data) {
+
+                    }
+                }
+            });
+        }
     }
 
     function OrderProductViewModel() {
@@ -23,14 +96,28 @@
 
         self.Name = ko.observable();
 
-        self.Price = ko.observable();
+        //羊类型
+        self.SheepType = ko.observable();
 
+        //羊价格
+        self.SheepPrice = ko.observable();
+
+        //库存
         self.Stock = ko.observable();
 
-        self.Count = ko.observable();
+        //销量
+        self.SaledCount = ko.observable();
+
+        //剩余数量
+        self.ExistCount = ko.pureComputed(function() {
+            return self.Stock() - self.SaledCount();
+        });
+
+        //购买数量
+        self.Count = ko.observable(1);
 
         self.TotalPrice = ko.pureComputed(function() {
-            return self.Count() * self.Price();
+            return self.Count() * self.SheepPrice();
         });
     }
 
@@ -49,5 +136,30 @@
         //认购者数量
         self.Count = ko.observable();
     }
+    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
+    $(function() {
+
+        if (confirmOrderServiceJson) {
+            var orderViewModel = new OrderViewModel();
+            if (confirmOrderServiceJson.Product) {
+                var product = new OrderProductViewModel();
+                product.Name(confirmOrderServiceJson.Product.Name);
+                product.SheepType(confirmOrderServiceJson.Product.SheepType);
+
+                product.SheepPrice(confirmOrderServiceJson.Product.SheepPrice);
+                //库存
+                product.Stock(confirmOrderServiceJson.Product.Stock);
+
+                //销量
+                product.SaledCount(confirmOrderServiceJson.Product.SaledCount);
+
+                product.Count(1);
+                orderViewModel.Product(product);
+            }
+
+            orderViewModel.BuyTops(confirmOrderServiceJson.TopOrderInfos);
+            ko.applyBindings(orderViewModel);
+        }
+    });
 
 </script>

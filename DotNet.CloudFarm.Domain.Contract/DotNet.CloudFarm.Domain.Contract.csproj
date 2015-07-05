@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Message\IMessageDataAccess.cs" />
+    <Compile Include="Message\IMessageService.cs" />
     <Compile Include="Order\IOrderDataAccess.cs" />
     <Compile Include="Order\IOrderService.cs" />
     <Compile Include="Product\IProductDataAccess.cs" />

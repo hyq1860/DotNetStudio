@@ -4,9 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract;
+using DotNet.CloudFarm.Domain.Contract.Message;
+using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.WebSite.Infrastructure.Config;
@@ -27,6 +30,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         [Ninject.Inject]
         public IProductService ProductService { get; set; }
+
+        [Ninject.Inject]
+        public IMessageService MessageService { get; set; }
+
+        [Ninject.Inject]
+        public IOrderService OrderService { get; set; }
 
         public ActionResult Default()
         {
@@ -96,6 +105,35 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Order(int? productId)
         {
+            var confirmOrderViewModel = new ConfirmOrderViewModel();
+            if (productId.HasValue)
+            {
+                confirmOrderViewModel.Product = ProductService.GetProductById(productId.Value);
+            }
+            else
+            {
+                return RedirectToAction("Default", "Home");
+            }
+            return View(confirmOrderViewModel);
+        }
+
+        public ActionResult SubmitOrder(ConfirmOrderViewModel confirmOrderViewModel)
+        {
+
+            return new JsonResult();
+        }
+
+        /// <summary>
+        /// 支付页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Pay()
+        {
+            return View();
+        }
+
+        public ActionResult PaySuccess()
+        {
             return View();
         }
 
@@ -109,17 +147,47 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(myCenterViewModel);
         }
 
-        public ActionResult OrderList()
+        public ActionResult OrderList(int pageIndex=1,int pageSize=10)
         {
-            return View();
+            var result = OrderService.GetOrderList(this.UserInfo.UserId, pageIndex, pageSize);
+            return View(result.Data);
         }
 
-        public ActionResult MessageList()
+        public ActionResult MessageList(int pageIndex=1,int pageSize=10)
         {
-            return View();
+            var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
+            return View(result.Data);
         }
 
         public ActionResult Contract()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 我的钱包
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Wallet()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 转账
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TransferAccount()
+        {
+            
+            return View();
+        }
+
+        /// <summary>
+        /// 结算
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Redeem()
         {
             return View();
         }

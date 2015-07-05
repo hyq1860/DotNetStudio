@@ -9,8 +9,9 @@ namespace DotNet.Common.Models
     /// <summary>
     /// 通用结果
     /// </summary>
-    public class Result<T> where T:class
+    public class Result<T>// where T:class
     {
+
         /// <summary>
         /// 结果状态
         /// </summary>

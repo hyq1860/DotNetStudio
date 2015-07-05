@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.Common.Collections;
+using DotNet.Common.Models;
 
 namespace DotNet.CloudFarm.Domain.Contract.Order
 {
@@ -11,5 +14,37 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
     /// </summary>
     public interface IOrderDataAccess
     {
+        /// <summary>
+        /// 获取订单交易额排名
+        /// </summary>
+        /// <param name="top"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 提交订单
+        /// </summary>
+        /// <param name="orderModel"></param>
+        /// <returns></returns>
+        Result<OrderModel> SubmitOrder(OrderModel orderModel);
+
+        /// <summary>
+        /// 获取单个订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Result<OrderModel> GetOrder(long orderId,int userId);
+
+        /// <summary>
+        /// 订单列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize);
     }
 }

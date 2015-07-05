@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ConfirmOrderViewModel.cs" />
     <Compile Include="HomeViewModel.cs" />
     <Compile Include="MyCenterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WalletViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj">

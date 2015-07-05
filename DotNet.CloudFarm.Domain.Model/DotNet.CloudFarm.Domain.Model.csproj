@@ -42,6 +42,7 @@
     <Compile Include="Message\MessageModel.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderPayModel.cs" />
+    <Compile Include="Order\TopOrderInfo.cs" />
     <Compile Include="Product\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\AdminUser.cs" />

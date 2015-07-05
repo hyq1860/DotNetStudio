@@ -1,17 +1,59 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.Model.Order.OrderModel>  
 
-<!DOCTYPE html>
+<div class="sheep_guest my_order">
+    <section class="my_order_section1">
+        <p class="order_station clearfix"><span class="span1">订单编号：<em>1673562</em></span><span class="span2">待支付</span></p>
+        <div class="order_detail clearfix">
+            <div class="order_detail_l">
+                <img src="/images/no_pic.jpg">
+            </div>
+            <div class="order_detail_m">
+                <p class="p1">羊客认领第二期羊客认领第二期羊客认领第二期羊客认领第二期羊</p>
+            </div>
+            <div class="order_detail_r">
+                <p class="p1">单价：<em>10000元</em></p>
+                <p class="p2">数量：<em>100只</em></p>
+                <p class="p3">合计：<em>1000000元</em></p>
+            </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+        </div>
+        <div class="how_about_order"><a href="#" class="a1">取消订单</a><a href="#" class="a2">去支付</a></div>
+    </section>
+    <section class="my_order_section1">
+        <p class="order_station clearfix"><span class="span1">订单编号：<em>1673562</em></span><span class="span2">育肥中</span></p>
+        <div class="order_detail clearfix">
+            <div class="order_detail_l">
+                <img src="/images/no_pic.jpg">
+            </div>
+            <div class="order_detail_m">
+                <p class="p1">羊客认领第二期羊客认领第二期羊客认领第二期羊客认领第二期羊</p>
+            </div>
+            <div class="order_detail_r">
+                <p class="p1">单价：<em>10000元</em></p>
+                <p class="p2">数量：<em>100只</em></p>
+                <p class="p3">合计：<em>1000000元</em></p>
+            </div>
+
+        </div>
+        <div class="how_about_order"><a href="#" class="a1 reed_btn">赎回</a></div>
+    </section>
+</div>
+<script type="text/javascript">
+    var orderListServiceJson=@Html.Raw(Model);
+
+    function OrderListViewModel() {
+        var self = this;
+
+        //订单列表
+        self.OrderList = ko.observableArray();
+    }
+
+    $(function() {
+        var orderListViewModel = new OrderListViewModel();
+
+        ko.applyBindings(orderListViewModel);
+    });
+</script>

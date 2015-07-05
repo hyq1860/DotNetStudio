@@ -11,6 +11,13 @@
 </head>
 <body>
 @RenderBody()
+    <div class="bottom_float">
+        <ul class="clearfix">
+            <li class="li1 active"><a href="@Url.Action("Default","Home")"><span></span><p>购买</p></a></li>
+            <li class="li2"><a href="@Url.Action("Wallet", "Home")"><span></span><p>钱包</p></a></li>
+            <li class="li3"><a href="@Url.Action("MyCenter","Home")"><span></span><p>我的</p></a></li>
+        </ul>
+    </div>
 @RenderSection("scripts", required: false)
 </body>
 </html>

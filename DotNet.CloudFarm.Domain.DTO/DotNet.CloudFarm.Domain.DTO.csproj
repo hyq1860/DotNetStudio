@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Message\MessageDataAccess.cs" />
     <Compile Include="Order\OrderDataAccess.cs" />
     <Compile Include="Product\ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -21,7 +21,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        PagedList<OrderModel> GetOrderList(int userId,int pageIndex,int pageSize);
+        Result<PagedList<OrderModel>> GetOrderList(int userId, int pageIndex, int pageSize);
 
         /// <summary>
         /// 提交订单
@@ -29,5 +29,14 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderModel"></param>
         /// <returns></returns>
         Result<OrderModel> SubmitOrder(OrderModel orderModel);
+
+       /// <summary>
+        /// 获取订单销量排行榜
+       /// </summary>
+       /// <param name="top"></param>
+       /// <param name="pageIndex"></param>
+       /// <param name="pageSize"></param>
+       /// <returns></returns>
+        List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize);
     }
 }
