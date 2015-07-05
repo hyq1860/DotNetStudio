@@ -1,12 +1,15 @@
 using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Contract.WeiXin;
 using DotNet.CloudFarm.Domain.DTO.Order;
 using DotNet.CloudFarm.Domain.DTO.Product;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.DTO.WeiXin;
 using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.User;
+using DotNet.CloudFarm.Domain.Impl.WeiXin;
 using DotNet.CloudFarm.WebSite.Controllers;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Start")]
@@ -86,6 +89,10 @@ namespace DotNet.CloudFarm.WebSite.App_Start
             //订单服务
             kernel.Bind<IOrderService>().To<OrderService>();
             kernel.Bind<IOrderDataAccess>().To<OrderDataAccess>();
+
+            //微信服务
+            kernel.Bind<IWeiXinMessageDataAccess>().To<WeiXinMessageDataAccess>();
+            kernel.Bind<IWeiXinService>().To<WeiXinService>();
 
         }        
     }

@@ -13,6 +13,9 @@ using DotNet.CloudFarm.WebSite.Models;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Entities.Menu;
 using log4net;
+using DotNet.CloudFarm.Domain.Contract.Product;
+using DotNet.CloudFarm.Domain.Contract.WeiXin;
+using DotNet.CloudFarm.Domain.Model.WeiXin;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -21,6 +24,13 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     /// </summary>
     public class HouTaiController : BaseHouTaiController
     {
+        [Ninject.Inject]
+        public IProductService ProductService { get; set; }
+        /// <summary>
+        /// 微信相关业务
+        /// </summary>
+        [Ninject.Inject]
+        public IWeiXinService WeiXinService { get; set; }
         
         public ActionResult Index()
         {
@@ -48,6 +58,33 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 微信回复内容设置
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult WeixinMessage()
+        {
+            var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+            var autoReplyMessagelist = WeiXinService.AutoReplyMessageGetAll();
+            ViewBag.MessageList = autoReplyMessagelist;
+            return View();
+        }
+        /// <summary>
+        /// 编辑或添加微信回复内容
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult WeixinMessage(WeixinAutoReplyMessageModel model)
+        {
+            model.CreateTime = DateTime.Now;
+            model.CreatorId = this.Admin.Id;
+            if(model.Id==0)
+            {
 
+            }
+            return View();
+        }
     }
 }

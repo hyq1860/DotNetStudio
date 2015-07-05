@@ -46,6 +46,8 @@
     <Compile Include="User\IUserDataAccess.cs" />
     <Compile Include="User\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeiXin\IWeiXinMessageDataAccess.cs" />
+    <Compile Include="WeiXin\IWeiXinService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNet.CloudFarm.Domain.Model\DotNet.CloudFarm.Domain.Model.csproj">
