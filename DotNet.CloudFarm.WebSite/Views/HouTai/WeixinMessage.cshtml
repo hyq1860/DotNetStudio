@@ -17,19 +17,20 @@
                 </div>
             </div>
             <div class="box-content">
-                <form class="form-horizontal" method="post">
+                <div id="alertMsg" class="alert alert-error hidden fade in"></div>
+                <form class="form-horizontal" method="post" onsubmit="return validateForm()">
                     <fieldset>
                         <input type="hidden" name="Id" id="msgId" />
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">关键字</label>
                             <div class="controls">
-                                <input value="test" class="input-xlarge focused" id="keyword" type="text" maxlength="30" name="Keyword">
+                                <input  class="input-xlarge focused" id="keyword" type="text" maxlength="30" name="Keyword">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">回复内容</label>
                             <div class="controls">
-                                <textarea  class="autogrow" id="replyContent" maxlength="300" name="ReplyContent">test</textarea>
+                                <textarea  class="autogrow" id="replyContent" maxlength="300" name="ReplyContent"></textarea>
                             </div>
                         </div>
                         <div class="control-group">
@@ -43,7 +44,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">添加/编辑</button>
-                            <button class="btn">取消</button>
+                            <button class="btn" onclick="cancel(); return false;">取消</button>
                         </div>
                     </fieldset>
                 </form>
@@ -76,8 +77,8 @@
                                         foreach (WeixinAutoReplyMessageModel message in ViewBag.MessageList)
                                         {
                                             <tr>
-                                                <td>@message.Keyword</td>
-                                                <td class="center">@message.ReplyContent</td>
+                                                <td id="td_keyword_@message.Id">@message.Keyword</td>
+                                                <td class="center" id="td_reply_@message.Id">@message.ReplyContent</td>
                                                 <td class="center">
                                                     @if (message.Status == 1)
                                                     {
@@ -89,11 +90,11 @@
                                                     }
                                                 </td>
                                                 <td class="center">
-                                                    <a class="btn btn-info" href="#">
+                                                    <a class="btn btn-info" href="javascript:edit(@message.Id,@message.Status);">
                                                         <i class="icon-edit icon-white"></i>
                                                         编辑
                                                     </a>
-                                                    <a class="btn btn-danger" href="#">
+                                                    <a class="btn btn-danger" href="javascript:del(@message.Id)">
                                                         <i class="icon-trash icon-white"></i>
                                                         删除
                                                     </a>
@@ -110,3 +111,99 @@
                 <!-- content ends -->
             </div>
 
+<div class="modal hide fade" id="myAlertDialog">
+    <input type="hidden" id="confirmDelId"/>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+    </div>
+    <div class="modal-body">
+        <p>确定要删除该项吗？</p>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:confirmDel()" class="btn btn-primary">确定</a>
+        <a href="#" class="btn" data-dismiss="modal">取消</a>
+    </div>
+</div>
+@section scripts{
+<script type="text/javascript">
+    function validateForm()
+    {
+        var id = $("#id").val();
+        var keyword = $("#keyword").val();
+        var reply = $("#replyContent").val();
+        if(keyword=="")
+        {
+            $("#alertMsg").text("请输入关键字").removeClass("hidden");
+            return false;
+        }
+        if (reply == "") {
+            $("#alertMsg").text("请输入回复内容").removeClass("hidden");
+            return false;
+        }
+        if (checkKeyword(keyword)==true)
+        {
+            $("#alertMsg").text("关键词重复").removeClass("hidden");
+            return false;
+        }
+        return true;
+        
+    }
+
+    function checkKeyword(kw) {
+        var foo;
+        $.ajax({
+            type: "POST",
+            url: "/houtai/CheckKeyword",
+            async:false,
+            data:"keyword="+kw,
+            dataType: "html",
+            success: function (result) {
+                foo = result;
+            }
+
+        });
+        return foo;
+    }
+        
+
+    function edit(id, status) {
+        var keyword = $("#td_keyword_"+id).text();
+        var reply = $("#td_reply_" + id).text();
+        $("#keyword").val(keyword).attr("disabled", "disabled");
+        $("#replyContent").text(reply);
+        $("#status").val(status);
+        $("#msgId").val(id);
+        }
+    function cancel()
+    {
+        $("#keyword").val("").removeAttr("disabled");
+        $("#replyContent").text("");
+        $("#status").val(1);
+        return false;
+    }
+    
+    function del(id)
+    {
+        $('#confirmDelId').val(id);
+        $('#myAlertDialog').modal('show');
+    }
+
+    function confirmDel()
+    {
+        var id = $('#confirmDelId').val();
+        $.ajax({
+            type: "POST",
+            url: "/houtai/delkeyword",
+            async: false,
+            data: "id=" + id ,
+            dataType: "html",
+            success: function (result) {
+                if (result == 1)
+                    location.reload();
+            }
+
+        });
+    }
+
+</script>
+}

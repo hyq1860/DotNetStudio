@@ -8,6 +8,7 @@ using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.MP.Entities.Request;
 using Senparc.Weixin.MP.MessageHandlers;
 using Senparc.Weixin.MP.Helpers;
+using DotNet.CloudFarm.Domain.Contract.WeiXin;
 
 namespace DotNet.CloudFarm.WebSite.Models
 {
@@ -17,7 +18,11 @@ namespace DotNet.CloudFarm.WebSite.Models
     /// </summary>
     public partial class CustomMessageHandler : MessageHandler<CustomMessageContext>
     {
-
+        /// <summary>
+        /// 微信相关业务
+        /// </summary>
+        [Ninject.Inject]
+        public IWeiXinService WeiXinService { get; set; }
         
         
         public CustomMessageHandler(Stream inputStream, PostModel postModel, int maxRecordCount = 0)
@@ -33,6 +38,19 @@ namespace DotNet.CloudFarm.WebSite.Models
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
         {
             return null;
+        }
+
+        public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
+        {
+            var resopnseMessage = base.CreateResponseMessage<ResponseMessageText>();
+            var keyword = requestMessage.Content;
+            var message = WeiXinService.AutoReplyMessageGetByKeyword(keyword);
+            if(message!=null && message.Id>0)
+            {
+                resopnseMessage.Content = message.ReplyContent;
+            }
+
+            return base.OnTextRequest(requestMessage);
         }
         /// <summary>
         /// 在所有消息处理之前执行

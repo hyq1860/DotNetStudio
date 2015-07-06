@@ -32,5 +32,25 @@ namespace DotNet.CloudFarm.Domain.Contract.WeiXin
         IList<WeixinAutoReplyMessageModel> GetAllAutoReplyMessage();
 
 
+        /// <summary>
+        /// 检查keyword是否存在
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        bool CheckKeyword(string keyword);
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        void Update(WeixinAutoReplyMessageModel model);
+
+        /// <summary>
+        /// 根据keword获取实体
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        WeixinAutoReplyMessageModel GetAutoReplyMessageByKeyword(string keyword);
     }
 }

@@ -58,6 +58,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
+        #region 微信回复
+
         /// <summary>
         /// 微信回复内容设置
         /// </summary>
@@ -82,9 +84,29 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             model.CreatorId = this.Admin.Id;
             if(model.Id==0)
             {
-
+                WeiXinService.AutoReplyMessageInsert(model);
             }
+            else
+            {
+                WeiXinService.AutoReplyMessageUpdate(model);
+            }
+            var autoReplyMessagelist = WeiXinService.AutoReplyMessageGetAll();
+            ViewBag.MessageList = autoReplyMessagelist;
             return View();
         }
+        [HttpPost]
+        public JsonResult CheckKeyword(string keyword)
+        {
+            var result = WeiXinService.AutoReplyMessageCheckKeyword(keyword);
+            return Json(result);
+        }
+        [HttpPost]
+        public JsonResult DelKeyword(int id)
+        {
+            WeiXinService.AutoReplyMessageUpdateStatus(id, 0);
+            return Json(1);
+        }
+
+        #endregion
     }
 }
