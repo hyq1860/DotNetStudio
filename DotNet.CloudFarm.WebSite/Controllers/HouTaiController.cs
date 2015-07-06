@@ -34,6 +34,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         
         public ActionResult Index()
         {
+            var message =WeiXinService.AutoReplyMessageGetByKeyword("你好");
             return View();
         }
 

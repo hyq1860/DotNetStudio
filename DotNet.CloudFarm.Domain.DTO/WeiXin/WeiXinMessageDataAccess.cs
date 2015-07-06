@@ -140,12 +140,15 @@ namespace DotNet.CloudFarm.Domain.DTO.WeiXin
                 cmd.SetParameterValue("@Keyword", keyword);
                 using (var dr = cmd.ExecuteDataReader())
                 {
-                    model.Id = !Convert.IsDBNull(dr["Id"]) ? int.Parse(dr["Id"].ToString()) : 0;
-                    model.Keyword = !Convert.IsDBNull(dr["Keyword"]) ? dr["Keyword"].ToString() : string.Empty;
-                    model.ReplyContent = !Convert.IsDBNull(dr["ReplyContent"]) ? dr["ReplyContent"].ToString() : string.Empty;
-                    model.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
-                    model.CreatorId = !Convert.IsDBNull(dr["CreatorId"]) ? int.Parse(dr["CreatorId"].ToString()) : 0;
-                    model.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                    while (dr.Read())
+                    {
+                        model.Id = !Convert.IsDBNull(dr["Id"]) ? int.Parse(dr["Id"].ToString()) : 0;
+                        model.Keyword = !Convert.IsDBNull(dr["Keyword"]) ? dr["Keyword"].ToString() : string.Empty;
+                        model.ReplyContent = !Convert.IsDBNull(dr["ReplyContent"]) ? dr["ReplyContent"].ToString() : string.Empty;
+                        model.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
+                        model.CreatorId = !Convert.IsDBNull(dr["CreatorId"]) ? int.Parse(dr["CreatorId"].ToString()) : 0;
+                        model.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                    }
                 }
             }
             return model;
