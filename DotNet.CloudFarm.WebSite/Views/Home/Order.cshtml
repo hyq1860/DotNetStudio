@@ -24,7 +24,7 @@
                     <div class="order_numbox clearfix">
                         <div class="order_num">
                             <div class="order_num_l">订购数量</div>
-                            <div class="order_num_r"><span class="span1">+</span><input type="text" placeholder="" data-bind="value:$parent.Count"><span class="span2">-</span></div>
+                            <div class="order_num_r"><span class="span1" data-bind="click:$parent.AddCount">+</span><input type="text" placeholder="" data-bind="value:$parent.Count"><span class="span2" data-bind="click:$parent.ReduceCount">-</span></div>
                         </div>
                         <p class="p1 clearfix"><span class="span1">合计</span><span class="span2">10000只</span></p>
                     </div>
@@ -74,6 +74,29 @@
         //认购排行榜
         self.BuyTops = ko.observableArray([]);
 
+        //购买数量
+        self.Count = ko.observable(1);
+
+        self.AddCount=function() {
+            var currentCount = self.Count();
+            console.log(currentCount);
+            ++currentCount;
+            if (currentCount>=self.Product.ExistCount()) {
+                currentCount = self.Product.ExistCount();
+            } else {
+                self.Count(currentCount);
+            }
+        }
+
+        self.ReduceCount=function() {
+            var currentCount = self.Count();
+            if (currentCount <= 1) {
+                self.Count(1);
+            } else {
+                self.Count(--currentCount);
+            }
+        }
+
         //提交订单
         self.SubmitOrder=function() {
             console.log(ko.toJSON(self));
@@ -114,7 +137,7 @@
         });
 
         //购买数量
-        self.Count = ko.observable(1);
+        self.Count = ko.observable();
 
         self.TotalPrice = ko.pureComputed(function() {
             return self.Count() * self.SheepPrice();
@@ -154,7 +177,8 @@
                 product.SaledCount(confirmOrderServiceJson.Product.SaledCount);
 
                 product.Count(1);
-                orderViewModel.Product(product);
+                orderViewModel.Count(1);
+                orderViewModel.Product=product;
             }
 
             orderViewModel.BuyTops(confirmOrderServiceJson.TopOrderInfos);
