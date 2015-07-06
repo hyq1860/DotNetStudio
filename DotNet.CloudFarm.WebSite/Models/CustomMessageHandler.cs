@@ -12,6 +12,8 @@ using DotNet.CloudFarm.Domain.Contract.WeiXin;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
 using log4net;
 using DotNet.Common.Utility;
+using DotNet.CloudFarm.Domain.Impl.WeiXin;
+using DotNet.CloudFarm.Domain.DTO.WeiXin;
 
 namespace DotNet.CloudFarm.WebSite.Models
 {
@@ -24,8 +26,8 @@ namespace DotNet.CloudFarm.WebSite.Models
         /// <summary>
         /// 微信相关业务
         /// </summary>
-        [Ninject.Inject]
-        public IWeiXinService WeiXinService { get; set; }
+        //[Ninject.Inject]
+        //public IWeiXinService WeiXinService { get; set; }
 
         private ILog logger = LogManager.GetLogger("CustomMessageHandler");
 
@@ -48,14 +50,21 @@ namespace DotNet.CloudFarm.WebSite.Models
         {
             var resopnseMessage = base.CreateResponseMessage<ResponseMessageText>();
             var keyword = requestMessage.Content;
-            var message = WeiXinService.AutoReplyMessageGetByKeyword(keyword);
+            //var message = WeiXinService.AutoReplyMessageGetByKeyword(keyword);
+            var dataAccess = new WeiXinMessageDataAccess();
+            var service = new WeiXinService(dataAccess);
+            var message = service.AutoReplyMessageGetByKeyword(keyword);
 
             if (message != null && message.Id > 0)
             {
                 resopnseMessage.Content = message.ReplyContent;
+                return resopnseMessage;
+            }
+            else
+            {
+                return null;                
             }
 
-            return resopnseMessage;
         }
         /// <summary>
         /// 在所有消息处理之前执行
