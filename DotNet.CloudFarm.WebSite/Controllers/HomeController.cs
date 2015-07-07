@@ -197,6 +197,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(result.Data);
         }
 
+        public ActionResult OrderDetail(long? orderId)
+        {
+            return View();
+        }
+
         public ActionResult Contract()
         {
             return View();

@@ -532,6 +532,7 @@
     <Content Include="Views\Home\MessageList.cshtml" />
     <Content Include="Views\Home\TransferAccount.cshtml" />
     <Content Include="Views\Home\Redeem.cshtml" />
+    <Content Include="Views\Home\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
