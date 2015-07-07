@@ -19,7 +19,7 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         public ProductModel Product { get; set; }
 
         //购买数量
-        public decimal Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// 用户top信息

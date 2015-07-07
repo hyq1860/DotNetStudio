@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\OrderStatus.cs" />
     <Compile Include="Message\MessageModel.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderPayModel.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="WeiXin\WeixinAutoReplyMessageModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base\" />
     <Folder Include="Stock\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

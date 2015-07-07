@@ -38,5 +38,13 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
        /// <param name="pageSize"></param>
        /// <returns></returns>
         List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 获取订单信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        OrderModel GetOrder(int userId, long orderId);
     }
 }
