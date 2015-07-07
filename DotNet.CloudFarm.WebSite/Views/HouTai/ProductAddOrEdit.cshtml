@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "创建产品";
+    Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
+}
+
+
+<div id="content" class="span10">
+    <!-- content starts -->
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-edit"></i>添加/修改产品</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div id="alertMsg" class="alert alert-error hidden fade in"></div>
+                <form class="form-horizontal" method="post" id="productForm">
+                    <fieldset>
+                        <input type="hidden" name="Id" id="productId" />
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">产品名称</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="ProductName" type="text"  name="ProductName">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">售卖总数</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="Stock" type="text"  name="Stock">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">羊只单价（元）</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="SheepPrice" type="text"  name="SheepPrice">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">饲料金额（元）</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="FeedPrice" type="text" name="FeedPrice">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">人工金额（元）</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="WorkPrice" type="text" name="WorkPrice">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">预期年化收益率(%)</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="YearEarningRate" type="text" name="YearEarningRate"> 
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">收益率(%)</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="EarningRate" type="text"  name="EarningRate">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">预计收益（元）</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="Earning" type="text" name="Earning">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">育肥期（天）</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="EarningDay" type="text" name="EarningDay">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="date01">售卖开始时间</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge datepicker" id="StartTime" name="StartTime">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="date01">售卖结束时间</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge datepicker" id="EndTime" name="EndTime">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">羊羔品种</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="SheepType" type="text" name="SheepType">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">育肥场</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="SheepFactory" type="text" name="SheepFactory">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">图片</label>
+                            <div class="controls">
+                                <input type="file" name="ImgUrl" id="ImgUrl" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="status">状态</label>
+                            <div class="controls">
+                                <select id="status" name="Status">
+                                    <option value="1">显示</option>
+                                    <option value="0">不见时</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">添加/编辑</button>
+                            <button class="btn" onclick="cancel(); return false;">取消</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- content ends -->
+</div>
+
+@section scripts{
+<script src="~/Scripts/houtai/jquery.validate-houtai.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var validate = $("#productForm").validate({
+            //debug: true,
+            focusInvalid: false,
+            onkeyup: false,
+            //submitHandler: function (form) {
+            //    alert("提交表单");
+            //    form.submit();
+            //},
+            rules: {
+                ProductName:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                Stock:
+                    {
+                        required: true,
+                        digits: true,
+                        min: 1
+                    },
+                SheepPrice:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
+                    },
+                FeedPrice:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
+                    },
+                WorkPrice:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
+                    },
+                YearEarningRate:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
+                    },
+                EarningRate:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
+                    },
+                Earning:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
+                    },
+                EarningDay:
+                    {
+                        required: true,
+                        number: true,
+                        min: 1,
+                    },
+                SheepType:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                SheepType:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                SheepFactory:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                StartTime: {
+                    required: true
+                },
+                EndTime: {
+                    required: true
+                },
+                ImgUrl: {
+                    required:true
+                }
+
+            }
+        });
+
+    });
+
+</script>
+
+    }

@@ -105,5 +105,10 @@ namespace DotNet.CloudFarm.Domain.Model.Product
         /// 育肥场
         /// </summary>
         public string SheepFactory { get; set; }
+        
+        /// <summary>
+        /// 产品图片URL
+        /// </summary>
+        public string  ImgUrl { get; set; }
     }
 }

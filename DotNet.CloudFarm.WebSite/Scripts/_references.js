@@ -47,3 +47,4 @@
 /// <reference path="houtai/bootstrap-modal.js" />
 /// <reference path="houtai/bootstrap-popover.js" />
 /// <reference path="houtai/bootstrap-scrollspy.js" />
+/// <reference path="houtai/jquery.validate-houtai.js" />

@@ -268,7 +268,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\houtai\bootstrap-cerulean.css" />
     <Content Include="Content\houtai\bootstrap-responsive.css" />
-    <Content Include="Content\houtai\bootstrap-responsive.min.css" />
     <Content Include="Content\houtai\charisma-app.css" />
     <Content Include="Content\houtai\chosen.css" />
     <Content Include="Content\houtai\colorbox.css" />
@@ -480,6 +479,7 @@
     <Content Include="Scripts\houtai\jquery.raty.min.js" />
     <Content Include="Scripts\houtai\jquery.uniform.min.js" />
     <Content Include="Scripts\houtai\jquery.uploadify-3.1.min.js" />
+    <Content Include="Scripts\houtai\jquery.validate-houtai.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
@@ -532,6 +532,8 @@
     <Content Include="Views\Home\MessageList.cshtml" />
     <Content Include="Views\Home\TransferAccount.cshtml" />
     <Content Include="Views\Home\Redeem.cshtml" />
+    <Content Include="Views\HouTai\Product.cshtml" />
+    <Content Include="Views\HouTai\ProductAddOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

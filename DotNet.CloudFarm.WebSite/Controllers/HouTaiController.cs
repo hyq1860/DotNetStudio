@@ -38,7 +38,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
-
+        #region 微信菜单
         /// <summary>
         /// 微信底部菜单管理
         /// </summary>
@@ -58,6 +58,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
             return View();
         }
+
+        #endregion
 
         #region 微信回复
 
@@ -106,6 +108,35 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             WeiXinService.AutoReplyMessageUpdateStatus(id, 0);
             return Json(1);
+        }
+
+        #endregion
+
+        #region 产品后台
+
+        /// <summary>
+        /// 产品列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Product(int pageIndex=1,int pageSize=10)
+        {
+            var status = 1;//调取显示的
+            var productList =ProductService.GetProducts(pageIndex,pageSize,status);
+            ViewBag.ProductList = productList;
+            return View();
+        }
+        /// <summary>
+        /// 新增或编辑product页面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ProductAddOrEdit(int id=0)
+        {
+            if(id>0)
+            {
+                ViewBag.Product = ProductService.GetProductById(id);
+            }
+            return View();
         }
 
         #endregion

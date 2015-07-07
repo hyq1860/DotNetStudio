@@ -96,6 +96,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             productModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
             productModel.SheepType = !Convert.IsDBNull(dr["SheepType"]) ? dr["SheepType"].ToString() : string.Empty;
             productModel.SheepFactory = !Convert.IsDBNull(dr["SheepFactory"]) ? dr["SheepFactory"].ToString() : string.Empty;
+            productModel.ImgUrl = !Convert.IsDBNull(dr["ImgUrl"]) ? dr["ImgUrl"].ToString() : string.Empty;
             return productModel;
         }
     }

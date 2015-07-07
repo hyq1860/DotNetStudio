@@ -246,8 +246,9 @@ $.extend( $.validator, {
 		groups: {},
 		rules: {},
 		errorClass: "error",
-		validClass: "valid",
-		errorElement: "label",
+		validClass: "",
+		errorElement: "span",
+        errorElementClass:"help-inline",
 		focusCleanup: false,
 		focusInvalid: true,
 		errorContainer: $( [] ),
@@ -289,18 +290,22 @@ $.extend( $.validator, {
 			}
 		},
 		highlight: function( element, errorClass, validClass ) {
-			if ( element.type === "radio" ) {
-				this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
-			} else {
-				$( element ).addClass( errorClass ).removeClass( validClass );
-			}
+			//if ( element.type === "radio" ) {
+			//	this.findByName( element.name ).addClass( errorClass ).removeClass( validClass );
+			//} else {
+			//    //$( element ).addClass( errorClass ).removeClass( validClass );
+		    //}
+		    $(element).parent().parent(".control-group").addClass(errorClass).removeClass(validClass);
+
 		},
 		unhighlight: function( element, errorClass, validClass ) {
-			if ( element.type === "radio" ) {
-				this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
-			} else {
-				$( element ).removeClass( errorClass ).addClass( validClass );
-			}
+			//if ( element.type === "radio" ) {
+			//	this.findByName( element.name ).removeClass( errorClass ).addClass( validClass );
+			//} else {
+			//	$( element ).removeClass( errorClass ).addClass( validClass );
+		    //}
+		    $(element).parent().parent(".control-group").removeClass(errorClass).addClass(validClass);
+
 		}
 	},
 
@@ -559,8 +564,8 @@ $.extend( $.validator, {
 		},
 
 		errors: function() {
-			var errorClass = this.settings.errorClass.split( " " ).join( "." );
-			return $( this.settings.errorElement + "." + errorClass, this.errorContext );
+			var errorClass = this.settings.errorElementClass.split( " " ).join( "." );
+			return $(this.settings.errorElement + "." + errorClass, this.errorContext);
 		},
 
 		reset: function() {
@@ -761,7 +766,7 @@ $.extend( $.validator, {
 				// create error element
 				error = $( "<" + this.settings.errorElement + ">" )
 					.attr( "id", elementID + "-error" )
-					.addClass( this.settings.errorClass )
+					.addClass(this.settings.errorElementClass)
 					.html( message || "" );
 
 				// Maintain reference to the element to be placed into the DOM
