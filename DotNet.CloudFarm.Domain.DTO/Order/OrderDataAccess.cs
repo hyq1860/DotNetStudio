@@ -62,32 +62,30 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             return result;
         }
 
-        public Result<OrderModel> GetOrder(long orderId, int userId)
+        public OrderModel GetOrder(long orderId, int userId)
         {
-            var result = new Result<OrderModel>();
+            var orderModel = new OrderModel();
             using (var cmd = DataCommandManager.GetDataCommand("GetOrder"))
             {
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@OrderId", orderId);
                 using (var dr = cmd.ExecuteDataReader())
                 {
                     while (dr.Read())
                     {
-                        var orderModel = new OrderModel();
-
                         orderModel.OrderId = !Convert.IsDBNull("OrderId") ? long.Parse(dr["OrderId"].ToString()) : 0;
                         orderModel.UserId = !Convert.IsDBNull("UserId") ? int.Parse(dr["UserId"].ToString()) : 0;
                         orderModel.ProductId = !Convert.IsDBNull("ProductId") ? int.Parse(dr["ProductId"].ToString()) : 0;
                         orderModel.ProductCount = !Convert.IsDBNull("ProductCount") ? int.Parse(dr["ProductCount"].ToString()) : 0;
-                        orderModel.Price = !Convert.IsDBNull("Price") ? long.Parse(dr["Price"].ToString()) : 0;
+                        orderModel.Price = !Convert.IsDBNull("Price") ? decimal.Parse(dr["Price"].ToString()) : 0;
                         orderModel.Status = !Convert.IsDBNull("Status") ? int.Parse(dr["Status"].ToString()) : 0;
                         orderModel.PayType = !Convert.IsDBNull("PayType") ? int.Parse(dr["PayType"].ToString()) : 0;
                         orderModel.CreateTime = !Convert.IsDBNull("CreateTime") ? DateTime.Parse(dr["CreateTime"].ToString()) : DateTime.MinValue;
-                        
-                        result.Data = orderModel;
                     }
                 }
             }
 
-            return result;
+            return orderModel;
         }
 
         public PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize)

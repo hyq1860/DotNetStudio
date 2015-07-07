@@ -100,7 +100,7 @@
         //提交订单
         self.SubmitOrder=function() {
             console.log(ko.toJSON(self));
-            confirmOrderServiceJson.Count = self.Product().Count();
+            confirmOrderServiceJson.Count = self.Product.Count();
             $.ajax({
                 url: "/home/SubmitOrder",
                 type: "post",

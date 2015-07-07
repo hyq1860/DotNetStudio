@@ -2,32 +2,97 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using DotNet.Common.Utility
+@model DotNet.CloudFarm.Domain.ViewModel.OrderPayViewModel
 <div class="sheep_guest purchase_claim pay_way">
     <section class="purchase_claim_section1">
         <div class="purchase_claim_section1box">
-            <h3><span>羊客认领第05期</span></h3>
+            <h3><span><!--ko text:Name--><!--/ko--></span></h3>
             <div class="periods clearfix">
                 <div class="periods_l"><img src="/images/no_pic.jpg"></div>
                 <div class="periods_r">
-                    <p>品种：<span>内蒙古巴美羊</span></p>
-                    <p>单价：<span><em>1000</em>/只</span></p>
-                    <p>活动期限：<span><em>2015-05-28</em>至<em>06-01</em></span></p>
+                    <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
+                    <p>单价：<span><em><!--ko text:Price--><!--/ko--></em>/只</span></p>
+                    <p>活动期限：<span><em><!--ko text:StartTime--><!--/ko--></em>至<em><!--ko text:EndTime--><!--/ko--></em></span></p>
                 </div>
             </div>
-            <p class="order_num2">订购数量：<span>1000只</span></p>
-            <p class="order_total">合计：<span>1000000元</span></p>
+            <p class="order_num2">订购数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
+            <p class="order_total">合计：<span><!--ko text:TotalPrice--><!--/ko-->元</span></p>
         </div>
     </section>
     <section class="to_pay">
         <div class="to_pay_box">
             <h3>请选择支付方式</h3>
             <div class="choice_pay_way clearfix">
-                <div class="choice_pay_zfb"><img src="/images/weixin.png"></div><!--当点击选中时 <img src="/images/weixin_active.png">-->
-                <div class="choice_pay_zz"><img src="/images/zhuanzhang.png"></div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
+                <div id="weixinpay" class="choice_pay_zfb" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/weixin.png" selectimage="/images/weixin_active.png"></div><!--当点击选中时 <img src="/images/weixin_active.png">-->
+                <div id="transferaccount" class="choice_pay_zz" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/zhuanzhang.png" selectimage="/images/zhuanzhang_active.png"></div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
             </div>
         </div>
     </section>
-    <div class="sure_book"><a href="#">去支付</a></div>
+    <div class="sure_book" data-bind="click:Pay"><a>去支付</a></div>
 </div>
 
+<script type="text/javascript">
+    var OrderPayServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
+
+    function OrderPayViewModel() {
+        var self = this;
+
+        self.OrderId = ko.observable();
+
+        self.Name=ko.observable();
+
+        self.SheepType=ko.observable();
+
+        self.Price=ko.observable();
+
+        self.StartTime=ko.observable();
+
+        self.EndTime=ko.observable();
+
+        self.Count=ko.observable();
+
+        self.TotalPrice=ko.observable();
+
+        self.PayType=ko.observable();
+
+        //选择支付方式
+        self.SelectpayType=function(item,target) {
+            var currentDom = $(target.currentTarget);
+            if (currentDom.attr("class") == "choice_pay_zfb") {
+                $("#weixinpay").find("img").attr("src","/images/weixin_active.png");
+                $("#transferaccount").find("img").attr("src","/images/zhuanzhang.png");
+                self.PayType(0);
+            } else if(currentDom.attr("class") == "choice_pay_zz") {
+                $("#weixinpay").find("img").attr("src","/images/weixin.png");
+                $("#transferaccount").find("img").attr("src","/images/zhuanzhang_active.png");
+                self.PayType(1);
+            }
+        }
+
+        //支付
+        self.Pay=function() {
+            console.log(ko.toJSON(self));
+        }
+    }
+
+    $(function() {
+
+        var orderPayViewModel = new OrderPayViewModel();
+        if (OrderPayServiceJson) {
+            orderPayViewModel.OrderId(OrderPayServiceJson.OrderId);
+            orderPayViewModel.Name(OrderPayServiceJson.Name);
+            orderPayViewModel.SheepType(OrderPayServiceJson.SheepType);
+            orderPayViewModel.Price(OrderPayServiceJson.Price);
+            orderPayViewModel.StartTime(OrderPayServiceJson.StartTime);
+            orderPayViewModel.EndTime(OrderPayServiceJson.EndTime);
+            orderPayViewModel.Count(OrderPayServiceJson.Count);
+            orderPayViewModel.TotalPrice(OrderPayServiceJson.TotalPrice);
+            orderPayViewModel.PayType(OrderPayServiceJson.PayType);
+        } else {
+            location.href="/Home/Index";
+        }
+        ko.applyBindings(orderPayViewModel);
+    });
+
+</script>

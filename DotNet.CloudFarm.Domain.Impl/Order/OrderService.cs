@@ -32,12 +32,26 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)
         {
+            //提交订单
+
+            
             return orderDataAccess.SubmitOrder(orderModel);
         }
 
         public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
         {
             return orderDataAccess.GetTopOrderList(top, pageIndex, pageSize);
+        }
+
+        /// <summary>
+        /// 获取订单信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public OrderModel GetOrder(int userId, long orderId)
+        {
+            return orderDataAccess.GetOrder(orderId, userId);
         }
     }
 }

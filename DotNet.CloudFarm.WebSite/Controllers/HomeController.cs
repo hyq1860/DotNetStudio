@@ -10,6 +10,8 @@ using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.DTO.User;
 using DotNet.CloudFarm.Domain.Impl.Order;
+using DotNet.CloudFarm.Domain.Model.Base;
+using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.WebSite.Infrastructure.Config;
@@ -119,7 +121,18 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult SubmitOrder(ConfirmOrderViewModel confirmOrderViewModel)
         {
-
+            var orderModel = new OrderModel
+            {
+                OrderId = 1,
+                UserId = this.UserInfo.UserId,
+                ProductId = confirmOrderViewModel.Product.Id,
+                Price = confirmOrderViewModel.Product.Price,
+                ProductCount = confirmOrderViewModel.Count,
+                Status = OrderStatus.Init.GetHashCode(),
+                PayType = 0,
+                CreateTime = DateTime.Now
+            };
+            OrderService.SubmitOrder(orderModel);
             return new JsonResult();
         }
 
@@ -127,9 +140,34 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 支付页面
         /// </summary>
         /// <returns></returns>
-        public ActionResult Pay()
+        public ActionResult Pay(long? orderId)
         {
-            return View();
+            var orderPayViewModel = new OrderPayViewModel();
+            if (orderId.HasValue)
+            {
+                var orderModel = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+
+                if (orderModel != null)
+                {
+                    var productModel = ProductService.GetProductById(orderModel.ProductId);
+
+                    if (productModel != null)
+                    {
+                        orderPayViewModel.Name = productModel.Name;
+                        orderPayViewModel.SheepType = productModel.SheepType;
+                        orderPayViewModel.OrderId = orderId.Value;
+                        orderPayViewModel.Price = productModel.Price;
+                        orderPayViewModel.Count = orderModel.ProductCount;
+                        orderPayViewModel.TotalPrice = productModel.Price*orderModel.ProductCount;
+                        orderPayViewModel.StartTime = productModel.StartTime.ToString("yyyy-MM-dd");
+                        orderPayViewModel.EndTime = productModel.EndTime.ToString("yyyy-MM-dd");
+                    }
+                }
+            }
+
+            
+
+            return View(orderPayViewModel);
         }
 
         public ActionResult PaySuccess()
@@ -157,6 +195,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
             return View(result.Data);
+        }
+
+        public ActionResult OrderDetail(long? orderId)
+        {
+            return View();
         }
 
         public ActionResult Contract()

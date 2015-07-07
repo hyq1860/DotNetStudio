@@ -36,7 +36,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Result<OrderModel> GetOrder(long orderId,int userId);
+        OrderModel GetOrder(long orderId,int userId);
 
         /// <summary>
         /// 订单列表
