@@ -46,5 +46,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderId"></param>
         /// <returns></returns>
         OrderModel GetOrder(int userId, long orderId);
+
+        Int64 GetNewOrderId();
     }
 }

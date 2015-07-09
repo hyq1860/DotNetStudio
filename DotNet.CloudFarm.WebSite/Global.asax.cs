@@ -34,7 +34,7 @@ namespace DotNet.CloudFarm.WebSite
 
         protected void Application_Error()
         {
-
+            
         }
     }
 }

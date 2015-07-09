@@ -33,9 +33,15 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)
         {
             //提交订单
+            var result = new Result<OrderModel>();
+            var tempOrderModel = orderDataAccess.SubmitOrder(orderModel);
+            if (tempOrderModel.OrderId > 0)
+            {
+                result.Data = tempOrderModel;
+                result.Status=new Status(){Code="1",Message = "提交订单成功。"};
+            }
 
-            
-            return orderDataAccess.SubmitOrder(orderModel);
+            return result;
         }
 
         public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
@@ -52,6 +58,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         public OrderModel GetOrder(int userId, long orderId)
         {
             return orderDataAccess.GetOrder(orderId, userId);
+        }
+
+        public long GetNewOrderId()
+        {
+            return orderDataAccess.GetNewOrderId();
         }
     }
 }

@@ -119,11 +119,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(confirmOrderViewModel);
         }
 
-        public ActionResult SubmitOrder(ConfirmOrderViewModel confirmOrderViewModel)
+        public JsonResult SubmitOrder(ConfirmOrderViewModel confirmOrderViewModel)
         {
             var orderModel = new OrderModel
             {
-                OrderId = 1,
+                OrderId = OrderService.GetNewOrderId(),
                 UserId = this.UserInfo.UserId,
                 ProductId = confirmOrderViewModel.Product.Id,
                 Price = confirmOrderViewModel.Product.Price,
@@ -132,8 +132,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 PayType = 0,
                 CreateTime = DateTime.Now
             };
-            OrderService.SubmitOrder(orderModel);
-            return new JsonResult();
+            var data=OrderService.SubmitOrder(orderModel);
+            var result = new JsonResult();
+            result.Data = data;
+            return result;
         }
 
         /// <summary>

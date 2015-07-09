@@ -39,9 +39,9 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
         /// </summary>
         /// <param name="orderModel"></param>
         /// <returns></returns>
-        public Result<OrderModel> SubmitOrder(OrderModel orderModel)
+        public OrderModel SubmitOrder(OrderModel orderModel)
         {
-            var result = new Result<OrderModel>();
+            var result = new OrderModel();
             using (var cmd = DataCommandManager.GetDataCommand("InsertOrder"))
             {
                 cmd.SetParameterValue("@OrderId", orderModel.OrderId);
@@ -56,7 +56,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                 var resultInt = cmd.ExecuteNonQuery();
                 if (resultInt > 0)
                 {
-                    
+                    result = GetOrder(orderModel.OrderId, orderModel.UserId);
                 }
             }
             return result;
@@ -93,6 +93,24 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var result = new PagedList<OrderModel>(new List<OrderModel>(), pageIndex,pageSize);
 
             return result;
+        }
+
+
+        /// <summary>
+        /// 获取新的订单号,订单号规则：81yyMMdd100001序列
+        /// </summary>
+        /// <returns></returns>
+        public Int64 GetNewOrderId()
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("GetNewOrderId"))
+            {
+                var orderId = cmd.ExecuteScalar();
+                if (orderId != null)
+                {
+                    return Convert.ToInt64(orderId);
+                }
+                return 0;
+            }
         }
     }
 }

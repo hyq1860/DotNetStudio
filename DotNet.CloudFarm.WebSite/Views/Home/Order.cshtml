@@ -105,9 +105,12 @@
                 url: "/home/SubmitOrder",
                 type: "post",
                 data: confirmOrderServiceJson,
-                success: function (data) {
-                    if (data) {
-
+                success: function (result) {
+                    console.log(result);
+                    if (result) {
+                        if (result.Status.Code == "1") {
+                            location.href = "@Url.Action("Pay","Home")"+"?OrderId="+result.Data.OrderId;
+                        }
                     }
                 }
             });
