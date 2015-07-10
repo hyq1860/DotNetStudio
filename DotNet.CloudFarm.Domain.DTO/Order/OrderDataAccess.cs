@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
 using DotNet.Data;
@@ -18,6 +19,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var result = new List<TopOrderInfo>();
             using (var cmd = DataCommandManager.GetDataCommand(""))
             {
+                
                 using (var dr=cmd.ExecuteDataReader())
                 {
                     while (dr.Read())
@@ -88,10 +90,22 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             return orderModel;
         }
 
-        public PagedList<OrderModel> GetOrderList(int userId, int pageIndex, int pageSize)
+        public PagedList<OrderViewModel> GetOrderList(int userId, int pageIndex, int pageSize)
         {
-            var result = new PagedList<OrderModel>(new List<OrderModel>(), pageIndex,pageSize);
-
+            var result = new PagedList<OrderViewModel>(new List<OrderViewModel>(), pageIndex, pageSize);
+            using (var cmd = DataCommandManager.GetDataCommand("GetOrderList"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@pageSize", pageSize);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        
+                    }
+                }
+            }
             return result;
         }
 

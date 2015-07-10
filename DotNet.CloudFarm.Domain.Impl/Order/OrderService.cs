@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
 
@@ -21,9 +22,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             this.orderDataAccess = orderDataAccess;
         }
 
-        public Result<PagedList<OrderModel>> GetOrderList(int userId, int pageIndex, int pageSize)
+        public Result<PagedList<OrderViewModel>> GetOrderList(int userId, int pageIndex, int pageSize)
         {
-            var result = new Result<PagedList<OrderModel>>
+            var result = new Result<PagedList<OrderViewModel>>
             {
                 Data = orderDataAccess.GetOrderList(userId, pageIndex, pageSize)
             };

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
 
@@ -21,7 +22,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Result<PagedList<OrderModel>> GetOrderList(int userId, int pageIndex, int pageSize);
+        Result<PagedList<OrderViewModel>> GetOrderList(int userId, int pageIndex, int pageSize);
 
         /// <summary>
         /// 提交订单

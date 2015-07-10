@@ -1,18 +1,20 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using DotNet.CloudFarm.Domain.ViewModel
+@using DotNet.Common.Utility
+@model DotNet.CloudFarm.Domain.ViewModel.WalletViewModel
 <div class="sheep_guest wallet">
     <div class="my_top wallet_top">
         <div class="my_top_pic"><img src="/images/bg4.jpg"></div>
         <div class="wallet_top_content clearfix">
             <div class="wallet_top_content_l">
                 <p class="p1">当前收益（元）</p>
-                <p class="p2">12345</p>
+                <p class="p2"><!--ko text:CurrentIncome--><!--/ko--></p>
             </div>
             <div class="wallet_top_content_r">
-                <p class="p1"><span class="span1">预期收益（元）</span><span class="span2">123</span></p>
-                <p class="p1"><span class="span1">预计年收益率</span><span class="span2">123</span></p>
+                <p class="p1"><span class="span1">预期收益（元）</span><span class="span2"><!--ko text:ExpectIncome--><!--/ko--></span></p>
+                <p class="p1"><span class="span1">预计年收益率</span><span class="span2"><!--ko text:YearEarningRate--><!--/ko--></span></p>
             </div>
         </div>
     </div>
@@ -36,12 +38,69 @@
         <div class="tzbb_box">
             <h3>投资报表</h3>
             <ul class="clearfix">
-                <li><span class="span1">累计收益（元）</span><span class="span2">123456</span></li>
-                <li><span class="span1">累计养殖数量</span><span class="span2">1236</span></li>
-                <li style="border-right:none;"><span class="span1">累计投入（元）</span><span class="span2">112456</span></li>
+                <li><span class="span1">累计收益（元）</span><span class="span2"><!--ko text:TotalIncome--><!--/ko--></span></li>
+                <li><span class="span1">累计养殖数量</span><span class="span2"><!--ko text:TotalProductCount--><!--/ko--></span></li>
+                <li style="border-right:none;"><span class="span1">累计投入（元）</span><span class="span2"><!--ko text:TotalInvestment--><!--/ko--></span></li>
             </ul>
         </div>
     </div>
     <!--投资报表-->
     <div class="Settlement"><a href="#">结算</a></div>
 </div>
+<script type="text/javascript">
+    var walletServiceJson = @Html.Raw((Model??null).ToJson());
+    function WalletViewModel() {
+        var self = this;
+
+        //当前收益
+        self.CurrentIncome = ko.observable();
+
+        //预期收益
+        self.ExpectIncome = ko.observable();
+
+        //预期年化收益率
+        self.YearEarningRate = ko.observable();
+
+        //累计收益
+        self.TotalIncome = ko.observable();
+
+        //累计养殖数量
+        self.TotalProductCount = ko.observable();
+
+        //累计投入
+        self.TotalInvestment = ko.observable();
+
+        //生长时间
+        self.GrowDay = ko.observable();
+    }
+
+    $(function() {
+        var walletViewModel = new WalletViewModel();
+
+        if (walletServiceJson) {
+            //当前收益
+            walletViewModel.CurrentIncome(walletServiceJson.CurrentIncome);
+
+            //预期收益
+            walletViewModel.ExpectIncome(walletServiceJson.ExpectIncome);
+
+            //预期年化收益率
+            walletViewModel.YearEarningRate(walletServiceJson.YearEarningRate);
+
+            //累计收益
+            walletViewModel.TotalIncome(walletServiceJson.TotalIncome);
+
+            //累计养殖数量
+            walletViewModel.TotalProductCount(walletServiceJson.TotalProductCount);
+
+            //累计投入
+            walletViewModel.TotalInvestment(walletServiceJson.TotalInvestment);
+
+            //生长时间
+            walletViewModel.GrowDay(walletServiceJson.GrowDay);
+        }
+
+        ko.applyBindings(walletViewModel);
+
+    });
+</script>

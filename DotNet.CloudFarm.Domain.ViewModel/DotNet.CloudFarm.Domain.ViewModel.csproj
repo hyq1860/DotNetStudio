@@ -44,6 +44,7 @@
     <Compile Include="HomeViewModel.cs" />
     <Compile Include="MyCenterViewModel.cs" />
     <Compile Include="OrderPayViewModel.cs" />
+    <Compile Include="OrderViewModel.cs" />
     <Compile Include="PayTipViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WalletViewModel.cs" />

@@ -55,6 +55,10 @@
       <Project>{BA5478CC-902C-49E0-A63C-6FF87553A240}</Project>
       <Name>DotNet.CloudFarm.Domain.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNet.CloudFarm.Domain.ViewModel\DotNet.CloudFarm.Domain.ViewModel.csproj">
+      <Project>{086488B7-67F1-4F13-BCC6-98C51B144D7D}</Project>
+      <Name>DotNet.CloudFarm.Domain.ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
       <Project>{55E1D54C-FBD4-4D79-97BB-A0F00DC14FB7}</Project>
       <Name>DotNet.Common</Name>

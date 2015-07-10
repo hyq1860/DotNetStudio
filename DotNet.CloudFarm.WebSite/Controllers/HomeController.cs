@@ -215,7 +215,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Wallet()
         {
-            return View();
+            var walletViewModel = new WalletViewModel();
+            return View(walletViewModel);
         }
 
         /// <summary>

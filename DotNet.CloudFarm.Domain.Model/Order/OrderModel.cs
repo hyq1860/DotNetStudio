@@ -31,6 +31,7 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         /// </summary>
         public int ProductId { get; set; }
 
+
         /// <summary>
         /// 购买数量
         /// </summary>
