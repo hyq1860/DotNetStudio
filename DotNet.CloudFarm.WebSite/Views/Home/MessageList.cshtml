@@ -5,10 +5,13 @@
 }
 
 <div class="sheep_guest message">
-    <ul class="message_ul">
+    <ul class="message_ul" data-bind="foreach:Messages">
         <li class="clearfix">
             <p class="li_l"><span class="no_read"><img src="/images/no_read.png"></span></p>
-            <p class="li_r"><span class="span1">未读消息</span><span class="span2">您的订单已经生成，请点击订单号进行支付。订单号为：20132298485</span></p>
+            <p class="li_r">
+                <span class="span1">未读消息</span>
+                <span class="span2"><!--ko text:Content--><!--/ko--></span>
+            </p>
         </li>
     </ul>
 </div>
@@ -23,7 +26,38 @@
 
     }
 
-    $(function() {
+    function MessageViewModel() {
+        var self = this;
+        self.MessageId = ko.observable();
 
+        self.UserId  = ko.observable();
+
+        self.Content  = ko.observable();
+
+        self.CreateTime = ko.observable();
+
+        //短消息状态 0 未读 1 已读
+        self.Status = ko.observable();
+
+    }
+
+    $(function() {
+        var messageListViewModel = new MessageListViewModel();
+        if (messageListServiceJson && messageListServiceJson.Data && messageListServiceJson.Data.length > 0) {
+            var length = messageListServiceJson.Data.length;
+            for (var i = 0; i < length; i++) {
+                var messageViewModel = new MessageViewModel();
+
+                messageViewModel.MessageId(messageListServiceJson.Data[i].MessageId);
+                messageViewModel.UserId(messageListServiceJson.Data[i].UserId);
+                messageViewModel.Content(messageListServiceJson.Data[i].Content);
+                messageViewModel.CreateTime(messageListServiceJson.Data[i].CreateTime);
+                messageViewModel.Status(messageListServiceJson.Data[i].Status);
+
+                messageListViewModel.Messages.push(messageViewModel);
+            }
+            
+        }
+        ko.applyBindings(messageListViewModel);
     });
 </script>
