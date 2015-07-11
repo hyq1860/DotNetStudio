@@ -30,7 +30,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Message
 
         public Result<PagedList<MessageModel>> GetMessages(int userId, int pageIndex, int pageSize)
         {
-            return messageDataAccess.GetMessages(userId, pageIndex, pageSize);
+            var result = new Result<PagedList<MessageModel>>();
+            result.Data = messageDataAccess.GetMessages(userId, pageIndex, pageSize);
+            return result; 
         }
     }
 }

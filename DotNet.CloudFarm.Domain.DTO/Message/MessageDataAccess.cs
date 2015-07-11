@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using DotNet.CloudFarm.Domain.Contract.Message;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.Common.Collections;
@@ -38,11 +39,42 @@ namespace DotNet.CloudFarm.Domain.DTO.Message
             return result;
         }
 
-        public Result<PagedList<MessageModel>> GetMessages(int userId, int pageIndex, int pageSize)
+        public PagedList<MessageModel> GetMessages(int userId, int pageIndex, int pageSize)
         {
-            var result = new Result<PagedList<MessageModel>>();
-            result.Data = new PagedList<MessageModel>(new List<MessageModel>(), pageIndex, pageSize);
-            return result;
+            var data = new List<MessageModel>();
+            
+            using (var cmd = DataCommandManager.GetDataCommand("GetMessages"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageIndex", pageSize);
+                var total = 0;
+                using (var dr=cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        var messageModel = new MessageModel();
+                        if (total == 0)
+                        {
+                            total = !Convert.IsDBNull(dr["Total"]) ? Convert.ToInt32(dr["Total"]) : 0;
+                        }
+                        messageModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        messageModel.Content = !Convert.IsDBNull(dr["Content"]) ? dr["Content"].ToString() : string.Empty;
+                        messageModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        messageModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
+                        if (messageModel.MessageId > 0)
+                        {
+                            data.Add(messageModel);
+                        }
+                    }
+                }
+                var result = new PagedList<MessageModel>(data, pageIndex, pageSize)
+                {
+                    TotalCount = total
+                };
+                return result;
+            }
+            
         }
     }
 }
