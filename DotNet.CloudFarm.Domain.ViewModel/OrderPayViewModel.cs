@@ -52,5 +52,9 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 支付方式：0-微信支付；1-线下支付
         /// </summary>
         public int PayType { get; set; }
+
+        public string wxEditAddrParam { get; set; }
+
+        public string openid { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.ViewModel;
+using DotNet.CloudFarm.WebSite.WeixinPay;
 using DotNet.WebSite.Infrastructure.Config;
 using DotNet.WebSite.MVC;
 using Microsoft.AspNet.Identity;
@@ -138,6 +139,20 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return result;
         }
 
+        #region
+        /// <summary>
+        /// 调用js获取收货地址时需要传入的参数
+        /// 格式：json串
+        /// 包含以下字段：
+        ///     appid：公众号id
+        ///     scope: 填写“jsapi_address”，获得编辑地址权限
+        ///     signType:签名方式，目前仅支持SHA1
+        ///     addrSign: 签名，由appid、url、timestamp、noncestr、accesstoken参与签名
+        ///     timeStamp：时间戳
+        ///     nonceStr: 随机字符串
+        /// </summary>
+        public static string wxEditAddrParam { get; set; }
+
         /// <summary>
         /// 支付页面
         /// </summary>
@@ -164,6 +179,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         orderPayViewModel.StartTime = productModel.StartTime.ToString("yyyy-MM-dd");
                         orderPayViewModel.EndTime = productModel.EndTime.ToString("yyyy-MM-dd");
                     }
+
+                    JsApiPay jsApiPay=new JsApiPay(ControllerContext.HttpContext);
+                    try
+                    {
+                        //调用【网页授权获取用户信息】接口获取用户的openid和access_token
+                        jsApiPay.GetOpenidAndAccessToken();
+
+                        //获取收货地址js函数入口参数
+                        wxEditAddrParam = jsApiPay.GetEditAddressParameters();
+                        orderPayViewModel.openid = jsApiPay.openid;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
 
@@ -176,6 +206,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             return View();
         }
+
+        #endregion
 
         /// <summary>
         /// 用户中心首页
@@ -209,6 +241,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult MessageList(int pageIndex=1,int pageSize=10)
         {
+            //ControllerContext.RequestContext.HttpContext
             var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
             return View(result.Data);
         }

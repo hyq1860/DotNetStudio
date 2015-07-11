@@ -82,6 +82,25 @@
         }
     }
 
+    //获取共享地址
+    function editAddress()
+    {
+        WeixinJSBridge.invoke(
+            'editAddress',
+            OrderPayServiceJson.wxEditAddrParam,//josn串
+              function (res)
+              {
+                  var addr1 = res.proviceFirstStageName;
+                  var addr2 = res.addressCitySecondStageName;
+                  var addr3 = res.addressCountiesThirdStageName;
+                  var addr4 = res.addressDetailInfo;
+                  var tel = res.telNumber;
+                  var addr = addr1 + addr2 + addr3 + addr4;
+                  alert(addr + ":" + tel);
+              }
+          );
+    }
+
     $(function() {
 
         var orderPayViewModel = new OrderPayViewModel();
@@ -99,6 +118,24 @@
             location.href="/Home/Index";
         }
         ko.applyBindings(orderPayViewModel);
+
+        //微信支付
+        if (typeof WeixinJSBridge == "undefined")
+        {
+            if (document.addEventListener)
+            {
+                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+            }
+            else if (document.attachEvent)
+            {
+                document.attachEvent('WeixinJSBridgeReady', editAddress);
+                document.attachEvent('onWeixinJSBridgeReady', editAddress);
+            }
+        }
+        else
+        {
+            editAddress();
+        }
     });
 
 </script>
