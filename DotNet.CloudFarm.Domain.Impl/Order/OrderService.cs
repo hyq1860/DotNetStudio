@@ -65,5 +65,10 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         {
             return orderDataAccess.GetNewOrderId();
         }
+
+        public Result<OrderViewModel> UpdateOrderStatus(int userId, long orderId, int orderStatus)
+        {
+            return orderDataAccess.UpdateOrderStatus(userId, orderId, orderStatus);
+        }
     }
 }

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.Order;
+using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.CloudFarm.Domain.Model.Product;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
@@ -14,6 +16,13 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
 {
     public class OrderDataAccess:IOrderDataAccess
     {
+        private IProductDataAccess ProductDataAccess;
+
+        public OrderDataAccess(IProductDataAccess productDataAccess)
+        {
+            this.ProductDataAccess = productDataAccess;
+        }
+
         public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
         {
             var result = new List<TopOrderInfo>();
@@ -141,6 +150,51 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                 }
                 return 0;
             }
+        }
+
+        public Result<OrderViewModel> UpdateOrderStatus(int userId, long orderId, int orderStatus)
+        {
+            var result = new Result<OrderViewModel>();
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateOrderStatus"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@OrderId", orderId);
+                cmd.SetParameterValue("@Status", orderStatus);
+                var returnValue = cmd.ExecuteNonQuery();
+
+                result.Status = returnValue > 0 ? new Status() {Code = "1"} : new Status() { Code = "0" };
+                var orderModel = GetOrder(orderId, userId);
+                if (orderModel != null&&orderModel.ProductId>0)
+                {
+                    var productModel = ProductDataAccess.GetProductById(orderModel.ProductId);
+                    result.Data = OrderModelToOrderViewModel(orderModel, productModel);
+                }
+                   
+                return result;
+            }
+        }
+
+        private OrderViewModel OrderModelToOrderViewModel(OrderModel orderModel,ProductModel productModel)
+        {
+            var orderViewModel = new OrderViewModel();
+            if (orderModel != null)
+            {
+                orderViewModel.OrderId = orderModel.OrderId;
+                orderViewModel.UserId = orderModel.UserId;
+                orderViewModel.CreateTime = orderModel.CreateTime;
+                orderViewModel.ProductId = orderModel.ProductId;
+                orderViewModel.ProductCount = orderModel.ProductCount;
+                orderViewModel.Price = orderModel.Price;
+                orderViewModel.Status = orderModel.Status;
+                orderViewModel.PayType = orderModel.PayType;
+                orderViewModel.TotalMoney = orderModel.Price*orderModel.ProductCount;
+            }
+            if (productModel != null)
+            {
+                orderViewModel.ProductName = productModel.Name;
+            }
+            
+            return orderViewModel;
         }
     }
 }

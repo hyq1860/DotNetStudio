@@ -193,6 +193,20 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult CancelOrder(long? orderId)
+        {
+            var result = new JsonResult
+            {
+                Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value, -1)
+            };
+            return result;
+        }
+
         public ActionResult MessageList(int pageIndex=1,int pageSize=10)
         {
             var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);

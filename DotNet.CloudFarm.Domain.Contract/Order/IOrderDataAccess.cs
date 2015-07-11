@@ -49,5 +49,14 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         PagedList<OrderViewModel> GetOrderList(int userId, int pageIndex, int pageSize);
 
         Int64 GetNewOrderId();
+
+        /// <summary>
+        /// 更新订单状态
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="orderStatus"></param>
+        /// <returns></returns>
+        Result<OrderViewModel> UpdateOrderStatus(int userId, long orderId, int orderStatus);
     }
 }

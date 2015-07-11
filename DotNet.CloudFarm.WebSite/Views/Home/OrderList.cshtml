@@ -6,7 +6,7 @@
 
 <div class="sheep_guest my_order" data-bind="foreach:OrderList">
     <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId}">
-        <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2">待支付</span></p>
+        <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:Status--><!--/ko--></span></p>
         <div class="order_detail clearfix">
             <div class="order_detail_l">
                 <img src="/images/no_pic.jpg">
@@ -71,7 +71,17 @@
 
         //取消订单
         self.CancelOrder=function(order) {
-            
+            $.ajax({
+                url: "/home/CancelOrder?orderId="+order.OrderId(),
+                type: "post",
+                success: function (result) {
+                    if (result.Status.Code == "1") {
+                        order.Status(result.Data.Status);
+                    } else {
+                        
+                    }
+                }
+            });
         }
 
         //去支付
@@ -81,7 +91,7 @@
 
         //赎回
         self.Redeem=function(order) {
-            
+
         }
     }
 
@@ -120,9 +130,9 @@
 
                 orderListViewModel.OrderList.push(orderViewModel);
             }
-            
+
         }
-        
+
         ko.applyBindings(orderListViewModel);
     });
 </script>
