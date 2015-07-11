@@ -1,28 +1,39 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.ViewModel.OrderViewModel>  
+@using DotNet.Common.Utility
+@model DotNet.Common.Models.Result<DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.ViewModel.OrderViewModel>>
 
-<div class="sheep_guest my_order">
-    <section class="my_order_section1">
-        <p class="order_station clearfix"><span class="span1">订单编号：<em>1673562</em></span><span class="span2">待支付</span></p>
+<div class="sheep_guest my_order" data-bind="foreach:OrderList">
+    <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId}">
+        <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2">待支付</span></p>
         <div class="order_detail clearfix">
             <div class="order_detail_l">
                 <img src="/images/no_pic.jpg">
             </div>
             <div class="order_detail_m">
-                <p class="p1">羊客认领第二期羊客认领第二期羊客认领第二期羊客认领第二期羊</p>
+                <p class="p1"><!--ko text:ProductName--><!--/ko--></p>
             </div>
             <div class="order_detail_r">
-                <p class="p1">单价：<em>10000元</em></p>
-                <p class="p2">数量：<em>100只</em></p>
-                <p class="p3">合计：<em>1000000元</em></p>
+                <p class="p1">
+                    单价：<em><!--ko text:Price--><!--/ko-->元</em>
+                </p>
+                <p class="p2">
+                    数量：<em><!--ko text:ProductCount--><!--/ko-->只</em>
+                </p>
+                <p class="p3">
+                    合计：<em><!--ko text:TotalMoney--><!--/ko-->元</em>
+                </p>
             </div>
 
         </div>
-        <div class="how_about_order"><a href="#" class="a1">取消订单</a><a href="#" class="a2">去支付</a></div>
+        <div class="how_about_order">
+            <a href="#" class="a1" data-bind="click:$parent.CancelOrder,visible:Status()==0">取消订单</a>
+            <a href="#" class="a2" data-bind="click:$parent.ToPay,visible:Status()==0">去支付</a>
+            <a href="#" class="a1 reed_btn" data-bind="click:$parent.Redeem,visible:Status()==1">赎回</a>
+        </div>
     </section>
-    <section class="my_order_section1">
+    @*<section class="my_order_section1">
         <p class="order_station clearfix"><span class="span1">订单编号：<em>1673562</em></span><span class="span2">育肥中</span></p>
         <div class="order_detail clearfix">
             <div class="order_detail_l">
@@ -32,28 +43,86 @@
                 <p class="p1">羊客认领第二期羊客认领第二期羊客认领第二期羊客认领第二期羊</p>
             </div>
             <div class="order_detail_r">
-                <p class="p1">单价：<em>10000元</em></p>
-                <p class="p2">数量：<em>100只</em></p>
-                <p class="p3">合计：<em>1000000元</em></p>
+                <p class="p1">
+                    单价：<em>10000元</em>
+                </p>
+                <p class="p2">
+                    数量：<em>100只</em>
+                </p>
+                <p class="p3">
+                    合计：<em>1000000元</em>
+                </p>
             </div>
 
         </div>
-        <div class="how_about_order"><a href="#" class="a1 reed_btn">赎回</a></div>
-    </section>
+        <div class="how_about_order">
+            <a href="#" class="a1 reed_btn">赎回</a>
+        </div>
+    </section>*@
 </div>
 <script type="text/javascript">
-    var orderListServiceJson=@Html.Raw(Model);
+    var orderListServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
 
     function OrderListViewModel() {
         var self = this;
 
         //订单列表
-        self.OrderList = ko.observableArray();
+        self.OrderList = ko.observableArray([]);
+
+        //取消订单
+        self.CancelOrder=function(order) {
+            
+        }
+
+        //去支付
+        self.ToPay=function(order) {
+            location.href = "@Url.Action("Pay","Home")" + "?OrderId=" + order.OrderId();
+        }
+
+        //赎回
+        self.Redeem=function(order) {
+            
+        }
+    }
+
+    function OrderViewModel() {
+        var self = this;
+
+        self.ProductName = ko.observable();
+        self.TotalMoney = ko.observable();
+        self.OrderId = ko.observable();
+        self.UserId = ko.observable();
+        self.CreateTime = ko.observable();
+        self.ProductId = ko.observable();
+        self.ProductCount = ko.observable();
+        self.Price = ko.observable();
+        self.Status = ko.observable();
+        self.PayType = ko.observable();
     }
 
     $(function() {
         var orderListViewModel = new OrderListViewModel();
+        if (orderListServiceJson && orderListServiceJson.Data && orderListServiceJson.Data.length > 0) {
+            var length = orderListServiceJson.Data.length;
+            for (var i = 0; i < length; i++) {
+                var orderViewModel = new OrderViewModel();
 
+                orderViewModel.ProductName(orderListServiceJson.Data[i].ProductName);
+                orderViewModel.TotalMoney(orderListServiceJson.Data[i].TotalMoney);
+                orderViewModel.OrderId(orderListServiceJson.Data[i].OrderId);
+                orderViewModel.UserId(orderListServiceJson.Data[i].UserId);
+                orderViewModel.CreateTime(orderListServiceJson.Data[i].CreateTime);
+                orderViewModel.ProductId(orderListServiceJson.Data[i].ProductId);
+                orderViewModel.ProductCount(orderListServiceJson.Data[i].ProductCount);
+                orderViewModel.Price(orderListServiceJson.Data[i].Price);
+                orderViewModel.Status(orderListServiceJson.Data[i].Status);
+                orderViewModel.PayType(orderListServiceJson.Data[i].PayType);
+
+                orderListViewModel.OrderList.push(orderViewModel);
+            }
+            
+        }
+        
         ko.applyBindings(orderListViewModel);
     });
 </script>

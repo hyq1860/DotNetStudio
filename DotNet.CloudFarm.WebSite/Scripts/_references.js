@@ -48,3 +48,5 @@
 /// <reference path="houtai/bootstrap-popover.js" />
 /// <reference path="houtai/bootstrap-scrollspy.js" />
 /// <reference path="houtai/jquery.validate-houtai.js" />
+/// <reference path="underscore.min.js" />
+/// <reference path="common.js" />

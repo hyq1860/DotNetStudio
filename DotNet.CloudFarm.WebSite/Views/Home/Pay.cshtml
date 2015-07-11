@@ -72,6 +72,12 @@
 
         //支付
         self.Pay=function() {
+            var payType = self.PayType();
+            if (payType == 1) {
+                location.href = "@Url.Action("TransferAccount", "Home")"+"?OrderId="+self.OrderId();
+            } else {
+                
+            }
             console.log(ko.toJSON(self));
         }
     }

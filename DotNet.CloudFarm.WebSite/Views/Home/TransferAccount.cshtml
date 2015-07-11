@@ -3,5 +3,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>TransferAccount</h2>
+<div class="sheep_guest">
+    <div class="pay_sucess_box">
+        <div class="sucess_logo transfer_a_logo"><i class="iconfont"></i></div>
+        <p class="p1" style="text-align:left; margin-left:3%;">银行在线转账正在申请开通中，抱歉给您带来不便！银行汇款信息如下：</p>
+        <div class="sucess_content">
+            <p class="p2"><em>科羊云牧（北京）网络有限公司</em></p>
+            <p class="p2">开户行：<em>交通银行股份有限公司北京东区支行</em></p>
+            <p class="p3">帐  号：<em>110061166018010151268</em></p>
+        </div>
+    </div>
+    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home")#Order_'+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a></div>
+</div>
+<script type="text/javascript">
+    function TransferAccountViewModel() {
+        var self = this;
 
+        self.OrderId = ko.observable();
+    }
+
+    $(function () {
+        var transferAccountViewModel = new TransferAccountViewModel();
+        transferAccountViewModel.OrderId($.QueryString["OrderId"]);
+        ko.applyBindings(transferAccountViewModel);
+        
+    });
+</script>

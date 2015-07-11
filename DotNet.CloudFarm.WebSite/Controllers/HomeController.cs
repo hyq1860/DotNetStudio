@@ -190,7 +190,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult OrderList(int pageIndex=1,int pageSize=10)
         {
             var result = OrderService.GetOrderList(this.UserInfo.UserId, pageIndex, pageSize);
-            return View(result.Data);
+            return View(result);
         }
 
         public ActionResult MessageList(int pageIndex=1,int pageSize=10)

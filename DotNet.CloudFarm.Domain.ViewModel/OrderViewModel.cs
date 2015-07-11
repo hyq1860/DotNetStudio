@@ -13,5 +13,10 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 商品名称
         /// </summary>
         public string ProductName { get; set; }
+
+        /// <summary>
+        /// 总价
+        /// </summary>
+        public decimal TotalMoney { get; set; }
     }
 }

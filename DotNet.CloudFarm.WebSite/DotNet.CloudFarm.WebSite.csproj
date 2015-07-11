@@ -442,6 +442,7 @@
     <Content Include="images\zhuanzhang_active.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\houtai\bootstrap-alert.js" />
     <Content Include="Scripts\houtai\bootstrap-button.js" />
     <Content Include="Scripts\houtai\bootstrap-carousel.js" />
@@ -498,6 +499,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -535,6 +538,7 @@
     <Content Include="Views\HouTai\Product.cshtml" />
     <Content Include="Views\HouTai\ProductAddOrEdit.cshtml" />
     <Content Include="Views\Home\OrderDetail.cshtml" />
+    <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
