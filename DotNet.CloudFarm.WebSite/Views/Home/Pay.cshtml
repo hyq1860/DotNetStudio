@@ -7,9 +7,12 @@
 <div class="sheep_guest purchase_claim pay_way">
     <section class="purchase_claim_section1">
         <div class="purchase_claim_section1box">
+            <!--ko text:wxEditAddrParam--><!--/ko-->
+            
             <h3><span><!--ko text:Name--><!--/ko--></span></h3>
             <div class="periods clearfix">
-                <div class="periods_l"><img src="/images/no_pic.jpg"></div>
+                <div class="periods_l"><img src="/images/no_pic.jpg">
+                </div>
                 <div class="periods_r">
                     <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
                     <p>单价：<span><em><!--ko text:Price--><!--/ko--></em>/只</span></p>
@@ -56,6 +59,8 @@
 
         self.PayType=ko.observable();
 
+        self.wxEditAddrParam = ko.observable();
+
         //选择支付方式
         self.SelectpayType=function(item,target) {
             var currentDom = $(target.currentTarget);
@@ -85,20 +90,20 @@
     //获取共享地址
     function editAddress()
     {
-        WeixinJSBridge.invoke(
-            'editAddress',
-            OrderPayServiceJson.wxEditAddrParam,//josn串
-              function (res)
-              {
-                  var addr1 = res.proviceFirstStageName;
-                  var addr2 = res.addressCitySecondStageName;
-                  var addr3 = res.addressCountiesThirdStageName;
-                  var addr4 = res.addressDetailInfo;
-                  var tel = res.telNumber;
-                  var addr = addr1 + addr2 + addr3 + addr4;
-                  alert(addr + ":" + tel);
-              }
-          );
+        //WeixinJSBridge.invoke(
+        //    'editAddress',
+        //    OrderPayServiceJson.wxEditAddrParam,//josn串
+        //      function (res)
+        //      {
+        //          var addr1 = res.proviceFirstStageName;
+        //          var addr2 = res.addressCitySecondStageName;
+        //          var addr3 = res.addressCountiesThirdStageName;
+        //          var addr4 = res.addressDetailInfo;
+        //          var tel = res.telNumber;
+        //          var addr = addr1 + addr2 + addr3 + addr4;
+        //          alert(addr + ":" + tel);
+        //      }
+        //  );
     }
 
     $(function() {
@@ -114,28 +119,31 @@
             orderPayViewModel.Count(OrderPayServiceJson.Count);
             orderPayViewModel.TotalPrice(OrderPayServiceJson.TotalPrice);
             orderPayViewModel.PayType(OrderPayServiceJson.PayType);
+            orderPayViewModel.wxEditAddrParam(OrderPayServiceJson.wxEditAddrParam);
+            alert(OrderPayServiceJson.wxEditAddrParam);
+
         } else {
             location.href="/Home/Index";
         }
         ko.applyBindings(orderPayViewModel);
 
         //微信支付
-        if (typeof WeixinJSBridge == "undefined")
-        {
-            if (document.addEventListener)
-            {
-                document.addEventListener('WeixinJSBridgeReady', editAddress, false);
-            }
-            else if (document.attachEvent)
-            {
-                document.attachEvent('WeixinJSBridgeReady', editAddress);
-                document.attachEvent('onWeixinJSBridgeReady', editAddress);
-            }
-        }
-        else
-        {
-            editAddress();
-        }
+        //if (typeof WeixinJSBridge == "undefined")
+        //{
+        //    if (document.addEventListener)
+        //    {
+        //        document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+        //    }
+        //    else if (document.attachEvent)
+        //    {
+        //        document.attachEvent('WeixinJSBridgeReady', editAddress);
+        //        document.attachEvent('onWeixinJSBridgeReady', editAddress);
+        //    }
+        //}
+        //else
+        //{
+        //    editAddress();
+        //}
     });
 
 </script>

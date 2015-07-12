@@ -46,14 +46,14 @@
 
                 </div>
                 <div class="detail clearfix">
-                    <div class="detail_l">
+                    <div class="detail_l" data-bind="click:$parent.ShowDetail">
                         <a href="#" data-bind="click:$parent.ViewProduct">详情</a>
                     </div>
                     <div class="detail_r">
                         <a data-bind="attr:{href:'@Url.Action("order","home")'+'?productId='+Id}">立刻认领羊只</a>
                     </div>
                 </div>
-                <div class="detail_content">
+                <div class="detail_content" data-bind="visible:IsShowDetail">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <th width="40%">项目名称</th>
@@ -139,6 +139,14 @@
         self.ViewProduct=function(product) {
             console.log(product);
         }
+
+        self.ShowDetail=function(product) {
+            if (product.IsShowDetail()) {
+                product.IsShowDetail(false);
+            } else {
+                product.IsShowDetail(true);
+            }
+        }
     }
 
     function ProductViewModel() {
@@ -171,6 +179,9 @@
         self.YearEarningRate = ko.observable();
 
         //预期收益
+        self.Earning = ko.observable();
+
+        //预期收益
         self.EarningRate = ko.observable();
 
         //活动持续时间 天
@@ -181,6 +192,9 @@
 
         //育肥场
         self.SheepFactory = ko.observable();
+
+        //是否显示详情
+        self.IsShowDetail = ko.observable(false);
     }
 
     var homeViewModel = new HomeViewModel();
@@ -192,9 +206,55 @@
             type: "post",
             data: { Mobile: $("#Mobile").val() },
             success: function (data) {
+                console.log(data);
                 if (data) {
                     homeViewModel.SheepCount(data.SheepCount);
-                    homeViewModel.Products(data.Products);
+                    var length = data.Products.length;
+                    for (var i = 0; i < length; i++) {
+                        var productViewModel = new ProductViewModel();
+                        productViewModel.Id(data.Products[i].Id);
+
+                        //产品名称
+                        productViewModel.Name(data.Products[i].Name);
+
+                        //产品数量
+                        productViewModel.Stock(data.Products[i].Stock);
+
+                        //当前期销量数量
+                        productViewModel.SaledCount(data.Products[i].SaledCount);
+
+                        //单价
+                        productViewModel.Price(data.Products[i].Price);
+
+                        //羊金额
+                        productViewModel.SheepPrice(data.Products[i].SheepPrice);
+
+                        //饲料金额
+                        productViewModel.FeedPrice(data.Products[i].FeedPrice);
+
+                        //人工成本
+                        productViewModel.WorkPrice(data.Products[i].WorkPrice);
+
+                        productViewModel.Earning(data.Products[i].Earning);
+                        //预期年化收益率
+                        productViewModel.YearEarningRate(data.Products[i].YearEarningRate);
+
+                        //预期收益
+                        productViewModel.EarningRate(data.Products[i].EarningRate);
+
+                        //活动持续时间 天
+                        productViewModel.EarningDay(data.Products[i].EarningDay);
+
+                        //羊类型
+                        productViewModel.SheepType(data.Products[i].SheepType);
+
+                        //育肥场
+                        productViewModel.SheepFactory(data.Products[i].SheepFactory);
+
+
+                        homeViewModel.Products.push(productViewModel);
+                    }
+                    
                     ko.applyBindings(homeViewModel);
                 }
             }

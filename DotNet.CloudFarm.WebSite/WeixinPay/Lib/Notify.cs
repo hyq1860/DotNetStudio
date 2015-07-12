@@ -14,10 +14,10 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
     /// </summary>
     public class Notify
     {
-        public Page page {get;set;}
-        public Notify(Page page)
+        public HttpContextBase httpContextBase { get; set; }
+        public Notify(HttpContextBase httpContextBase)
         {
-            this.page = page;
+            this.httpContextBase = httpContextBase;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
         public WxPayData GetNotifyData()
         {
             //接收从微信后台POST过来的数据
-            System.IO.Stream s = page.Request.InputStream;
+            System.IO.Stream s = httpContextBase.Request.InputStream;
             int count = 0;
             byte[] buffer = new byte[1024];
             StringBuilder builder = new StringBuilder();
@@ -54,8 +54,8 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
                 res.SetValue("return_code", "FAIL");
                 res.SetValue("return_msg", ex.Message);
                 Log.Error(this.GetType().ToString(), "Sign check error : " + res.ToXml());
-                page.Response.Write(res.ToXml());
-                page.Response.End();
+                httpContextBase.Response.Write(res.ToXml());
+                httpContextBase.Response.End();
             }
 
             Log.Info(this.GetType().ToString(), "Check sign success");

@@ -272,6 +272,7 @@
     <Compile Include="WeixinPay\Lib\Log.cs" />
     <Compile Include="WeixinPay\Lib\Notify.cs" />
     <Compile Include="WeixinPay\Lib\WxPayApi.cs" />
+    <Compile Include="WeixinPay\WeixinPayNotify.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

@@ -21,6 +21,7 @@ using Microsoft.AspNet.Identity;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
+    [Authorize]
     public class HomeController : BaseController
     {
         public HomeController(IUserService userService):base(userService)

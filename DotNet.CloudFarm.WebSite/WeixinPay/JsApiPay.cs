@@ -164,6 +164,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
                 string host = httpContextBase.Request.Url.Host;
                 string path = httpContextBase.Request.Path;
                 string redirect_uri = HttpUtility.UrlEncode("http://" + host + path);
+                Log.Debug(this.GetType().ToString(), "redirect_uri : " + redirect_uri);
                 WxPayData data = new WxPayData();
                 data.SetValue("appid", WxPayConfig.APPID);
                 data.SetValue("redirect_uri", redirect_uri);
@@ -175,7 +176,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
                 try
                 {
                     //触发微信返回code码         
-                    httpContextBase.Response.Redirect(url);//Redirect函数会抛出ThreadAbortException异常，不用处理这个异常
+                    //httpContextBase.Response.Redirect(url);//Redirect函数会抛出ThreadAbortException异常，不用处理这个异常
                 }
                 catch (System.Threading.ThreadAbortException ex)
                 {
