@@ -21,9 +21,9 @@
     <!--/ko-->
     <div class="my_list">
         <ul>
-            <li class="li1 clearfix"><a href="@Url.Action("MessageList","Home")"><span class="span_logo"></span><span class="span1">我的消息</span><span class="span2"></span></a></li>
-            <li class="li2 clearfix"><a href="@Url.Action("OrderList","Home")"><span class="span_logo"></span><span class="span1">我的订单</span><span class="span2"></span></a></li>
-            <li class="li3 clearfix"><a href="@Url.Action("Contract", "Home")"><span class="span_logo"></span><span class="span1">我的合同</span><span class="span2"></span></a></li>
+            <li class="li1 clearfix"><a href="@Url.Action("MessageList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的消息</span><span class="span2"></span></a></li>
+            <li class="li2 clearfix"><a href="@Url.Action("OrderList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的订单</span><span class="span2"></span></a></li>
+            <li class="li3 clearfix"><a href="@Url.Action("Contract", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的合同</span><span class="span2"></span></a></li>
         </ul>
     </div>
     <div class="quit_login"><a href="#">退出登录</a>
