@@ -54,6 +54,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return jsonResult;
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Login", "Account");
+        }
+
         public JsonResult GetMobileCaptcha(string mobile)
         {
             var result=UserService.GetCaptcha(mobile);
