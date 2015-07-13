@@ -16,6 +16,7 @@ using log4net;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.WeiXin;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
+using DotNet.CloudFarm.Domain.Model.Product;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -34,7 +35,6 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         
         public ActionResult Index()
         {
-            var message =WeiXinService.AutoReplyMessageGetByKeyword("你好");
             return View();
         }
 
@@ -130,6 +130,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult ProductAddOrEdit(int id=0)
         {
             if(id>0)
@@ -137,6 +138,54 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 ViewBag.Product = ProductService.GetProductById(id);
             }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult ProductAddOrEdit(ProductModel product)
+        {
+            product.CreateTime = DateTime.Now;
+            product.CreatorId = Admin.Id;
+
+            if (Request.Files.Count > 0 && Request.Files[0].ContentLength>0)
+            {
+                var file = Request.Files[0];
+                var urlPath = string.Format("/images/upload/{0}/", DateTime.Now.ToString("yyyyMMdd"));
+                var imgFilePath = Server.MapPath(urlPath);
+                var imgName = string.Format("{0}.jpg",Guid.NewGuid());
+                if (!Directory.Exists(imgFilePath))
+                {
+                    Directory.CreateDirectory(imgFilePath);
+                }
+                file.SaveAs(Path.Combine(imgFilePath,imgName));
+                product.ImgUrl = string.Format("{0}{1}",urlPath,imgName);
+            }
+            else
+            {
+                if(string.IsNullOrEmpty(product.ImgUrl))
+                {
+                    product.ImgUrl = "/images/no_pic.jpg";
+                }
+            }
+            if(product.Id==0)
+            {
+                //insert
+                ProductService.InsertProduct(product);
+            }
+            else if(product.Id>0)
+            {
+                //update
+                ProductService.UpdateProduct(product);
+
+            }
+            return RedirectToAction("Product");
+        }
+
+
+        public JsonResult GetProducts(int pageSize=10,int pageIndex=1)
+        {
+            var condition = " AND ID=1";
+            var productList = ProductService.GetProducts(pageIndex, pageSize, condition);
+            return Json(0,JsonRequestBehavior.AllowGet);
         }
 
         #endregion

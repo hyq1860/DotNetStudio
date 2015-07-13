@@ -1,10 +1,8 @@
-﻿
+﻿@using DotNet.CloudFarm.Domain.Model.Product;
 @{
     ViewBag.Title = "创建产品";
     Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
 }
-
-
 <div id="content" class="span10">
     <!-- content starts -->
     <div class="row-fluid sortable">
@@ -18,92 +16,111 @@
                 </div>
             </div>
             <div class="box-content">
+                @{
+                    ProductModel product = ViewBag.Product;
+                    if (product == null)
+                    { 
+                        product = new ProductModel();
+                    }
+                }
                 <div id="alertMsg" class="alert alert-error hidden fade in"></div>
-                <form class="form-horizontal" method="post" id="productForm">
+                <form class="form-horizontal" method="post" id="productForm" enctype="multipart/form-data">
                     <fieldset>
-                        <input type="hidden" name="Id" id="productId" />
+                        <input type="hidden" name="Id" id="productId" value="@product.Id" />
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">产品名称</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="ProductName" type="text"  name="ProductName">
+                                <input class="input-xlarge focused" id="Name" type="text" name="Name" value="@product.Name"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">售卖总数</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="Stock" type="text"  name="Stock">
+                                <input class="input-xlarge focused" id="Stock" type="text" name="Stock" value="@product.Stock"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">单价（元）</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="Price" type="text" name="Price" value="@product.Price"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">羊只单价（元）</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="SheepPrice" type="text"  name="SheepPrice">
+                                <input class="input-xlarge focused" id="SheepPrice" type="text" name="SheepPrice" value="@product.SheepPrice"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">饲料金额（元）</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="FeedPrice" type="text" name="FeedPrice">
+                                <input class="input-xlarge focused" id="FeedPrice" type="text" name="FeedPrice" value="@product.FeedPrice"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">人工金额（元）</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="WorkPrice" type="text" name="WorkPrice">
+                                <input class="input-xlarge focused" id="WorkPrice" type="text" name="WorkPrice" value="@product.WorkPrice"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">预期年化收益率(%)</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="YearEarningRate" type="text" name="YearEarningRate"> 
+                                <input class="input-xlarge focused" id="YearEarningRate" type="text" name="YearEarningRate" value="@product.YearEarningRate"/> 
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">收益率(%)</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="EarningRate" type="text"  name="EarningRate">
+                                <input class="input-xlarge focused" id="EarningRate" type="text" name="EarningRate" value="@product.EarningRate"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">预计收益（元）</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="Earning" type="text" name="Earning">
+                                <input class="input-xlarge focused" id="Earning" type="text" name="Earning" value="@product.Earning"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">育肥期（天）</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="EarningDay" type="text" name="EarningDay">
+                                <input class="input-xlarge focused" id="EarningDay" type="text" name="EarningDay" value="@product.EarningDay"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="date01">售卖开始时间</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge datepicker" id="StartTime" name="StartTime">
+                                <input type="text" class="input-xlarge datepicker" id="StartTime" name="StartTime" value="@(product.StartTime==DateTime.MinValue?"":product.StartTime.ToString())"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="date01">售卖结束时间</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge datepicker" id="EndTime" name="EndTime">
+                                <input type="text" class="input-xlarge datepicker" id="EndTime" name="EndTime" value="@(product.StartTime==DateTime.MinValue?"":product.EndTime.ToString())">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">羊羔品种</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="SheepType" type="text" name="SheepType">
+                                <input class="input-xlarge focused" id="SheepType" type="text" name="SheepType" value="@product.SheepType"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">育肥场</label>
                             <div class="controls">
-                                <input class="input-xlarge focused" id="SheepFactory" type="text" name="SheepFactory">
+                                <input class="input-xlarge focused" id="SheepFactory" type="text" name="SheepFactory" value="@product.SheepFactory"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">图片</label>
                             <div class="controls">
-                                <input type="file" name="ImgUrl" id="ImgUrl" class="input-xlarge">
+                                <input type="file" name="FileImgUrl" id="FileImgUrl" class="input-xlarge">
+                                @if(!string.IsNullOrEmpty(product.ImgUrl))
+                                {
+                                    <br/>
+                                    <img src="@product.ImgUrl" class="" />
+                                    <input type="hidden" name="ImgUrl" id="ImgUrl" value="@product.ImgUrl" />
+                                }
                             </div>
                         </div>
                         <div class="control-group">
@@ -131,7 +148,7 @@
 <script src="~/Scripts/houtai/jquery.validate-houtai.js"></script>
 <script type="text/javascript">
     $(function () {
-
+     
         var validate = $("#productForm").validate({
             //debug: true,
             focusInvalid: false,
@@ -141,7 +158,7 @@
             //    form.submit();
             //},
             rules: {
-                ProductName:
+                Name:
                     {
                         required: true,
                         maxlength: 50
@@ -151,6 +168,12 @@
                         required: true,
                         digits: true,
                         min: 1
+                    },
+                Price:
+                    {
+                        required: true,
+                        number: true,
+                        min: 0,
                     },
                 SheepPrice:
                     {
@@ -214,9 +237,6 @@
                 },
                 EndTime: {
                     required: true
-                },
-                ImgUrl: {
-                    required:true
                 }
 
             }

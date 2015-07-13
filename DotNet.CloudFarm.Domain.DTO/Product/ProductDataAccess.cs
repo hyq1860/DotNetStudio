@@ -51,6 +51,37 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             return result;
         }
 
+
+        public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize, string condition)
+        {
+            var data = new List<ProductModel>();
+
+            using (var cmd = DataCommandManager.GetDataCommand("GetProductsWithCondition"))
+            {
+                cmd.SetParameterValue("@condition", condition);
+
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        var productModel = DataReaderToProductModel(dr);
+
+                        if (productModel.Id > 0)
+                        {
+                            data.Add(productModel);
+                        }
+                    }
+                }
+            }
+
+            var result = new PagedList<ProductModel>(data, pageIndex, pageSize)
+            {
+                TotalCount = 100
+            };
+            //总记录数量
+            return result;
+        }
+
         /// <summary>
         /// 根据商品id获取商品详情
         /// </summary>
@@ -99,5 +130,73 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             productModel.ImgUrl = !Convert.IsDBNull(dr["ImgUrl"]) ? dr["ImgUrl"].ToString() : string.Empty;
             return productModel;
         }
+
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public int InserProduct(ProductModel product)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("InsertProduct"))
+            {
+                cmd.SetParameterValue("@CreateTime", product.CreateTime);
+                cmd.SetParameterValue("@CreatorId", product.CreatorId);
+                cmd.SetParameterValue("@Earning", product.Earning);
+                cmd.SetParameterValue("@EarningDay", product.EarningDay);
+                cmd.SetParameterValue("@EarningRate", product.EarningRate);
+                cmd.SetParameterValue("@EndTime", product.EndTime);
+                cmd.SetParameterValue("@FeedPrice", product.FeedPrice);
+                cmd.SetParameterValue("@ImgUrl", product.ImgUrl);
+                cmd.SetParameterValue("@ProductName", product.Name);
+                cmd.SetParameterValue("@Price", product.Price);
+                cmd.SetParameterValue("@SaledCount", product.SaledCount);
+                cmd.SetParameterValue("@SheepFactory", product.SheepFactory);
+                cmd.SetParameterValue("@SheepPrice", product.SheepPrice);
+                cmd.SetParameterValue("@SheepType", product.SheepType);
+                cmd.SetParameterValue("@StartTime", product.StartTime);
+                cmd.SetParameterValue("@Status", product.Status);
+                cmd.SetParameterValue("@Stock", product.Stock);
+                cmd.SetParameterValue("@WorkPrice", product.WorkPrice);
+                cmd.SetParameterValue("@YearEarningRate", product.YearEarningRate);
+                var result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+                return 0;
+            }
+        }
+
+
+        public void UpdateProduct(ProductModel product)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateProductById"))
+            {
+                cmd.SetParameterValue("@Id", product.Id);
+                cmd.SetParameterValue("@CreateTime", product.CreateTime);
+                cmd.SetParameterValue("@CreatorId", product.CreatorId);
+                cmd.SetParameterValue("@Earning", product.Earning);
+                cmd.SetParameterValue("@EarningDay", product.EarningDay);
+                cmd.SetParameterValue("@EarningRate", product.EarningRate);
+                cmd.SetParameterValue("@EndTime", product.EndTime);
+                cmd.SetParameterValue("@FeedPrice", product.FeedPrice);
+                cmd.SetParameterValue("@ImgUrl", product.ImgUrl);
+                cmd.SetParameterValue("@ProductName", product.Name);
+                cmd.SetParameterValue("@Price", product.Price);
+                cmd.SetParameterValue("@SaledCount", product.SaledCount);
+                cmd.SetParameterValue("@SheepFactory", product.SheepFactory);
+                cmd.SetParameterValue("@SheepPrice", product.SheepPrice);
+                cmd.SetParameterValue("@SheepType", product.SheepType);
+                cmd.SetParameterValue("@StartTime", product.StartTime);
+                cmd.SetParameterValue("@Status", product.Status);
+                cmd.SetParameterValue("@Stock", product.Stock);
+                cmd.SetParameterValue("@WorkPrice", product.WorkPrice);
+                cmd.SetParameterValue("@YearEarningRate", product.YearEarningRate);
+                cmd.ExecuteScalar();
+            }
+        }
+
+
     }
 }

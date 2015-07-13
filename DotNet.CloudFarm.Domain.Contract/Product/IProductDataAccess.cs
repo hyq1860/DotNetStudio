@@ -25,5 +25,17 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         /// <param name="productId"></param>
         /// <returns></returns>
         ProductModel GetProductById(int productId);
+
+        int InserProduct(ProductModel product);
+
+        void UpdateProduct(ProductModel product);
+        /// <summary>
+        /// 获取产品列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        PagedList<ProductModel> GetProducts(int pageIndex, int pageSize, string condition);
     }
 }

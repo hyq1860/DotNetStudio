@@ -261,6 +261,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustomMessageContext.cs" />
     <Compile Include="Models\CustomMessageHandler.cs" />
+    <Compile Include="Models\DataTableModel.cs" />
     <Compile Include="Models\TextResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

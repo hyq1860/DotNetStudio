@@ -25,9 +25,29 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
             return productDataAccess.GetProducts(pageIndex, pageSize, status);
         }
 
+        public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize, string condition)
+        {
+            return productDataAccess.GetProducts(pageIndex, pageSize, condition);
+        }
+
         public ProductModel GetProductById(int productId)
         {
             return productDataAccess.GetProductById(productId);
         }
+
+
+        public int InsertProduct(ProductModel product)
+        {
+            return productDataAccess.InserProduct(product);
+        }
+
+
+        public void UpdateProduct(ProductModel product)
+        {
+             productDataAccess.UpdateProduct(product);
+        }
+
+
+        
     }
 }
