@@ -51,9 +51,8 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LitJson, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>refdll\LitJson.dll</HintPath>
+    <Reference Include="LitJson">
+      <HintPath>..\packages\LitJson.0.7.0\lib\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -492,6 +491,7 @@
     <Content Include="Scripts\houtai\jquery.iphone.toggle.js" />
     <Content Include="Scripts\houtai\jquery.js" />
     <Content Include="Scripts\houtai\jquery.noty.js" />
+    <Content Include="Scripts\houtai\jquery.pager.js" />
     <Content Include="Scripts\houtai\jquery.raty.min.js" />
     <Content Include="Scripts\houtai\jquery.uniform.min.js" />
     <Content Include="Scripts\houtai\jquery.uploadify-3.1.min.js" />
@@ -554,6 +554,7 @@
     <Content Include="Views\HouTai\ProductAddOrEdit.cshtml" />
     <Content Include="Views\Home\OrderDetail.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Views\HouTai\OrderList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

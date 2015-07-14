@@ -4450,3 +4450,11 @@ i[class^="icon-"] {
 .invisible {
   visibility: hidden;
 }
+
+
+.pages{height:26px;text-align:center;color:#999;clear:both;padding:10px 0;}
+.pages a{display:inline-block;height:26px;width:26px;line-height:26px;margin-right:10px;border:1px solid #a8a8a8; color:#666;border-radius:2px;background-color:#fff;}
+.pages a{*display:inline;}
+.pages a.preEndDf,.pages a.nextEndDf{width:50px;border:1px solid #a8a8a8;}
+.pages a.preDf,.pages a.nextDf{width:58px;border:1px solid #a8a8a8;}
+.pages a.checked{border:1px solid #ee5b47;height:26px;width:26px;color:#ee5b47;}

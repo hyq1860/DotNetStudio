@@ -50,3 +50,4 @@
 /// <reference path="houtai/jquery.validate-houtai.js" />
 /// <reference path="underscore.min.js" />
 /// <reference path="common.js" />
+/// <reference path="houtai/jquery.pager.js" />

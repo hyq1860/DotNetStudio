@@ -1,73 +1,75 @@
 ﻿@using DotNet.CloudFarm.Domain.Model.Product;
 @{
-    ViewBag.Title = "产品列表";
+    ViewBag.Title = "订单列表";
     Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
 }
 <div id="content" class="span10">
     <!-- content starts -->
     <div class="row-fluid sortable">
         <div class="box span12">
-					<div class="box-header well" data-original-title>
-						<h2><i class="icon-align-justify"></i> 产品列表</h2>
-						<div class="box-icon">
-							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-						</div>
-					</div>
-					<div class="box-content">
-						<table class="table table-bordered">
-							  <thead>
-								  <tr>
-									  <th>ID</th>
-									  <th>名称</th>
-                                      <th>图像</th>
-									  <th>状态</th>
-									  <th>操作</th>                                          
-								  </tr>
-							  </thead>   
-                            <tbody data-bind="foreach: homeViewModel.Products()">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-align-justify"></i> 订单列表</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>用户名称</th>
+                            <th>产品名称</th>
+                            <th>购买数量</th>
+                            <th>总价</th>
+                            <th>支付方式</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: homeViewModel.Products()">
 
-                                <tr>
-                                    <td data-bind="text:Id"></td>
-                                    <td class="center" data-bind="text:Name"></td>
-                                    <td class="center">
-                                        <img data-bind="attr:{src:ImgUrl}" style="width:120px;height:120px" />
-                                    </td>
-                                    <td class="center" >
-                                        <span class="label" data-bind="text:Activity"></span>
-                                        <!-- ko if: Status()==1 -->
-                                        <span class="label label-success">显示</span>
-                                        <!-- /ko -->
-                                        <!-- ko if: Status()==0 -->
-                                        <span class="label">不显示</span>
-                                        <!-- /ko -->
-                                    </td>
-                                    <td class="center">
-                                        <!-- ko if:Activity()=="未开始"-->
-                                        <a href="javascript:void(0);" data-bind="click: Edit" class="btn btn-info"><i class="icon-edit icon-white"></i>编辑</a>
-                                        <a href="javascript:void(0);" data-bind="click: Del" class="btn btn-danger"><i class="icon-edit icon-white"></i>删除</a>
+                        <tr>
+                            <td data-bind="text:Id"></td>
+                            <td class="center" data-bind="text:Name"></td>
+                            <td class="center">
+                                <img data-bind="attr:{src:ImgUrl}" style="width:120px;height:120px" />
+                            </td>
+                            <td class="center">
+                                <span class="label" data-bind="text:Activity"></span>
+                                <!-- ko if: Status()==1 -->
+                                <span class="label label-success">显示</span>
+                                <!-- /ko -->
+                                <!-- ko if: Status()==0 -->
+                                <span class="label">不显示</span>
+                                <!-- /ko -->
+                            </td>
+                            <td class="center">
+                                <!-- ko if:Activity()=="未开始"-->
+                                <a href="javascript:void(0);" data-bind="click: Edit" class="btn btn-info"><i class="icon-edit icon-white"></i>编辑</a>
+                                <a href="javascript:void(0);" data-bind="click: Del" class="btn btn-danger"><i class="icon-edit icon-white"></i>删除</a>
 
-                                        <!-- /ko -->
-                                    </td>
-                                </tr>
-                            </tbody>
-						 </table>  
-                        <div id="pages"></div>
-						 @*<div class="pagination pagination-centered">
-						  <ul>
-							<li><a href="#">Prev</a></li>
-							<li class="active">
-							  <a href="#">1</a>
-							</li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">Next</a></li>
-						  </ul>
-						</div>*@     
-					</div>
-				</div><!--/span-->
+                                <!-- /ko -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="pages"></div>
+                @*<div class="pagination pagination-centered">
+                      <ul>
+                        <li><a href="#">Prev</a></li>
+                        <li class="active">
+                          <a href="#">1</a>
+                        </li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">Next</a></li>
+                      </ul>
+                    </div>*@
+            </div>
+        </div><!--/span-->
 
     </div>
 
@@ -88,7 +90,7 @@
     <!-- content ends -->
 </div>
 @section scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
     var pageSize = 2;
     var pageIndex = 1;
     var init = true;
@@ -308,5 +310,5 @@
         }
 
     }
-    </script>    
+    </script>
 }

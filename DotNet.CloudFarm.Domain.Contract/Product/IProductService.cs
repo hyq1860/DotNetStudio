@@ -15,13 +15,21 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
     public interface IProductService
     {
         /// <summary>
+        /// 获取产品列表(未删除)
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        PagedList<ProductModel> GetProducts(int pageIndex,int pageSize);
+
+        /// <summary>
         /// 获取产品列表
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <param name="status">产品状态</param>
         /// <returns></returns>
-        PagedList<ProductModel> GetProducts(int pageIndex,int pageSize,int status);
+        PagedList<ProductModel> GetProducts(int pageIndex, int pageSize,int status);
 
         /// <summary>
         /// 获取产品列表
@@ -46,5 +54,11 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         int InsertProduct(ProductModel product);
 
         void UpdateProduct(ProductModel product);
+        /// <summary>
+        /// 更新product的状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        void UpdateStatus(int id,int status);
     }
 }

@@ -20,9 +20,15 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
             this.productDataAccess = productDataAccess;
         }
 
+        public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize)
+        {
+            return productDataAccess.GetProducts(pageIndex, pageSize);
+        }
+
         public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize, int status)
         {
             return productDataAccess.GetProducts(pageIndex, pageSize, status);
+
         }
 
         public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize, string condition)
@@ -48,6 +54,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
         }
 
 
-        
+
+
+        public void UpdateStatus(int id, int status)
+        {
+            productDataAccess.UpdateStatus(id,status);
+        }
     }
 }

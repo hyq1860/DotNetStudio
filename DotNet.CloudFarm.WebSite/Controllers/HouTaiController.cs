@@ -15,8 +15,10 @@ using Senparc.Weixin.MP.Entities.Menu;
 using log4net;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.WeiXin;
+using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
-using DotNet.CloudFarm.Domain.Model.Product;
+using DotNet.CloudFarm.Domain.Model.WeiXin;
+using DotNet.CloudFarm.Domain.Model.Order;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -32,6 +34,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         [Ninject.Inject]
         public IWeiXinService WeiXinService { get; set; }
+     
+        
+        [Ninject.Inject]
+        public IOrderService OrderService { get; set; }
         
         public ActionResult Index()
         {
@@ -140,6 +146,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 添加或编辑
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ProductAddOrEdit(ProductModel product)
         {
@@ -180,14 +191,58 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return RedirectToAction("Product");
         }
 
-
-        public JsonResult GetProducts(int pageSize=10,int pageIndex=1)
+        /// <summary>
+        /// AJAX获取所有product
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public JsonResult GetProducts(int pageSize=20,int pageIndex=1)
         {
-            var condition = " AND ID=1";
-            var productList = ProductService.GetProducts(pageIndex, pageSize, condition);
-            return Json(0,JsonRequestBehavior.AllowGet);
+            var productList = ProductService.GetProducts(pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = productList.PageIndex,
+                PageSize = productList.PageSize,
+                Products = productList.ToList(),
+                Count = productList.TotalCount,
+                PageNo=productList.TotalCount % productList.PageSize != 0 ? (productList.TotalCount / productList.PageSize) + 1 : productList.TotalCount / productList.PageSize
+            };
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// AJAX删除product
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult DelProduct(int id, int pageSize = 20, int pageIndex = 1)
+        {
+            var status = -1;
+            ProductService.UpdateStatus(id,status);
+            var productList = ProductService.GetProducts(pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = productList.PageIndex,
+                PageSize = productList.PageSize,
+                Products = productList.ToList(),
+                Count = productList.TotalCount,
+                PageNo=productList.TotalCount % productList.PageSize != 0 ? (productList.TotalCount / productList.PageSize) + 1 : productList.TotalCount / productList.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+
+        #region 订单后台
+        public ActionResult OrderList()
+        {
+            
+            return View();
+        }
         #endregion
     }
 }
