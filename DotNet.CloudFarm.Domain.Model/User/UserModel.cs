@@ -59,6 +59,11 @@ namespace DotNet.CloudFarm.Domain.Model.User
         public int WxGroupId { get; set; }
 
         /// <summary>
+        /// 状态：0-禁用；1-可用
+        /// </summary>
+        public int Status { get; set; }
+
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }

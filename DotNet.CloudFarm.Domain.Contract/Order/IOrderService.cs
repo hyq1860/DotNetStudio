@@ -16,13 +16,22 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
     public interface IOrderService
     {
         /// <summary>
-        /// 获取订单列表
+        /// 获取订单列表（BY USERID）
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         Result<PagedList<OrderViewModel>> GetOrderList(int userId, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 获取订单列表（ALL）
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize);
 
         /// <summary>
         /// 提交订单

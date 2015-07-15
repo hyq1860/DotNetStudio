@@ -19,6 +19,11 @@ using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
 using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.CloudFarm.Domain.Model.Product;
+using DotNet.CloudFarm.Domain.Model.Base;
+using DotNet.CloudFarm.Domain.ViewModel;
+using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model.User;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -38,6 +43,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         
         [Ninject.Inject]
         public IOrderService OrderService { get; set; }
+
+        /// <summary>
+        /// 用户服务
+        /// </summary>
+        [Ninject.Inject]
+        public IUserService UserService { get; set; }
         
         public ActionResult Index()
         {
@@ -240,8 +251,180 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         #region 订单后台
         public ActionResult OrderList()
         {
-            
             return View();
+        }
+
+        public JsonResult GetOrderList(int pageSize=20, int pageIndex=1)
+        {
+            var orderList = OrderService.GetOrderList(pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = orderList.Data.PageIndex,
+                PageSize = orderList.Data.PageSize,
+                List = orderList.Data.ToList(),
+                Count = orderList.Data.TotalCount,
+                PageNo = orderList.Data.TotalCount % orderList.Data.PageSize != 0 ?
+                    (orderList.Data.TotalCount / orderList.Data.PageSize) + 1 : orderList.Data.TotalCount / orderList.Data.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult CancelOrder(long orderId,int userId,int pageIndex,int pageSize)
+        {
+            var status = OrderStatus.Close.GetHashCode();
+            var orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+            var result = new
+            {
+                PageIndex = orderList.Data.PageIndex,
+                PageSize = orderList.Data.PageSize,
+                List = orderList.Data.ToList(),
+                Count = orderList.Data.TotalCount,
+                PageNo = orderList.Data.TotalCount % orderList.Data.PageSize != 0 ?
+                    (orderList.Data.TotalCount / orderList.Data.PageSize) + 1 : orderList.Data.TotalCount / orderList.Data.PageSize
+            };
+            return Json(result,JsonRequestBehavior.AllowGet);
+            
+        }
+
+        /// <summary>
+        /// 确认支付
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult CofirmOrderPay(long orderId, int userId, int pageIndex, int pageSize)
+        {
+            var status = OrderStatus.Paid.GetHashCode();
+            var orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+            var result = new
+            {
+                PageIndex = orderList.Data.PageIndex,
+                PageSize = orderList.Data.PageSize,
+                List = orderList.Data.ToList(),
+                Count = orderList.Data.TotalCount,
+                PageNo = orderList.Data.TotalCount % orderList.Data.PageSize != 0 ?
+                    (orderList.Data.TotalCount / orderList.Data.PageSize) + 1 : orderList.Data.TotalCount / orderList.Data.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        /// <summary>
+        /// 确认赎回
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult ConfirmOrderPayReturn(long orderId, int userId, int pageIndex, int pageSize)
+        {
+            var status = OrderStatus.Complete.GetHashCode();
+            //TODO:调取微信企业支付接口
+
+            var orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+            var result = new
+            {
+                PageIndex = orderList.Data.PageIndex,
+                PageSize = orderList.Data.PageSize,
+                List = orderList.Data.ToList(),
+                Count = orderList.Data.TotalCount,
+                PageNo = orderList.Data.TotalCount % orderList.Data.PageSize != 0 ?
+                    (orderList.Data.TotalCount / orderList.Data.PageSize) + 1 : orderList.Data.TotalCount / orderList.Data.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+        /// <summary>
+        /// 变更订单状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        private Common.Models.Result<Common.Collections.PagedList<OrderManageViewModel>> ChangeOrderStatus(long orderId, int userId, int pageIndex, int pageSize, int status)
+        {
+            var orderResult = OrderService.UpdateOrderStatus(userId, orderId, status);
+            var orderList = OrderService.GetOrderList(pageIndex, pageSize);
+            return orderList;
+        }
+        #endregion
+
+        #region 用户后台
+        /// <summary>
+        /// 用户列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserList()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// AJAX获取用户列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public JsonResult GetUserList(int pageIndex=1,int pageSize=20)
+        {
+            var userList = UserService.GetUserList(pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = userList.PageIndex,
+                PageSize = userList.PageSize,
+                List = userList.ToList(),
+                Count = userList.TotalCount,
+                PageNo = userList.TotalCount % userList.PageSize != 0 ?
+                    (userList.TotalCount / userList.PageSize) + 1 :
+                    userList.TotalCount / userList.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 禁用用户
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public JsonResult DisableUser(int userId)
+        {
+            var status = 0;
+            var result = UserService.UpdateUserStatus(userId, status);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 启用用户
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public JsonResult EnableUser(int userId)
+        {
+            var status = 1;
+            var result = UserService.UpdateUserStatus(userId, status);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 搜索用户
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        public JsonResult SearchUser(string mobile)
+        {
+            var user = UserService.GetUser(mobile);
+            var result = new
+            {
+                PageIndex = 1,
+                PageSize = 20,
+                List = new List<UserModel>(){user},
+                Count = 1,
+                PageNo = 1,
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

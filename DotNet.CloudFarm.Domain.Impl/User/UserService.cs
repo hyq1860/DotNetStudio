@@ -55,5 +55,17 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         {
             return userDataAccess.Insert(userModel);
         }
+
+
+        public PagedList<UserModel> GetUserList(int pageIndex, int pageSize)
+        {
+            return userDataAccess.GetUserList(pageIndex, pageSize);
+        }
+
+
+        public int UpdateUserStatus(int userId, int status)
+        {
+             return userDataAccess.UpdateUserStatus(userId, status);
+        }
     }
 }

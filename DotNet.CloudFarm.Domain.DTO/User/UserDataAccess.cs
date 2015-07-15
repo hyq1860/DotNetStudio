@@ -7,6 +7,8 @@ using Dapper;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Data;
+using System.Data;
+using DotNet.Common.Collections;
 
 namespace DotNet.CloudFarm.Domain.DTO.User
 {
@@ -60,6 +62,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                         user.WxUnionId = !Convert.IsDBNull(dr["WxUnionId"]) ? dr["WxUnionId"].ToString() : string.Empty;
                         user.WxRemark = !Convert.IsDBNull(dr["WxRemark"]) ? dr["WxRemark"].ToString() : string.Empty;
                         user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
+                        user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
                         user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
                     }
                 }
@@ -87,6 +90,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                         user.WxUnionId = !Convert.IsDBNull(dr["WxUnionId"]) ? dr["WxUnionId"].ToString() : string.Empty;
                         user.WxRemark = !Convert.IsDBNull(dr["WxRemark"]) ? dr["WxRemark"].ToString() : string.Empty;
                         user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
+                        user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
                         user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
                     }
                 }
@@ -107,6 +111,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 cmd.SetParameterValue("@WxUnionId", userModel.WxUnionId);
                 cmd.SetParameterValue("@WxRemark", userModel.WxRemark);
                 cmd.SetParameterValue("@WxGroupId", userModel.WxGroupId);
+                cmd.SetParameterValue("@Status", userModel.Status);
                 cmd.SetParameterValue("@CreateTime", userModel.CreateTime);
 
                 var result = cmd.ExecuteScalar();
@@ -115,6 +120,62 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                     return Convert.ToInt32(result);
                 }
                 return 0;
+            }
+        }
+
+
+        public PagedList<UserModel> GetUserList(int pageIndex, int pageSize)
+        {
+            var userList = new List<UserModel>();
+            var count = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetUserByPageList"))
+            {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                using (var ds = cmd.ExecuteDataSet())
+                {
+                    if (ds.Tables.Count >= 2)
+                    {
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            var user = new UserModel();
+                            user.UserId = !Convert.IsDBNull(dr["ID"]) ? int.Parse(dr["ID"].ToString()) : 0;
+                            user.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
+                            user.WxOpenId = !Convert.IsDBNull(dr["WxOpenId"]) ? dr["WxOpenId"].ToString() : string.Empty;
+                            user.WxNickName = !Convert.IsDBNull(dr["WxNickName"]) ? dr["WxNickName"].ToString() : string.Empty;
+                            user.WxSex = !Convert.IsDBNull(dr["WxSex"]) ? int.Parse(dr["WxSex"].ToString()) : 0;
+                            user.WxHeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;
+                            user.WxSubTime = !Convert.IsDBNull(dr["WxSubTime"]) ? Convert.ToDateTime(dr["WxSubTime"]) : DateTime.MinValue;
+                            user.WxUnionId = !Convert.IsDBNull(dr["WxUnionId"]) ? dr["WxUnionId"].ToString() : string.Empty;
+                            user.WxRemark = !Convert.IsDBNull(dr["WxRemark"]) ? dr["WxRemark"].ToString() : string.Empty;
+                            user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
+                            user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
+                            user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                            userList.Add(user);
+                        }
+                        var countDr = ds.Tables[1].Rows[0][0];
+                        count = !Convert.IsDBNull(countDr) ? Convert.ToInt32(countDr) : 0;
+                    }
+                }
+                var result = new PagedList<UserModel>(userList, pageIndex, pageSize, count);
+                return result;
+            }
+        }
+
+
+
+        public int UpdateUserStatus(int userId, int status)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateUserStatus"))
+            {
+                cmd.SetParameterValue("@Status",status);
+                cmd.SetParameterValue("@UserId", userId);
+               var result = cmd.ExecuteNonQuery();
+               if (result != null)
+               {
+                   return Convert.ToInt32(result);
+               }
+               return 0;
             }
         }
     }

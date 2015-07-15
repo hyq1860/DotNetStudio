@@ -31,6 +31,15 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return result;
         }
 
+        public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)
+        {
+            var result = new Result<PagedList<OrderManageViewModel>>
+            {
+                Data = orderDataAccess.GetOrderList(pageIndex, pageSize)
+            };
+            return result;
+        }
+
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)
         {
             //提交订单
@@ -70,5 +79,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         {
             return orderDataAccess.UpdateOrderStatus(userId, orderId, orderStatus);
         }
+
+
     }
 }

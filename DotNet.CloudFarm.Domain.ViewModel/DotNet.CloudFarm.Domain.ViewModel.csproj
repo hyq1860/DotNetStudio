@@ -43,6 +43,7 @@
     <Compile Include="ConfirmOrderViewModel.cs" />
     <Compile Include="HomeViewModel.cs" />
     <Compile Include="MyCenterViewModel.cs" />
+    <Compile Include="OrderManageViewModel.cs" />
     <Compile Include="OrderPayViewModel.cs" />
     <Compile Include="OrderViewModel.cs" />
     <Compile Include="PayTipViewModel.cs" />

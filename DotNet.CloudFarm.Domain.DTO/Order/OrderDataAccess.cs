@@ -11,6 +11,7 @@ using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
 using DotNet.Data;
+using System.Data;
 
 namespace DotNet.CloudFarm.Domain.DTO.Order
 {
@@ -26,7 +27,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
         public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
         {
             var result = new List<TopOrderInfo>();
-            using (var cmd = DataCommandManager.GetDataCommand(""))
+            using (var cmd = DataCommandManager.GetDataCommand("GetTopOrderList"))
             {
                 
                 using (var dr=cmd.ExecuteDataReader())
@@ -195,6 +196,49 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
             
             return orderViewModel;
+        }
+
+
+        public PagedList<OrderManageViewModel> GetOrderList(int pageIndex, int pageSize)
+        {
+            var orderList = new List<OrderManageViewModel>();
+            var count = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetOrderListAll"))
+            {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                using (var ds = cmd.ExecuteDataSet())
+                {
+                    if (ds.Tables.Count >= 2)
+                    {
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            var omvm = new OrderManageViewModel();
+
+                            omvm.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? Convert.ToInt64(dr["OrderId"]) : 0;
+                            omvm.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                            omvm.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                            omvm.ProductId = !Convert.IsDBNull(dr["ProductId"]) ? Convert.ToInt32(dr["ProductId"]) : 0;
+                            omvm.ProductCount = !Convert.IsDBNull(dr["ProductCount"]) ? Convert.ToInt32(dr["ProductCount"]) : 0;
+                            omvm.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
+                            omvm.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
+                            omvm.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
+                            omvm.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
+                            omvm.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+                            omvm.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
+                            if (omvm.OrderId > 0)
+                            {
+                                orderList.Add(omvm);
+                            }
+                        }
+                        var countDr = ds.Tables[1].Rows[0][0];
+                        count = !Convert.IsDBNull(countDr) ? Convert.ToInt32(countDr) : 0;
+
+                    }
+                }
+            }
+            var result = new PagedList<OrderManageViewModel>(orderList, pageIndex, pageSize,count);
+            return result;
         }
     }
 }

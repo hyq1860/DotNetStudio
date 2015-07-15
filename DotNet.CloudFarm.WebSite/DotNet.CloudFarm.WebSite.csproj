@@ -555,6 +555,7 @@
     <Content Include="Views\Home\OrderDetail.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\HouTai\OrderList.cshtml" />
+    <Content Include="Views\HouTai\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

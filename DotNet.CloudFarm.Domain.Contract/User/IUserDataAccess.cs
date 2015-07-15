@@ -39,5 +39,21 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="userName"></param>
         /// <returns></returns>
         UserModel GetUser(string userName);
+
+        /// <summary>
+        /// 分页获取用户信息
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        Common.Collections.PagedList<UserModel> GetUserList(int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        int UpdateUserStatus(int userId, int status);
     }
 }
