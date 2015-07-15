@@ -27,6 +27,8 @@ namespace DotNet.CloudFarm.WebSite.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using DotNet.CloudFarm.Domain.Contract.SMS;
+    using DotNet.CloudFarm.Domain.Impl.SMS;
 
     public static class NinjectWebCommon 
     {
@@ -100,6 +102,9 @@ namespace DotNet.CloudFarm.WebSite.App_Start
             //微信服务
             kernel.Bind<IWeiXinMessageDataAccess>().To<WeiXinMessageDataAccess>();
             kernel.Bind<IWeiXinService>().To<WeiXinService>();
+
+            //短信服务
+            kernel.Bind<ISMSService>().To<SMSService>();
 
         }        
     }

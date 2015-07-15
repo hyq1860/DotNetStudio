@@ -46,6 +46,9 @@
     <Compile Include="Order\TopOrderInfo.cs" />
     <Compile Include="Product\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMS\oAuthRequestModel.cs" />
+    <Compile Include="SMS\SMSResponseModel.cs" />
+    <Compile Include="SMS\SMSRequestModel.cs" />
     <Compile Include="User\AdminUser.cs" />
     <Compile Include="User\LoginUser.cs" />
     <Compile Include="User\UserCaptchaModel.cs" />

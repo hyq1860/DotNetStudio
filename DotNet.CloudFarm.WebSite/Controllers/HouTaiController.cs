@@ -24,6 +24,9 @@ using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.CloudFarm.Domain.Contract.SMS;
+using DotNet.CloudFarm.Domain.Impl.SMS;
+
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -49,6 +52,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         [Ninject.Inject]
         public IUserService UserService { get; set; }
+
+        /// <summary>
+        /// 短信服务
+        /// </summary>
+        [Ninject.Inject]
+        public ISMSService SMSService { get; set; }
         
         public ActionResult Index()
         {
@@ -427,5 +436,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+
+        public ContentResult TestSMS(string tel)
+        {
+            var value = SMSService.SendSMSOrderCreated(tel, 111111111, 10.00M);
+            return Content(value.ToString());
+        }
     }
 }
