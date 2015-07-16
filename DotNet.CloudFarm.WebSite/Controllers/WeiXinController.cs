@@ -13,6 +13,9 @@ using DotNet.CloudFarm.WebSite.Models;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Entities.Menu;
 using log4net;
+using Senparc.Weixin.MP.TenPayLibV3;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using System.Xml.Linq;
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
     /// <summary>
@@ -36,7 +39,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
         /// </summary>
         public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
-
+        /// <summary>
+        /// 微信商户号
+        /// </summary>
+        public static readonly string Mchid = WebConfigurationManager.AppSettings["WeixinMchid"];
         private ILog logger = LogManager.GetLogger("WeiXinController");
 
         /// <summary>
@@ -193,6 +199,51 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var result = CommonApi.GetUserInfo(accessToken, openid);
             
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 企业支付TEST
+        /// </summary>
+        /// <param name="openId">openId</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="amount">金额</param>
+        /// <param name="desc">付款描述信息</param>
+        /// <returns></returns>
+        public ContentResult QyPayTest(string openId,string orderId,decimal amount,string desc)
+        {
+            //创建支付应答对象
+            RequestHandler packageReqHandler = new RequestHandler(null);
+
+            var sp_billno = DateTime.Now.ToString("HHmmss") + TenPayV3Util.BuildRandomStr(28);
+            var nonceStr = TenPayV3Util.GetNoncestr();
+
+            //创建请求统一订单接口参数
+            packageReqHandler.SetParameter("mch_appid", AppId);
+            packageReqHandler.SetParameter("mch_id", Mchid);
+            packageReqHandler.SetParameter("nonce_str", nonceStr);
+            packageReqHandler.SetParameter("partner_trade_no", orderId);
+            packageReqHandler.SetParameter("openid", openId);
+            packageReqHandler.SetParameter("check_name", "NO_CHECK");//不校验用户姓名
+            packageReqHandler.SetParameter("desc", desc);
+            string sign = packageReqHandler.CreateMd5Sign("spbill_create_ip", "101.200.233.5");//TODO:替换成可配置文件
+            packageReqHandler.SetParameter("sign", sign);
+
+            string data = packageReqHandler.ParseXML();
+
+            try
+            {
+                //调用统一订单接口
+                var result = TenPayV3.QYPay(data);
+                var unifiedorderRes = XDocument.Parse(result);
+                string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;
+                return Content(return_code);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                return Content(e.InnerException.ToString());
+            }
+
         }
     }
 }

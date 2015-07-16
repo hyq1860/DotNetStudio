@@ -146,8 +146,9 @@
     <Reference Include="Senparc.Weixin">
       <HintPath>..\packages\Senparc.Weixin.3.3.6\lib\net40\Senparc.Weixin.dll</HintPath>
     </Reference>
-    <Reference Include="Senparc.Weixin.MP">
-      <HintPath>..\packages\Senparc.Weixin.MP.11.3.2\lib\net40\Senparc.Weixin.MP.dll</HintPath>
+    <Reference Include="Senparc.Weixin.MP, Version=11.3.2.17164, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\LIB\Senparc.Weixin.MP.dll</HintPath>
     </Reference>
     <Reference Include="Senparc.Weixin.MP.MvcExtension">
       <HintPath>..\packages\Senparc.Weixin.MP.MVC.3.1.0\lib\net40\Senparc.Weixin.MP.MvcExtension.dll</HintPath>
