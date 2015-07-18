@@ -74,5 +74,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="expireMinute"></param>
         /// <returns></returns>
         string GetUnUsedCaptcha(int userId, string mobile, int expireMinute);
+
+        /// <summary>
+        ///  根据OPENID获取用户信息
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        UserModel GetUserByWxOpenId(string openId);
     }
 }

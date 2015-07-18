@@ -90,5 +90,14 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         {
              return userDataAccess.UpdateUserStatus(userId, status);
         }
+
+
+
+
+        public UserModel GetUserByWxOpenId(string wxOpenId)
+        {
+            return userDataAccess.GetUserByWxOpenId(wxOpenId);
+        }
+
     }
 }

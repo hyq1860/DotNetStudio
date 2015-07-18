@@ -61,5 +61,13 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="userId"></param>
         /// <param name="status"></param>
         int UpdateUserStatus(int userId, int status);
+
+
+        /// <summary>
+        /// 根据微信OPENID获取用户信息
+        /// </summary>
+        /// <param name="wxOpenId"></param>
+        /// <returns></returns>
+        UserModel GetUserByWxOpenId(string wxOpenId);
     }
 }

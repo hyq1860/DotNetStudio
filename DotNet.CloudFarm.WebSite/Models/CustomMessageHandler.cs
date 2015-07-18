@@ -8,12 +8,18 @@ using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.MP.Entities.Request;
 using Senparc.Weixin.MP.MessageHandlers;
 using Senparc.Weixin.MP.Helpers;
-using DotNet.CloudFarm.Domain.Contract.WeiXin;
-using DotNet.CloudFarm.Domain.Model.WeiXin;
 using log4net;
 using DotNet.Common.Utility;
+using DotNet.CloudFarm.Domain.Contract.WeiXin;
+using DotNet.CloudFarm.Domain.Model.WeiXin;
 using DotNet.CloudFarm.Domain.Impl.WeiXin;
 using DotNet.CloudFarm.Domain.DTO.WeiXin;
+using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.CloudFarm.Domain.Impl.User;
+using DotNet.CloudFarm.Domain.DTO.User;
+using Senparc.Weixin.MP.CommonAPIs;
+using System.Web.Configuration;
 
 namespace DotNet.CloudFarm.WebSite.Models
 {
@@ -23,6 +29,15 @@ namespace DotNet.CloudFarm.WebSite.Models
     /// </summary>
     public partial class CustomMessageHandler : MessageHandler<CustomMessageContext>
     {
+        /// <summary>
+        /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
+        /// <summary>
+        /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+
         /// <summary>
         /// 微信相关业务
         /// </summary>
@@ -48,23 +63,67 @@ namespace DotNet.CloudFarm.WebSite.Models
 
         public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
         {
-            var resopnseMessage = base.CreateResponseMessage<ResponseMessageText>();
-            var keyword = requestMessage.Content;
-            //var message = WeiXinService.AutoReplyMessageGetByKeyword(keyword);
-            var dataAccess = new WeiXinMessageDataAccess();
-            var service = new WeiXinService(dataAccess);
-            var message = service.AutoReplyMessageGetByKeyword(keyword);
-
-            if (message != null && message.Id > 0)
+            try
             {
-                resopnseMessage.Content = message.ReplyContent;
-                return resopnseMessage;
-            }
-            else
-            {
-                return null;                
-            }
+                var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+                var keyword = requestMessage.Content;
+                var dataAccess = new WeiXinMessageDataAccess();
+                var service = new WeiXinService(dataAccess);
+                var message = service.AutoReplyMessageGetByKeyword(keyword);
 
+                if (message != null && message.Id > 0)
+                {
+                    responseMessage.Content = message.ReplyContent;
+                    return responseMessage;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return null;
+            }
+           
+
+        }
+
+        public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
+        {
+            var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+            var welcomeStr = "欢迎关注羊客，了解羊客请点击【微场景】，购买请点击【购买】。";
+            responseMessage.Content = welcomeStr;
+            try
+            {
+                var openId = requestMessage.FromUserName;
+                var userDataAccess = new UserDataAccess();
+                var userService = new UserService(userDataAccess, null);
+                var user = userService.GetUserByWxOpenId(openId);
+                if (user == null || user.UserId == 0)
+                {
+                    var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+                    var wxUser = CommonApi.GetUserInfo(accesstoken, openId);
+                    if (!string.IsNullOrEmpty(wxUser.headimgurl))
+                    {
+                        wxUser.headimgurl = wxUser.headimgurl.Substring(0, wxUser.headimgurl.Length - 1) + "96";
+                    }
+                    var userModel = new UserModel()
+                    {
+                        CreateTime = DateTime.Now,
+                        WxOpenId = openId,
+                        WxHeadUrl = wxUser.headimgurl,
+                        WxNickName = wxUser.nickname
+                    };
+                    userService.Insert(userModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+            return responseMessage;
         }
         /// <summary>
         /// 在所有消息处理之前执行
