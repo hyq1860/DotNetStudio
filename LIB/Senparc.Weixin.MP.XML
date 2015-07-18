@@ -6294,13 +6294,14 @@
             <returns></returns>
         </member>
         <!-- 对于成员“T:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3”忽略有格式错误的 XML 注释 -->
-        <member name="M:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3.Unifiedorder(System.String,System.Int32)">
+        <member name="M:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3.Unifiedorder(System.String,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Int32)">
             <summary>
             统一支付接口
             统一支付接口，可接受JSAPI/NATIVE/APP 下预支付订单，返回预支付订单号。NATIVE 支付返回二维码code_url。
             </summary>
             <param name="data">微信支付需要post的xml数据</param>
             <param name="timeOut"></param>
+            <param name="cert"></param>
             <returns></returns>
         </member>
         <member name="M:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3.NativePay(System.String,System.String,System.String,System.String,System.String,System.String)">
@@ -6357,11 +6358,12 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3.QYPay(System.String)">
+        <member name="M:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3.QYPay(System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             企业付款
             </summary>
             <param name="data"></param>
+            <param name="certificate2"></param>
             <returns></returns>
         </member>
         <member name="T:Senparc.Weixin.MP.AdvancedAPIs.TenPayV3Result">

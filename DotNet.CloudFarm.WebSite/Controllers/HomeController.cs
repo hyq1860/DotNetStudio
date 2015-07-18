@@ -182,20 +182,20 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         orderPayViewModel.EndTime = productModel.EndTime;
                     }
 
-                    JsApiPay jsApiPay=new JsApiPay(ControllerContext.HttpContext);
-                    try
-                    {
-                        //调用【网页授权获取用户信息】接口获取用户的openid和access_token
-                        jsApiPay.GetOpenidAndAccessToken();
+                    //JsApiPay jsApiPay=new JsApiPay(ControllerContext.HttpContext);
+                    //try
+                    //{
+                    //    //调用【网页授权获取用户信息】接口获取用户的openid和access_token
+                    //    jsApiPay.GetOpenidAndAccessToken();
 
-                        //获取收货地址js函数入口参数
-                        wxEditAddrParam = jsApiPay.GetEditAddressParameters();
-                        orderPayViewModel.openid = jsApiPay.openid;
-                    }
-                    catch (Exception ex)
-                    {
+                    //    //获取收货地址js函数入口参数
+                    //    wxEditAddrParam = jsApiPay.GetEditAddressParameters();
+                    //    orderPayViewModel.openid = jsApiPay.openid;
+                    //}
+                    //catch (Exception ex)
+                    //{
 
-                    }
+                    //}
                 }
             }
 

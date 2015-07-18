@@ -16,6 +16,7 @@ using log4net;
 using Senparc.Weixin.MP.TenPayLibV3;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using System.Xml.Linq;
+using System.Security.Cryptography.X509Certificates;
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
     /// <summary>
@@ -43,6 +44,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 微信商户号
         /// </summary>
         public static readonly string Mchid = WebConfigurationManager.AppSettings["WeixinMchid"];
+        /// <summary>
+        /// 微信支付KEY
+        /// </summary>
+        public static readonly string PayKey = WebConfigurationManager.AppSettings["WeixinPaySecretKey"];
+
+        public static readonly string SSLCERT_PATH = WebConfigurationManager.AppSettings["WeixinSSLCERT_PATH"];
+
+        public static readonly string SSLCERT_PASSWORD = WebConfigurationManager.AppSettings["WeixinSSLCERT_PASSWORD"];
         private ILog logger = LogManager.GetLogger("WeiXinController");
 
         /// <summary>
@@ -137,7 +146,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
         }
 
-
+        /// <summary>
+        /// 微信支付回调地址
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult PayNotify()
+        {
+            return Content("1");
+        }
 
         /// <summary>
         /// 测试创建菜单的部分
@@ -172,14 +188,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 key = "SubClickRoot_News",
                 name = "返回图文"
             });
-            subButton.sub_button.Add(new SingleClickButton()
+            subButton.sub_button.Add(new SingleViewButton()
             {
-                key = "SubClickRoot_Music",
-                name = "返回音乐"
+                url = "http://yk.kerchinsheep.com/weixin/pay",
+                name = "付"
             });
             subButton.sub_button.Add(new SingleViewButton()
             {
-                url = "http://101.200.233.5/",
+                url = "http://yk.kerchinsheep.com/",
                 name = "Url跳转"
             });
             btnGroup.button.Add(subButton);
@@ -201,6 +217,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
         /// <summary>
         /// 企业支付TEST
         /// </summary>
@@ -219,21 +236,27 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
             //创建请求统一订单接口参数
             packageReqHandler.SetParameter("mch_appid", AppId);
-            packageReqHandler.SetParameter("mch_id", Mchid);
+            packageReqHandler.SetParameter("mchid", Mchid);
             packageReqHandler.SetParameter("nonce_str", nonceStr);
             packageReqHandler.SetParameter("partner_trade_no", orderId);
             packageReqHandler.SetParameter("openid", openId);
             packageReqHandler.SetParameter("check_name", "NO_CHECK");//不校验用户姓名
             packageReqHandler.SetParameter("desc", desc);
-            string sign = packageReqHandler.CreateMd5Sign("spbill_create_ip", "101.200.233.5");//TODO:替换成可配置文件
+            packageReqHandler.SetParameter("amount", (amount * 100).ToString());
+            packageReqHandler.SetParameter("spbill_create_ip", "101.200.233.5");//TODO:替换成可配置文件
+            string sign = packageReqHandler.CreateMd5Sign("key", PayKey);
             packageReqHandler.SetParameter("sign", sign);
 
             string data = packageReqHandler.ParseXML();
 
+            //证书相关
+            var cert = new X509Certificate2(SSLCERT_PATH, SSLCERT_PASSWORD);
+
             try
             {
                 //调用统一订单接口
-                var result = TenPayV3.QYPay(data);
+                var result = TenPayV3.QYPay(data, cert);
+                logger.Info(result);
                 var unifiedorderRes = XDocument.Parse(result);
                 string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;
                 return Content(return_code);
@@ -241,9 +264,34 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             catch (Exception e)
             {
                 logger.Error(e);
-                return Content(e.InnerException.ToString());
+                return Content("-1");
             }
 
+        }
+
+        public ActionResult Pay()
+        {
+            var openId = "oOGootzpwe38CkQSTj00wyHhKSMk";
+             var timeStamp = TenPayV3Util.GetTimestamp();
+               var nonceStr = TenPayV3Util.GetNoncestr();
+               var sp_billno = Convert.ToInt64(timeStamp);
+             var pre_id = WeixinPay.WeixinPayApi.Unifiedorder("测试用", sp_billno, 0.01M, Request.UserHostAddress, openId);
+             if (pre_id == "ERROR" && pre_id == "FAIL")
+                 return Content("ERROR");
+             var package = "prepay_id=" + pre_id;
+             ViewBag.Package = package;
+             ViewBag.AppId = AppId;
+          
+             var req = new RequestHandler(null);
+             req.SetParameter("appId", AppId);
+             req.SetParameter("timeStamp", timeStamp);
+             req.SetParameter("package", package);
+             req.SetParameter("signType", "MD5");
+             var paySign =req.CreateMd5Sign("key", PayKey);
+             ViewBag.TimeStamp = timeStamp;
+             ViewBag.NonceStr = nonceStr;
+             ViewBag.PaySign = paySign;
+            return View();
         }
     }
 }

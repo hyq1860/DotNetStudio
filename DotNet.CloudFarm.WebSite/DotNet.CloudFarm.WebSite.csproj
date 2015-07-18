@@ -51,9 +51,6 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LitJson">
-      <HintPath>..\packages\LitJson.0.7.0\lib\LitJson.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -143,8 +140,9 @@
       <HintPath>..\packages\Ninject.Web.WebApi.OwinHost.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.OwinHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Senparc.Weixin">
-      <HintPath>..\packages\Senparc.Weixin.3.3.6\lib\net40\Senparc.Weixin.dll</HintPath>
+    <Reference Include="Senparc.Weixin, Version=3.3.6.38136, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\LIB\Senparc.Weixin.dll</HintPath>
     </Reference>
     <Reference Include="Senparc.Weixin.MP, Version=11.3.2.17164, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -265,15 +263,7 @@
     <Compile Include="Models\TextResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="WeixinPay\JsApiPay.cs" />
-    <Compile Include="WeixinPay\Lib\Config.cs" />
-    <Compile Include="WeixinPay\Lib\Data.cs" />
-    <Compile Include="WeixinPay\Lib\Exception.cs" />
-    <Compile Include="WeixinPay\Lib\HttpService.cs" />
-    <Compile Include="WeixinPay\Lib\Log.cs" />
-    <Compile Include="WeixinPay\Lib\Notify.cs" />
-    <Compile Include="WeixinPay\Lib\WxPayApi.cs" />
-    <Compile Include="WeixinPay\WeixinPayNotify.cs" />
+    <Compile Include="WeixinPay\WeixinPayApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -454,7 +444,6 @@
     <Content Include="images\weixin_active.png" />
     <Content Include="images\zhuanzhang.png" />
     <Content Include="images\zhuanzhang_active.png" />
-    <Content Include="refdll\LitJson.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
@@ -558,14 +547,17 @@
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\HouTai\OrderList.cshtml" />
     <Content Include="Views\HouTai\UserList.cshtml" />
+    <Content Include="Views\Weixin\Pay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="refdll\" />
     <Folder Include="Views\HouTaiBase\" />
-    <Folder Include="Views\Weixin\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
