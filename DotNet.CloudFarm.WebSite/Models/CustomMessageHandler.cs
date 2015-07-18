@@ -114,7 +114,8 @@ namespace DotNet.CloudFarm.WebSite.Models
                         CreateTime = DateTime.Now,
                         WxOpenId = openId,
                         WxHeadUrl = wxUser.headimgurl,
-                        WxNickName = wxUser.nickname
+                        WxNickName = wxUser.nickname,
+                        Status=1
                     };
                     userService.Insert(userModel);
                 }
