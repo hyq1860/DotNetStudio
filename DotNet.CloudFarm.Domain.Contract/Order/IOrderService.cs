@@ -43,11 +43,10 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
        /// <summary>
         /// 获取订单销量排行榜
        /// </summary>
-       /// <param name="top"></param>
        /// <param name="pageIndex"></param>
        /// <param name="pageSize"></param>
        /// <returns></returns>
-        List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize);
+        List<TopOrderInfo> GetTopOrderList(int pageIndex, int pageSize);
 
         /// <summary>
         /// 获取订单信息

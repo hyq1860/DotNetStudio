@@ -16,7 +16,7 @@
             <div class="opacity_box"></div>
             <div class="tele_num_box clearfix">
                 <span class="span1"></span>
-                <input id="Mobile" name="Mobile" type="tel" value="" placeholder="请输入手机号" />
+                <input id="Mobile" name="Mobile" type="tel" value="" placeholder="请输入手机号" required="required" />
                 <span class="span2"></span>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="opacity_box"></div>
                 <div class="tele_num_box clearfix">
                     <span class="span1"></span>
-                    <input id="Captcha" name="Captcha" type="text" value="" placeholder="请输入验证码" />
+                    <input id="Captcha" name="Captcha" type="text" value="" placeholder="请输入验证码" required="required" maxlength="6" />
                     <span class="span2"></span>
                 </div>
             </div>
@@ -44,7 +44,19 @@
         //绑定事件
 
         //获取验证码
-        $("#get_yzm_btn").on("click", function() {
+        $("#get_yzm_btn").on("click", function () {
+            var mobile = $("#Mobile").val();
+            var captcha = $("#Captcha").val();
+            //校验手机号是否为空 手机号是否正确
+            if (mobile == "") {
+                alert("手机号不能为空。");
+                return;
+            }
+            if (!isMobile(mobile)) {
+                alert("手机号格式不正确。");
+                return;
+            }
+            $(this).attr("IsSendCaptcha",true);
             $.ajax({
                 url: "/account/GetMobileCaptcha",
                 type: "post",
@@ -58,11 +70,27 @@
 
         //登录
         $("#goto_myfarm").on("click", function () {
-
+            var mobile = $("#Mobile").val();
+            var captcha = $("#Captcha").val();
+            //校验手机号是否为空 手机号是否正确
+            if (!isMobile(mobile)) {
+                alert("手机号格式不正确。");
+                return;
+            }
+            //判断是否获取过验证码
+            if (!$("#get_yzm_btn").attr("IsSendCaptcha")) {
+                alert("请先获取验证码。");
+                return;
+            }
+            if (!IsNumer(captcha)) {
+                alert("验证码格式不正确。");
+                return;
+            }
+            //校验是否获取过验证码，以及验证码的长度
             $.ajax({
                 url:"/account/login",
                 type: "post",
-                data: { Mobile: $("#Mobile").val(), Captcha: $("#Captcha").val() },
+                data: { Mobile: mobile, Captcha: captcha },
                 success:function(data) {
                     if (data.IsSuccess) {
                         location.href = "/home/default";

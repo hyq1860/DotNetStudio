@@ -24,18 +24,19 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             this.ProductDataAccess = productDataAccess;
         }
 
-        public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
+        public List<TopOrderInfo> GetTopOrderList(int pageIndex, int pageSize)
         {
             var result = new List<TopOrderInfo>();
             using (var cmd = DataCommandManager.GetDataCommand("GetTopOrderList"))
             {
-                
+                cmd.SetParameterValue("@PageIndex",pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
                 using (var dr=cmd.ExecuteDataReader())
                 {
                     while (dr.Read())
                     {
                         var topOrderInfo = new TopOrderInfo();
-                        topOrderInfo.UserId = !Convert.IsDBNull(dr["ID"]) ? int.Parse(dr["ID"].ToString()) : 0;
+                        topOrderInfo.UserId = !Convert.IsDBNull(dr["UserId"]) ? int.Parse(dr["UserId"].ToString()) : 0;
                         topOrderInfo.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
                         topOrderInfo.BuyCount = !Convert.IsDBNull(dr["Total"]) ? decimal.Parse(dr["Total"].ToString()) : 0;
                         topOrderInfo.HeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;

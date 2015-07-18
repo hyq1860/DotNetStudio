@@ -54,9 +54,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return result;
         }
 
-        public List<TopOrderInfo> GetTopOrderList(int top, int pageIndex, int pageSize)
+        public List<TopOrderInfo> GetTopOrderList(int pageIndex, int pageSize)
         {
-            return orderDataAccess.GetTopOrderList(top, pageIndex, pageSize);
+            return orderDataAccess.GetTopOrderList(pageIndex, pageSize);
         }
 
         /// <summary>

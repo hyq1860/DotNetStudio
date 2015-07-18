@@ -13,7 +13,7 @@
                 </div>
                 <div class="periods_r">
                     <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
-                    <p>单价：<span><em><!--ko text:SheepPrice--><!--/ko--></em>/只</span></p>
+                    <p>单价：<span><em><!--ko text:Price--><!--/ko--></em>/只</span></p>
                     <p>活动期限：<span><em><!--ko text:StartTime--><!--/ko--></em>至<em><!--ko text:EndTime--><!--/ko--></em></span></p>
                     <p style="margin-bottom: 0px;">剩余数量：<span><!--ko text:ExistCount--><!--/ko-->只</span></p>
                 </div>
@@ -26,7 +26,7 @@
                             <div class="order_num_l">订购数量</div>
                             <div class="order_num_r"><span class="span1" data-bind="click:$parent.ReduceCount">-</span><input type="text" placeholder="" data-bind="value:$parent.Count"><span class="span2" data-bind="click:$parent.AddCount">+</span></div>
                         </div>
-                        <p class="p1 clearfix"><span class="span1">合计</span><span class="span2"><!--ko text:$parent.TotalPrice--><!--/ko--></span></p>
+                        <p class="p1 clearfix"><span class="span1">合计</span><span class="span2"><!--ko text:$parent.TotalPrice--><!--/ko-->元</span></p>
                     </div>
 
                 </div>
@@ -34,16 +34,23 @@
         </div>
         <!--/ko-->
     </section>
+
     <div class="ranking_List"><div class="ranking_List_box">认购排行榜</div></div>
     <section class="purchase_claim_section2">
-        <ul>
-            <li class="li1 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
-            <li class="li2 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
-            <li class="li3 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
-            <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
-            <li class="loading_more"><a href="#">加载更多</a></li>
+        <ul data-bind="foreach:BuyTops">
+            <!--ko if:$index()<=3-->
+            <li class="li1 clearfix" data-bind="css:'li'+$index()"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:Mobile--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko-->只</span></li>
+            <!--/ko-->
+            <!--ko if:$index()>3-->
+            <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:Mobile--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko--></span></li>
+            <!--/ko-->
+            @*<li class="li2 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
+            <li class="li3 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>*@
+            @*<li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>*@
+            @*<li class="loading_more"><a href="#">加载更多</a></li>*@
         </ul>
     </section>
+
     <section class="purchase_claim_section3">
         <div class="pk_box clearfix">
             <div class="pk_box_l">
@@ -80,8 +87,14 @@
 
         self.AddCount=function() {
             var currentCount = self.Count();
+            
             console.log(currentCount);
             ++currentCount;
+            debugger;
+            if (currentCount * self.Product.Price() > 50000) {
+                alert("一次最多购买50000元。");
+                return;
+            }
             if (currentCount>=self.Product.ExistCount()) {
                 currentCount = self.Product.ExistCount();
             } else {
@@ -92,10 +105,12 @@
         //是否同意合同
         self.AgreeContract = ko.observable(false);
 
+        //同意选中的class
         self.CheckClass=function() {
             return self.AgreeContract() ? "agree_ment": "no_agree";
         }
 
+        //选中合同
         self.ChooseAgreeContract=function() {
             debugger;
             if (self.AgreeContract()) {
@@ -104,9 +119,10 @@
                 self.AgreeContract(true);
             }
         }
-
+        
+        //总计金额
         self.TotalPrice = ko.pureComputed(function() {
-            return self.Product.Count() * self.Product.SheepPrice();
+            return self.Count() * self.Product.Price();
         });
 
         self.ReduceCount=function() {
@@ -122,6 +138,7 @@
         self.SubmitOrder=function() {
             if (!self.AgreeContract()) {
                 alert("请选择同意用户协议");
+                return;
             }
             console.log(ko.toJSON(self));
             confirmOrderServiceJson.Count = self.Product.Count();
@@ -150,7 +167,7 @@
         self.SheepType = ko.observable();
 
         //羊价格
-        self.SheepPrice = ko.observable();
+        self.Price = ko.observable();
 
         //库存
         self.Stock = ko.observable();
@@ -172,9 +189,9 @@
         //结束时间
         self.EndTime = ko.observable();
 
-        self.TotalPrice = ko.pureComputed(function() {
-            return self.Count() * self.SheepPrice();
-        });
+        //self.TotalPrice = ko.pureComputed(function() {
+        //    return self.Count() * self.SheepPrice();
+        //});
     }
 
     function BuyTopViewModel() {
@@ -187,10 +204,10 @@
         self.HeadUrl = ko.observable();
 
         //认购者姓名
-        self.Name = ko.observable();
+        self.Mobile = ko.observable();
 
         //认购者数量
-        self.Count = ko.observable();
+        self.BuyCount = ko.observable();
     }
     var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日"));
     $(function() {
@@ -202,7 +219,7 @@
                 product.Name(confirmOrderServiceJson.Product.Name);
                 product.SheepType(confirmOrderServiceJson.Product.SheepType);
 
-                product.SheepPrice(confirmOrderServiceJson.Product.SheepPrice);
+                product.Price(confirmOrderServiceJson.Product.Price);
                 //库存
                 product.Stock(confirmOrderServiceJson.Product.Stock);
 

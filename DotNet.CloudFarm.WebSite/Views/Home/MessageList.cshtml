@@ -5,6 +5,7 @@
 }
 
 <div class="sheep_guest message">
+    <!--ko if:Messages().length>0-->
     <ul class="message_ul" data-bind="foreach:Messages">
         <li class="clearfix">
             <p class="li_l"><span class="no_read"><img src="/images/no_read.png"></span></p>
@@ -14,6 +15,10 @@
             </p>
         </li>
     </ul>
+    <!--/ko-->
+    <!--ko if:Messages().length==0-->
+    暂无消息
+    <!--/ko-->
 </div>
 <script type="text/javascript">
     var messageListServiceJson=@Html.Raw(JsonHelper.ToJson(Model));

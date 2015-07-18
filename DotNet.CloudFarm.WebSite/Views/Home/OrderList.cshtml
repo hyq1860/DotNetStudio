@@ -6,13 +6,13 @@
 
 <div class="sheep_guest my_order" data-bind="foreach:OrderList">
     <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId}">
-        <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:Status--><!--/ko--></span></p>
+        <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:OrderStatusDesc--><!--/ko--></span></p>
         <div class="order_detail clearfix">
             <div class="order_detail_l">
-                <img src="/images/no_pic.jpg">
+                <a data-bind="attr:{href:''+ProductId()}"><img src="/images/no_pic.jpg"></a>
             </div>
             <div class="order_detail_m">
-                <p class="p1"><!--ko text:ProductName--><!--/ko--></p>
+                <p class="p1"><a data-bind="attr:{href:''+ProductId()}"><!--ko text:ProductName--><!--/ko--></a></p>
             </div>
             <div class="order_detail_r">
                 <p class="p1">
@@ -107,6 +107,7 @@
         self.ProductCount = ko.observable();
         self.Price = ko.observable();
         self.Status = ko.observable();
+        self.OrderStatusDesc=ko.observable();
         self.PayType = ko.observable();
     }
 
@@ -126,6 +127,7 @@
                 orderViewModel.ProductCount(orderListServiceJson.Data[i].ProductCount);
                 orderViewModel.Price(orderListServiceJson.Data[i].Price);
                 orderViewModel.Status(orderListServiceJson.Data[i].Status);
+                orderViewModel.OrderStatusDesc(orderListServiceJson.Data[i].OrderStatusDesc);
                 orderViewModel.PayType(orderListServiceJson.Data[i].PayType);
 
                 orderListViewModel.OrderList.push(orderViewModel);
