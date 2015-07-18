@@ -12,6 +12,7 @@ using DotNet.CloudFarm.Domain.Model.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using DotNet.CloudFarm.WebSite.Models;
+using DotNet.Common.Models;
 using DotNet.Identity;
 using DotNet.Identity.Database;
 
@@ -55,11 +56,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        //[ValidateAntiForgeryToken]
+        public JsonResult LogOff()
         {
+            var jsonResult = new JsonResult();
             AuthenticationManager.SignOut();
-            return RedirectToAction("Login", "Account");
+            var result = new Result<object>();
+            result.Data = new {LoginUrl="/Account/Login"};
+            result.Status = new Status() { Code = "1", Message = "退出登录成功。" };
+            jsonResult.Data = result;
+            return jsonResult;
         }
 
         public JsonResult GetMobileCaptcha(string mobile)

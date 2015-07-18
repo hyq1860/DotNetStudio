@@ -26,7 +26,7 @@
             <li class="li3 clearfix"><a href="@Url.Action("Contract", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的合同</span><span class="span2"></span></a></li>
         </ul>
     </div>
-    <div class="quit_login"><a href="#">退出登录</a>
+    <div class="quit_login" id="loginOff"><a href="#">退出登录</a>
     </div>
 </div>
 <script type="text/javascript">
@@ -40,6 +40,19 @@
         self.IsHasMessage = ko.observable();
     }
 
+    function logOff() {
+        $.ajax({
+            url: "/Account/LogOff",
+            type: "post",
+            success: function(result) {
+                if (result.Status.Code == "1") {
+                    location.href = result.Data.LoginUrl;
+                }
+                console.log(result);
+            }
+        });
+    }
+
     $(function() {
         var myCenter=@Html.Raw(JsonHelper.ToJson(Model));
         var myCenterViewModel = new MyCenterViewModel();
@@ -47,5 +60,11 @@
             myCenterViewModel.User(myCenter.User);
         }
         ko.applyBindings(myCenterViewModel);
+
+        $("#loginOff").on("click", function() {
+            logOff();
+        });
     });
+
+
 </script>
