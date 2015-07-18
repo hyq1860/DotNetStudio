@@ -162,6 +162,38 @@ namespace DotNet.Common.Utility
             return strResult;
         }
 
+        /// <param name="strLength">
+        /// The str length.
+        /// </param>
+        /// <param name="randomSeed">
+        /// The random seed.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public static string GetRandomInt(int strLength, int randomSeed)
+        {
+            string strBaseStr = "1,2,3,4,5,6,7,8,9,0";
+            string[] baseStrList = strBaseStr.Split(',');
+
+            Random randomObject = null;
+            if (randomSeed > 0)
+            {
+                randomObject = new Random(randomSeed);
+            }
+            else
+            {
+                randomObject = new Random();
+            }
+
+            string strResult = "";
+            while (strResult.Length < strLength)
+            {
+                strResult = strResult + baseStrList[randomObject.Next(baseStrList.Length)];
+            }
+
+            return strResult;
+        }
+
         /// <summary>
         /// 冒泡排序
         /// </summary>

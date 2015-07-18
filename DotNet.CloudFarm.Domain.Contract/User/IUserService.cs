@@ -17,9 +17,10 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <summary>
         /// 获取验证码接口
         /// </summary>
+        /// <param name="userId"></param>
         /// <param name="mobile"></param>
         /// <returns></returns>
-        Result<LoginUser> GetCaptcha(string mobile);
+        Result<LoginUser> GetCaptcha(int userId, string mobile);
 
         /// <summary>
         /// 根据用户id获取用户消息列表

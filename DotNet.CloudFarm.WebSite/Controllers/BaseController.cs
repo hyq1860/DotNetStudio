@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
+using DotNet.WebSite.MVC.Extensions;
 using Microsoft.AspNet.Identity;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -37,6 +38,36 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 }
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 返回JsonResult.24         /// </summary>
+        /// <param name="data">数据</param>
+        /// <param name="behavior">行为</param>
+        /// <param name="format">json中dateTime类型的格式</param>
+        /// <returns>Json</returns>
+        protected JsonResult CustomJson(object data, JsonRequestBehavior behavior, string format)
+        {
+            return new CustomJsonResult
+            {
+                Data = data,
+                JsonRequestBehavior = behavior,
+                FormateStr = format
+            };
+        }
+
+        /// <summary>
+        /// 返回JsonResult42         /// </summary>
+        /// <param name="data">数据</param>
+        /// <param name="format">数据格式</param>
+        /// <returns>Json</returns>
+        protected JsonResult CustomJson(object data, string format)
+        {
+            return new CustomJsonResult
+            {
+                Data = data,
+                FormateStr = format
+            };
         }
     }
 }

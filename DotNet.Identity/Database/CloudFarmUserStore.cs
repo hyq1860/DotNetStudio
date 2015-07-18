@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.SMS;
 using DotNet.CloudFarm.Domain.Impl.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using Microsoft.AspNet.Identity;
@@ -17,7 +18,7 @@ namespace DotNet.Identity.Database
     public class CloudFarmUserStore : IUserStore<CloudFarmIdentityUser>, IUserPasswordStore<CloudFarmIdentityUser>
     {
         [Ninject.Inject]
-        private IUserService userService=new UserService(new UserDataAccess());
+        private IUserService userService=new UserService(new UserDataAccess(),new SMSService());
 
         public void Dispose()
         {

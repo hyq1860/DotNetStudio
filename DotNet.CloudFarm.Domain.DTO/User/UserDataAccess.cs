@@ -178,5 +178,33 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                return 0;
             }
         }
+
+        public bool InsertUserCaptcha(int userId, string captcha, DateTime sendTime, int status)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("InsertUserCaptcha"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@Captcha", captcha);
+                cmd.SetParameterValue("@SendTime", sendTime);
+                cmd.SetParameterValue("@Status", status);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public string GetUnUsedCaptcha(int userId, string mobile, int expireMinute)
+        {
+            var captcha = string.Empty;
+            using (var cmd = DataCommandManager.GetDataCommand("GetUnUsedCaptcha"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                var returnValue = cmd.ExecuteScalar();
+                if (returnValue != null)
+                {
+                    captcha = Convert.ToString(returnValue);
+                }
+            }
+
+            return captcha;
+        }
     }
 }

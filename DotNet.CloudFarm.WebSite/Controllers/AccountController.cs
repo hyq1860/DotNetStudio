@@ -5,8 +5,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.SMS;
 using DotNet.CloudFarm.Domain.Impl.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using Microsoft.AspNet.Identity;
@@ -24,7 +26,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
         {
-            UserService=new UserService(new UserDataAccess());
+            UserService=new UserService(new UserDataAccess(),new SMSService());
+            SmsService=new SMSService();
         }
 
         public AccountController(UserManager<CloudFarmIdentityUser> userManager)
@@ -36,6 +39,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         [Ninject.Inject]
         public IUserService UserService { get; set; }
+
+        public ISMSService SmsService { get; set; }
 
         [HttpPost]
         public async Task<JsonResult> Login(LoginUser loginUser)
@@ -68,9 +73,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return jsonResult;
         }
 
-        public JsonResult GetMobileCaptcha(string mobile)
+        public JsonResult GetMobileCaptcha(string mobile,string weixinId)
         {
-            var result=UserService.GetCaptcha(mobile);
+            //通过微信id获取用户id
+            var result=UserService.GetCaptcha(0,mobile);
+            //将用户的手机号与weixinid绑定
+
 
             return new JsonResult();
         }

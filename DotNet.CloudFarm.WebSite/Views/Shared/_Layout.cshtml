@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var controller=ViewContext.RouteData.Values["controller"].ToString();
+    var action=ViewContext.RouteData.Values["action"].ToString();
+    bool isShowTab = true;
+    if (controller.ToLower() == "account" && action.ToLower() == "login")
+    {
+        isShowTab = false;
+    }
+}
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -11,13 +20,17 @@
 </head>
 <body>
 @RenderBody()
-    <div class="bottom_float" id="bottom_Container">
-        <ul class="clearfix">
-            <li class="li1" id="tab1"><a href="@Url.Action("Default","Home",new {tab=1})"><span></span><p>购买</p></a></li>
-            <li class="li2" id="tab2"><a href="@Url.Action("Wallet", "Home", new { tab = 2 })"><span></span><p>钱包</p></a></li>
-            <li class="li3" id="tab3"><a href="@Url.Action("MyCenter", "Home", new { tab = 3 })"><span></span><p>我的</p></a></li>
-        </ul>
-    </div>
+    @if (isShowTab)
+    {
+        <div class="bottom_float" id="bottom_Container">
+            <ul class="clearfix">
+                <li class="li1" id="tab1"><a href="@Url.Action("Default","Home",new {tab=1})"><span></span><p>购买</p></a></li>
+                <li class="li2" id="tab2"><a href="@Url.Action("Wallet", "Home", new { tab = 2 })"><span></span><p>钱包</p></a></li>
+                <li class="li3" id="tab3"><a href="@Url.Action("MyCenter", "Home", new { tab = 3 })"><span></span><p>我的</p></a></li>
+            </ul>
+        </div>
+    }
+    
 @RenderSection("scripts", required: false)
 <script type="text/javascript">
     $(function() {

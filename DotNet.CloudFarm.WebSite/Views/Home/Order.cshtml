@@ -14,7 +14,7 @@
                 <div class="periods_r">
                     <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
                     <p>单价：<span><em><!--ko text:SheepPrice--><!--/ko--></em>/只</span></p>
-                    <p>活动期限：<span><em>2015-05-28</em>至<em>06-01</em></span></p>
+                    <p>活动期限：<span><em><!--ko text:StartTime--><!--/ko--></em>至<em><!--ko text:EndTime--><!--/ko--></em></span></p>
                     <p style="margin-bottom: 0px;">剩余数量：<span><!--ko text:ExistCount--><!--/ko-->只</span></p>
                 </div>
             </div>
@@ -59,7 +59,8 @@
             </div>
         </div>
     </section>
-    <div class="read_agree clearfix"><label><span class="no_agree"></span><span class="span2">阅读并同意<a href="#" style="color:#3388ff;">《用户协议》</a></span></label></div><!--当同意协议时 使用agree_ment的类名-->
+    <div class="read_agree clearfix"><label><span class="" data-bind="css:CheckClass(),click:ChooseAgreeContract"></span>
+        <span class="span2">阅读并同意<a href="@Url.Action("Contract","Home")" target="_blank" style="color:#3388ff;">《用户协议》</a></span></label></div><!--当同意协议时 使用agree_ment的类名-->
     <div class="sure_book"><a href="#" data-bind="click:SubmitOrder">确认订单</a></div>
 </div>
 
@@ -88,6 +89,22 @@
             }
         }
 
+        //是否同意合同
+        self.AgreeContract = ko.observable(false);
+
+        self.CheckClass=function() {
+            return self.AgreeContract() ? "agree_ment": "no_agree";
+        }
+
+        self.ChooseAgreeContract=function() {
+            debugger;
+            if (self.AgreeContract()) {
+                self.AgreeContract(false);
+            } else {
+                self.AgreeContract(true);
+            }
+        }
+
         self.TotalPrice = ko.pureComputed(function() {
             return self.Product.Count() * self.Product.SheepPrice();
         });
@@ -103,6 +120,9 @@
 
         //提交订单
         self.SubmitOrder=function() {
+            if (!self.AgreeContract()) {
+                alert("请选择同意用户协议");
+            }
             console.log(ko.toJSON(self));
             confirmOrderServiceJson.Count = self.Product.Count();
             $.ajax({
@@ -146,6 +166,12 @@
         //购买数量
         self.Count = ko.observable();
 
+        //开始时间
+        self.StartTime = ko.observable();
+
+        //结束时间
+        self.EndTime = ko.observable();
+
         self.TotalPrice = ko.pureComputed(function() {
             return self.Count() * self.SheepPrice();
         });
@@ -166,7 +192,7 @@
         //认购者数量
         self.Count = ko.observable();
     }
-    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
+    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日"));
     $(function() {
 
         if (confirmOrderServiceJson) {
@@ -182,7 +208,11 @@
 
                 //销量
                 product.SaledCount(confirmOrderServiceJson.Product.SaledCount);
+                //开始时间
+                product.StartTime(confirmOrderServiceJson.Product.StartTime);
 
+                //结束时间
+                product.EndTime(confirmOrderServiceJson.Product.EndTime);
                 product.Count(1);
                 orderViewModel.Count(1);
                 orderViewModel.Product=product;

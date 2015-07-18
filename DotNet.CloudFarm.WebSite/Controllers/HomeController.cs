@@ -63,14 +63,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public JsonResult Data()
         {
-            var result = new JsonResult();
+            //var result = new JsonResult();
             var homeViewModel = new HomeViewModel
             {
                 Products = ProductService.GetProducts(1, 5, 1), 
                 SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1})
             };
-            result.Data = homeViewModel;
-            return result;
+            //result.Data = homeViewModel;
+            return this.CustomJson(homeViewModel, "yyyy年MM月dd日");
+            //return result;
         }
 
         public JsonResult GetProductById(int productId)
@@ -177,8 +178,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         orderPayViewModel.Price = productModel.Price;
                         orderPayViewModel.Count = orderModel.ProductCount;
                         orderPayViewModel.TotalPrice = productModel.Price*orderModel.ProductCount;
-                        orderPayViewModel.StartTime = productModel.StartTime.ToString("yyyy-MM-dd");
-                        orderPayViewModel.EndTime = productModel.EndTime.ToString("yyyy-MM-dd");
+                        orderPayViewModel.StartTime = productModel.StartTime;
+                        orderPayViewModel.EndTime = productModel.EndTime;
                     }
 
                     JsApiPay jsApiPay=new JsApiPay(ControllerContext.HttpContext);

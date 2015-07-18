@@ -55,5 +55,24 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="status"></param>
         /// <returns></returns>
         int UpdateUserStatus(int userId, int status);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="captcha"></param>
+        /// <param name="sendTime"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        bool InsertUserCaptcha(int userId,string captcha,DateTime sendTime,int status);
+
+        /// <summary>
+        /// 获取用户是否存在没有使用的验证码
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="mobile"></param>
+        /// <param name="expireMinute"></param>
+        /// <returns></returns>
+        string GetUnUsedCaptcha(int userId, string mobile, int expireMinute);
     }
 }

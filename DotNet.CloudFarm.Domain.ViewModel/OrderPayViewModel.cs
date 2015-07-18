@@ -31,12 +31,12 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// <summary>
         /// 活动开始时间
         /// </summary>
-        public string StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         /// <summary>
         /// 活动结束时间
         /// </summary>
-        public string EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         /// <summary>
         /// 购买数量

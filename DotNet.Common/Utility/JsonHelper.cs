@@ -50,6 +50,33 @@ namespace DotNet.Common.Utility
         }
 
         /// <summary>
+        /// 将指定的对象序列化成 JSON 数据。
+        /// </summary>
+        /// <param name="obj">要序列化的对象。</param>
+        /// <returns></returns>
+        public static string ToJson(this object obj,string dateTimeFormat)
+        {
+            try
+            {
+                if (null == obj)
+                    return null;
+                IsoDateTimeConverter datetimeConverter = new IsoDateTimeConverter();
+                datetimeConverter.DateTimeFormat = dateTimeFormat;
+
+                JsonSerializerSettings _jsonSettings = new JsonSerializerSettings();
+                _jsonSettings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Ignore;
+                _jsonSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                _jsonSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                _jsonSettings.Converters.Add(datetimeConverter);
+                return JsonConvert.SerializeObject(obj, Formatting.None, _jsonSettings);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 将指定的 JSON 数据反序列化成指定对象。
         /// </summary>
         /// <typeparam name="T">对象类型。</typeparam>

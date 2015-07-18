@@ -33,7 +33,7 @@
         <div class="Claim_sheep1">
             <div class="Claim_sheep1_box">
                 <div class="hot_sale"></div>
-                <p class="p1"><!--ko text:Name--><!--/ko-->·认领</p>
+                <p class="p1"><!--ko text:Name--><!--/ko--></p>
                 <p class="p2">出身内蒙古，混在华尔街；羊只认购火热进行中</p>
                 <div class="Claim_sheep1_box_content">
                     <ul class="clearfix">
@@ -57,43 +57,43 @@
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <th width="40%">项目名称</th>
-                            <th class="th2" width="60%">顺手牵羊第【<em>1</em>】期</th>
+                            <th class="th2" width="60%"><!--ko text:Name--><!--/ko--></th>
                         </tr>
                         <tr>
                             <td>预期收益</td>
-                            <td class="td2">三个半月【<em>5%</em>】；年化【<em><!--ko text:YearEarningRate--><!--/ko-->%</em>】</td>
+                            <td class="td2">三个半月<em><!--ko text:EarningRate--><!--/ko--></em>；年化<em><!--ko text:YearEarningRate--><!--/ko-->%</em></td>
                         </tr>
                         <tr>
                             <td>项目持续期</td>
-                            <td class="td2">自项目募集成功之日起【<em><!--ko text:EarningDay--><!--/ko--></em>】个自然日</td>
+                            <td class="td2">自项目募集成功之日起<em><!--ko text:EarningDay--><!--/ko--></em>个自然日</td>
                         </tr>
                         <tr>
                             <td>项目总份额</td>
-                            <td class="td2">【<em><!--ko text:Stock--><!--/ko--></em>】份</td>
+                            <td class="td2"><em><!--ko text:Stock--><!--/ko--></em>份</td>
                         </tr>
                         <tr>
                             <td>每份项目份额认购价格</td>
-                            <td class="td2">人民币【<em><!--ko text:SheepPrice--><!--/ko--></em>】元；小羊费用：【<em>100</em>】元，饲料费：【<em><!--ko text:FeedPrice--><!--/ko--></em>】元；人工费：【<em><!--ko text:WorkPrice--><!--/ko--></em>】元</td>
+                            <td class="td2">人民币<em><!--ko text:Price--><!--/ko--></em>元；小羊费用：<em><!--ko text:SheepPrice--><!--/ko--></em>元，饲料费：<em><!--ko text:FeedPrice--><!--/ko--></em>元；人工费：<em><!--ko text:WorkPrice--><!--/ko--></em>元</td>
                         </tr>
                         <tr>
                             <td>申购期限</td>
-                            <td class="td2">自<em>2015</em>年【<em>6</em>】月【<em>8</em>】日至【<em>6</em>】月【<em>9</em>】日</td>
+                            <td class="td2"><!--ko text:StartTime--><!--/ko-->至<!--ko text:EndTime--><!--/ko--></td>
                         </tr>
-                        <tr>
+                        @*<tr>
                             <td>申购期限</td>
                             <td class="td2">自<em>2015</em>年【<em>6</em>】月【<em>8</em>】日至【<em>6</em>】月【<em>9</em>】日</td>
-                        </tr>
+                        </tr>*@
                         <tr>
                             <td>项目收益预期支付日</td>
                             <td class="td2"><em>2015</em>年【<em>6</em>】月【<em>8</em>】日</td>
                         </tr>
                         <tr>
                             <td>收益支付方式</td>
-                            <td class="td2">1、现金，每份份额预计收益为【<em>1000</em>】元；<br />2、与现金等额的羊肉，每份份额预计可得羊肉为【<em>50</em>】kg。</td>
+                            <td class="td2">现金，每份份额预计收益为<em><!--ko text:Earning--><!--/ko--></em>元；</td>
                         </tr>
                         <tr>
                             <td>该期项目羊羔数量</td>
-                            <td class="td2">【<em><!--ko text:Stock--><!--/ko--></em>】只待育肥羊</td>
+                            <td class="td2"><em><!--ko text:Stock--><!--/ko--></em>只待育肥羊</td>
                         </tr>
 
                         <tr>
@@ -195,6 +195,12 @@
 
         //是否显示详情
         self.IsShowDetail = ko.observable(false);
+
+        //开始时间
+        self.StartTime = ko.observable();
+
+        //结束时间
+        self.EndTime = ko.observable();
     }
 
     var homeViewModel = new HomeViewModel();
@@ -204,11 +210,13 @@
         $.ajax({
             url: "/home/data",
             type: "post",
+            dataType:"json",
             data: { Mobile: $("#Mobile").val() },
             success: function (data) {
                 console.log(data);
                 if (data) {
                     homeViewModel.SheepCount(data.SheepCount);
+                    debugger;
                     var length = data.Products.length;
                     for (var i = 0; i < length; i++) {
                         var productViewModel = new ProductViewModel();
@@ -251,6 +259,10 @@
                         //育肥场
                         productViewModel.SheepFactory(data.Products[i].SheepFactory);
 
+                        //开始
+                        productViewModel.StartTime(data.Products[i].StartTime);
+                        //结束
+                        productViewModel.EndTime(data.Products[i].EndTime);
 
                         homeViewModel.Products.push(productViewModel);
                     }
