@@ -70,6 +70,12 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return orderDataAccess.GetOrder(orderId, userId);
         }
 
+
+        public OrderViewModel GetOrderViewModel(int userId, long orderId)
+        {
+            return orderDataAccess.GetOrderViewModel(orderId, userId);
+        }
+
         public long GetNewOrderId()
         {
             return orderDataAccess.GetNewOrderId();
@@ -84,5 +90,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         {
             return orderDataAccess.GetProductCountWithStatus(userId, status);
         }
+
+
     }
 }

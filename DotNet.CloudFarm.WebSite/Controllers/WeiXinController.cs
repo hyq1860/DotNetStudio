@@ -17,6 +17,10 @@ using Senparc.Weixin.MP.TenPayLibV3;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using System.Xml.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Collections;
+using Senparc.Weixin.MP.Helpers;
+using DotNet.CloudFarm.Domain.Contract.Order;
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
     /// <summary>
@@ -53,6 +57,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public static readonly string SSLCERT_PASSWORD = WebConfigurationManager.AppSettings["WeixinSSLCERT_PASSWORD"];
         private ILog logger = LogManager.GetLogger("WeiXinController");
+
+        [Ninject.Inject]
+        public IOrderService OrderService { get; set; }
+
+
 
         /// <summary>
         /// 微信后台验证地址（使用Get），微信后台的“接口配置信息”的Url
@@ -268,30 +277,49 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
 
         }
-
-        public ActionResult Pay()
+        /// <summary>
+        /// 按订单号进行支付
+        /// </summary>
+        /// <param name="orderid">订单号</param>
+        /// <returns></returns>
+        public ActionResult Pay(long orderid=81150718819501)
         {
+            //TODO:将该页加入登录页,就可以启用下边的注释
+            //var userid = UserInfo.UserId;
+            //var openId = UserInfo.WxOpenId;
+            var userid = 161;
             var openId = "oOGootzpwe38CkQSTj00wyHhKSMk";
-             var timeStamp = TenPayV3Util.GetTimestamp();
-               var nonceStr = TenPayV3Util.GetNoncestr();
-               var sp_billno = Convert.ToInt64(timeStamp);
-             var pre_id = WeixinPay.WeixinPayApi.Unifiedorder("测试用", sp_billno, 0.01M, Request.UserHostAddress, openId);
-             if (pre_id == "ERROR" && pre_id == "FAIL")
-                 return Content("ERROR");
-             var package = "prepay_id=" + pre_id;
-             ViewBag.Package = package;
-             ViewBag.AppId = AppId;
-          
-             var req = new RequestHandler(null);
-             req.SetParameter("appId", AppId);
-             req.SetParameter("timeStamp", timeStamp);
-             req.SetParameter("package", package);
-             req.SetParameter("signType", "MD5");
-             var paySign =req.CreateMd5Sign("key", PayKey);
-             ViewBag.TimeStamp = timeStamp;
-             ViewBag.NonceStr = nonceStr;
-             ViewBag.PaySign = paySign;
+            var order = OrderService.GetOrderViewModel(userid, orderid);
+            if(string.IsNullOrEmpty(order.ProductName) || order.OrderId==0 || order.TotalMoney==0M)
+            {
+                return Content("ERROR");
+            }
+            var timeStamp = TenPayV3Util.GetTimestamp();
+            var nonceStr = TenPayV3Util.GetNoncestr();
+
+            var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(order.ProductName, order.OrderId, order.TotalMoney, Request.UserHostAddress, openId);
+            if (pre_id == "ERROR" || pre_id == "FAIL")
+                return Content("ERROR");
+            var package = "prepay_id=" + pre_id;
+
+            var req = new RequestHandler(null);
+            req.SetParameter("appId", AppId);
+            req.SetParameter("timeStamp", timeStamp);
+            req.SetParameter("nonceStr", nonceStr);
+            req.SetParameter("package", package);
+            req.SetParameter("signType", "MD5");
+            var paySign = req.CreateMd5Sign("key", PayKey);
+
+            //绑定页面数据
+            ViewBag.TimeStamp = timeStamp;
+            ViewBag.NonceStr = nonceStr;
+            ViewBag.PaySign = paySign;
+            ViewBag.Package = package;
+            ViewBag.AppId = AppId;
+            ViewBag.OrderId = order.OrderId;
             return View();
         }
+
+      
     }
 }
