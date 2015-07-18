@@ -320,6 +320,43 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 微信回调
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult WexinPayNotify()
+        {
+            ResponseHandler resHandler = new ResponseHandler(null);
+
+            string return_code = resHandler.GetParameter("return_code");
+            string return_msg = resHandler.GetParameter("return_msg");
+
+            string res = null;
+            //TODO:这里需要验证签名
+            ////验证请求是否从微信发过来（安全）
+            //if (resHandler.IsTenpaySign())
+            //{
+            //    res = "success";
+
+            //    //正确的订单处理
+            //}
+            //else
+            //{
+            //    res = "wrong";
+
+            //    //错误的订单处理
+            //}
+
+
+            res = "success";
+            //订单处理
+
+            string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
+                return_code, return_msg);
+
+            return Content(xml, "text/xml");
+        }
+
       
     }
 }
