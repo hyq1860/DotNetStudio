@@ -67,5 +67,13 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderStatus"></param>
         /// <returns></returns>
         Result<OrderViewModel> UpdateOrderStatus(int userId, long orderId,int orderStatus);
+
+        /// <summary>
+        /// 获取用户订单在某些状态下的羊的数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        int GetProductCountWithStatus(int userId,List<int> status);
     }
 }

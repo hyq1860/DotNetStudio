@@ -240,5 +240,24 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var result = new PagedList<OrderManageViewModel>(orderList, pageIndex, pageSize,count);
             return result;
         }
+
+        public int GetProductCountWithStatus(int userId, List<int> status)
+        {
+            var count = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetProductCountWithStatus"))
+            {
+                cmd.CommandText = string.Format(cmd.CommandText, string.Join(",", status));
+                cmd.SetParameterValue("@UserId", userId);
+
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        count = !Convert.IsDBNull(dr[0]) ? Convert.ToInt32(dr[0]) : 0;
+                    }
+                }
+            }
+            return count;
+        }
     }
 }

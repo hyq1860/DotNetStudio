@@ -67,7 +67,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var homeViewModel = new HomeViewModel
             {
                 Products = ProductService.GetProducts(1, 5, 1), 
-                SheepCount = 188
+                SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1})
             };
             result.Data = homeViewModel;
             return result;

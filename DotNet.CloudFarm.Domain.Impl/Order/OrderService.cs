@@ -80,6 +80,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return orderDataAccess.UpdateOrderStatus(userId, orderId, orderStatus);
         }
 
-
+        public int GetProductCountWithStatus(int userId, List<int> status)
+        {
+            return orderDataAccess.GetProductCountWithStatus(userId, status);
+        }
     }
 }

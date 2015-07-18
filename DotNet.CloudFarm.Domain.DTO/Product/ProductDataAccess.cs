@@ -58,12 +58,11 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             var count = 0;
             using (var cmd = DataCommandManager.GetDataCommand("GetProductsWithStatus"))
             {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                cmd.SetParameterValue("@Status", status);
                 using (var ds = cmd.ExecuteDataSet())
                 {
-                    cmd.SetParameterValue("@PageIndex", pageIndex);
-                    cmd.SetParameterValue("@PageSize", pageSize);
-                    cmd.SetParameterValue("@status", status);
-
                     if (ds.Tables.Count >= 2)
                     {
                         foreach (DataRow dr in ds.Tables[0].Rows)

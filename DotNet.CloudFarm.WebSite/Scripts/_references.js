@@ -51,3 +51,4 @@
 /// <reference path="underscore.min.js" />
 /// <reference path="common.js" />
 /// <reference path="houtai/jquery.pager.js" />
+/// <reference path="jquery.scrollpagination.js" />
