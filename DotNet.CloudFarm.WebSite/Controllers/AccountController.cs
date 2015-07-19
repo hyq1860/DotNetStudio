@@ -29,11 +29,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
         /// </summary>
         public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
-        /// <summary>
-        /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
-        /// </summary>
-        public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
-
+     
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
         {
@@ -94,10 +90,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return new JsonResult();
         }
 
+        private readonly static string COOKIE_OPENID_KEY = "wx_openId";
+
         public ActionResult Login()
         {
+            ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
             ViewBag.AppId = AppId;
-            ViewBag.AppSecret = AppSecret;
             return View();
         }
 

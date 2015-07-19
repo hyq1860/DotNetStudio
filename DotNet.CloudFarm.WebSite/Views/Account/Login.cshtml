@@ -110,9 +110,8 @@
 <script src="~/Scripts/jquery.cookie.js"></script>
      <script type="text/javascript">
          var appid= "@ViewBag.AppId";
-         var appsecret = "@ViewBag.AppSecret";
-         var token = $.cookie("wx_accessToken");
-         var url_oauth_token = "https://api.weixin.qq.com/sns/oauth2/access_token";
+         var openId = "@ViewBag.OpenId";
+         alert(openId);
          var code_settings = {
              apiUrl: "https://open.weixin.qq.com/connect/oauth2/authorize",
              appid: appid,
@@ -143,22 +142,34 @@
 
          function WxOauthAuth(code)
          {
-             var reqeustUrl = url_oauth_token+"?appid=" + appid + "&secret=" + appsecret+"&code="+code+"grant_type=authorization_code&callback=?";
-             //获取token
-             $.getJSON(reqeustUrl, function (data) {
-                 alert(data.errorcode);
-                 
+             $.ajax({
+                 url: "/weixin/WexinOpenOAuthCallBack",
+                 data: "code=" + code,
+                 dataType: "text",
+                 success: function (result) {
+                     alert(result);
+                     if(result!="ERROR")
+                     {
+                         openId = result;
+                     }
+                     else {
+                         alert("授权错误");
+                     }
+                 }
              });
-
          }
-         var code = GetQueryString(code);
-         alert(code);
-         if (code == undefined || code == "" || code == null) {
+
+
+         var code = GetQueryString("code");
+         if (token==null && code == null) {
              WxOauthCode(code_settings);
          }
 
          $(document).ready(function () {
-            
+             if(code!=null)
+             {
+                 WxOauthAuth(code);
+             }
          });
      </script>
         }

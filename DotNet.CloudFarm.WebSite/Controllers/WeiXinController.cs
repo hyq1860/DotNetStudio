@@ -21,6 +21,8 @@ using System.Text;
 using System.Collections;
 using Senparc.Weixin.MP.Helpers;
 using DotNet.CloudFarm.Domain.Contract.Order;
+using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+using Senparc.Weixin;
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
     /// <summary>
@@ -364,6 +366,59 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Content(xml, "text/xml");
         }
 
+        private readonly static string COOKIE_TOKEN_KEY = "wx_accessToken";
+        private readonly static string COOKIE_REFRESHTOKEN_KEY = "wx_refreshToken";
+        private readonly static string COOKIE_OPENID_KEY = "wx_openId";
+
+        /// <summary>
+        /// 网页请求授权
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="state"></param>
+        /// <returns>openID，ERROR:错误</returns>
+        public ContentResult WexinOpenOAuthCallBack(string code,string state)
+        {
+            if (string.IsNullOrEmpty(code))
+            {
+                return Content("您拒绝了授权！");
+            }
+            OAuthAccessTokenResult result = null;
+            //通过，用code换取access_token
+            try
+            {
+                result = OAuthApi.GetAccessToken(AppId, AppSecret, code);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return Content("ERROR");
+            }
+            if (result.errcode != ReturnCode.请求成功)
+            {
+                logger.Error(string.Format("调取WexinOpenOAuthCallBack出错,errorCode:{0},errormsg:{1}",result.errcode,result.errmsg));
+                return Content("ERROR");
+            }
+            //下面2个数据也可以自己封装成一个类，储存在数据库中（建议结合缓存）
+            //如果可以确保安全，可以将access_token存入用户的cookie中，每一个人的access_token是不一样的
+            Request.Cookies.Add(new HttpCookie(COOKIE_TOKEN_KEY, result.access_token));
+            Request.Cookies.Add(new HttpCookie(COOKIE_REFRESHTOKEN_KEY, result.refresh_token));
+            Request.Cookies.Add(new HttpCookie(COOKIE_OPENID_KEY, result.openid));
+
+            //因为第一步选择的是OAuthScope.snsapi_userinfo，这里可以进一步获取用户详细信息
+            //try
+            //{
+            //    OAuthUserInfo userInfo = OAuthApi.GetUserInfo(result.access_token, result.openid);
+            //    return View(userInfo);
+            //}
+            //catch (ErrorJsonResultException ex)
+            //{
+            //    return Content(ex.Message);
+            //}
+            return Content(result.openid);
+
+
+
+        }
       
     }
 }
