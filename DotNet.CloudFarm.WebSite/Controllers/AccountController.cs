@@ -70,23 +70,26 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     //将用户的手机号与weixinid绑定
                     UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
                     //logger.Info(2);
+                    var result = UserManager.FindByNameAsync(loginUser.Mobile);
+                    //logger.Info(3);
 
-                }
-
-                var result = UserManager.FindByNameAsync(loginUser.Mobile);
-                //logger.Info(3);
-
-                //用户禁用不让登陆
-                if (result != null && user != null && user.Status == 1)
-                {
-                    //logger.Info(JsonHelper.ToJson(result));
-                    await SignInAsync(result.Result, true);
-                    //logger.Info(4);
-                    jsonResult.Data = new { IsSuccess = true };
+                    //用户禁用不让登陆
+                    if (result != null && user != null && user.Status == 1)
+                    {
+                        //logger.Info(JsonHelper.ToJson(result));
+                        await SignInAsync(result.Result, true);
+                        //logger.Info(4);
+                        jsonResult.Data = new { IsSuccess = true };
+                    }
+                    else
+                    {
+                        jsonResult.Data = new { IsSuccess = false ,Msg ="您的用户已被禁用"};
+                    }
                 }
                 else
                 {
-                    jsonResult.Data = new { IsSuccess = false };
+                    jsonResult.Data = new { IsSuccess = false, Msg = "" };
+
                 }
             }
             catch (Exception ex)
