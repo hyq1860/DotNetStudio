@@ -20,7 +20,7 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="userId"></param>
         /// <param name="mobile"></param>
         /// <returns></returns>
-        Result<LoginUser> GetCaptcha(int userId, string mobile);
+        bool GetCaptcha(int userId, string mobile);
 
         /// <summary>
         /// 根据用户id获取用户消息列表
