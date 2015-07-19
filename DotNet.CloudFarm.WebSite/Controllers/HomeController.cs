@@ -189,7 +189,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         orderPayViewModel.EndTime = productModel.EndTime;
                     }
 
-#region 微信支付
+                    #region 微信支付
 
                     //TODO:将该页加入登录页,就可以启用下边的注释
                     //var userid = UserInfo.UserId;
@@ -224,7 +224,17 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     ViewBag.Package = package;
                     ViewBag.AppId = AppId;
                     ViewBag.OrderId = order.OrderId;
-#endregion
+
+                    OrderService.InsertOrderPay(new OrderPayModel()
+                    {
+                        PayId = pre_id,
+                        OrdeId = order.OrderId,
+                        UserId = order.UserId,
+                        Status = 0,
+                        CreateTime = DateTime.Now
+                    });
+
+                    #endregion
                 }
             }
 

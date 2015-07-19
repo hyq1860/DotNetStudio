@@ -48,6 +48,13 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return result;
         }
 
+        //获取用户的所有有效订单数据
+        public Result<List<OrderViewModel>> GetUserAllOrder(int userId,List<int> orderStatus)
+        {
+            var data = new Result<List<OrderViewModel>>();
+            return data;
+        }
+
         public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)
         {
             var result = new Result<PagedList<OrderManageViewModel>>
@@ -124,6 +131,14 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return orderDataAccess.GetProductCountWithStatus(userId, status);
         }
 
+        public bool InsertOrderPay(OrderPayModel orderPayModel)
+        {
+            return orderDataAccess.InsertOrderPay(orderPayModel);
+        }
 
+        public bool UpdateOrderPay(OrderPayModel orderPayModel)
+        {
+            return orderDataAccess.UpdateOrderPay(orderPayModel);
+        }
     }
 }

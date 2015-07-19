@@ -289,5 +289,38 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
 
             return orderModel;
         }
+
+        public List<OrderViewModel> GetUserAllOrder(int userId, List<int> orderStatus)
+        {
+            var orderList = new List<OrderViewModel>();
+
+            return orderList;
+        }
+
+        public bool InsertOrderPay(OrderPayModel orderPayModel)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("InsertOrderPay"))
+            {
+                cmd.SetParameterValue("@PayId", orderPayModel.PayId);
+                cmd.SetParameterValue("@OrderId", orderPayModel.OrdeId);
+                cmd.SetParameterValue("@UserId", orderPayModel.UserId);
+                cmd.SetParameterValue("@Status", orderPayModel.Status);
+                cmd.SetParameterValue("@CreateTime", orderPayModel.CreateTime);
+
+                return cmd.ExecuteNonQuery()>0;
+            }
+        }
+
+        public bool UpdateOrderPay(OrderPayModel orderPayModel)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateOrderPay"))
+            {
+                cmd.SetParameterValue("@OrdeId", orderPayModel.OrdeId);
+                cmd.SetParameterValue("@PayId", orderPayModel.PayId);
+                cmd.SetParameterValue("@Status", orderPayModel.Status);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }

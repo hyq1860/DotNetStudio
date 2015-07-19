@@ -82,5 +82,22 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="userId"></param>
         /// <returns></returns>
         OrderViewModel GetOrderViewModel(long orderId, int userId);
+
+        //获取用户的所有有效订单数据
+        List<OrderViewModel> GetUserAllOrder(int userId, List<int> orderStatus);
+
+        /// <summary>
+        /// 创建支付记录
+        /// </summary>
+        /// <param name="orderPayModel"></param>
+        /// <returns></returns>
+        bool InsertOrderPay(OrderPayModel orderPayModel);
+
+        /// <summary>
+        /// 更新支付状态
+        /// </summary>
+        /// <param name="orderPayModel"></param>
+        /// <returns></returns>
+        bool UpdateOrderPay(OrderPayModel orderPayModel);
     }
 }

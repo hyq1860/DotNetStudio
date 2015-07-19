@@ -82,5 +82,19 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="status"></param>
         /// <returns></returns>
         int GetProductCountWithStatus(int userId,List<int> status);
+
+        /// <summary>
+        /// 创建支付记录
+        /// </summary>
+        /// <param name="orderPayModel"></param>
+        /// <returns></returns>
+        bool InsertOrderPay(OrderPayModel orderPayModel);
+
+        /// <summary>
+        /// 更新支付状态
+        /// </summary>
+        /// <param name="orderPayModel"></param>
+        /// <returns></returns>
+        bool UpdateOrderPay(OrderPayModel orderPayModel);
     }
 }

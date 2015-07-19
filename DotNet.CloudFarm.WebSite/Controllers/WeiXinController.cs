@@ -326,6 +326,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ContentResult WexinPayNotify()
         {
+            
             ResponseHandler resHandler = new ResponseHandler(null);
 
             string return_code = resHandler.GetParameter("return_code");
@@ -333,27 +334,33 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
             string res = null;
             //TODO:这里需要验证签名
+
             ////验证请求是否从微信发过来（安全）
-            //if (resHandler.IsTenpaySign())
-            //{
-            //    res = "success";
+            
+            logger.Info(resHandler.ParseXML());
+            if (resHandler.IsTenpaySign())
+            {
+                res = "success";
+                logger.Info(resHandler.ParseXML());
+                //正确的订单处理
+                if (return_code == "SUCCESS")
+                {
+                    
+                }
+            }
+            else
+            {
+                res = "wrong";
 
-            //    //正确的订单处理
-            //}
-            //else
-            //{
-            //    res = "wrong";
-
-            //    //错误的订单处理
-            //}
-
+                //错误的订单处理
+            }
 
             res = "success";
             //订单处理
 
             string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
                 return_code, return_msg);
-
+            logger.Info(xml);
             return Content(xml, "text/xml");
         }
 

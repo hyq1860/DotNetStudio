@@ -14,11 +14,26 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         /// <summary>
         /// 支付流水编号
         /// </summary>
-        public long PayId { get; set; }
+        public string PayId { get; set; }
 
         /// <summary>
         /// 订单编号
         /// </summary>
         public long OrdeId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// 支付状态
+        /// </summary>
+        public int Status { get; set; }
+
+        /// <summary>
+        /// 支付时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
     }
 }
