@@ -39,6 +39,8 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             {
                 //计算出验证码
                 captcha = StringHelper.GetRandomInt(6, DateTime.Now.Millisecond);
+                //写入验证码发送表
+                userDataAccess.InsertUserCaptcha(userId, captcha, DateTime.Now, 0);
             }
             else
             {
@@ -46,8 +48,6 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             }
             //调用验证码发送接口
             var returnCode = smsService.SendSMSUserCaptcha(mobile, captcha, 5);
-            //写入验证码发送表
-            userDataAccess.InsertUserCaptcha(userId, captcha, DateTime.Now, 0);
             if (returnCode == 0)
             {
                 return true;
