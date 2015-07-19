@@ -235,5 +235,11 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             }
             return user;
         }
+
+
+        public void updateMobileByWxOpenId(string mobile, string wxOpenId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

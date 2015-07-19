@@ -69,5 +69,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="wxOpenId"></param>
         /// <returns></returns>
         UserModel GetUserByWxOpenId(string wxOpenId);
+
+        /// <summary>
+        /// 更新用户手机号
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="WxOpenId"></param>
+        void UpdateMobileUserByWxOpenId(string mobile, string WxOpenId);
     }
 }

@@ -97,6 +97,7 @@
         $("#goto_myfarm").on("click", function () {
             var mobile = $("#Mobile").val();
             var captcha = $("#Captcha").val();
+            var wxopenId = $("#weixinId").val();
             //校验手机号是否为空 手机号是否正确
             if (!isMobile(mobile)) {
                 alert("手机号格式不正确。");
@@ -115,7 +116,7 @@
             $.ajax({
                 url:"/account/login",
                 type: "post",
-                data: { Mobile: mobile, Captcha: captcha },
+                data: { Mobile: mobile, Captcha: captcha, WxOpenId: wxopenId },
                 success:function(data) {
                     if (data.IsSuccess) {
                         location.href = "/home/default";

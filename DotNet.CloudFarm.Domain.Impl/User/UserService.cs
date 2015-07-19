@@ -108,5 +108,11 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             return userDataAccess.GetUserByWxOpenId(wxOpenId);
         }
 
+
+
+        public void UpdateMobileUserByWxOpenId(string mobile, string wxOpenId)
+        {
+             userDataAccess.updateMobileByWxOpenId(mobile, wxOpenId);
+        }
     }
 }

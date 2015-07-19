@@ -20,5 +20,11 @@ namespace DotNet.CloudFarm.Domain.Model.User
         /// 验证码
         /// </summary>
         public string Captcha { get; set; }
+
+        /// <summary>
+        /// 用户的微信OpenId
+        /// </summary>
+        public string WxOpenId { get; set; }
+
     }
 }
