@@ -66,6 +66,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 //logger.Info(JsonHelper.ToJson(user));
                 if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
                 {
+                    UserService.UpdateUserCaptchaStatus(user.UserId);
                     //logger.Info(1);
                     //将用户的手机号与weixinid绑定
                     UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
