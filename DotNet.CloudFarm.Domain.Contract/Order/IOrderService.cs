@@ -96,5 +96,16 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderPayModel"></param>
         /// <returns></returns>
         bool UpdateOrderPay(OrderPayModel orderPayModel);
+
+        //获取用户的所有有效订单数据
+        Result<List<OrderViewModel>> GetUserAllOrder(int userId, List<int> orderStatus);
+
+        /// <summary>
+        /// 获取用户钱包实体
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderStatus"></param>
+        /// <returns></returns>
+        WalletViewModel GetWalletViewModel(int userId,List<int> orderStatus);
     }
 }

@@ -293,7 +293,44 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
         public List<OrderViewModel> GetUserAllOrder(int userId, List<int> orderStatus)
         {
             var orderList = new List<OrderViewModel>();
+            using (var cmd = DataCommandManager.GetDataCommand("GetUserAllOrder"))
+            {
+                cmd.CommandText = string.Format(cmd.CommandText, string.Join(",", orderStatus)); 
+                cmd.SetParameterValue("@UserId", userId);
+                using (var dr=cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        var orderViewModel = new OrderViewModel();
 
+                        orderViewModel.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? Convert.ToInt64(dr["OrderId"]) : 0;
+                        orderViewModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        orderViewModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        orderViewModel.ProductId = !Convert.IsDBNull(dr["ProductId"]) ? Convert.ToInt32(dr["ProductId"]) : 0;
+                        orderViewModel.ProductCount = !Convert.IsDBNull(dr["ProductCount"]) ? Convert.ToInt32(dr["ProductCount"]) : 0;
+                        orderViewModel.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
+                        orderViewModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
+                        orderViewModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
+                        orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
+                        orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+
+                        orderViewModel.Earning = !Convert.IsDBNull(dr["Earning"]) ? Convert.ToDecimal(dr["Earning"]) : 0;
+                        orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
+                        orderViewModel.EarningRate = !Convert.IsDBNull(dr["EarningRate"]) ? Convert.ToDecimal(dr["EarningRate"]) : 0;
+                        orderViewModel.YearEarningRate = !Convert.IsDBNull(dr["YearEarningRate"]) ? Convert.ToDecimal(dr["YearEarningRate"]) : 0;
+                        orderViewModel.StartTime = !Convert.IsDBNull(dr["StartTime"]) ? Convert.ToDateTime(dr["StartTime"]) : DateTime.MinValue;
+                        orderViewModel.EndTime = !Convert.IsDBNull(dr["EndTime"]) ? Convert.ToDateTime(dr["EndTime"]) : DateTime.MinValue;
+
+                        
+                        if (orderViewModel.OrderId > 0)
+                        {
+                            orderList.Add(orderViewModel);
+                        }
+
+                        orderList.Add(orderViewModel);
+                    }
+                }
+            }
             return orderList;
         }
 
@@ -315,7 +352,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
         {
             using (var cmd = DataCommandManager.GetDataCommand("UpdateOrderPay"))
             {
-                cmd.SetParameterValue("@OrdeId", orderPayModel.OrdeId);
+                //cmd.SetParameterValue("@OrdeId", orderPayModel.OrdeId);
                 cmd.SetParameterValue("@PayId", orderPayModel.PayId);
                 cmd.SetParameterValue("@Status", orderPayModel.Status);
 

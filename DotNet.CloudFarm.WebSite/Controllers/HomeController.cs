@@ -18,6 +18,7 @@ using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.CloudFarm.WebSite.WeixinPay;
 using DotNet.WebSite.Infrastructure.Config;
 using DotNet.WebSite.MVC;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Senparc.Weixin.MP.TenPayLibV3;
 
@@ -162,6 +163,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         public static readonly string PayKey = WebConfigurationManager.AppSettings["WeixinPaySecretKey"];
 
+        private ILog logger = LogManager.GetLogger("HomeController");
+
         /// <summary>
         /// 支付页面
         /// </summary>
@@ -241,6 +244,51 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             
 
             return View(orderPayViewModel);
+        }
+
+        /// <summary>
+        /// 微信回调
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult WexinPayNotify()
+        {
+
+            ResponseHandler resHandler = new ResponseHandler(null);
+
+            string return_code = resHandler.GetParameter("return_code");
+            string return_msg = resHandler.GetParameter("return_msg");
+
+            string res = null;
+            //TODO:这里需要验证签名
+
+            ////验证请求是否从微信发过来（安全）
+
+            logger.Info("微信回调" + resHandler.ParseXML());
+            //if (resHandler.IsTenpaySign())
+            //{
+            //    res = "success";
+            //    logger.Info(resHandler.ParseXML());
+            //    //正确的订单处理
+
+            //}
+            //else
+            //{
+            //    res = "wrong";
+
+            //    //错误的订单处理
+            //}
+            if (return_code.ToLower() == "SUCCESS".ToLower())
+            {
+                OrderService.UpdateOrderPay(new OrderPayModel() { PayId = resHandler.GetParameter("prepay_id"), Status = 1 });
+            }
+
+            res = "success";
+            //订单处理
+
+            string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
+                return_code, return_msg);
+            logger.Info("微信返回值" + xml);
+            return Content(xml, "text/xml");
         }
 
         public ActionResult PaySuccess()

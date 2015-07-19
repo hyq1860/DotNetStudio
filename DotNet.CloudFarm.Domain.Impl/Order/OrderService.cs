@@ -51,8 +51,28 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         //获取用户的所有有效订单数据
         public Result<List<OrderViewModel>> GetUserAllOrder(int userId,List<int> orderStatus)
         {
-            var data = new Result<List<OrderViewModel>>();
-            return data;
+            var result = new Result<List<OrderViewModel>>();
+            result.Data= orderDataAccess.GetUserAllOrder(userId, orderStatus);
+            result.Status = new Status() {Code = "1"};
+            return result;
+        }
+
+        /// <summary>
+        /// 获取用户钱包信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderStatus"></param>
+        /// <returns></returns>
+        public WalletViewModel GetWalletViewModel(int userId, List<int> orderStatus)
+        {
+            var walletViewModel = new WalletViewModel();
+            var orderList = GetUserAllOrder(userId, orderStatus);
+            if (orderList != null && orderList.Data != null && orderList.Data.Any())
+            {
+                //当前
+            }
+
+            return walletViewModel;
         }
 
         public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)
@@ -140,5 +160,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         {
             return orderDataAccess.UpdateOrderPay(orderPayModel);
         }
+
+
     }
 }
