@@ -107,16 +107,58 @@
 </script>
 
 @section Scripts {
+<script src="~/Scripts/jquery.cookie.js"></script>
      <script type="text/javascript">
-         var openId = "";
-         var setting = {
-             url: "",
-             appid: "",
-             redirect_uri: "",
-
+         var appid= "@ViewBag.AppId";
+         var appsecret = "@ViewBag.AppSecret";
+         var token = $.cookie("wx_accessToken");
+         var url_oauth_token = "https://api.weixin.qq.com/sns/oauth2/access_token";
+         var code_settings = {
+             apiUrl: "https://open.weixin.qq.com/connect/oauth2/authorize",
+             appid: appid,
+             response_type:"code",
+             redirect_uri: encodeURIComponent("http://yk.kerchinsheep.com/account/login"),
+             scope: "snsapi_userinfo",
+             anchor: "#wechat_redirect"
          };
-         $(document).ready(function () {
 
+         function GetQueryString(name) {
+             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+             var r = window.location.search.substr(1).match(reg);
+             if (r!=null) return (r[2]); return null;
+         };
+
+
+         function WxOauthCode(set) {
+             var requestUrl = "";
+                 requestUrl = set.apiUrl;
+                 requestUrl += "?";
+                 requestUrl += "appid=" + set.appid;
+                 requestUrl += "&redirect_uri=" + set.redirect_uri;
+                 requestUrl += "&response_type=" + set.response_type;
+                 requestUrl += "&scope=" + set.scope;
+                 requestUrl += set.anchor;
+                 location.href = requestUrl;
+         };
+
+         function WxOauthAuth(code)
+         {
+             var reqeustUrl = url_oauth_token+"?appid=" + appid + "&secret=" + appsecret+"&code="+code+"grant_type=authorization_code&callback=?";
+             //获取token
+             $.getJSON(reqeustUrl, function (data) {
+                 alert(data.errorcode);
+                 
+             });
+
+         }
+         var code = GetQueryString(code);
+         alert(code);
+         if (code == undefined || code == "" || code == null) {
+             WxOauthCode(code_settings);
+         }
+
+         $(document).ready(function () {
+            
          });
      </script>
         }

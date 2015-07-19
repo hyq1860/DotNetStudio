@@ -53,3 +53,4 @@
 /// <reference path="houtai/jquery.pager.js" />
 /// <reference path="jquery.scrollpagination.js" />
 /// <reference path="wxyangke.js" />
+/// <reference path="jquery.cookie.js" />

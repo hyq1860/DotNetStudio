@@ -1,5 +1,0 @@
-INFO  2015-07-19 17:32:55,936 [WeixnPayApi] <xml><return_code><![CDATA[FAIL]]></return_code>
-<return_msg><![CDATA[invalid spbill_create_ip]]></return_msg>
-</xml>
-ERROR 2015-07-19 17:32:56,064 [WeixnPayApi] System.NullReferenceException: 未将对象引用设置到对象的实例。
-   在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 154

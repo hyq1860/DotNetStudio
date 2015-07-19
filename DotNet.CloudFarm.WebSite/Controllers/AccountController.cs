@@ -17,12 +17,23 @@ using DotNet.CloudFarm.WebSite.Models;
 using DotNet.Common.Models;
 using DotNet.Identity;
 using DotNet.Identity.Database;
+using System.Web.Configuration;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
 
     public class AccountController : BaseController
     {
+
+        /// <summary>
+        /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
+        /// <summary>
+        /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
         {
@@ -85,6 +96,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.AppId = AppId;
+            ViewBag.AppSecret = AppSecret;
             return View();
         }
 
