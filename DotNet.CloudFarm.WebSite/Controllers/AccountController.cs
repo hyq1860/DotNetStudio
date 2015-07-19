@@ -54,7 +54,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var jsonResult = new JsonResult();
             var result = UserManager.FindByNameAsync(loginUser.Mobile);
+            //check验证码
+            
             //将用户的手机号与weixinid绑定
+            
 
             if (result!=null)
             {
