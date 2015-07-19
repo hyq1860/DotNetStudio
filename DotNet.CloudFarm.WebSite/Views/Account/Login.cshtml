@@ -77,7 +77,7 @@
             $.ajax({
                 url: "/account/GetMobileCaptcha",
                 type: "post",
-                data: { Mobile: $("#Mobile").val() },
+                data: { mobile: $("#Mobile").val(), weixinId: $("#WxOpenId").val() },
                 success: function (data) {
                     if(data=="True")
                     {
