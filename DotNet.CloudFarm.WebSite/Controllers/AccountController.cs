@@ -53,8 +53,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public async Task<JsonResult> Login(LoginUser loginUser)
         {
             var jsonResult = new JsonResult();
-            var result = UserManager.FindByNameAsync(loginUser.Mobile);
-
+            
             //check验证码
             var user=UserService.GetUserByWxOpenId(loginUser.WxOpenId);
             if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
@@ -63,7 +62,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
             }
 
-            if (result!=null)
+            var result = UserManager.FindByNameAsync(loginUser.Mobile);
+
+            //用户禁用不让登陆
+            if (result != null && user != null && user.Status==1)
             {
                 await SignInAsync(result.Result, true);
                 jsonResult.Data = new { IsSuccess = true };
