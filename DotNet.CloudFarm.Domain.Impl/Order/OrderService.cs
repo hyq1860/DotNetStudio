@@ -9,6 +9,7 @@ using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.ViewModel;
@@ -69,7 +70,43 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             var orderList = GetUserAllOrder(userId, orderStatus);
             if (orderList != null && orderList.Data != null && orderList.Data.Any())
             {
-                //当前
+                //当前收益
+                var currentOrderList =
+                    orderList.Data.Where(
+                        s =>
+                            s.Status == OrderStatus.Paid.GetHashCode() &&
+                            s.Status == OrderStatus.WaitingConfirm.GetHashCode());
+
+                //当前收益
+                walletViewModel.CurrentIncome = currentOrderList.Sum(s => s.Earning * s.ProductCount * ((s.EndTime - DateTime.Now).Days / s.EarningDay));
+
+                //预期收益
+                walletViewModel.ExpectIncome = currentOrderList.Sum(s => s.Earning*s.ProductCount);
+
+                //预期年化收益率
+                walletViewModel.YearEarningRate = currentOrderList.Sum(s => s.YearEarningRate)/currentOrderList.Count();
+
+                //育肥状态
+                var orderViewModel =
+                    currentOrderList.Where(s => s.StartTime < DateTime.Now && s.EndTime <= DateTime.Now)
+                        .OrderByDescending(s => s.CreateTime)
+                        .FirstOrDefault();
+                if (orderViewModel != null)
+                {
+                    walletViewModel.GrowDay = (orderViewModel.EndTime - DateTime.Now).Days/orderViewModel.EarningDay;
+                }
+
+                //历史
+                var historyOrderList = orderList.Data.Where(s => s.Status == OrderStatus.Complete.GetHashCode());
+
+                //累计收益
+                walletViewModel.TotalIncome = historyOrderList.Sum(s => s.Earning*s.ProductCount);
+
+                //累计养殖数量
+                walletViewModel.TotalProductCount = historyOrderList.Sum(s => s.ProductCount);
+
+                //累计投入金额
+                walletViewModel.TotalInvestment = historyOrderList.Sum(s => s.ProductCount*s.Price);
             }
 
             return walletViewModel;

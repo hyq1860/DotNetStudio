@@ -351,7 +351,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Wallet()
         {
-            var walletViewModel = new WalletViewModel();
+            var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId,new List<int>(){1,2,10});
             return View(walletViewModel);
         }
 
