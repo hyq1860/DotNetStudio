@@ -4,6 +4,7 @@
 }
 @using DotNet.Common.Utility
 @model DotNet.CloudFarm.Domain.ViewModel.OrderPayViewModel
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <div class="sheep_guest purchase_claim pay_way">
     <section class="purchase_claim_section1">
         <div class="purchase_claim_section1box">
@@ -81,29 +82,30 @@
             if (payType == 1) {
                 location.href = "@Url.Action("TransferAccount", "Home")"+"?OrderId="+self.OrderId();
             } else {
-                
+                //调用微信支付的js
+                onBridgeReady();
             }
             //console.log(ko.toJSON(self));
         }
     }
 
     //获取共享地址
-    function editAddress()
+    function onBridgeReady()
     {
-        //WeixinJSBridge.invoke(
-        //    'editAddress',
-        //    OrderPayServiceJson.wxEditAddrParam,//josn串
-        //      function (res)
-        //      {
-        //          var addr1 = res.proviceFirstStageName;
-        //          var addr2 = res.addressCitySecondStageName;
-        //          var addr3 = res.addressCountiesThirdStageName;
-        //          var addr4 = res.addressDetailInfo;
-        //          var tel = res.telNumber;
-        //          var addr = addr1 + addr2 + addr3 + addr4;
-        //          alert(addr + ":" + tel);
-        //      }
-        //  );
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            {
+                "appId": "@ViewBag.appId",     //公众号名称，由商户传入     
+                "timeStamp": "@ViewBag.TimeStamp",         //时间戳，自1970年以来的秒数     
+                "nonceStr": "@ViewBag.NonceStr", //随机串     
+                "package": "@ViewBag.Package",
+                "signType": "MD5",         //微信签名方式:     
+                "paySign": "@ViewBag.PaySign" //微信签名 
+            },
+              function (res) {
+                  alert(res);
+              }
+          );
     }
 
     $(function() {
@@ -128,22 +130,22 @@
         ko.applyBindings(orderPayViewModel);
 
         //微信支付
-        //if (typeof WeixinJSBridge == "undefined")
-        //{
-        //    if (document.addEventListener)
-        //    {
-        //        document.addEventListener('WeixinJSBridgeReady', editAddress, false);
-        //    }
-        //    else if (document.attachEvent)
-        //    {
-        //        document.attachEvent('WeixinJSBridgeReady', editAddress);
-        //        document.attachEvent('onWeixinJSBridgeReady', editAddress);
-        //    }
-        //}
-        //else
-        //{
-        //    editAddress();
-        //}
+        if (typeof WeixinJSBridge == "undefined")
+        {
+            if (document.addEventListener)
+            {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            }
+            else if (document.attachEvent)
+            {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        }
+        else
+        {
+            
+        }
     });
 
 </script>

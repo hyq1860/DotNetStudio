@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using DotNet.CloudFarm.Domain.Contract;
 using DotNet.CloudFarm.Domain.Contract.Message;
@@ -18,6 +19,7 @@ using DotNet.CloudFarm.WebSite.WeixinPay;
 using DotNet.WebSite.Infrastructure.Config;
 using DotNet.WebSite.MVC;
 using Microsoft.AspNet.Identity;
+using Senparc.Weixin.MP.TenPayLibV3;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -144,18 +146,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         }
 
         #region
+
         /// <summary>
-        /// 调用js获取收货地址时需要传入的参数
-        /// 格式：json串
-        /// 包含以下字段：
-        ///     appid：公众号id
-        ///     scope: 填写“jsapi_address”，获得编辑地址权限
-        ///     signType:签名方式，目前仅支持SHA1
-        ///     addrSign: 签名，由appid、url、timestamp、noncestr、accesstoken参与签名
-        ///     timeStamp：时间戳
-        ///     nonceStr: 随机字符串
+        /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
         /// </summary>
-        public static string wxEditAddrParam { get; set; }
+        public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
+
+        /// <summary>
+        /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+
+        /// <summary>
+        /// 微信支付KEY
+        /// </summary>
+        public static readonly string PayKey = WebConfigurationManager.AppSettings["WeixinPaySecretKey"];
 
         /// <summary>
         /// 支付页面
@@ -184,20 +189,42 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         orderPayViewModel.EndTime = productModel.EndTime;
                     }
 
-                    //JsApiPay jsApiPay=new JsApiPay(ControllerContext.HttpContext);
-                    //try
-                    //{
-                    //    //调用【网页授权获取用户信息】接口获取用户的openid和access_token
-                    //    jsApiPay.GetOpenidAndAccessToken();
+#region 微信支付
 
-                    //    //获取收货地址js函数入口参数
-                    //    wxEditAddrParam = jsApiPay.GetEditAddressParameters();
-                    //    orderPayViewModel.openid = jsApiPay.openid;
-                    //}
-                    //catch (Exception ex)
-                    //{
+                    //TODO:将该页加入登录页,就可以启用下边的注释
+                    //var userid = UserInfo.UserId;
+                    //var openId = UserInfo.WxOpenId;
+                    var userid = this.UserInfo.UserId;
+                    var openId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";//写死的
+                    var order = OrderService.GetOrderViewModel(userid, orderId.Value);
+                    if (string.IsNullOrEmpty(order.ProductName) || order.OrderId == 0 || order.TotalMoney == 0M)
+                    {
+                        return Content("ERROR");
+                    }
+                    var timeStamp = TenPayV3Util.GetTimestamp();
+                    var nonceStr = TenPayV3Util.GetNoncestr();
 
-                    //}
+                    var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(order.ProductName, order.OrderId, order.TotalMoney, Request.UserHostAddress, openId);
+                    if (pre_id == "ERROR" || pre_id == "FAIL")
+                        return Content("ERROR");
+                    var package = "prepay_id=" + pre_id;
+
+                    var req = new RequestHandler(null);
+                    req.SetParameter("appId", AppId);
+                    req.SetParameter("timeStamp", timeStamp);
+                    req.SetParameter("nonceStr", nonceStr);
+                    req.SetParameter("package", package);
+                    req.SetParameter("signType", "MD5");
+                    var paySign = req.CreateMd5Sign("key", PayKey);
+
+                    //绑定页面数据
+                    ViewBag.TimeStamp = timeStamp;
+                    ViewBag.NonceStr = nonceStr;
+                    ViewBag.PaySign = paySign;
+                    ViewBag.Package = package;
+                    ViewBag.AppId = AppId;
+                    ViewBag.OrderId = order.OrderId;
+#endregion
                 }
             }
 
