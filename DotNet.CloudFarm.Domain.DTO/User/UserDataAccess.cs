@@ -237,9 +237,14 @@ namespace DotNet.CloudFarm.Domain.DTO.User
         }
 
 
-        public void updateMobileByWxOpenId(string mobile, string wxOpenId)
+        public void UpdateMobileByWxOpenId(string mobile, string wxOpenId)
         {
-            throw new NotImplementedException();
+            using (var cmd = DataCommandManager.GetDataCommand("updateMobileByWxOpenId"))
+            {
+                cmd.SetParameterValue("@Mobile", mobile);
+                cmd.SetParameterValue("@WxOpenId", wxOpenId);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }
