@@ -54,10 +54,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var jsonResult = new JsonResult();
             var result = UserManager.FindByNameAsync(loginUser.Mobile);
-            //check验证码
 
-            //将用户的手机号与weixinid绑定
-            UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
+            //check验证码
+            var user=UserService.GetUserByWxOpenId(loginUser.WxOpenId);
+            if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
+            {
+                //将用户的手机号与weixinid绑定
+                UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
+            }
 
             if (result!=null)
             {

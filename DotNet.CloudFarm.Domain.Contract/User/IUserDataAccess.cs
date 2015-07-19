@@ -89,7 +89,14 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="wxOpenId"></param>
         void UpdateMobileByWxOpenId(string mobile, string wxOpenId);
 
-        bool CheckMobileCaptcha(string mobile, string captcha);
-        
+        bool CheckMobileCaptcha(int userId, string mobile, string captcha);
+
+        /// <summary>
+        /// 更新验证码的状态
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool UpdateUserCaptchaStatus(int userId);
+
     }
 }

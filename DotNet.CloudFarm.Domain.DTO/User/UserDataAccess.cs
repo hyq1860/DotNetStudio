@@ -247,11 +247,23 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             }
         }
 
-        public bool CheckMobileCaptcha(string mobile, string captcha)
+        public bool CheckMobileCaptcha(int userId,string mobile, string captcha)
         {
             using (var cmd = DataCommandManager.GetDataCommand("CheckMobileCaptcha"))
             {
-                
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@Captcha", captcha);
+                var returnValue = cmd.ExecuteScalar();
+                return returnValue != null;
+            }
+        }
+
+        public bool UpdateUserCaptchaStatus(int userId)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateUserCaptchaStatus"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                return cmd.ExecuteNonQuery()>0;
             }
         }
     }

@@ -28,7 +28,7 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="mobile"></param>
         /// <param name="captcha"></param>
         /// <returns></returns>
-        bool CheckMobileCaptcha(string mobile, string captcha);
+        bool CheckMobileCaptcha(int userId,string mobile, string captcha);
 
         /// <summary>
         /// 根据用户id获取用户消息列表
@@ -84,5 +84,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="mobile"></param>
         /// <param name="WxOpenId"></param>
         void UpdateMobileUserByWxOpenId(string mobile, string WxOpenId);
+
+        /// <summary>
+        /// 更新验证码的状态
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool UpdateUserCaptchaStatus(int userId);
     }
 }
