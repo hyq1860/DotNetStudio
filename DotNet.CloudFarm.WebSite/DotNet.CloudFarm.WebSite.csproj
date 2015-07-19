@@ -304,6 +304,7 @@
     <Content Include="Configs\Data\DataCommand_Product.config" />
     <Content Include="Configs\Data\DataCommand_User.config" />
     <Content Include="Configs\Params.config" />
+    <Content Include="html\take_care.html" />
     <Content Include="images\houtai\ajax-loaders\Thumbs.db" />
     <Content Include="images\houtai\logo_20.jpg" />
     <Content Include="images\houtai\iphone-style-checkboxes\Thumbs.db" />
