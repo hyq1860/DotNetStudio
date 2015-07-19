@@ -21,6 +21,9 @@ using System.Text;
 using System.Collections;
 using Senparc.Weixin.MP.Helpers;
 using DotNet.CloudFarm.Domain.Contract.Order;
+using DotNet.CloudFarm.Domain.Impl.Order;
+using DotNet.CloudFarm.Domain.Model.Order;
+
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
     /// <summary>
@@ -345,7 +348,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 //正确的订单处理
                 if (return_code == "SUCCESS")
                 {
-                    
+                    OrderService.UpdateOrderPay(new OrderPayModel() { PayId = resHandler.GetParameter("prepay_id"),Status = 1});
                 }
             }
             else

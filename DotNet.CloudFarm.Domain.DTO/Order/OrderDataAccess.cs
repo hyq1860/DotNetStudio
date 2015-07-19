@@ -315,7 +315,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
         {
             using (var cmd = DataCommandManager.GetDataCommand("UpdateOrderPay"))
             {
-                cmd.SetParameterValue("@OrdeId", orderPayModel.OrdeId);
+                //cmd.SetParameterValue("@OrdeId", orderPayModel.OrdeId);
                 cmd.SetParameterValue("@PayId", orderPayModel.PayId);
                 cmd.SetParameterValue("@Status", orderPayModel.Status);
 
