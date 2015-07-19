@@ -5,7 +5,7 @@
 @model DotNet.Common.Models.Result<DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.ViewModel.OrderViewModel>>
 
 <div class="sheep_guest my_order" data-bind="foreach:OrderList">
-    <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId}">
+    <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId()}">
         <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:OrderStatusDesc--><!--/ko--></span></p>
         <div class="order_detail clearfix">
             <div class="order_detail_l">
