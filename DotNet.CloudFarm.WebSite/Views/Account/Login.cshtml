@@ -79,7 +79,8 @@
                 type: "post",
                 data: { mobile: $("#Mobile").val(), weixinId: $("#WxOpenId").val() },
                 success: function (data) {
-                    if(data=="True")
+                    alert(data);
+                    if(data)
                     {
                         //验证码倒计时
                 }

@@ -18,6 +18,8 @@ using DotNet.Common.Models;
 using DotNet.Identity;
 using DotNet.Identity.Database;
 using System.Web.Configuration;
+using log4net;
+using DotNet.Common.Utility;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -41,6 +43,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             UserManager = userManager;
         }
+
+        private ILog logger = LogManager.GetLogger("AccountController");
 
         public UserManager<CloudFarmIdentityUser> UserManager { get; private set; }
 
@@ -95,6 +99,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             //通过微信id获取用户id
             var user = UserService.GetUserByWxOpenId(weixinId);
+            logger.Info(JsonHelper.ToJson(user));
             var userid = user.UserId;
             var result = UserService.GetCaptcha(userid, mobile);
 
