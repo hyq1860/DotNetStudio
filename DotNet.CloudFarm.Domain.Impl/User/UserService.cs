@@ -31,7 +31,7 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             return new Result<LoginUser>();
         }
 
-        public Result<LoginUser> GetCaptcha(int userId,string mobile)
+        public bool GetCaptcha(int userId,string mobile)
         {
             var unUsedCaptcha = userDataAccess.GetUnUsedCaptcha(userId, mobile, 5);
             var captcha = string.Empty;
@@ -46,17 +46,26 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             }
             //调用验证码发送接口
             var returnCode = smsService.SendSMSUserCaptcha(mobile, captcha, 5);
-
+            //写入验证码发送表
+            userDataAccess.InsertUserCaptcha(userId, captcha, DateTime.Now, 0);
             if (returnCode == 0)
             {
-                
+                return true;
             }
             else
             {
-                
+                //失败再调一遍
+                returnCode = smsService.SendSMSUserCaptcha(mobile, captcha, 5);
+                if (returnCode == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
-            //写入验证码发送表
-            return new Result<LoginUser>();
         }
 
         public PagedList<MessageModel> GetMessages(int userId, int pageIndex, int pageSize)

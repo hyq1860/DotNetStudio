@@ -404,9 +404,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
             //下面2个数据也可以自己封装成一个类，储存在数据库中（建议结合缓存）
             //如果可以确保安全，可以将access_token存入用户的cookie中，每一个人的access_token是不一样的
-            Request.Cookies.Add(new HttpCookie(COOKIE_TOKEN_KEY, result.access_token));
-            Request.Cookies.Add(new HttpCookie(COOKIE_REFRESHTOKEN_KEY, result.refresh_token));
-            Request.Cookies.Add(new HttpCookie(COOKIE_OPENID_KEY, result.openid));
+            Response.Cookies.Add(new HttpCookie(COOKIE_TOKEN_KEY, result.access_token));
+            Response.Cookies.Add(new HttpCookie(COOKIE_REFRESHTOKEN_KEY, result.refresh_token));
+            Response.Cookies.Add(new HttpCookie(COOKIE_OPENID_KEY, result.openid));
 
             //因为第一步选择的是OAuthScope.snsapi_userinfo，这里可以进一步获取用户详细信息
             //try

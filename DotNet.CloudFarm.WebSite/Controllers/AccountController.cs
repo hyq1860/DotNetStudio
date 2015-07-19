@@ -54,6 +54,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var jsonResult = new JsonResult();
             var result = UserManager.FindByNameAsync(loginUser.Mobile);
+            //将用户的手机号与weixinid绑定
+
             if (result!=null)
             {
                 await SignInAsync(result.Result, true);
@@ -83,18 +85,26 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult GetMobileCaptcha(string mobile,string weixinId)
         {
             //通过微信id获取用户id
-            var result=UserService.GetCaptcha(0,mobile);
-            //将用户的手机号与weixinid绑定
+            var user = UserService.GetUserByWxOpenId(weixinId);
+            var userid = user.UserId;
+            var result = UserService.GetCaptcha(userid, mobile);
+            
 
-
-            return new JsonResult();
+            return Json(result);
         }
 
         private readonly static string COOKIE_OPENID_KEY = "wx_openId";
 
         public ActionResult Login()
         {
-            ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
+            if (Request.Cookies[COOKIE_OPENID_KEY]!=null)
+            {
+                ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
+            }
+            else
+            {
+                ViewBag.OpenId = "";
+            }
             ViewBag.AppId = AppId;
             return View();
         }
