@@ -37,7 +37,7 @@
                 <p class="p2">出身内蒙古，混在华尔街；羊只认购火热进行中</p>
                 <div class="Claim_sheep1_box_content">
                     <ul class="clearfix">
-                        <li class="li1"><img src="/images/no_pic.jpg"></li>
+                        <li class="li1"><img src="/images/no_pic.jpg" data-bind="attr:{src:ImgUrl}"></li>
                         <li><span class="span1">￥<em><!--ko text:SheepPrice--><!--/ko--></em>/只</span><span class="span2">价格</span></li>
                         <li><span class="span1">￥<em><!--ko text:Earning--><!--/ko--></em>元</span><span class="span2">预计收益</span></li>
                         <li><span class="span1"><em><!--ko text:Stock--><!--/ko--></em>只</span><span class="span2">本期投放</span></li>
@@ -85,7 +85,7 @@
                         </tr>*@
                         <tr>
                             <td>项目收益预期支付日</td>
-                            <td class="td2"><em>2015</em>年【<em>6</em>】月【<em>8</em>】日</td>
+                            <td class="td2"><!--ko text:ExpectEarningDay--><!--/ko--></td>
                         </tr>
                         <tr>
                             <td>收益支付方式</td>
@@ -103,7 +103,7 @@
 
                         <tr>
                             <td>预期育肥时间</td>
-                            <td class="td2">3个半月</td>
+                            <td class="td2"><!--ko text:EarningDay--><!--/ko-->天</td>
                         </tr>
 
                         <tr>
@@ -201,6 +201,12 @@
 
         //结束时间
         self.EndTime = ko.observable();
+
+        //商品图片
+        self.ImgUrl = ko.observable();
+
+        //预期收益时间
+        self.ExpectEarningDay = ko.observable();
     }
 
     var homeViewModel = new HomeViewModel();
@@ -263,6 +269,12 @@
                         productViewModel.StartTime(data.Products[i].StartTime);
                         //结束
                         productViewModel.EndTime(data.Products[i].EndTime);
+
+                        //商品图片
+                        productViewModel.ImgUrl(data.Products[i].ImgUrl);
+
+                        //预期收益时间
+                        productViewModel.ExpectEarningDay(data.Products[i].ExpectEarningDay);
 
                         homeViewModel.Products.push(productViewModel);
                     }

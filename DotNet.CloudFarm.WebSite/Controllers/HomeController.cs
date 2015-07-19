@@ -247,7 +247,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             //ControllerContext.RequestContext.HttpContext
             var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
-            return View(result.Data);
+            return View(result);
         }
 
         public ActionResult OrderDetail(long? orderId)

@@ -1,5 +1,5 @@
 ﻿@using DotNet.Common.Utility
-@model DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.Model.Message.MessageModel>
+@model DotNet.Common.Models.Result<DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.Model.Message.MessageModel>>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,7 +11,7 @@
             <p class="li_l"><span class="no_read"><img src="/images/no_read.png"></span></p>
             <p class="li_r">
                 <span class="span1">未读消息</span>
-                <span class="span2"><!--ko text:Content--><!--/ko--></span>
+                <span class="span2" data-bind="html:Content"></span>
             </p>
         </li>
     </ul>
@@ -48,7 +48,8 @@
 
     $(function() {
         var messageListViewModel = new MessageListViewModel();
-        if (messageListServiceJson && messageListServiceJson.Data && messageListServiceJson.Data.length > 0) {
+        debugger;
+        if (messageListServiceJson &&messageListServiceJson.Data  && messageListServiceJson.Data.length > 0) {
             var length = messageListServiceJson.Data.length;
             for (var i = 0; i < length; i++) {
                 var messageViewModel = new MessageViewModel();

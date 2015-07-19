@@ -110,5 +110,14 @@ namespace DotNet.CloudFarm.Domain.Model.Product
         /// 产品图片URL
         /// </summary>
         public string  ImgUrl { get; set; }
+
+        //预期收益时间
+        public DateTime ExpectEarningDay
+        {
+            get
+            {
+                return EndTime.AddDays(EarningDay+1);
+            }
+        }
     }
 }

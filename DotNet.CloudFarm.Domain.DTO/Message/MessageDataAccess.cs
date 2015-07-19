@@ -47,7 +47,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Message
             {
                 cmd.SetParameterValue("@UserId", userId);
                 cmd.SetParameterValue("@PageIndex", pageIndex);
-                cmd.SetParameterValue("@PageIndex", pageSize);
+                cmd.SetParameterValue("@PageSize", pageSize);
                 var total = 0;
                 using (var dr=cmd.ExecuteDataReader())
                 {
@@ -58,8 +58,9 @@ namespace DotNet.CloudFarm.Domain.DTO.Message
                         {
                             total = !Convert.IsDBNull(dr["Total"]) ? Convert.ToInt32(dr["Total"]) : 0;
                         }
+                        messageModel.MessageId = !Convert.IsDBNull(dr["Id"]) ? Convert.ToInt32(dr["Id"]) : 0;
                         messageModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
-                        messageModel.Content = !Convert.IsDBNull(dr["Content"]) ? dr["Content"].ToString() : string.Empty;
+                        messageModel.Content = !Convert.IsDBNull(dr["MsgContent"]) ? dr["MsgContent"].ToString() : string.Empty;
                         messageModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
                         messageModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
                         if (messageModel.MessageId > 0)

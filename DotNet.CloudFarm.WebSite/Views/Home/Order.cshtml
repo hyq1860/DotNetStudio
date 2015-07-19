@@ -141,7 +141,7 @@
                 return;
             }
             console.log(ko.toJSON(self));
-            confirmOrderServiceJson.Count = self.Product.Count();
+            confirmOrderServiceJson.Count = self.Count();
             $.ajax({
                 url: "/home/SubmitOrder",
                 type: "post",
@@ -152,6 +152,10 @@
                         if (result.Status.Code == "1") {
                             location.href = "@Url.Action("Pay","Home")"+"?OrderId="+result.Data.OrderId;
                         }
+                        else if (result.Status.Code == "0") {
+                            alert(result.Status.Message);
+                        }
+
                     }
                 }
             });
