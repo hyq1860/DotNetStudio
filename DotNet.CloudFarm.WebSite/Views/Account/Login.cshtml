@@ -30,7 +30,7 @@
                     <span class="span2"></span>
                 </div>
             </div>
-            <div class="get_yzm_btn" id="get_yzm_btn"><a href="#">获取验证码</a></div>
+            <div class="get_yzm_btn" id="get_yzm_btn"><a href="#" id="get_yzm_btn_a">获取验证码</a></div>
         </div>
         <!--进入我的牧场-->
         <div class="go_myfarm" id="goto_myfarm"><a href="#">进入我的牧场</a></div>
@@ -40,9 +40,21 @@
 </div>
 
 <script type="text/javascript">
+    var countdownNumber = 60;
+    var intervalId;
+    var $capthca = $("#get_yzm_btn_a");
+    function captchaCountdown() {
+        countdownNumber--;
+        $capthca.html("(" + countdownNumber + ")");
+        if (countdownNumber <= 0) {
+            countdownNumber = 60;
+            clearInterval(intervalId);
+            $capthca.html("获取验证码");
+        }
+    }
     $(function() {
         //绑定事件
-
+        
         //获取验证码
         $("#get_yzm_btn").on("click", function () {
             var mobile = $("#Mobile").val();
@@ -56,15 +68,21 @@
                 alert("手机号格式不正确。");
                 return;
             }
-            $(this).attr("IsSendCaptcha",true);
-            $.ajax({
-                url: "/account/GetMobileCaptcha",
-                type: "post",
-                data: { Mobile: $("#Mobile").val() },
-                success: function (data) {
-                    
-                }
-            });
+            debugger;
+            if ($capthca.text() == "获取验证码") {
+                intervalId = setInterval(captchaCountdown, 1000);
+
+                $(this).attr("IsSendCaptcha", true);
+                $.ajax({
+                    url: "/account/GetMobileCaptcha",
+                    type: "post",
+                    data: { Mobile: $("#Mobile").val() },
+                    success: function (data) {
+
+                    }
+                });
+            }
+            
         });
 
 
@@ -130,14 +148,14 @@
 
          function WxOauthCode(set) {
              var requestUrl = "";
-                 requestUrl = set.apiUrl;
-                 requestUrl += "?";
-                 requestUrl += "appid=" + set.appid;
-                 requestUrl += "&redirect_uri=" + set.redirect_uri;
-                 requestUrl += "&response_type=" + set.response_type;
-                 requestUrl += "&scope=" + set.scope;
-                 requestUrl += set.anchor;
-                 location.href = requestUrl;
+             requestUrl = set.apiUrl;
+             requestUrl += "?";
+             requestUrl += "appid=" + set.appid;
+             requestUrl += "&redirect_uri=" + set.redirect_uri;
+             requestUrl += "&response_type=" + set.response_type;
+             requestUrl += "&scope=" + set.scope;
+             requestUrl += set.anchor;
+             location.href = requestUrl;
          };
 
          function WxOauthAuth(code)

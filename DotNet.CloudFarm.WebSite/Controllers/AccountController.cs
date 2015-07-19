@@ -94,7 +94,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Login()
         {
-            ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
+            if (Request.Cookies[COOKIE_OPENID_KEY] != null)
+            {
+                ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
+            }
+            
             ViewBag.AppId = AppId;
             return View();
         }
