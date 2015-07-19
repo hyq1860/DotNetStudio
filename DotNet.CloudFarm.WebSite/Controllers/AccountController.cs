@@ -57,28 +57,42 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public async Task<JsonResult> Login(LoginUser loginUser)
         {
             var jsonResult = new JsonResult();
-            
-            //check验证码
-            var user=UserService.GetUserByWxOpenId(loginUser.WxOpenId);
-            if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
+            try
             {
-                //将用户的手机号与weixinid绑定
-                UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
+                //logger.Info(JsonHelper.ToJson(loginUser));
+
+                //check验证码
+                var user = UserService.GetUserByWxOpenId(loginUser.WxOpenId);
+                //logger.Info(JsonHelper.ToJson(user));
+                if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
+                {
+                    //logger.Info(1);
+                    //将用户的手机号与weixinid绑定
+                    UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
+                    //logger.Info(2);
+
+                }
+
+                var result = UserManager.FindByNameAsync(loginUser.Mobile);
+                //logger.Info(3);
+
+                //用户禁用不让登陆
+                if (result != null && user != null && user.Status == 1)
+                {
+                    //logger.Info(JsonHelper.ToJson(result));
+                    await SignInAsync(result.Result, true);
+                    //logger.Info(4);
+                    jsonResult.Data = new { IsSuccess = true };
+                }
+                else
+                {
+                    jsonResult.Data = new { IsSuccess = false };
+                }
             }
-
-            var result = UserManager.FindByNameAsync(loginUser.Mobile);
-
-            //用户禁用不让登陆
-            if (result != null && user != null && user.Status==1)
+            catch (Exception ex)
             {
-                await SignInAsync(result.Result, true);
-                jsonResult.Data = new { IsSuccess = true };
+                logger.Error(ex);
             }
-            else
-            {
-                jsonResult.Data = new { IsSuccess = false };
-            }
-
             return jsonResult;
         }
 
@@ -99,7 +113,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             //通过微信id获取用户id
             var user = UserService.GetUserByWxOpenId(weixinId);
-            logger.Info(JsonHelper.ToJson(user));
+            //logger.Info(JsonHelper.ToJson(user));
             var userid = user.UserId;
             var result = UserService.GetCaptcha(userid, mobile);
 
