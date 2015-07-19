@@ -241,5 +241,13 @@ namespace DotNet.CloudFarm.Domain.DTO.User
         {
             throw new NotImplementedException();
         }
+
+        public bool CheckMobileCaptcha(string mobile, string captcha)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("CheckMobileCaptcha"))
+            {
+                
+            }
+        }
     }
 }

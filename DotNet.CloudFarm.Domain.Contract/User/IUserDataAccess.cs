@@ -88,5 +88,7 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="mobile"></param>
         /// <param name="wxOpenId"></param>
         void updateMobileByWxOpenId(string mobile, string wxOpenId);
+
+        bool CheckMobileCaptcha(string mobile, string captcha);
     }
 }

@@ -23,6 +23,14 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         bool GetCaptcha(int userId, string mobile);
 
         /// <summary>
+        /// 校验验证码
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="captcha"></param>
+        /// <returns></returns>
+        bool CheckMobileCaptcha(string mobile, string captcha);
+
+        /// <summary>
         /// 根据用户id获取用户消息列表
         /// </summary>
         /// <param name="userId"></param>

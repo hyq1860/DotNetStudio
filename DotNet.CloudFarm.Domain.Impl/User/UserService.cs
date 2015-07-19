@@ -114,5 +114,10 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         {
              userDataAccess.updateMobileByWxOpenId(mobile, wxOpenId);
         }
+
+        public bool CheckMobileCaptcha(string mobile,string captcha)
+        {
+            return userDataAccess.CheckMobileCaptcha(mobile, captcha);
+        }
     }
 }
