@@ -340,22 +340,23 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
             ////验证请求是否从微信发过来（安全）
             
-            logger.Info(resHandler.ParseXML());
-            if (resHandler.IsTenpaySign())
-            {
-                res = "success";
-                logger.Info(resHandler.ParseXML());
-                //正确的订单处理
-                if (return_code == "SUCCESS")
-                {
-                    OrderService.UpdateOrderPay(new OrderPayModel() { PayId = resHandler.GetParameter("prepay_id"),Status = 1});
-                }
-            }
-            else
-            {
-                res = "wrong";
+            logger.Info("微信回调"+resHandler.ParseXML());
+            //if (resHandler.IsTenpaySign())
+            //{
+            //    res = "success";
+            //    logger.Info(resHandler.ParseXML());
+            //    //正确的订单处理
+                
+            //}
+            //else
+            //{
+            //    res = "wrong";
 
-                //错误的订单处理
+            //    //错误的订单处理
+            //}
+            if (return_code.ToLower() == "SUCCESS".ToLower())
+            {
+                OrderService.UpdateOrderPay(new OrderPayModel() { PayId = resHandler.GetParameter("prepay_id"), Status = 1 });
             }
 
             res = "success";
@@ -363,7 +364,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
             string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
                 return_code, return_msg);
-            logger.Info(xml);
+            logger.Info("微信返回值"+xml);
             return Content(xml, "text/xml");
         }
 

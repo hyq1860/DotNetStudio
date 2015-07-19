@@ -48,5 +48,35 @@ namespace DotNet.CloudFarm.Domain.ViewModel
                 return orderStatusDesc;
             } 
         }
+
+        /// <summary>
+        /// 预期年化收益率
+        /// </summary>
+        public decimal YearEarningRate { get; set; }
+
+        /// <summary>
+        /// 收益率
+        /// </summary>
+        public decimal EarningRate { get; set; }
+
+        /// <summary>
+        /// 预期收益
+        /// </summary>
+        public decimal Earning { get; set; }
+
+        /// <summary>
+        /// 活动开始时间
+        /// </summary>
+        public DateTime StartTime { get; set; }
+
+        /// <summary>
+        /// 活动结束时间
+        /// </summary>
+        public DateTime EndTime { get; set; }
+
+        /// <summary>
+        /// 活动持续时间、天（预计收益时间）
+        /// </summary>
+        public int EarningDay { get; set; }
     }
 }
