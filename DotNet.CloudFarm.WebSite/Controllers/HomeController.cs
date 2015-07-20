@@ -288,7 +288,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //}
             if (return_code.ToLower() == "SUCCESS".ToLower())
             {
-                OrderService.UpdateOrderPay(new OrderPayModel() { PayId = resHandler.GetParameter("prepay_id"), Status = 1 });
+                OrderService.UpdateOrderPay(new OrderPayModel() { OrdeId = long.Parse(resHandler.GetParameter("out_trade_no")), Status = 1 });
             }
 
             res = "success";
