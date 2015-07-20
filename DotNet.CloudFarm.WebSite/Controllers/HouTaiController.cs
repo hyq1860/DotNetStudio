@@ -26,6 +26,7 @@ using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Impl.SMS;
+using DotNet.CloudFarm.WebSite.WeixinPay;
 
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -330,8 +331,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult ConfirmOrderPayReturn(long orderId, int userId, int pageIndex, int pageSize)
         {
             var status = OrderStatus.Complete.GetHashCode();
-            //TODO:调取微信企业支付接口
-
+            var order = OrderService.GetOrder(userId,orderId);
+            var user = UserService.GetUserByUserId(userId);
+            var product = ProductService.GetProductById(order.ProductId);
+            if(order.Status==OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay)>DateTime.Now)
+            {
+                //TODO:调取微信企业支付接口
+                var totalRefund = order.Price * order.ProductCount + product.Earning;
+                var description = string.Format("羊客【{0}】回购",product.Name);
+                var payResult =  WeixinPayApi.QYPay(user.WxOpenId, orderId, totalRefund, description);
+                if(payResult=="ERROR")
+                {
+                    //错误处理
+                }
+            }
+      
             var orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
             var result = new
             {
@@ -342,6 +356,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 PageNo = orderList.Data.TotalCount % orderList.Data.PageSize != 0 ?
                     (orderList.Data.TotalCount / orderList.Data.PageSize) + 1 : orderList.Data.TotalCount / orderList.Data.PageSize
             };
+                 
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }

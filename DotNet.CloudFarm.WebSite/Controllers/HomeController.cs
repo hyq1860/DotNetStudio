@@ -171,79 +171,87 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Pay(long? orderId)
         {
-            var orderPayViewModel = new OrderPayViewModel();
-            if (orderId.HasValue)
+            try
             {
-                var orderModel = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
-
-                if (orderModel != null)
+                var orderPayViewModel = new OrderPayViewModel();
+                if (orderId.HasValue)
                 {
-                    var productModel = ProductService.GetProductById(orderModel.ProductId);
+                    var orderModel = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
 
-                    if (productModel != null)
+                    if (orderModel != null)
                     {
-                        orderPayViewModel.Name = productModel.Name;
-                        orderPayViewModel.SheepType = productModel.SheepType;
-                        orderPayViewModel.OrderId = orderId.Value;
-                        orderPayViewModel.Price = productModel.Price;
-                        orderPayViewModel.Count = orderModel.ProductCount;
-                        orderPayViewModel.TotalPrice = productModel.Price*orderModel.ProductCount;
-                        orderPayViewModel.StartTime = productModel.StartTime;
-                        orderPayViewModel.EndTime = productModel.EndTime;
+                        var productModel = ProductService.GetProductById(orderModel.ProductId);
+
+                        if (productModel != null)
+                        {
+                            orderPayViewModel.Name = productModel.Name;
+                            orderPayViewModel.SheepType = productModel.SheepType;
+                            orderPayViewModel.OrderId = orderId.Value;
+                            orderPayViewModel.Price = productModel.Price;
+                            orderPayViewModel.Count = orderModel.ProductCount;
+                            orderPayViewModel.TotalPrice = productModel.Price * orderModel.ProductCount;
+                            orderPayViewModel.StartTime = productModel.StartTime;
+                            orderPayViewModel.EndTime = productModel.EndTime;
+                        }
+
+                        #region 微信支付
+
+                        //TODO:将该页加入登录页,就可以启用下边的注释
+                        //var userid = UserInfo.UserId;
+                        var userid = this.UserInfo.UserId;
+                        var openId = this.UserInfo.WxOpenId;
+                        var order = OrderService.GetOrderViewModel(userid, orderId.Value);
+                        if (string.IsNullOrEmpty(order.ProductName) || order.OrderId == 0 || order.TotalMoney == 0M)
+                        {
+                            return Content("ERROR");
+                        }
+                        var timeStamp = TenPayV3Util.GetTimestamp();
+                        var nonceStr = TenPayV3Util.GetNoncestr();
+
+                        var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(order.ProductName, order.OrderId, order.TotalMoney, Request.UserHostAddress, openId);
+                        if (pre_id == "ERROR" || pre_id == "FAIL")
+                            return Content("ERROR");
+                        var package = "prepay_id=" + pre_id;
+
+                        var req = new RequestHandler(null);
+                        req.SetParameter("appId", AppId);
+                        req.SetParameter("timeStamp", timeStamp);
+                        req.SetParameter("nonceStr", nonceStr);
+                        req.SetParameter("package", package);
+                        req.SetParameter("signType", "MD5");
+                        var paySign = req.CreateMd5Sign("key", PayKey);
+
+                        //绑定页面数据
+                        ViewBag.TimeStamp = timeStamp;
+                        ViewBag.NonceStr = nonceStr;
+                        ViewBag.PaySign = paySign;
+                        ViewBag.Package = package;
+                        ViewBag.AppId = AppId;
+                        ViewBag.OrderId = order.OrderId;
+
+                        OrderService.InsertOrderPay(new OrderPayModel()
+                        {
+                            PayId = pre_id,
+                            OrdeId = order.OrderId,
+                            UserId = order.UserId,
+                            Status = 0,
+                            CreateTime = DateTime.Now
+                        });
+
+                        #endregion
                     }
-
-                    #region 微信支付
-
-                    //TODO:将该页加入登录页,就可以启用下边的注释
-                    //var userid = UserInfo.UserId;
-                    //var openId = UserInfo.WxOpenId;
-                    var userid = this.UserInfo.UserId;
-                    var openId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";//写死的
-                    var order = OrderService.GetOrderViewModel(userid, orderId.Value);
-                    if (string.IsNullOrEmpty(order.ProductName) || order.OrderId == 0 || order.TotalMoney == 0M)
-                    {
-                        return Content("ERROR");
-                    }
-                    var timeStamp = TenPayV3Util.GetTimestamp();
-                    var nonceStr = TenPayV3Util.GetNoncestr();
-
-                    var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(order.ProductName, order.OrderId, order.TotalMoney, Request.UserHostAddress, openId);
-                    if (pre_id == "ERROR" || pre_id == "FAIL")
-                        return Content("ERROR");
-                    var package = "prepay_id=" + pre_id;
-
-                    var req = new RequestHandler(null);
-                    req.SetParameter("appId", AppId);
-                    req.SetParameter("timeStamp", timeStamp);
-                    req.SetParameter("nonceStr", nonceStr);
-                    req.SetParameter("package", package);
-                    req.SetParameter("signType", "MD5");
-                    var paySign = req.CreateMd5Sign("key", PayKey);
-
-                    //绑定页面数据
-                    ViewBag.TimeStamp = timeStamp;
-                    ViewBag.NonceStr = nonceStr;
-                    ViewBag.PaySign = paySign;
-                    ViewBag.Package = package;
-                    ViewBag.AppId = AppId;
-                    ViewBag.OrderId = order.OrderId;
-
-                    OrderService.InsertOrderPay(new OrderPayModel()
-                    {
-                        PayId = pre_id,
-                        OrdeId = order.OrderId,
-                        UserId = order.UserId,
-                        Status = 0,
-                        CreateTime = DateTime.Now
-                    });
-
-                    #endregion
                 }
-            }
+                return View(orderPayViewModel);
 
             
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                throw;
+            }
+           
 
-            return View(orderPayViewModel);
         }
 
         /// <summary>
@@ -252,7 +260,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ContentResult WexinPayNotify()
         {
-
+            logger.Info("wexinpayNotify");
             ResponseHandler resHandler = new ResponseHandler(null);
 
             string return_code = resHandler.GetParameter("return_code");

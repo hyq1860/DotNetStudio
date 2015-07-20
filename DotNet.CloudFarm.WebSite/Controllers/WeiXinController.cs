@@ -25,6 +25,7 @@ using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
 using Senparc.Weixin;
 using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Model.Order;
+using DotNet.Common.Utility;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {

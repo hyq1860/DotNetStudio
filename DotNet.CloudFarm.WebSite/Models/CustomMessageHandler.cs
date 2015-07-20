@@ -58,14 +58,15 @@ namespace DotNet.CloudFarm.WebSite.Models
         /// <returns></returns>
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
         {
-            return null;
+            var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+            return responseMessage;
         }
 
         public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
         {
+            var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
             try
             {
-                var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
                 var keyword = requestMessage.Content;
                 var dataAccess = new WeiXinMessageDataAccess();
                 var service = new WeiXinService(dataAccess);

@@ -18,8 +18,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 </head>
-<body>
+<body style="background:#eee;">
 @RenderBody()
+    <div class="loading" style="display:none"><img src="images/loading.gif"></div>
     @if (isShowTab)
     {
         <div class="bottom_float" id="bottom_Container">
@@ -37,9 +38,20 @@
         $bottomTab = $("#bottom_Container").find("ul>li");
         if ($bottomTab.length > 0) {
             var tabFlag = $.QueryString["tab"];
-            console.log(tabFlag);
             if (tabFlag) {
-                $("#tab" + tabFlag).addClass("active");
+                if (tabFlag==1) {
+                    $("#tab" + tabFlag).addClass("active");
+                }
+                else if (tabFlag==2) {
+                    $("#tab" + tabFlag).addClass("active_wallet");
+                }
+                else if(tabFlag==3)
+                {
+                    $("#tab" + tabFlag).addClass("active_my");
+                }
+                else {
+                    $("#tab1").addClass("active");
+                }
             } else {
                 $("#tab1").addClass("active");
             }

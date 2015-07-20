@@ -22,6 +22,7 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
         private static string appSecret = ConfigurationManager.AppSettings["SMS_AppSecret"];
         private static string orderTempId = ConfigurationManager.AppSettings["SMS_TemplateId_Order"];
         private static string regTempId = ConfigurationManager.AppSettings["SMS_TemplateId_Reg"];
+        private static string smsSendOnOff = ConfigurationManager.AppSettings["SMS_SendOnOff"];
 
 
         /// <summary>
@@ -38,6 +39,11 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
         /// <returns>0为成功</returns>
         public int SendSMSUserCaptcha(string mobile, string code,int expireMinute)
         {
+            //开关，避免测试发送过多短信
+            if(smsSendOnOff=="0")
+            {
+                return 0;
+            }
             var tempParamModel = new 
             {
                 tel = mobile,
@@ -78,6 +84,11 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
         /// <returns>0为成功</returns>
         public int SendSMSOrderCreated(string mobile,long orderId, decimal totalPrice)
         {
+            //开关，避免测试发送过多短信
+            if (smsSendOnOff == "0")
+            {
+                return 0;
+            }
             var tempParamModel = new
             {
                 order_sn = orderId,
