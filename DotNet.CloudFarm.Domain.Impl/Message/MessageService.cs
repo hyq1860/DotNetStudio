@@ -34,5 +34,10 @@ namespace DotNet.CloudFarm.Domain.Impl.Message
             result.Data = messageDataAccess.GetMessages(userId, pageIndex, pageSize);
             return result; 
         }
+
+        public bool UpdateMessageStatus(int userId)
+        {
+            return UpdateMessageStatus(userId);
+        }
     }
 }

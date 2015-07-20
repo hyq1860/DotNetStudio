@@ -28,5 +28,12 @@ namespace DotNet.CloudFarm.Domain.Contract.Message
         /// <param name="status"></param>
         /// <returns></returns>
         PagedList<MessageModel> GetMessages(int userId, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 设置消息状态
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool UpdateMessageStatus(int userId);
     }
 }

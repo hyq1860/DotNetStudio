@@ -77,5 +77,15 @@ namespace DotNet.CloudFarm.Domain.DTO.Message
             }
             
         }
+
+        public bool UpdateMessageStatus(int userId)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateMessageStatus"))
+            {
+                cmd.SetParameterValue("@Status", 1);
+                cmd.SetParameterValue("@UserId", userId);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }

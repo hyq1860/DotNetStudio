@@ -340,6 +340,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             //ControllerContext.RequestContext.HttpContext
             var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
+
+            //修改短信已读状态
+            MessageService.UpdateMessageStatus(this.UserInfo.UserId);
             return View(result);
         }
 

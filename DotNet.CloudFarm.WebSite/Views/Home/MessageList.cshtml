@@ -10,7 +10,7 @@
         <li class="clearfix">
             <p class="li_l"><span class="no_read"><img src="/images/no_read.png"></span></p>
             <p class="li_r">
-                <span class="span1">未读消息</span>
+                <span class="span1"><!--ko text:StatusDesc--><!--/ko--></span>
                 <span class="span2" data-bind="html:Content"></span>
             </p>
         </li>
@@ -42,7 +42,15 @@
         self.CreateTime = ko.observable();
 
         //短消息状态 0 未读 1 已读
-        self.Status = ko.observable();
+        self.Status = ko.observable(0);
+
+        self.StatusDesc = ko.pureComputed(function() {
+            if (self.Status() == 0) {
+                return "未读";
+            } else if (self.Status() == 1) {
+                return "已读";
+            }
+        });
 
     }
 
