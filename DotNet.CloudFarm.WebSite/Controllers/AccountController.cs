@@ -31,7 +31,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
         /// </summary>
         public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
-     
+
+
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
         {

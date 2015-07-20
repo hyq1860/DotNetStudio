@@ -39,6 +39,7 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
         /// <returns>0为成功</returns>
         public int SendSMSUserCaptcha(string mobile, string code,int expireMinute)
         {
+            
             //开关，避免测试发送过多短信
             if(smsSendOnOff=="0")
             {
