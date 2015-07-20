@@ -14,7 +14,7 @@
             <p class="p3">金额：<em><!--ko text:PayMoney--><!--/ko-->元</em></p>
         </div>
     </div>
-    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderDetail","Home")?orderid='+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a></div>
+    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList","Home")/#Order_'+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a></div>
 </div>
 <script type="text/javascript">
     var payTipServiceJson=@Html.Raw(JsonHelper.ToJson(Model??new PayTipViewModel()));
