@@ -258,6 +258,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 微信回调
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ContentResult WexinPayNotify()
         {
             logger.Info("wexinpayNotify");
@@ -299,9 +300,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Content(xml, "text/xml");
         }
 
-        public ActionResult PaySuccess()
+        public ActionResult PaySuccess(long orderId)
         {
-            return View();
+            var payTipViewModel = new PayTipViewModel();
+            var orderViewModel = OrderService.GetOrderViewModel(this.UserInfo.UserId, orderId);
+            payTipViewModel.OrderId = orderViewModel.OrderId;
+            payTipViewModel.PayMoney = orderViewModel.ProductCount*orderViewModel.Price;
+            payTipViewModel.IsPaySuccess = orderViewModel.Status == OrderStatus.Paid.GetHashCode();
+            payTipViewModel.Message = payTipViewModel.IsPaySuccess ? "支付成功" : "支付失败";
+            return View(payTipViewModel);
         }
 
         #endregion
