@@ -1,2 +1,10 @@
 INFO  2015-07-20 21:58:07,362 [AccountController] 短信开关：0
 INFO  2015-07-20 22:05:07,365 [AccountController] 短信开关：0
+INFO  2015-07-21 00:14:04,850 [HomeController] wexinpayNotify
+INFO  2015-07-21 00:14:08,768 [HomeController] 微信回调<xml></xml>
+INFO  2015-07-21 00:17:01,807 [HomeController] wexinpayNotify
+INFO  2015-07-21 00:17:08,949 [HomeController] 微信回调<xml></xml>
+INFO  2015-07-21 00:17:31,414 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
+INFO  2015-07-21 00:20:29,038 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
+INFO  2015-07-21 00:22:25,369 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
+INFO  2015-07-21 00:23:30,169 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>

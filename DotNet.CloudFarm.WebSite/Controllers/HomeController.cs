@@ -278,10 +278,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 try
                 {
                     //订单处理
-            if (return_code.ToLower() == "SUCCESS".ToLower())
-            {
-                OrderService.UpdateOrderPay(new OrderPayModel() { OrdeId = long.Parse(resHandler.GetParameter("out_trade_no")), Status = 1 });
-            }
+                    if (return_code.ToLower() == "SUCCESS".ToLower())
+                    {
+                        OrderService.UpdateOrderPay(new OrderPayModel() { OrdeId = 81150721544370,
+                            //long.Parse(resHandler.GetParameter("out_trade_no")), 
+                            Status = 1 });
+                    }
 
                     res = "SUCCESS";
 
@@ -291,11 +293,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     logger.Error("微信支付回调错误：" + e);
                     res = "FAIL";
                 }
-            string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
+                string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
                 return_code, return_msg);
-            logger.Info("微信返回值" + xml);
-            return Content(xml, "text/xml");
-        }
+                logger.Info("微信返回值" + xml);
+                return Content(xml, "text/xml");
+            }
             else
             {
                 return Content("");
