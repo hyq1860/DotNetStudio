@@ -98,7 +98,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
             {
                 //调用统一订单接口
                 var result = TenPayV3.QYPay(data, cert);
-                logger.Info(result);
+                logger.Info("企业支付返回信息："+result);
                 var unifiedorderRes = XDocument.Parse(result);
                 string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;
                 return return_code;
@@ -141,14 +141,14 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
             packageReqHandler.SetParameter("sign", sign);
 
             string data = packageReqHandler.ParseXML();
-
+            logger.Info("统一订单接口请求信息：" + data);
             //证书相关
             var cert = new X509Certificate2(SSLCERT_PATH, SSLCERT_PASSWORD);
               try
             {
                 //调用统一订单接口
                 var result = TenPayV3.Unifiedorder(data, cert);
-                logger.Info("同一订单接口返回信息："+result);
+                logger.Info("统一订单接口返回信息："+result);
                 var unifiedorderRes = XDocument.Parse(result);
                 string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;
                 string result_code =unifiedorderRes.Element("xml").Element("result_code").Value;

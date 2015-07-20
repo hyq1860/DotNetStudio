@@ -137,7 +137,6 @@
      <script type="text/javascript">
          var appid= "@ViewBag.AppId";
          var openId = "@ViewBag.OpenId";
-         alert(openId);
          var code_settings = {
              apiUrl: "https://open.weixin.qq.com/connect/oauth2/authorize",
              appid: appid,
@@ -174,7 +173,6 @@
                  data: "code=" + code,
                  dataType: "text",
                  success: function (result) {
-                     alert("result-openId:"+result);
                      if(result!="ERROR")
                      {
                          openId = result;

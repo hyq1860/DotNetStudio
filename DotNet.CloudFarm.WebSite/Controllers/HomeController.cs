@@ -258,6 +258,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 微信回调
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ContentResult WexinPayNotify()
         {
             logger.Info("wexinpayNotify");
