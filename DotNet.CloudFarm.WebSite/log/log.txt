@@ -8,3 +8,10 @@ INFO  2015-07-21 00:17:31,414 [HomeController] 微信返回值<xml><return_code><![CD
 INFO  2015-07-21 00:20:29,038 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
 INFO  2015-07-21 00:22:25,369 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
 INFO  2015-07-21 00:23:30,169 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
+INFO  2015-07-21 01:29:37,060 [HomeController] 微信回调<xml></xml>
+INFO  2015-07-21 01:30:19,466 [HomeController] orderId:81150721544377|out_trade_no=81150721544377
+INFO  2015-07-21 01:30:45,191 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
+INFO  2015-07-21 01:32:14,490 [HomeController] orderId:81150721544377|out_trade_no=81150721544377
+INFO  2015-07-21 01:32:19,244 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
+INFO  2015-07-21 01:42:12,209 [HomeController] IsTenpaySign:False
+INFO  2015-07-21 01:42:34,272 [HomeController] orderId:81150721544379|out_trade_no=81150721544379

@@ -261,18 +261,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [AllowAnonymous]
         public ContentResult WexinPayNotify()
         {
-            logger.Info("wexinpayNotify");
             ResponseHandler resHandler = new ResponseHandler(null);
 
             string return_code = resHandler.GetParameter("return_code");
             string return_msg = resHandler.GetParameter("return_msg");
-
+            resHandler.SetKey(PayKey);
             string res = null;
             //TODO:这里需要验证签名
 
             ////验证请求是否从微信发过来（安全）
-
-            logger.Info("微信回调" + resHandler.ParseXML());
+            logger.Info("IsTenpaySign:" + resHandler.IsTenpaySign());
             if (resHandler.IsTenpaySign())
             {
                 try
@@ -280,9 +278,18 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     //订单处理
                     if (return_code.ToLower() == "SUCCESS".ToLower())
                     {
-                        OrderService.UpdateOrderPay(new OrderPayModel() { OrdeId = 81150721544370,
+                        string out_trade_no = resHandler.GetParameter("out_trade_no");
+                        long orderId=0;
+                        if (!string.IsNullOrEmpty(out_trade_no))
+                        {
+                            orderId = Convert.ToInt64(out_trade_no);
+                        }
+                        logger.Info("orderId:" + orderId+"|out_trade_no="+out_trade_no);
+                        OrderService.UpdateOrderPay(new OrderPayModel()
+                        {
+                            OrdeId = orderId,
                             //long.Parse(resHandler.GetParameter("out_trade_no")), 
-                            Status = 1 });
+                            Status = OrderStatus.Paid.GetHashCode() });
                     }
 
                     res = "SUCCESS";
@@ -294,8 +301,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     res = "FAIL";
                 }
                 string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
-                return_code, return_msg);
-                logger.Info("微信返回值" + xml);
+                res, return_msg);
                 return Content(xml, "text/xml");
             }
             else
