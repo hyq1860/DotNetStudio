@@ -154,16 +154,15 @@
 
 
          function WxOauthCode(set) {
-             $("#WxOpenId").val("oOGootzpwe38CkQSTj00wyHhKSMk");
-             //var requestUrl = "";
-             //    requestUrl = set.apiUrl;
-             //    requestUrl += "?";
-             //    requestUrl += "appid=" + set.appid;
-             //    requestUrl += "&redirect_uri=" + set.redirect_uri;
-             //    requestUrl += "&response_type=" + set.response_type;
-             //    requestUrl += "&scope=" + set.scope;
-             //    requestUrl += set.anchor;
-             //    location.href = requestUrl;
+             var requestUrl = "";
+                 requestUrl = set.apiUrl;
+                 requestUrl += "?";
+                 requestUrl += "appid=" + set.appid;
+                 requestUrl += "&redirect_uri=" + set.redirect_uri;
+                 requestUrl += "&response_type=" + set.response_type;
+                 requestUrl += "&scope=" + set.scope;
+                 requestUrl += set.anchor;
+                 location.href = requestUrl;
          };
 
          function WxOauthAuth(code)
