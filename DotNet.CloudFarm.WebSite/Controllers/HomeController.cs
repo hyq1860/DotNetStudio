@@ -273,31 +273,33 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             ////验证请求是否从微信发过来（安全）
 
             logger.Info("微信回调" + resHandler.ParseXML());
-            //if (resHandler.IsTenpaySign())
-            //{
-            //    res = "success";
-            //    logger.Info(resHandler.ParseXML());
-            //    //正确的订单处理
-
-            //}
-            //else
-            //{
-            //    res = "wrong";
-
-            //    //错误的订单处理
-            //}
+            if (resHandler.IsTenpaySign())
+            {
+                try
+                {
+                    //订单处理
             if (return_code.ToLower() == "SUCCESS".ToLower())
             {
                 OrderService.UpdateOrderPay(new OrderPayModel() { OrdeId = long.Parse(resHandler.GetParameter("out_trade_no")), Status = 1 });
             }
 
-            res = "success";
-            //订单处理
+                    res = "SUCCESS";
 
+                }
+                catch (Exception e)
+                {
+                    logger.Error("微信支付回调错误：" + e);
+                    res = "FAIL";
+                }
             string xml = string.Format(@"<xml><return_code><![CDATA[{0}]]></return_code><return_msg><![CDATA[{1}]]></return_msg></xml>",
                 return_code, return_msg);
             logger.Info("微信返回值" + xml);
             return Content(xml, "text/xml");
+        }
+            else
+            {
+                return Content("");
+            }
         }
 
         public ActionResult PaySuccess(long orderId)
