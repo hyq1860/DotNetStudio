@@ -179,41 +179,43 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
 
-            //单击
             var btnGroup = new ButtonGroup();
-            btnGroup.button.Add(new SingleClickButton()
-                {
-                    name = "单击测试",
-                    key = "OnClick",
-                    type = ButtonType.click.ToString()
-                });
-
             //二级菜单
             var subButton = new SubButton()
             {
-                name = "二级菜单"
+                name = "关于羊客"
             };
-            subButton.sub_button.Add(new SingleClickButton()
-            {
-                key = "SubClickRoot_Text",
-                name = "返回文本"
-            });
-            subButton.sub_button.Add(new SingleClickButton()
-            {
-                key = "SubClickRoot_News",
-                name = "返回图文"
-            });
             subButton.sub_button.Add(new SingleViewButton()
             {
-                url = "http://yk.kerchinsheep.com/weixin/pay",
-                name = "付"
+                url = "http://yk.kerchinsheep.com/html/micro.html",
+                name = "微场景"
             });
-            subButton.sub_button.Add(new SingleViewButton()
+            subButton.sub_button.Add(new SingleClickButton()
             {
-                url = "http://yk.kerchinsheep.com/",
-                name = "Url跳转"
+                key = "learnmore",
+                name = "了解更多"
             });
             btnGroup.button.Add(subButton);
+            var subButton1 = new SubButton()
+            {
+                name = "购买页面"
+            };
+            subButton1.sub_button.Add(new SingleViewButton()
+            {
+                url = "http://yk.kerchinsheep.com/home/default",
+                name = "购买"
+            });
+            subButton1.sub_button.Add(new SingleViewButton()
+            {
+                url = "http://yk.kerchinsheep.com/home/wallet",
+                name = "钱包"
+            });
+            subButton1.sub_button.Add(new SingleViewButton()
+            {
+                url = "http://yk.kerchinsheep.com/home/MyCenter",
+                name = "我的"
+            });
+            btnGroup.button.Add(subButton1);
             var result = CommonApi.CreateMenu(accesstoken, btnGroup);
             return Json(result,JsonRequestBehavior.AllowGet);
         }

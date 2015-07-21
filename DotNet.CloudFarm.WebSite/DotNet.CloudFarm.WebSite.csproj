@@ -305,6 +305,7 @@
     <Content Include="Configs\Data\DataCommand_Product.config" />
     <Content Include="Configs\Data\DataCommand_User.config" />
     <Content Include="Configs\Params.config" />
+    <Content Include="html\micro.html" />
     <Content Include="html\take_care.html" />
     <Content Include="images\houtai\ajax-loaders\Thumbs.db" />
     <Content Include="images\houtai\logo_20.jpg" />
@@ -525,7 +526,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contract.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Default.cshtml" />
@@ -556,7 +556,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="refdll\" />
-    <Folder Include="Views\HouTaiBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

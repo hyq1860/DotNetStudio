@@ -348,19 +348,42 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var result = new JsonResult
             {
-                Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value, -1)
+                Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value, OrderStatus.Close.GetHashCode())
+            };
+            return result;
+        }
+        /// <summary>
+        /// 结算
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult RedeemOrder(long?orderId)
+        {
+            //TODO：验证，是否可结算
+            var result = new JsonResult
+            {
+                Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value, OrderStatus.WaitingConfirm.GetHashCode())
             };
             return result;
         }
 
         public ActionResult MessageList(int pageIndex=1,int pageSize=10)
         {
-            //ControllerContext.RequestContext.HttpContext
-            var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
+            try
+            {
+                //ControllerContext.RequestContext.HttpContext
+                var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
 
-            //修改短信已读状态
-            MessageService.UpdateMessageStatus(this.UserInfo.UserId);
-            return View(result);
+                //修改短信已读状态
+                MessageService.UpdateMessageStatus(this.UserInfo.UserId);
+                return View(result);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                return View(new DotNet.Common.Models.Result<DotNet.CloudFarm.Domain.Model.Message.MessageModel>());
+            }
+        
         }
 
         public ActionResult OrderDetail(long? orderId)
@@ -379,8 +402,18 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Wallet()
         {
-            var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId,new List<int>(){1,2,10});
-            return View(walletViewModel);
+            try
+            {
+                var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId, new List<int>() { 1, 2, 10 });
+                return View(walletViewModel);
+            }
+            catch (Exception e)
+            {
+
+                logger.Error(e);
+                return View(new WalletViewModel());
+            }
+
         }
 
         /// <summary>
