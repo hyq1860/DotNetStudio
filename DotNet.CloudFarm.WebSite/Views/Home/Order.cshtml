@@ -39,16 +39,20 @@
     <section class="purchase_claim_section2">
         <ul data-bind="foreach:BuyTops">
             <!--ko if:$index()<=3-->
-            <li class="li1 clearfix" data-bind="css:'li'+$index()"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:Mobile--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko-->只</span></li>
+            <li class="li1 clearfix" data-bind="css:'li'+$index()"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko-->只</span></li>
             <!--/ko-->
             <!--ko if:$index()>3-->
-            <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:Mobile--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko--></span></li>
+            <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko--></span></li>
             <!--/ko-->
             @*<li class="li2 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
             <li class="li3 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>*@
             @*<li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>*@
         </ul>
-        <div class="loading_more"><a href="#">加载更多</a></div>
+        <!--ko if:BuyTops.length>=5-->
+        
+        <div class="loading_more"><a href="#">加载更多</a>
+        </div>
+        <!--/ko-->
     </section>
 
     <section class="purchase_claim_section3">
@@ -68,7 +72,7 @@
     </section>
     <div class="read_agree clearfix"><label><span class="" data-bind="css:CheckClass(),click:ChooseAgreeContract"></span>
         <span class="span2">阅读并同意<a href="@Url.Action("Contract","Home")" target="_blank" style="color:#3388ff;">《用户协议》</a></span></label></div><!--当同意协议时 使用agree_ment的类名-->
-    <div class="sure_book"><a href="#" data-bind="click:SubmitOrder">确认订单</a></div>
+    <div class="sure_book"><a href="#" data-bind="click:SubmitOrder">提交订单</a></div>
 </div>
 
 <script type="text/javascript">
@@ -208,7 +212,7 @@
         self.HeadUrl = ko.observable();
 
         //认购者姓名
-        self.Mobile = ko.observable();
+        self.WxNickName = ko.observable();
 
         //认购者数量
         self.BuyCount = ko.observable();

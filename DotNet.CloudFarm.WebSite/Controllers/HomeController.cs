@@ -118,7 +118,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             {
                 confirmOrderViewModel.Product = ProductService.GetProductById(productId.Value);
 
-                confirmOrderViewModel.TopOrderInfos = OrderService.GetTopOrderList(1, 3);
+                confirmOrderViewModel.TopOrderInfos = OrderService.GetTopOrderList(1, 5);
             }
             else
             {

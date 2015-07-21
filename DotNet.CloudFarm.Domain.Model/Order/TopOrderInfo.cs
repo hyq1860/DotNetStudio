@@ -16,6 +16,11 @@ namespace DotNet.CloudFarm.Domain.Model.Order
 
         public string Mobile { get; set; }
 
+        /// <summary>
+        /// 微信昵称
+        /// </summary>
+        public string WxNickName { get; set; }
+
         public string HeadUrl { get; set; }
 
         public decimal BuyCount { get; set; }

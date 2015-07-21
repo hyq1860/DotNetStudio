@@ -40,6 +40,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         topOrderInfo.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
                         topOrderInfo.BuyCount = !Convert.IsDBNull(dr["Total"]) ? decimal.Parse(dr["Total"].ToString()) : 0;
                         topOrderInfo.HeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;
+                        topOrderInfo.WxNickName = !Convert.IsDBNull(dr["WxNickName"]) ? dr["WxNickName"].ToString() : string.Empty;
                         result.Add(topOrderInfo);
                     }
                 }   
