@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "实时牧场";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="sheep_guest take_care">
+    <p class="take_care_title"><img src="../images/title.png"></p>
+    <ul class="cam_list clearfix">
+        <li>
+            <p class="clearfix"><span class="span1"></span><span class="span2"><i>1</i>号摄像头</span><span class="span3"></span></p>
+            <div id="player1"></div>
+        </li>
+        <li>
+            <p class="clearfix"><span class="span1"></span><span class="span2"><i>2</i>号摄像头</span><span class="span3"></span></p>
+            <div id="player2"></div>
+        </li>
+        <li>
+            <p class="clearfix"><span class="span1"></span><span class="span2"><i>3</i>号摄像头</span><span class="span3"></span></p>
+            <div id="player3"></div>
+        </li>
+        <li>
+            <p class="clearfix"><span class="span1"></span><span class="span2"><i>4</i>号摄像头</span><span class="span3"></span></p>
+            <div id="player4"></div>
+        </li>
+    </ul>
+</div>
+
+
+
+@section scripts{
+    <script src="http://kankan.baidu.com/Public/js/baidu_cam.js"></script>
+    <script  type="text/javascript">
+        var vwidth = "255";
+        var vheght = "195";
+        var option1 = { width: vwidth, height: vheght, div_id: "player1", device_id: "137893139339" };
+        var player_obj1 = new baidu_cam(option1);
+        player_obj1.play();
+        var option2 = { width: vwidth, height: vheght, div_id: "player2", device_id: "137893139371" };
+        var player_obj2 = new baidu_cam(option2);
+        player_obj2.play();
+
+       // $(document).ready(function () {
+            //var optionList = [];
+            //var deviceIds = ["137893139339", "137893139371", "137893139627", "137893139659"];
+            //for (var i = 0; i < deviceIds.length; i++) {
+            //    var divId = "player" + (i + 1);
+            //    var option = { width: vwidth, height: vheght, div_id: divId, device_id: deviceIds[i] };
+            //    optionList.push(option);
+            //}
+        
+        //});
+
+      
+    </script>
+    }

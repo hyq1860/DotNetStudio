@@ -130,6 +130,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Login()
         {
+
             if (Request.Cookies[COOKIE_OPENID_KEY]!=null)
             {
             ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
@@ -139,6 +140,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 ViewBag.OpenId = "";
             }
             ViewBag.AppId = AppId;
+#if DEBUG
+            ViewBag.OpenId = "oOGootzpwe38CkQSTj00wyHhKSMk";
+#endif
             return View();
         }
 

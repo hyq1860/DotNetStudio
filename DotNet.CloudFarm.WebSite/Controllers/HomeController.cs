@@ -449,5 +449,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 实时牧场
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Video()
+        {
+            return View();
+        }
     }
 }
