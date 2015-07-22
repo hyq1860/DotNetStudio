@@ -119,6 +119,20 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 confirmOrderViewModel.Product = ProductService.GetProductById(productId.Value);
 
                 confirmOrderViewModel.TopOrderInfos = OrderService.GetTopOrderList(1, 5);
+
+                var orderStatisModel=OrderService.GetOrderStatisModel();
+                var info = orderStatisModel.UserOrderList.FirstOrDefault(s => s.UserId == this.UserInfo.UserId);
+                if (info != null)
+                {
+                    var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId, new List<int>() { 1, 2, 10 });
+                    confirmOrderViewModel.Percentage = (info.RowId / orderStatisModel.TotalUserCount).ToString("F2");
+                    confirmOrderViewModel.Earning = walletViewModel.TotalIncome;
+                }
+                else
+                {
+                    confirmOrderViewModel.Earning = 0;
+                    confirmOrderViewModel.Percentage = "0";
+                }
             }
             else
             {
@@ -198,6 +212,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
                         //TODO:将该页加入登录页,就可以启用下边的注释
                         //var userid = UserInfo.UserId;
+                         
                         var userid = this.UserInfo.UserId;
                         var openId = this.UserInfo.WxOpenId;
                         var order = OrderService.GetOrderViewModel(userid, orderId.Value);

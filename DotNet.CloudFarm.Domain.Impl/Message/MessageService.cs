@@ -37,7 +37,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Message
 
         public bool UpdateMessageStatus(int userId)
         {
-            return UpdateMessageStatus(userId);
+            return messageDataAccess.UpdateMessageStatus(userId);
         }
     }
 }
