@@ -107,5 +107,11 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderStatus"></param>
         /// <returns></returns>
         WalletViewModel GetWalletViewModel(int userId,List<int> orderStatus);
+
+        /// <summary>
+        /// 订单统计信息
+        /// </summary>
+        /// <returns></returns>
+        OrderStatisModel GetOrderStatisModel();
     }
 }

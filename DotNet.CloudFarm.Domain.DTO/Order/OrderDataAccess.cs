@@ -313,7 +313,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
                         orderViewModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
                         orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
-                        orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+                        //orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
 
                         orderViewModel.Earning = !Convert.IsDBNull(dr["Earning"]) ? Convert.ToDecimal(dr["Earning"]) : 0;
                         orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
@@ -360,6 +360,36 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
 
                 return cmd.ExecuteNonQuery() > 0;
             }
+        }
+
+        public OrderStatisModel GetOrderStatisModel()
+        {
+            var orderStatisModel = new OrderStatisModel();
+            using (var cmd = DataCommandManager.GetDataCommand("GetOrderStatis"))
+            {
+                using (var dr=cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        if (orderStatisModel.TotalUserCount <= 0)
+                        {
+                            orderStatisModel.TotalUserCount = !Convert.IsDBNull(dr["Total"])
+                                ? int.Parse(dr["Total"].ToString())
+                                : 0;
+                        }
+                        var userOrderModel = new UserOrderModel();
+
+                        userOrderModel.RowId = !Convert.IsDBNull(dr["RowId"]) ? int.Parse(dr["RowId"].ToString()) : 0;
+                        userOrderModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? int.Parse(dr["UserId"].ToString()) : 0;
+                        userOrderModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"])
+                            ? decimal.Parse(dr["TotalMoney"].ToString())
+                            : 0;
+
+                        orderStatisModel.UserOrderList.Add(userOrderModel);
+                    }
+                }
+            }
+            return orderStatisModel;
         }
     }
 }

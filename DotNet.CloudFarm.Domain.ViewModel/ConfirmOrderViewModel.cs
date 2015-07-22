@@ -24,6 +24,16 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// <summary>
         /// 用户top信息
         /// </summary>
-        public List<TopOrderInfo> TopOrderInfos { get; set; } 
+        public List<TopOrderInfo> TopOrderInfos { get; set; }
+
+        /// <summary>
+        /// 用户收益
+        /// </summary>
+        public decimal Earning { get; set; }
+
+        /// <summary>
+        /// 打败百分比
+        /// </summary>
+        public string Percentage { get; set; }
     }
 }

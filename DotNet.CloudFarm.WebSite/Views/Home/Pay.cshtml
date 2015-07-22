@@ -82,8 +82,13 @@
             if (payType == 1) {
                 location.href = "@Url.Action("TransferAccount", "Home")"+"?OrderId="+self.OrderId();
             } else {
-                //调用微信支付的js
-                onBridgeReady();
+                if ($("#weixinpay").find("img").attr("src") == "/images/weixin_active.png" && $("#weixinpay").find("img").attr("src") == "/images/weixin.png") {
+                    alert("请选择支付方式。");
+                } else {
+                    //调用微信支付的js
+                    onBridgeReady();
+                }
+                
             }
             //console.log(ko.toJSON(self));
         }

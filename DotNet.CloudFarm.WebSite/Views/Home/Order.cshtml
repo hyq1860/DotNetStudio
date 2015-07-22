@@ -59,14 +59,14 @@
         <div class="pk_box clearfix">
             <div class="pk_box_l">
                 <p class="p1">您的累计收益</p>
-                <p class="p2">50000元</p>
+                <p class="p2"><!--ko text:Earning--><!--/ko-->元</p>
             </div>
             <div class="pk_box_m">
 
             </div>
             <div class="pk_box_r">
                 <p class="p1">打败全国羊客中的</p>
-                <p class="p2">50%</p>
+                <p class="p2"><!--ko text:Percentage--><!--/ko-->%</p>
             </div>
         </div>
     </section>
@@ -79,6 +79,10 @@
     
     function OrderViewModel() {
         var self = this;
+
+        self.Earning = ko.observable();
+
+        self.Percentage = ko.observable();
 
         //购买的商品
         self.Product = ko.observable();
@@ -242,6 +246,10 @@
                 orderViewModel.Count(1);
                 orderViewModel.Product=product;
             }
+
+            orderViewModel.Earning(confirmOrderServiceJson.Earning);
+
+            orderViewModel.Percentage(confirmOrderServiceJson.Percentage);
 
             orderViewModel.BuyTops(confirmOrderServiceJson.TopOrderInfos);
             ko.applyBindings(orderViewModel);

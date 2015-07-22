@@ -84,7 +84,14 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                 walletViewModel.ExpectIncome = currentOrderList.Sum(s => s.Earning*s.ProductCount);
 
                 //预期年化收益率
-                walletViewModel.YearEarningRate = currentOrderList.Sum(s => s.YearEarningRate)/currentOrderList.Count();
+                if (currentOrderList.Count() > 0)
+                {
+                    walletViewModel.YearEarningRate = currentOrderList.Sum(s => s.YearEarningRate) / currentOrderList.Count();
+                }
+                else
+                {
+                    walletViewModel.YearEarningRate = 0;
+                }
 
                 //育肥状态
                 var orderViewModel =
@@ -110,6 +117,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             }
 
             return walletViewModel;
+        }
+
+        public OrderStatisModel GetOrderStatisModel()
+        {
+            return orderDataAccess.GetOrderStatisModel();
         }
 
         public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)
