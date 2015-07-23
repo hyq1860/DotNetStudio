@@ -34,7 +34,9 @@ namespace DotNet.CloudFarm.WebSite
 
         protected void Application_Error()
         {
-            
+            Exception ex = Server.GetLastError().GetBaseException(); 
+            var logger =log4net.LogManager.GetLogger("ApplicationError");
+            logger.Error(ex);
         }
     }
 }

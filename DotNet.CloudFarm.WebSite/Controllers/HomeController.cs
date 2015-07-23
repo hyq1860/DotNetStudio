@@ -21,6 +21,8 @@ using DotNet.WebSite.MVC;
 using log4net;
 using Microsoft.AspNet.Identity;
 using Senparc.Weixin.MP.TenPayLibV3;
+using System.Net;
+using System.IO;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -113,32 +115,41 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult Order(int? productId)
         {
-            var confirmOrderViewModel = new ConfirmOrderViewModel();
-            if (productId.HasValue)
+            try
             {
-                confirmOrderViewModel.Product = ProductService.GetProductById(productId.Value);
-
-                confirmOrderViewModel.TopOrderInfos = OrderService.GetTopOrderList(1, 5);
-
-                var orderStatisModel=OrderService.GetOrderStatisModel();
-                var info = orderStatisModel.UserOrderList.FirstOrDefault(s => s.UserId == this.UserInfo.UserId);
-                if (info != null)
+                var confirmOrderViewModel = new ConfirmOrderViewModel();
+                if (productId.HasValue)
                 {
-                    var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId, new List<int>() { 1, 2, 10 });
-                    confirmOrderViewModel.Percentage = (info.RowId / orderStatisModel.TotalUserCount).ToString("F2");
-                    confirmOrderViewModel.Earning = walletViewModel.TotalIncome;
+                    confirmOrderViewModel.Product = ProductService.GetProductById(productId.Value);
+
+                    confirmOrderViewModel.TopOrderInfos = OrderService.GetTopOrderList(1, 5);
+
+                    var orderStatisModel = OrderService.GetOrderStatisModel();
+                    var info = orderStatisModel.UserOrderList.FirstOrDefault(s => s.UserId == this.UserInfo.UserId);
+                    if (info != null)
+                    {
+                        var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId, new List<int>() { 1, 2, 10 });
+                        confirmOrderViewModel.Percentage = (info.RowId / orderStatisModel.TotalUserCount).ToString("F2");
+                        confirmOrderViewModel.Earning = walletViewModel.TotalIncome;
+                    }
+                    else
+                    {
+                        confirmOrderViewModel.Earning = 0;
+                        confirmOrderViewModel.Percentage = "0";
+                    }
                 }
                 else
                 {
-                    confirmOrderViewModel.Earning = 0;
-                    confirmOrderViewModel.Percentage = "0";
+                    return RedirectToAction("Default", "Home");
                 }
+                return View(confirmOrderViewModel);
             }
-            else
+            catch (Exception e)
             {
-                return RedirectToAction("Default", "Home");
+                logger.Error(e);
+                throw;
             }
-            return View(confirmOrderViewModel);
+      
         }
 
         public JsonResult SubmitOrder(ConfirmOrderViewModel confirmOrderViewModel)
@@ -457,6 +468,25 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult Video()
         {
             return View();
+        }
+
+        public JsonResult GetWeather()
+        {
+            GetWeatherByHttp();
+            return Json(1,JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetWeatherByHttp()
+        {
+            WebRequest request = WebRequest.Create("http://www.weather.com.cn/weather1d/101080701.shtml");
+            request.Method = "GET";
+            HttpWebResponse httpWebResponse = (HttpWebResponse)request.GetResponse();
+             string responseContent ="";
+            using(StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream()))
+            {
+                responseContent = streamReader.ReadToEnd();
+            }
+            return responseContent;
         }
     }
 }

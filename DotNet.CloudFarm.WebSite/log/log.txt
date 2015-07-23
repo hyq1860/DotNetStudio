@@ -15,3 +15,5 @@ INFO  2015-07-21 01:32:14,490 [HomeController] orderId:81150721544377|out_trade_
 INFO  2015-07-21 01:32:19,244 [HomeController] 微信返回值<xml><return_code><![CDATA[]]></return_code><return_msg><![CDATA[]]></return_msg></xml>
 INFO  2015-07-21 01:42:12,209 [HomeController] IsTenpaySign:False
 INFO  2015-07-21 01:42:34,272 [HomeController] orderId:81150721544379|out_trade_no=81150721544379
+INFO  2015-07-23 23:30:36,975 [AccountController] 获取验证码：13621296882|oOGootzpwe38CkQSTj00wyHhKSMk
+INFO  2015-07-23 23:30:37,561 [AccountController] {"UserId":162,"Mobile":"13716457768","WxOpenId":"oOGootzpwe38CkQSTj00wyHhKSMk","WxNickName":"光","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/ajNVdqHZLLAHqohmbzsmxdUibE9yO5kiad0DHoKDibsmEcKiaLbpEQRwBDBKT2Z3hItI0ibIZraGWlyibxrMlicPBTG1A/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-18 21:34:04"}
