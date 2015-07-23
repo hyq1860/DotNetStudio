@@ -8,7 +8,7 @@
     <!--ko if:Messages().length>0-->
     <ul class="message_ul" data-bind="foreach:Messages">
         <li class="clearfix">
-            <p class="li_l"><span class="no_read"><img src="/images/no_read.png"></span></p>
+            <p class="li_l"><span class="no_read"><img src="/images/no_read.png" data-bind="attr:ReadStatusImg"></span></p>
             <p class="li_r">
                 <span class="span1"><!--ko text:StatusDesc--><!--/ko--></span>
                 <span class="span2" data-bind="html:Content"></span>
@@ -52,6 +52,13 @@
             }
         });
 
+        self.ReadStatusImg=ko.pureComputed(function(){
+            if (self.Status() == 0) {
+                return "/images/no_read.png";
+            } else if (self.Status() == 1) {
+                return "/images/have_read.png";
+            }
+        });
     }
 
     $(function() {
