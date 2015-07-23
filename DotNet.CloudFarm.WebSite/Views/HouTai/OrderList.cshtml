@@ -214,6 +214,10 @@
                     data: "pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&orderId=" + orderId
                     +"&userId="+userId,
                     success: function (data) {
+                        if(data.IsSuccess==false)
+                        {
+                            alert("赎回失败，原因："+data.Message);
+                        }
                         $('#myAlertDialog').modal('hide');
                         FillOrder(data);
                         pager(data.PageIndex, data.PageNo);

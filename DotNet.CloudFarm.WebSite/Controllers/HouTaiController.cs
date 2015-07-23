@@ -27,6 +27,8 @@ using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Impl.SMS;
 using DotNet.CloudFarm.WebSite.WeixinPay;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using DotNet.Common.Models;
 
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -334,21 +336,36 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var order = OrderService.GetOrder(userId,orderId);
             var user = UserService.GetUserByUserId(userId);
             var product = ProductService.GetProductById(order.ProductId);
+            Result<DotNet.Common.Collections.PagedList<OrderManageViewModel>> orderList = new Result<Common.Collections.PagedList<OrderManageViewModel>>();
+            var isSuccess = false;
+            var msg = "";
             if(order.Status==OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay)>DateTime.Now)
             {
                 //TODO:调取微信企业支付接口
                 var totalRefund = order.Price * order.ProductCount + product.Earning;
                 var description = string.Format("羊客【{0}】回购",product.Name);
                 var payResult =  WeixinPayApi.QYPay(user.WxOpenId, orderId, totalRefund, description);
-                if(payResult=="ERROR")
+                if (payResult == "SUCCESS")
                 {
-                    //错误处理
+                    orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+                    isSuccess = true;
+                }
+                else
+                {
+                    msg = "微信企业支付接口出现异常";
+                    orderList = OrderService.GetOrderList(pageIndex, pageSize);
                 }
             }
+            else
+            {
+                msg = "订单状态不是【待赎回】或订单尚未达到赎回期";
+                orderList = OrderService.GetOrderList(pageIndex, pageSize);
+            }
       
-            var orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
             var result = new
             {
+                IsSuccess = isSuccess,
+                Message = msg,
                 PageIndex = orderList.Data.PageIndex,
                 PageSize = orderList.Data.PageSize,
                 List = orderList.Data.ToList(),

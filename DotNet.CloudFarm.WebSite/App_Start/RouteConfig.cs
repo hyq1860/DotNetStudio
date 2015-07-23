@@ -25,6 +25,14 @@ namespace DotNet.CloudFarm.WebSite
                 defaults: new { controller = "Home", action = "Default", id = UrlParameter.Optional }
             );
 
+
+            routes.MapRoute(
+                name: "Houtai",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Houtai", action = "Index", id = UrlParameter.Optional }
+            );
+
+
         }
     }
 }
