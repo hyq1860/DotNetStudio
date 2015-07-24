@@ -57,6 +57,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [HttpPost]
         public async Task<JsonResult> Login(LoginUser loginUser)
         {
+            //loginUser.WxOpenId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";
             var jsonResult = new JsonResult();
             try
             {
@@ -67,10 +68,13 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 //logger.Info(JsonHelper.ToJson(user));
                 if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
                 {
+                    //更新验证码状态
                     UserService.UpdateUserCaptchaStatus(user.UserId);
                     //logger.Info(1);
+
                     //将用户的手机号与weixinid绑定
                     UserService.UpdateMobileUserByWxOpenId(loginUser.Mobile, loginUser.WxOpenId);
+
                     //logger.Info(2);
                     var result = UserManager.FindByNameAsync(loginUser.Mobile);
                     //logger.Info(3);
@@ -116,6 +120,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public JsonResult GetMobileCaptcha(string mobile,string weixinId)
         {
+            //weixinId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";
             logger.Info("获取验证码："+mobile+"|"+weixinId);            
             //通过微信id获取用户id
             var user = UserService.GetUserByWxOpenId(weixinId);

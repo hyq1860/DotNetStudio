@@ -25,6 +25,7 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <summary>
         /// 校验验证码
         /// </summary>
+        /// <param name="userId"></param>
         /// <param name="mobile"></param>
         /// <param name="captcha"></param>
         /// <returns></returns>
@@ -53,6 +54,11 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <returns></returns>
         UserModel GetUser(string userName);
 
+        /// <summary>
+        /// 新增用户
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         int Insert(UserModel userModel);
 
         /// <summary>
@@ -82,8 +88,8 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// 更新用户手机号
         /// </summary>
         /// <param name="mobile"></param>
-        /// <param name="WxOpenId"></param>
-        void UpdateMobileUserByWxOpenId(string mobile, string WxOpenId);
+        /// <param name="wxOpenId"></param>
+        void UpdateMobileUserByWxOpenId(string mobile, string wxOpenId);
 
         /// <summary>
         /// 更新验证码的状态

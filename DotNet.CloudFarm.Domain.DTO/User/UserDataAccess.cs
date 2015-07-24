@@ -254,7 +254,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 cmd.SetParameterValue("@UserId", userId);
                 cmd.SetParameterValue("@Captcha", captcha);
                 var returnValue = cmd.ExecuteScalar();
-                return returnValue != null;
+                return returnValue != null && captcha.ToLower() == returnValue.ToString().ToLower();
             }
         }
 
