@@ -192,6 +192,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                 orderViewModel.Status = orderModel.Status;
                 orderViewModel.PayType = orderModel.PayType;
                 orderViewModel.TotalMoney = orderModel.Price*orderModel.ProductCount;
+                
             }
             if (productModel != null)
             {

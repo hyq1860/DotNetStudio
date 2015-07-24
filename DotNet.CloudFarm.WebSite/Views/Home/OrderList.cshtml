@@ -75,8 +75,10 @@
                 url: "/home/CancelOrder?orderId="+order.OrderId(),
                 type: "post",
                 success: function (result) {
+                    debugger;
                     if (result.Status.Code == "1") {
                         order.Status(result.Data.Status);
+                        order.OrderStatusDesc(result.Data.OrderStatusDesc);
                     } else {
                         
                     }
