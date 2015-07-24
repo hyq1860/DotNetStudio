@@ -125,6 +125,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
                         orderViewModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
                         orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
+                        orderViewModel.ProductImgUrl = !Convert.IsDBNull(dr["ImgUrl"])? dr["ImgUrl"].ToString(): string.Empty;
                         orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
                         if (orderViewModel.OrderId > 0)
                         {

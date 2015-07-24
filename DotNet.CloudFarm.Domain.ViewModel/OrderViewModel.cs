@@ -15,6 +15,11 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         public string ProductName { get; set; }
 
         /// <summary>
+        /// 商品图片url
+        /// </summary>
+        public string ProductImgUrl { get; set; }
+
+        /// <summary>
         /// 总价
         /// </summary>
         public decimal TotalMoney { get; set; }

@@ -9,7 +9,7 @@
         <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:OrderStatusDesc--><!--/ko--></span></p>
         <div class="order_detail clearfix">
             <div class="order_detail_l">
-                <a data-bind="attr:{href:''+ProductId()}"><img src="/images/no_pic.jpg"></a>
+                <a data-bind="attr:{href:''+ProductId()}"><img src="/images/no_pic.jpg" data-bind="attr:{src:ProductImgUrl}"></a>
             </div>
             <div class="order_detail_m">
                 <p class="p1"><a data-bind="attr:{href:''+ProductId()}"><!--ko text:ProductName--><!--/ko--></a></p>
@@ -97,8 +97,8 @@
                 success: function (result) {
                     if (result.Status.Code == "1") {
                         order.Status(result.Data.Status);
-                    } else {
-                        
+                    } else if(result.Status.Code=="-1") {
+                        alert(result.Status.Message);
                     }
                 }
             });
@@ -109,6 +109,7 @@
         var self = this;
 
         self.ProductName = ko.observable();
+        self.ProductImgUrl = ko.observable();
         self.TotalMoney = ko.observable();
         self.OrderId = ko.observable();
         self.UserId = ko.observable();
@@ -127,7 +128,7 @@
             var length = orderListServiceJson.Data.length;
             for (var i = 0; i < length; i++) {
                 var orderViewModel = new OrderViewModel();
-
+                orderViewModel.ProductImgUrl(orderListServiceJson.Data[i].ProductImgUrl);
                 orderViewModel.ProductName(orderListServiceJson.Data[i].ProductName);
                 orderViewModel.TotalMoney(orderListServiceJson.Data[i].TotalMoney);
                 orderViewModel.OrderId(orderListServiceJson.Data[i].OrderId);

@@ -23,6 +23,7 @@ using Microsoft.AspNet.Identity;
 using Senparc.Weixin.MP.TenPayLibV3;
 using System.Net;
 using System.IO;
+using DotNet.Common.Models;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -72,7 +73,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var homeViewModel = new HomeViewModel
             {
                 Products = ProductService.GetProducts(1, 5, 1), 
-                SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1})
+                //订单状态为已支付和待赎回的羊的数量
+                SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1,2})
             };
             //result.Data = homeViewModel;
             return this.CustomJson(homeViewModel, "yyyy年MM月dd日");
@@ -383,13 +385,26 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public JsonResult RedeemOrder(long?orderId)
+        public JsonResult RedeemOrder(long? orderId)
         {
-            //TODO：验证，是否可结算
-            var result = new JsonResult
+            var result = new JsonResult();
+            if (orderId.HasValue)
             {
-                Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value, OrderStatus.WaitingConfirm.GetHashCode())
-            };
+                var order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+
+                if (order.Status != OrderStatus.Paid.GetHashCode())
+                {
+                    var data = new Result<OrderViewModel>
+                    {
+                        Status = new Status() {Code = "-1", Message = "当前订单状态不允许赎回。"}
+                    };
+                    result.Data = data;
+                    return result;
+                }
+
+                result.Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value,
+                    OrderStatus.WaitingConfirm.GetHashCode());
+            }
             return result;
         }
 

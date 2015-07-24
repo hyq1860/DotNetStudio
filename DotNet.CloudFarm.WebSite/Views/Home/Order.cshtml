@@ -9,7 +9,7 @@
         <div class="purchase_claim_section1box">
             <h3><span><!--ko text:Name--><!--/ko--></span></h3>
             <div class="periods clearfix">
-                <div class="periods_l"><img src="/images/no_pic.jpg">
+                <div class="periods_l"><img src="/images/no_pic.jpg" data-bind="attr:{src:ImgUrl}">
                 </div>
                 <div class="periods_r">
                     <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
@@ -204,6 +204,9 @@
         //self.TotalPrice = ko.pureComputed(function() {
         //    return self.Count() * self.SheepPrice();
         //});
+
+        //商品图片
+        self.ImgUrl = ko.observable();
     }
 
     function BuyTopViewModel() {
@@ -242,6 +245,8 @@
 
                 //结束时间
                 product.EndTime(confirmOrderServiceJson.Product.EndTime);
+
+                product.ImgUrl(confirmOrderServiceJson.Product.ImgUrl);
                 product.Count(1);
                 orderViewModel.Count(1);
                 orderViewModel.Product=product;
