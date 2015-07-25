@@ -28,7 +28,7 @@
         <div class="to_pay_box">
             <h3>请选择支付方式</h3>
             <div class="choice_pay_way clearfix">
-                <div id="weixinpay" class="choice_pay_zfb" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/weixin.png" selectimage="/images/weixin_active.png"></div><!--当点击选中时 <img src="/images/weixin_active.png">-->
+                <div id="weixinpay" class="choice_pay_zfb" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/weixin_active.png" selectimage="/images/weixin_active.png"></div><!--当点击选中时 <img src="/images/weixin_active.png">-->
                 <div id="transferaccount" class="choice_pay_zz" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/zhuanzhang.png" selectimage="/images/zhuanzhang_active.png"></div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
             </div>
         </div>
@@ -58,7 +58,7 @@
 
         self.TotalPrice=ko.observable();
 
-        self.PayType=ko.observable();
+        self.PayType=ko.observable(0);
 
         self.wxEditAddrParam = ko.observable();
 
