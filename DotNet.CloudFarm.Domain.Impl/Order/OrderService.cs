@@ -140,23 +140,31 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         public Result<OrderModel> SubmitOrder(OrderModel orderModel)
         {
             var result = new Result<OrderModel>();
-            //订单表 扣去库存
-            var tempOrderModel = orderDataAccess.SubmitOrder(orderModel);
-            if (tempOrderModel.OrderId > 0)
+            var productModel = productService.GetProductById(orderModel.ProductId);
+            if (productModel.CanSale)
             {
-                
-                result.Data = tempOrderModel;
-                result.Status=new Status(){Code="1",Message = "提交订单成功。"};
-                UserModel user= userService.GetUserByUserId(tempOrderModel.UserId);
-                //发送消息
-                messageService.SendSms(user.UserId, string.Format("【科羊云牧-羊客】您的订单<a href=\"/Home/OrderList?orderid={0}#Order_{0}\">{0}</a>已经提交成功。", tempOrderModel.OrderId));
+                //订单表 扣去库存
+                var tempOrderModel = orderDataAccess.SubmitOrder(orderModel);
+                if (tempOrderModel.OrderId > 0)
+                {
 
-                //发送下单成功短信息
-                smsService.SendSMSOrderCreated(user.Mobile, tempOrderModel.OrderId,tempOrderModel.Price*tempOrderModel.ProductCount);
+                    result.Data = tempOrderModel;
+                    result.Status = new Status() { Code = "1", Message = "提交订单成功。" };
+                    UserModel user = userService.GetUserByUserId(tempOrderModel.UserId);
+                    //发送消息
+                    messageService.SendSms(user.UserId, string.Format("【科羊云牧-羊客】您的订单<a href=\"/Home/OrderList?orderid={0}#Order_{0}\">{0}</a>已经提交成功。", tempOrderModel.OrderId));
+
+                    //发送下单成功短信息
+                    smsService.SendSMSOrderCreated(user.Mobile, tempOrderModel.OrderId, tempOrderModel.Price * tempOrderModel.ProductCount);
+                }
+                else
+                {
+                    result.Status = new Status() { Code = "0", Message = "提交订单失败,请稍后重试。" };
+                }
             }
             else
             {
-                result.Status = new Status() { Code = "0", Message = "提交订单失败,请稍后重试。" };
+                result.Status = new Status() { Code = "0", Message = "该产品暂无法销售。" };
             }
 
             return result;
