@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="sheep_guest message" id="messagelist">
+<div class="sheep_guest message" id="messagelist" style="display: none">
     <!--ko if:Messages().length>0-->
     <ul class="message_ul" data-bind="foreach:Messages">
         <li class="clearfix">
@@ -66,6 +66,8 @@
         }
 
         $(function() {
+           
+            $("#loading").show();
             var messageListViewModel = new MessageListViewModel();
             window.messageListViewModel = messageListViewModel;
             debugger;
@@ -87,6 +89,8 @@
             }
             ko.applyBindings(messageListViewModel);
             scrollPageMessageList();
+            $("#messagelist").show();
+            $("#loading").hide();
         });
 
         function scrollPageMessageList() {

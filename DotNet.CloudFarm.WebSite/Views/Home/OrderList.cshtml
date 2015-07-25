@@ -4,7 +4,7 @@
 @using DotNet.Common.Utility
 @model DotNet.Common.Models.Result<DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.ViewModel.OrderViewModel>>
 
-<div id="orderlist" class="sheep_guest my_order" data-bind="foreach:OrderList">
+<div id="orderlist" class="sheep_guest my_order" style="display: none" data-bind="foreach:OrderList">
     <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId()}">
         <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:OrderStatusDesc--><!--/ko--></span></p>
         <div class="order_detail clearfix">
@@ -159,6 +159,7 @@
     }
 
     $(function() {
+        $("#loading").show();
         var orderListViewModel = new OrderListViewModel();
         window.orderListViewModel = orderListViewModel;
         if (orderListServiceJson && orderListServiceJson.Data && orderListServiceJson.Data.length > 0) {
@@ -188,6 +189,8 @@
         ko.applyBindings(orderListViewModel);
 
         scrollPageOrderList();
+        $("#orderlist").show();
+        $("#loading").hide();
     });
 </script>
 }

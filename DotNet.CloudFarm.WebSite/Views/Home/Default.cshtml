@@ -28,7 +28,7 @@
     </div>
     <!--天气状况结束-->
     <!--羊只认领-->
-    <div class="Claim_sheep" data-bind="foreach:Products">
+    <div class="Claim_sheep" id="productlist" data-bind="foreach:Products" style="display: none">
         
         <div class="Claim_sheep1">
             <div class="Claim_sheep1_box">
@@ -231,13 +231,13 @@
 
     //初始化首页的数据
     function initHomeData() {
+        $("#loading").show();
         $.ajax({
             url: "/home/data",
             type: "post",
             dataType:"json",
             data: { Mobile: $("#Mobile").val() },
             success: function (data) {
-                console.log(data);
                 if (data) {
                     homeViewModel.SheepCount(data.SheepCount);
                     debugger;
@@ -301,6 +301,8 @@
                     
                     ko.applyBindings(homeViewModel);
                 }
+                $("#productlist").show();
+                $("#loading").hide();
             }
         });
     }
@@ -320,7 +322,7 @@
     }
 
     $(function () {
-
+        
         initHomeData();
         
     });
