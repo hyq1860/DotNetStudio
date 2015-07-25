@@ -4,7 +4,7 @@
 @using DotNet.CloudFarm.Domain.ViewModel
 @using DotNet.Common.Utility
 @model DotNet.CloudFarm.Domain.ViewModel.WalletViewModel
-<div class="sheep_guest wallet">
+<div class="sheep_guest wallet" id="wallet">
     <div class="my_top wallet_top">
         <div class="my_top_pic"><img src="/images/bg4.jpg"></div>
         <div class="wallet_top_content clearfix">
@@ -75,6 +75,7 @@
     }
 
     $(function() {
+        $("#loading").show();
         var walletViewModel = new WalletViewModel();
 
         if (walletServiceJson) {
@@ -101,6 +102,7 @@
         }
 
         ko.applyBindings(walletViewModel);
-
+        $("#loading").hide();
+        $("#wallet").show();
     });
 </script>

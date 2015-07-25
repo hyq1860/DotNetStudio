@@ -74,7 +74,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //var result = new JsonResult();
             var homeViewModel = new HomeViewModel
             {
-                Products = ProductService.GetProducts(1, 5, 1), 
+                Products = ProductService.GetProducts(1, 100, 1), 
                 //订单状态为已支付和待赎回的羊的数量
                 SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1,2})
             };
