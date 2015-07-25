@@ -307,9 +307,8 @@
     <Content Include="Configs\Params.config" />
     <Content Include="html\micro.html" />
     <Content Include="html\take_care.html" />
-    <Content Include="images\houtai\ajax-loaders\Thumbs.db" />
+    <Content Include="images\bg5.jpg" />
     <Content Include="images\houtai\logo_20.jpg" />
-    <Content Include="images\houtai\iphone-style-checkboxes\Thumbs.db" />
     <Content Include="Configs\Data\DataCommand_WeiXin.config">
       <SubType>Designer</SubType>
     </Content>
@@ -429,6 +428,7 @@
     <Content Include="images\houtai\ui-icons_888888_256x240.png" />
     <Content Include="images\houtai\ui-icons_cd0a0a_256x240.png" />
     <Content Include="images\houtai\uploadify-cancel.png" />
+    <Content Include="images\last_look.png" />
     <Content Include="images\no_pic.jpg" />
     <Content Include="images\no_read.png" />
     <Content Include="images\opacity_bg.png" />
@@ -440,6 +440,7 @@
     <Content Include="images\sheep_step_17.png" />
     <Content Include="images\ssmc.png" />
     <Content Include="images\step_bg.png" />
+    <Content Include="images\title.png" />
     <Content Include="images\tx.png" />
     <Content Include="images\tx2.png" />
     <Content Include="images\user_agreement.png" />

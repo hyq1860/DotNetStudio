@@ -8,6 +8,49 @@
     <div class="row-fluid sortable">
         <div class="box span12">
             <div class="box-header well" data-original-title>
+                <h2><i class="icon-edit"></i> 增加/修改关键字</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div id="alertMsg" class="alert alert-error hidden fade in"></div>
+                    <fieldset>
+                        <input type="hidden" name="Id" id="msgId" />
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">关键字</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="keyword" type="text" maxlength="30" name="Keyword">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">回复内容</label>
+                            <div class="controls">
+                                <textarea class="autogrow" id="replyContent" maxlength="300" name="ReplyContent"></textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="status">状态</label>
+                            <div class="controls">
+                                <select id="status" name="Status">
+                                    <option value="1">使用</option>
+                                    <option value="2">禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">添加/编辑</button>
+                            <button class="btn" onclick="cancel(); return false;">取消</button>
+                        </div>
+                    </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
                 <h2><i class="icon-align-justify"></i> 订单列表</h2>
                 <div class="box-icon">
                     <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>

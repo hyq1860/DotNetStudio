@@ -13,7 +13,7 @@
             <span class="span1"><img src="/images/tx.png" data-bind="attr:{src:WxHeadUrl}"></span>
             <span class="span2"><!--ko text:Mobile--><!--/ko--></span>
         </div>
-        <div class="lastest_farm"><a href="#"></a>
+        <div class="lastest_farm"><a href="/home/video"></a>
         </div>
         <div class="my_top_opacity"></div>
         <div class="my_top_from"></div>
@@ -21,7 +21,9 @@
     <!--/ko-->
     <div class="my_list">
         <ul>
-            <li class="li1 clearfix"><a href="@Url.Action("MessageList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的消息</span><span class="span2"></span></a></li>
+            <li class="li1 clearfix"><a href="@Url.Action("MessageList", "Home", new { tab = 3 })">
+                                         <span data-bind="css:{no_message:IsHasMessage()==false}" class="span_logo"></span><span class="span1">我的消息</span>
+                <span class="span2"></span></a></li>
             <li class="li2 clearfix"><a href="@Url.Action("OrderList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的订单</span><span class="span2"></span></a></li>
             <li class="li3 clearfix"><a href="@Url.Action("Contract", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的合同</span><span class="span2"></span></a></li>
         </ul>
@@ -58,6 +60,7 @@
         var myCenterViewModel = new MyCenterViewModel();
         if (myCenter) {
             myCenterViewModel.User(myCenter.User);
+            myCenterViewModel.IsHasMessage(myCenter.IsHasNoReadMessage);
         }
         ko.applyBindings(myCenterViewModel);
 

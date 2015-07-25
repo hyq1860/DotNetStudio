@@ -112,189 +112,19 @@ ERROR 2015-07-24 00:10:47,045 [ApplicationError] System.NullReferenceException: 
    在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
-INFO  2015-07-24 21:46:47,876 [WeixnPayApi] 统一订单接口请求信息：<xml><spbill_create_ip><![CDATA[::1]]></spbill_create_ip><notify_url><![CDATA[http://yk.kerchinsheep.com/Home/WexinPayNotify]]></notify_url><out_trade_no><![CDATA[81150722815766]]></out_trade_no><appid><![CDATA[wx56102891c08301c7]]></appid><total_fee>1</total_fee><nonce_str><![CDATA[B2EB7349035754953B57A32E2841BDA5]]></nonce_str><sign><![CDATA[E51EC9ECE1D60FEA70825F40C2B51389]]></sign><openid><![CDATA[oOGoot0O0nEuP4uEHdNLQyNpGnwM]]></openid><mch_id><![CDATA[1248935501]]></mch_id><trade_type><![CDATA[JSAPI]]></trade_type><body><![CDATA[羊客测试第一期产品]]></body></xml>
-ERROR 2015-07-24 21:46:47,980 [HomeController] System.Security.Cryptography.CryptographicException: 系统找不到指定的路径。
-
-   在 System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
-   在 System.Security.Cryptography.X509Certificates.X509Utils._QueryCertFileType(String fileName)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate.LoadCertificateFromFile(String fileName, Object password, X509KeyStorageFlags keyStorageFlags)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
-   在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 146
-   在 DotNet.CloudFarm.WebSite.Controllers.HomeController.Pay(Nullable`1 orderId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\HomeController.cs:行号 238
-ERROR 2015-07-24 21:46:52,273 [ApplicationError] System.Security.Cryptography.CryptographicException: 系统找不到指定的路径。
-
-   在 System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
-   在 System.Security.Cryptography.X509Certificates.X509Utils._QueryCertFileType(String fileName)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate.LoadCertificateFromFile(String fileName, Object password, X509KeyStorageFlags keyStorageFlags)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
-   在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 146
-   在 DotNet.CloudFarm.WebSite.Controllers.HomeController.Pay(Nullable`1 orderId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\HomeController.cs:行号 278
-   在 lambda_method(Closure , ControllerBase , Object[] )
-   在 System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
-   在 System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
-   在 System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.ActionInvocation.InvokeSynchronousActionMethod()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<BeginInvokeSynchronousActionMethod>b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3d()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass33.<BeginInvokeActionMethodWithFilters>b__32(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+INFO  2015-07-25 17:03:33,537 [WeixnPayApi] 统一订单接口请求信息：<xml><spbill_create_ip><![CDATA[::1]]></spbill_create_ip><notify_url><![CDATA[http://yk.kerchinsheep.com/Home/WexinPayNotify]]></notify_url><out_trade_no><![CDATA[81150725282149]]></out_trade_no><appid><![CDATA[wx56102891c08301c7]]></appid><total_fee>1</total_fee><nonce_str><![CDATA[9B04D152845EC0A378394003C96DA594]]></nonce_str><sign><![CDATA[7B94F944A212571C7C599040BD7C5C27]]></sign><openid><![CDATA[oOGootzpwe38CkQSTj00wyHhKSMk]]></openid><mch_id><![CDATA[1248935501]]></mch_id><trade_type><![CDATA[JSAPI]]></trade_type><body><![CDATA[羊客测试第一期产品]]></body></xml>
+INFO  2015-07-25 17:03:34,295 [WeixnPayApi] 统一订单接口返回信息：<xml><return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[invalid spbill_create_ip]]></return_msg>
+</xml>
+ERROR 2015-07-25 17:03:34,379 [WeixnPayApi] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 154
+ERROR 2015-07-25 18:57:16,079 [ApplicationError] System.Web.HttpException (0x80004005): 在控制器“DotNet.CloudFarm.WebSite.Controllers.HouTaiController”上未找到公共操作方法“message”。
+   在 System.Web.Mvc.Controller.HandleUnknownAction(String actionName)
    在 System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
    在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
    在 System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
    在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
    在 System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
    在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
-   在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
-   在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
-   在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
-INFO  2015-07-24 23:06:56,306 [WeixnPayApi] 统一订单接口请求信息：<xml><spbill_create_ip><![CDATA[::1]]></spbill_create_ip><notify_url><![CDATA[http://yk.kerchinsheep.com/Home/WexinPayNotify]]></notify_url><out_trade_no><![CDATA[81150724403542]]></out_trade_no><appid><![CDATA[wx56102891c08301c7]]></appid><total_fee>3</total_fee><nonce_str><![CDATA[1595AF6435015C77A7149E92A551338E]]></nonce_str><sign><![CDATA[2284F8432F3EE533864664CE3B9EF87D]]></sign><openid><![CDATA[oOGoot0O0nEuP4uEHdNLQyNpGnwM]]></openid><mch_id><![CDATA[1248935501]]></mch_id><trade_type><![CDATA[JSAPI]]></trade_type><body><![CDATA[羊客测试第一期产品]]></body></xml>
-ERROR 2015-07-24 23:06:56,425 [HomeController] System.Security.Cryptography.CryptographicException: 系统找不到指定的路径。
-
-   在 System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
-   在 System.Security.Cryptography.X509Certificates.X509Utils._QueryCertFileType(String fileName)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate.LoadCertificateFromFile(String fileName, Object password, X509KeyStorageFlags keyStorageFlags)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
-   在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 146
-   在 DotNet.CloudFarm.WebSite.Controllers.HomeController.Pay(Nullable`1 orderId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\HomeController.cs:行号 239
-ERROR 2015-07-24 23:07:00,324 [ApplicationError] System.Security.Cryptography.CryptographicException: 系统找不到指定的路径。
-
-   在 System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
-   在 System.Security.Cryptography.X509Certificates.X509Utils._QueryCertFileType(String fileName)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate.LoadCertificateFromFile(String fileName, Object password, X509KeyStorageFlags keyStorageFlags)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password)
-   在 System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
-   在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 146
-   在 DotNet.CloudFarm.WebSite.Controllers.HomeController.Pay(Nullable`1 orderId) 位置 d:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\HomeController.cs:行号 279
-   在 lambda_method(Closure , ControllerBase , Object[] )
-   在 System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
-   在 System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
-   在 System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.ActionInvocation.InvokeSynchronousActionMethod()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<BeginInvokeSynchronousActionMethod>b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3d()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass33.<BeginInvokeActionMethodWithFilters>b__32(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
-   在 System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
-   在 System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
-   在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
-   在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
-   在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
-INFO  2015-07-25 07:39:09,772 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 07:39:17,717 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 08:34:31,061 [AccountController] 获取验证码：13716457768|
-INFO  2015-07-25 08:34:31,510 [AccountController] {"UserId":0,"WxSex":0,"WxSubTime":"0001-01-01 00:00:00","WxGroupId":0,"Status":0,"CreateTime":"0001-01-01 00:00:00"}
-INFO  2015-07-25 08:35:48,176 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 08:35:48,599 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 08:40:01,569 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 08:40:01,955 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 08:45:53,517 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 08:45:56,163 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 08:47:21,575 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 08:47:25,887 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 08:48:57,695 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 08:48:57,796 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 08:59:06,810 [AccountController] 获取验证码：13716457768|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 08:59:07,150 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 09:14:33,528 [AccountController] 获取验证码：13621296882|oOGoot0O0nEuP4uEHdNLQyNpGnwM
-INFO  2015-07-25 09:14:33,591 [AccountController] {"UserId":164,"Mobile":"13716457768","WxOpenId":"oOGoot0O0nEuP4uEHdNLQyNpGnwM","WxNickName":"何永强","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELicoOkRwpw6Cic51xU3vVicwic4VIRqKhTqxUianzsAY3KNSw6ej0EyN1ItialLX7TwLMvWo93OjXTbnjA/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-19 16:59:30"}
-INFO  2015-07-25 09:16:42,190 [AccountController] 获取验证码：13621296882|oOGootzpwe38CkQSTj00wyHhKSMk
-INFO  2015-07-25 09:16:42,509 [AccountController] {"UserId":162,"Mobile":"13621296882","WxOpenId":"oOGootzpwe38CkQSTj00wyHhKSMk","WxNickName":"光","WxSex":0,"WxHeadUrl":"http://wx.qlogo.cn/mmopen/ajNVdqHZLLAHqohmbzsmxdUibE9yO5kiad0DHoKDibsmEcKiaLbpEQRwBDBKT2Z3hItI0ibIZraGWlyibxrMlicPBTG1A/96","WxSubTime":"0001-01-01 00:00:00","WxUnionId":"","WxRemark":"","WxGroupId":0,"Status":1,"CreateTime":"2015-07-18 21:34:04"}
-ERROR 2015-07-25 18:48:17,607 [ApplicationError] System.Web.HttpRequestValidationException (0x80004005): 从客户端(pageIndex="...n d(){if(0<arguments.length)re...")中检测到有潜在危险的 Request.QueryString 值。
-   在 System.Web.HttpRequest.ValidateString(String value, String collectionKey, RequestValidationSource requestCollection)
-   在 System.Web.HttpRequest.<>c__DisplayClass5.<ValidateHttpValueCollection>b__3(String key, String value)
-   在 System.Web.HttpValueCollection.EnsureKeyValidated(String key)
-   在 System.Web.HttpValueCollection.GetValues(String name)
-   在 System.Web.Mvc.NameValueCollectionValueProvider.ValueProviderResultPlaceholder.GetResultFromCollection(String key, NameValueCollection collection, CultureInfo culture)
-   在 System.Web.Mvc.NameValueCollectionValueProvider.ValueProviderResultPlaceholder.get_ValidatedResult()
-   在 System.Web.Mvc.NameValueCollectionValueProvider.GetValue(String key, Boolean skipValidation)
-   在 System.Web.Mvc.ValueProviderCollection.GetValueFromProvider(IValueProvider provider, String key, Boolean skipValidation)
-   在 System.Web.Mvc.ValueProviderCollection.GetValue(String key, Boolean skipValidation)
-   在 System.Web.Mvc.DefaultModelBinder.BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
-   在 System.Web.Mvc.ControllerActionInvoker.GetParameterValue(ControllerContext controllerContext, ParameterDescriptor parameterDescriptor)
-   在 System.Web.Mvc.ControllerActionInvoker.GetParameterValues(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__19(AsyncCallback asyncCallback, Object asyncState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.Begin[TResult](AsyncCallback callback, Object state, BeginInvokeDelegate beginDelegate, EndInvokeDelegate`1 endDelegate, Object tag, Int32 timeout)
-   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.BeginInvokeAction(ControllerContext controllerContext, String actionName, AsyncCallback callback, Object state)
-   在 System.Web.Mvc.Controller.<BeginExecuteCore>b__1c(AsyncCallback asyncCallback, Object asyncState, ExecuteCoreState innerState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.Begin[TState](AsyncCallback callback, Object callbackState, BeginInvokeDelegate`1 beginDelegate, EndInvokeVoidDelegate`1 endDelegate, TState invokeState, Object tag, Int32 timeout, SynchronizationContext callbackSyncContext)
-   在 System.Web.Mvc.Controller.BeginExecuteCore(AsyncCallback callback, Object state)
-   在 System.Web.Mvc.Controller.<BeginExecute>b__14(AsyncCallback asyncCallback, Object callbackState, Controller controller)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.Begin[TState](AsyncCallback callback, Object callbackState, BeginInvokeDelegate`1 beginDelegate, EndInvokeVoidDelegate`1 endDelegate, TState invokeState, Object tag, Int32 timeout, SynchronizationContext callbackSyncContext)
-   在 System.Web.Mvc.Controller.BeginExecute(RequestContext requestContext, AsyncCallback callback, Object state)
-   在 System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.BeginExecute(RequestContext requestContext, AsyncCallback callback, Object state)
-   在 System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__4(AsyncCallback asyncCallback, Object asyncState, ProcessRequestState innerState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)
-   在 System.Web.Mvc.Async.AsyncResultWrapper.Begin[TState](AsyncCallback callback, Object callbackState, BeginInvokeDelegate`1 beginDelegate, EndInvokeVoidDelegate`1 endDelegate, TState invokeState, Object tag, Int32 timeout, SynchronizationContext callbackSyncContext)
-   在 System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
-   在 System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
-   在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
    在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)

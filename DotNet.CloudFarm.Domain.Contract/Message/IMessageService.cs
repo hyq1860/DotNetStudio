@@ -35,5 +35,12 @@ namespace DotNet.CloudFarm.Domain.Contract.Message
         /// <param name="userId"></param>
         /// <returns></returns>
         bool UpdateMessageStatus(int userId);
+
+        /// <summary>
+        /// 检查是否有未读短消息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool CheckUnreadMessage(int userId);
     }
 }

@@ -84,5 +84,17 @@ namespace DotNet.CloudFarm.Domain.DTO.Message
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
+
+
+        public bool CheckUnreadMessage(int userId)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("CheckUnreadMessage"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                var result = Convert.ToInt32(cmd.ExecuteScalar());
+                return result > 0;
+                
+            }
+        }
     }
 }

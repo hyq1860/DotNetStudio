@@ -125,6 +125,7 @@ a,a:hover{ text-decoration:none;}
 .my_list ul li .span2{ float:right; margin-right:2rem; width:1rem; height:1.8rem;background:url(../images/bg2.png) no-repeat; background-size:25rem 25rem;background-position:-5.8rem -22.5rem; margin-top:2.1rem;}
 .my_list ul .li1 .span_logo{ background-position:-5.8rem -6.5rem;}
 .my_list ul .li2 .span_logo{ background-position:-5.8rem -11.5rem;}
+.my_list ul .li1 .no_message{ background-position:-22rem 0.3rem;}
 .my_list ul .li3 .span_logo{ background-position:-5.8rem -17.5rem;}
 .quit_login{ width:100%; height:5rem; background:#fff;border-bottom:1px solid #d0d0d0; text-align:center; line-height:5rem; margin-top:1.5rem;}
 .quit_login a{color:#666; font-size:1.6rem; display:inline-block; width:100%; height:5rem; line-height:5rem;}
@@ -188,7 +189,7 @@ a,a:hover{ text-decoration:none;}
 .order_num{ height:3rem; line-height:3rem; padding-bottom:4rem;}
 .order_num_r span{ display:inline-block; width:3rem; height:3rem; line-height:3rem; text-align:center; border-right:1px solid #eee; font-size:22px; cursor: pointer; float:left;}
 .order_num_r .span2{ border-left:1px solid #eee; border-right:none;}
-.order_num_r input{width:4rem;border-style: none;display: inline-block;height: 2.8rem;line-height: 2.8rem;padding: 0px;float: left; }
+.order_num_r input{width:4rem;border-style: none;display: inline-block;height: 2.8rem;line-height: 2.8rem;padding: 0px;float: left; text-align:center; }
 .purchase_claim_section2{ width:94%; margin:-1.3rem 3% 0rem; background:#fff; border-radius:3px;}
 .ranking_List{ position:relative;}
 .ranking_List_box{background:url(../images/bg2.png) no-repeat; width:15rem; height:3rem; line-height:3rem; text-align:center; background-size:26.4rem 26rem;background-position:-12rem -6.5rem; font-size:1.4rem; color:#fff; margin:0 auto; top:1rem;}

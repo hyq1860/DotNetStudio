@@ -33,7 +33,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Message
             var result = new Result<PagedList<MessageModel>>
             {
                 Data = messageDataAccess.GetMessages(userId, pageIndex, pageSize),
-                Status = new Status() { Code="1",Message = ""}
+                Status = new Status() { Code = "1", Message = "" }
             };
             return result; 
         }
@@ -41,6 +41,12 @@ namespace DotNet.CloudFarm.Domain.Impl.Message
         public bool UpdateMessageStatus(int userId)
         {
             return messageDataAccess.UpdateMessageStatus(userId);
+        }
+
+
+        public bool CheckUnreadMessage(int userId)
+        {
+            return messageDataAccess.CheckUnreadMessage(userId);
         }
     }
 }
