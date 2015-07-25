@@ -35,11 +35,11 @@
         <!--/ko-->
     </section>
 
-    <div class="ranking_List"><div class="ranking_List_box">认购排行榜</div></div>
+    <div class="ranking_List"><div class="ranking_List_box">累计收益排行榜</div></div>
     <section class="purchase_claim_section2">
         <ul data-bind="foreach:BuyTops">
             <!--ko if:$index()<=3-->
-            <li class="li1 clearfix" data-bind="css:'li'+$index()"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko-->只</span></li>
+            <li class="li1 clearfix" data-bind="css:'li'+$index()"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko-->元</span></li>
             <!--/ko-->
             <!--ko if:$index()>3-->
             <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:BuyCount--><!--/ko--></span></li>

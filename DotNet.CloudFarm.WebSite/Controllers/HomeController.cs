@@ -131,7 +131,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     if (info != null)
                     {
                         var walletViewModel = OrderService.GetWalletViewModel(this.UserInfo.UserId, new List<int>() { 1, 2, 10 });
-                        confirmOrderViewModel.Percentage = (info.RowId / orderStatisModel.TotalUserCount).ToString("F2");
+                        confirmOrderViewModel.Percentage =((info.RowId / orderStatisModel.TotalUserCount)*100).ToString("F2");
                         confirmOrderViewModel.Earning = walletViewModel.TotalIncome;
                     }
                     else

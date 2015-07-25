@@ -76,44 +76,42 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                         s =>
                             s.Status == OrderStatus.Paid.GetHashCode() &&
                             s.Status == OrderStatus.WaitingConfirm.GetHashCode());
-
-                //当前收益
-                walletViewModel.CurrentIncome = currentOrderList.Sum(s => s.Earning * s.ProductCount * ((s.EndTime - DateTime.Now).Days / s.EarningDay));
-
-                //预期收益
-                walletViewModel.ExpectIncome = currentOrderList.Sum(s => s.Earning*s.ProductCount);
-
-                //预期年化收益率
-                if (currentOrderList.Count() > 0)
+                if (currentOrderList != null && currentOrderList.Any())
                 {
+                    //当前收益
+                    walletViewModel.CurrentIncome = currentOrderList.Sum(s => s.Earning * s.ProductCount * ((s.EndTime - DateTime.Now).Days / s.EarningDay));
+
+                    //预期收益
+                    walletViewModel.ExpectIncome = currentOrderList.Sum(s => s.Earning * s.ProductCount);
+
+                    //预期年化收益率
                     walletViewModel.YearEarningRate = currentOrderList.Sum(s => s.YearEarningRate) / currentOrderList.Count();
-                }
-                else
-                {
-                    walletViewModel.YearEarningRate = 0;
-                }
 
-                //育肥状态
-                var orderViewModel =
-                    currentOrderList.Where(s => s.StartTime < DateTime.Now && s.EndTime <= DateTime.Now)
-                        .OrderByDescending(s => s.CreateTime)
-                        .FirstOrDefault();
-                if (orderViewModel != null)
-                {
-                    walletViewModel.GrowDay = (orderViewModel.EndTime - DateTime.Now).Days/orderViewModel.EarningDay;
-                }
+                    //育肥状态
+                    var orderViewModel =
+                        currentOrderList.Where(s => s.StartTime < DateTime.Now && s.EndTime <= DateTime.Now)
+                            .OrderByDescending(s => s.CreateTime)
+                            .FirstOrDefault();
 
+                    if (orderViewModel != null)
+                    {
+                        walletViewModel.GrowDay = (orderViewModel.EndTime - DateTime.Now).Days / orderViewModel.EarningDay;
+                    }
+                }
+                
                 //历史
                 var historyOrderList = orderList.Data.Where(s => s.Status == OrderStatus.Complete.GetHashCode());
+                if (historyOrderList.Any())
+                {
+                    //累计收益
+                    walletViewModel.TotalIncome = historyOrderList.Sum(s => s.Earning * s.ProductCount);
 
-                //累计收益
-                walletViewModel.TotalIncome = historyOrderList.Sum(s => s.Earning*s.ProductCount);
+                    //累计养殖数量
+                    walletViewModel.TotalProductCount = historyOrderList.Sum(s => s.ProductCount);
 
-                //累计养殖数量
-                walletViewModel.TotalProductCount = historyOrderList.Sum(s => s.ProductCount);
-
-                //累计投入金额
-                walletViewModel.TotalInvestment = historyOrderList.Sum(s => s.ProductCount*s.Price);
+                    //累计投入金额
+                    walletViewModel.TotalInvestment = historyOrderList.Sum(s => s.ProductCount * s.Price);
+                }
             }
 
             return walletViewModel;

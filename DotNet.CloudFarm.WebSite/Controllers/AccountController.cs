@@ -58,7 +58,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public async Task<JsonResult> Login(LoginUser loginUser)
         {
             #if DEBUG
-            loginUser.WxOpenId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";
+            loginUser.WxOpenId = "oOGootzpwe38CkQSTj00wyHhKSMk";//"oOGoot0O0nEuP4uEHdNLQyNpGnwM";
             #endif
 
             var jsonResult = new JsonResult();
@@ -124,7 +124,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult GetMobileCaptcha(string mobile,string weixinId)
         {
             #if DEBUG
-            weixinId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";
+            weixinId = "oOGootzpwe38CkQSTj00wyHhKSMk";//"oOGoot0O0nEuP4uEHdNLQyNpGnwM";
             #endif
             logger.Info("获取验证码："+mobile+"|"+weixinId);            
             //通过微信id获取用户id
