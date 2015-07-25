@@ -170,7 +170,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                     result.Status = new Status() { Code = "1", Message = "提交订单成功。" };
                     UserModel user = userService.GetUserByUserId(tempOrderModel.UserId);
                     //发送消息
-                    messageService.SendSms(user.UserId, string.Format("【科羊云牧-羊客】您的订单<a href=\"/Home/OrderList?orderid={0}#Order_{0}\">{0}</a>已经提交成功。", tempOrderModel.OrderId));
+                    messageService.SendSms(user.UserId, string.Format("【科羊云牧-羊客】您的订单<a href=\"/Home/OrderList?orderid={0}&tab=3#Order_{0}\">{0}</a>已经提交成功。", tempOrderModel.OrderId));
 
                     //发送下单成功短信息
                     smsService.SendSMSOrderCreated(user.Mobile, tempOrderModel.OrderId, tempOrderModel.Price * tempOrderModel.ProductCount);
