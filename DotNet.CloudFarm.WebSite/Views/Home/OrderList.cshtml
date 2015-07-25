@@ -107,6 +107,7 @@
                 success: function(result) {
                     if (result.Status.Code == "1") {
                         order.Status(result.Data.Status);
+                        order.OrderStatusDesc(result.Data.OrderStatusDesc);
                     } else if (result.Status.Code == "-1") {
                         alert(result.Status.Message);
                     }
