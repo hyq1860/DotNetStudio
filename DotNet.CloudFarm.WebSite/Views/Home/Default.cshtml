@@ -58,7 +58,7 @@
                         <!--/ko-->
                     </div>
                 </div>
-                <div class="detail_content" data-bind="visible:IsShowDetail">
+                <div class="detail_content" @*data-bind="visible:IsShowDetail"*@ data-bind="attr:{id:'detail_'+Id()}" style="display: none">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <th width="40%">项目名称</th>
@@ -85,9 +85,9 @@
                             <td class="td2"><!--ko text:StartTime--><!--/ko-->至<!--ko text:EndTime--><!--/ko--></td>
                         </tr>
                         @*<tr>
-                            <td>申购期限</td>
-                            <td class="td2">自<em>2015</em>年【<em>6</em>】月【<em>8</em>】日至【<em>6</em>】月【<em>9</em>】日</td>
-                        </tr>*@
+                    <td>申购期限</td>
+                    <td class="td2">自<em>2015</em>年【<em>6</em>】月【<em>8</em>】日至【<em>6</em>】月【<em>9</em>】日</td>
+                </tr>*@
                         <tr>
                             <td>项目收益预期支付日</td>
                             <td class="td2"><!--ko text:ExpectEarningDay--><!--/ko--></td>
@@ -145,12 +145,15 @@
             //console.log(product);
         }
 
-        self.ShowDetail=function(product) {
-            if (product.IsShowDetail()) {
-                product.IsShowDetail(false);
-            } else {
-                product.IsShowDetail(true);
-            }
+        self.ShowDetail = function (product) {
+            $("#detail_" + product.Id()).fadeToggle();
+            //if (product.IsShowDetail()) {
+            //    product.IsShowDetail(false);
+               
+
+            //} else {
+            //    product.IsShowDetail(true);
+            //}
         }
     }
 
