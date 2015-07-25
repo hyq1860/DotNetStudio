@@ -44,7 +44,7 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// <summary>
         /// 生长时间
         /// </summary>
-        public int GrowDay { get; set; }
+        public decimal GrowDay { get; set; }
 
         
 

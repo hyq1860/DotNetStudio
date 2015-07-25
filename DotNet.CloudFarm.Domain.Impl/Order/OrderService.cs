@@ -77,10 +77,28 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                         s =>
                             s.Status == OrderStatus.Paid.GetHashCode() &&
                             s.Status == OrderStatus.WaitingConfirm.GetHashCode());
+                var now = DateTime.Now;
                 if (currentOrderList != null && currentOrderList.Any())
                 {
                     //当前收益
-                    walletViewModel.CurrentIncome = currentOrderList.Sum(s => s.Earning * s.ProductCount * ((s.EndTime - DateTime.Now).Days / s.EarningDay));
+                    foreach (var model in currentOrderList)
+                    {
+                        decimal rate = 0;
+                        if (model.EndTime >= now)
+                        {
+                            rate = 0;
+                        }
+                        else if(model.EndTime.AddDays(model.EarningDay)<=now)
+                        {
+                            rate = 1;
+                        }
+                        else
+                        {
+                             rate = (model.EndTime-now).Days/model.EarningDay;
+                        }
+                        walletViewModel.CurrentIncome+=model.Earning*model.ProductCount*rate;
+                    }
+
 
                     //预期收益
                     walletViewModel.ExpectIncome = currentOrderList.Sum(s => s.Earning * s.ProductCount);
@@ -90,13 +108,13 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
                     //育肥状态
                     var orderViewModel =
-                        currentOrderList.Where(s => s.StartTime < DateTime.Now && s.EndTime <= DateTime.Now)
+                        currentOrderList.Where(s => s.StartTime < now && s.EndTime <= now)
                             .OrderByDescending(s => s.CreateTime)
                             .FirstOrDefault();
 
                     if (orderViewModel != null)
                     {
-                        walletViewModel.GrowDay = (orderViewModel.EndTime - DateTime.Now).Days / orderViewModel.EarningDay;
+                        walletViewModel.GrowDay = Math.Floor((((decimal)(orderViewModel.EndTime - now).Days) / (decimal)orderViewModel.EarningDay))*100;
                     }
                 }
                 
