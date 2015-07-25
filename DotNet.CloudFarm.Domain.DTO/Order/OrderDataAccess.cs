@@ -38,7 +38,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         var topOrderInfo = new TopOrderInfo();
                         topOrderInfo.UserId = !Convert.IsDBNull(dr["UserId"]) ? int.Parse(dr["UserId"].ToString()) : 0;
                         topOrderInfo.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
-                        topOrderInfo.BuyCount = !Convert.IsDBNull(dr["Total"]) ? decimal.Parse(dr["Total"].ToString()) : 0;
+                        topOrderInfo.Total = !Convert.IsDBNull(dr["Total"]) ? decimal.Parse(dr["Total"].ToString()) : 0;
                         topOrderInfo.HeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;
                         topOrderInfo.WxNickName = !Convert.IsDBNull(dr["WxNickName"]) ? dr["WxNickName"].ToString() : string.Empty;
                         result.Add(topOrderInfo);
@@ -339,7 +339,6 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                             orderList.Add(orderViewModel);
                         }
 
-                        orderList.Add(orderViewModel);
                     }
                 }
             }

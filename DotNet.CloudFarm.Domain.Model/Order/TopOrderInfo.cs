@@ -23,6 +23,6 @@ namespace DotNet.CloudFarm.Domain.Model.Order
 
         public string HeadUrl { get; set; }
 
-        public decimal BuyCount { get; set; }
+        public decimal Total { get; set; }
     }
 }
