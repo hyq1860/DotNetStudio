@@ -119,5 +119,17 @@ namespace DotNet.CloudFarm.Domain.Model.Product
                 return EndTime.AddDays(EarningDay+1);
             }
         }
+
+        /// <summary>
+        /// 是否可以销售
+        /// </summary>
+        public bool CanSale
+        {
+            get
+            {
+                var now = DateTime.Now;
+                return now >= StartTime && now < EndTime && Status==1;
+            }
+        }
     }
 }

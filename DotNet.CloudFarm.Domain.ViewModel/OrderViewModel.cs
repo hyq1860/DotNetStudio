@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.Order;
 
 namespace DotNet.CloudFarm.Domain.ViewModel
@@ -83,5 +84,11 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 活动持续时间、天（预计收益时间）
         /// </summary>
         public int EarningDay { get; set; }
+
+        /// <summary>
+        /// 是否可以赎回
+        /// </summary>
+        public bool CanRedeem {
+            get { return EndTime.AddDays(EarningDay) <= DateTime.Now && Status == OrderStatus.Paid.GetHashCode(); } }
     }
 }

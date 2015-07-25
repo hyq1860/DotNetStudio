@@ -32,7 +32,7 @@
         
         <div class="Claim_sheep1">
             <div class="Claim_sheep1_box">
-                <div class="hot_sale"></div>
+                <div class="hot_sale" data-bind="css:SaleIconClass"></div>
                 <p class="p1"><!--ko text:Name--><!--/ko--></p>
                 <p class="p2">@*出身内蒙古，混在华尔街；羊只认购火热进行中*@</p>
                 <div class="Claim_sheep1_box_content">
@@ -49,8 +49,13 @@
                     <div class="detail_l" data-bind="click:$parent.ShowDetail">
                         <a href="#" data-bind="click:$parent.ViewProduct">详情</a>
                     </div>
-                    <div class="detail_r">
-                        <a data-bind="attr:{href:'@Url.Action("order","home")'+'?productId='+Id()}">立刻认领羊只</a>
+                    <div class="detail_r" data-bind="css:SaleButtonClass">
+                        <!--ko if:CanSale-->
+                        <a data-bind="attr:{href:'@Url.Action("order", "home")'+'?productId='+Id()}">立刻认领羊只</a>
+                        <!--/ko-->
+                        <!--ko ifnot:CanSale-->
+                        <a>立刻认领羊只</a>
+                        <!--/ko-->
                     </div>
                 </div>
                 <div class="detail_content" data-bind="visible:IsShowDetail">
@@ -207,6 +212,19 @@
 
         //预期收益时间
         self.ExpectEarningDay = ko.observable();
+
+        //是否可以销售
+        self.CanSale = ko.observable();
+
+        //图标
+        self.SaleIconClass = ko.pureComputed(function() {
+            return self.CanSale() ? "hot_sale" : "hot_sale coming_soon";
+        });
+
+        //是否可销售
+        self.SaleButtonClass = ko.pureComputed(function () {
+            return self.CanSale() ? "detail_r" : "detail_r_disabled";
+        });
     }
 
     var homeViewModel = new HomeViewModel();
@@ -275,6 +293,8 @@
 
                         //预期收益时间
                         productViewModel.ExpectEarningDay(data.Products[i].ExpectEarningDay);
+
+                        productViewModel.CanSale(data.Products[i].CanSale);
 
                         homeViewModel.Products.push(productViewModel);
                     }

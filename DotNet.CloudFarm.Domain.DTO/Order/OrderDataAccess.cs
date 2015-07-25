@@ -133,6 +133,10 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
                         orderViewModel.ProductImgUrl = !Convert.IsDBNull(dr["ImgUrl"])? dr["ImgUrl"].ToString(): string.Empty;
                         orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+
+                        orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
+                        orderViewModel.StartTime = !Convert.IsDBNull(dr["StartTime"]) ? Convert.ToDateTime(dr["StartTime"]) : DateTime.MaxValue;
+                        orderViewModel.EndTime = !Convert.IsDBNull(dr["EndTime"]) ? Convert.ToDateTime(dr["EndTime"]) : DateTime.MaxValue;
                         if (orderViewModel.OrderId > 0)
                         {
                             orderList.Add(orderViewModel);
