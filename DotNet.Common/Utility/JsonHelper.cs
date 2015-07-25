@@ -15,18 +15,21 @@ namespace DotNet.Common.Utility
 
     public static class JsonHelper
     {
-        private static JsonSerializerSettings _jsonSettings;
+        private static JsonSerializerSettings jsonSettings;
 
         static JsonHelper()
         {
             IsoDateTimeConverter datetimeConverter = new IsoDateTimeConverter();
             datetimeConverter.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
-            _jsonSettings = new JsonSerializerSettings();
-            _jsonSettings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Ignore;
-            _jsonSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            _jsonSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            _jsonSettings.Converters.Add(datetimeConverter);
+            jsonSettings = new JsonSerializerSettings
+            {
+                MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Ignore,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                //TypeNameHandling = TypeNameHandling.All
+            };
+            jsonSettings.Converters.Add(datetimeConverter);
         }
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace DotNet.Common.Utility
                 if (null == obj)
                     return null;
 
-                return JsonConvert.SerializeObject(obj, Formatting.None, _jsonSettings);
+                return JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSettings);
             }
             catch (Exception ex)
             {
@@ -63,12 +66,15 @@ namespace DotNet.Common.Utility
                 IsoDateTimeConverter datetimeConverter = new IsoDateTimeConverter();
                 datetimeConverter.DateTimeFormat = dateTimeFormat;
 
-                JsonSerializerSettings _jsonSettings = new JsonSerializerSettings();
-                _jsonSettings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Ignore;
-                _jsonSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-                _jsonSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                _jsonSettings.Converters.Add(datetimeConverter);
-                return JsonConvert.SerializeObject(obj, Formatting.None, _jsonSettings);
+                JsonSerializerSettings jsonSettings = new JsonSerializerSettings
+                {
+                    MissingMemberHandling = MissingMemberHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    //TypeNameHandling = TypeNameHandling.All
+                };
+                jsonSettings.Converters.Add(datetimeConverter);
+                return JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSettings);
             }
             catch (Exception ex)
             {
@@ -86,7 +92,7 @@ namespace DotNet.Common.Utility
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(json, _jsonSettings);
+                return JsonConvert.DeserializeObject<T>(json, jsonSettings);
             }
             catch (Exception ex)
             {

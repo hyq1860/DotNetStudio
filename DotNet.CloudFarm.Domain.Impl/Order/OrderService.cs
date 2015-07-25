@@ -44,7 +44,8 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         {
             var result = new Result<PagedList<OrderViewModel>>
             {
-                Data = orderDataAccess.GetOrderList(userId, pageIndex, pageSize)
+                Data = orderDataAccess.GetOrderList(userId, pageIndex, pageSize),
+                Status = new Status() { Code = "1",Message = ""}
             };
             return result;
         }

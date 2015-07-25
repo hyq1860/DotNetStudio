@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="sheep_guest message">
+<div class="sheep_guest message" id="messagelist">
     <!--ko if:Messages().length>0-->
     <ul class="message_ul" data-bind="foreach:Messages">
         <li class="clearfix">
@@ -20,65 +20,116 @@
     暂无消息
     <!--/ko-->
 </div>
-<script type="text/javascript">
-    var messageListServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
-    function MessageListViewModel() {
-        var self = this;
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.scrollPagination.js")
+    <script type="text/javascript">
+        var messageListServiceJson = @Html.Raw(JsonHelper.ToJson(new {Data = Model.Data, PageSize = Model.Data.PageSize, PageCount = Model.Data.PageCount, PageIndex = Model.Data.PageIndex}));
 
-        self.Messages = ko.observableArray();
+        function MessageListViewModel() {
+            var self = this;
 
-        
+            self.Messages = ko.observableArray();
 
-    }
+            self.PageIndex = ko.observable();
 
-    function MessageViewModel() {
-        var self = this;
-        self.MessageId = ko.observable();
-
-        self.UserId  = ko.observable();
-
-        self.Content  = ko.observable();
-
-        self.CreateTime = ko.observable();
-
-        //短消息状态 0 未读 1 已读
-        self.Status = ko.observable(0);
-
-        self.StatusDesc = ko.pureComputed(function() {
-            if (self.Status() == 0) {
-                return "未读";
-            } else if (self.Status() == 1) {
-                return "已读";
-            }
-        });
-
-        self.ReadStatusImg=ko.pureComputed(function(){
-            if (self.Status() == 0) {
-                return "/images/no_read.png";
-            } else if (self.Status() == 1) {
-                return "/images/have_read.png";
-            }
-        });
-    }
-
-    $(function() {
-        var messageListViewModel = new MessageListViewModel();
-        debugger;
-        if (messageListServiceJson &&messageListServiceJson.Data  && messageListServiceJson.Data.length > 0) {
-            var length = messageListServiceJson.Data.length;
-            for (var i = 0; i < length; i++) {
-                var messageViewModel = new MessageViewModel();
-
-                messageViewModel.MessageId(messageListServiceJson.Data[i].MessageId);
-                messageViewModel.UserId(messageListServiceJson.Data[i].UserId);
-                messageViewModel.Content(messageListServiceJson.Data[i].Content);
-                messageViewModel.CreateTime(messageListServiceJson.Data[i].CreateTime);
-                messageViewModel.Status(messageListServiceJson.Data[i].Status);
-
-                messageListViewModel.Messages.push(messageViewModel);
-            }
-            
+            self.PageCount = ko.observable();
         }
-        ko.applyBindings(messageListViewModel);
-    });
-</script>
+
+        function MessageViewModel() {
+            var self = this;
+            self.MessageId = ko.observable();
+
+            self.UserId = ko.observable();
+
+            self.Content = ko.observable();
+
+            self.CreateTime = ko.observable();
+
+            //短消息状态 0 未读 1 已读
+            self.Status = ko.observable(0);
+
+            self.StatusDesc = ko.pureComputed(function() {
+                if (self.Status() == 0) {
+                    return "未读";
+                } else if (self.Status() == 1) {
+                    return "已读";
+                }
+            });
+
+            self.ReadStatusImg = ko.pureComputed(function() {
+                if (self.Status() == 0) {
+                    return "/images/no_read.png";
+                } else if (self.Status() == 1) {
+                    return "/images/have_read.png";
+                }
+            });
+        }
+
+        $(function() {
+            var messageListViewModel = new MessageListViewModel();
+            window.messageListViewModel = messageListViewModel;
+            debugger;
+            if (messageListServiceJson && messageListServiceJson.Data && messageListServiceJson.Data.length > 0) {
+                var length = messageListServiceJson.Data.length;
+                for (var i = 0; i < length; i++) {
+                    var messageViewModel = new MessageViewModel();
+
+                    messageViewModel.MessageId(messageListServiceJson.Data[i].MessageId);
+                    messageViewModel.UserId(messageListServiceJson.Data[i].UserId);
+                    messageViewModel.Content(messageListServiceJson.Data[i].Content);
+                    messageViewModel.CreateTime(messageListServiceJson.Data[i].CreateTime);
+                    messageViewModel.Status(messageListServiceJson.Data[i].Status);
+
+                    messageListViewModel.Messages.push(messageViewModel);
+                }
+                messageListViewModel.PageIndex(messageListServiceJson.PageIndex);
+                messageListViewModel.PageCount(messageListServiceJson.PageCount);
+            }
+            ko.applyBindings(messageListViewModel);
+            scrollPageMessageList();
+        });
+
+        function scrollPageMessageList() {
+            $("#messagelist").scrollPagination({
+                pageIndex: messageListViewModel.PageIndex(),
+                totalPageNumber: messageListViewModel.PageCount()
+            }, function (settings) {
+                //console.log(settings.pageIndex);
+                //console.log(settings.orderType);
+                //console.log(settings.orderTypeDesc);
+                //console.log(settings.totalPageNumber);
+                if (settings.pageIndex <= settings.totalPageNumber) {
+                    settings.pageIndex = settings.pageIndex + 1;
+                    $.ajax({
+                        url: "/home/GetMessageList?pageIndex=" + settings.pageIndex+"&pageSize=4",
+                        type: "post",
+                        dataType:"json",
+                        success: function(result) {
+                            console.log(result);
+                            if (result.Status.Code == "1") {
+                                //console.log(result);
+                                var length = result.Data.length;
+                                for (var i = 0; i < length; i++) {
+                                    var messageViewModel = new MessageViewModel();
+
+                                    messageViewModel.MessageId(result.Data[i].MessageId);
+                                    messageViewModel.UserId(result.Data[i].UserId);
+                                    messageViewModel.Content(result.Data[i].Content);
+                                    messageViewModel.CreateTime(result.Data[i].CreateTime);
+                                    messageViewModel.Status(result.Data[i].Status);
+
+                                    messageListViewModel.Messages.push(messageViewModel);
+                                }
+                            } else if (result.Status.Code == "-1") {
+                                alert(result.Status.Message);
+                            }
+                        }
+                    });
+                    //console.log("加载更多");
+                } else {
+                    //console.log("没有更多了");
+                }
+            });
+        }
+    </script>
+}

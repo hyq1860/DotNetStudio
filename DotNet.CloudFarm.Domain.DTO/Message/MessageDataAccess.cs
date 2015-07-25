@@ -69,10 +69,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Message
                         }
                     }
                 }
-                var result = new PagedList<MessageModel>(data, pageIndex, pageSize)
-                {
-                    TotalCount = total
-                };
+                var result = new PagedList<MessageModel>(data, pageIndex, pageSize, total);
                 return result;
             }
             

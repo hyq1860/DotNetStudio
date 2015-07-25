@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Runtime.Serialization;
+
 namespace DotNet.Common.Collections
 {
     using System;
@@ -15,15 +17,21 @@ namespace DotNet.Common.Collections
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [DataContract]
     public class PagedList<T> :List<T>,IPagedList
     {
+        [DataMember]
         public int TotalCount { get; set; }
 
+        [DataMember]
         public int PageIndex { get; set; }
 
+        [DataMember]
         public int PageSize { get; set; }
 
         private int pageCount;
+
+        [DataMember]
         public int PageCount
         {
             get
@@ -35,11 +43,11 @@ namespace DotNet.Common.Collections
                     int modPageCount = TotalCount%PageSize;
                     if (modPageCount == 0)
                     {
-                        pageCount = modPageCount;
+                        pageCount = TotalCount / PageSize;
                     }
                     else
                     {
-                        pageCount = modPageCount + 1;
+                        pageCount = (TotalCount / PageSize) + 1;
                     }
                     return pageCount;
                 }

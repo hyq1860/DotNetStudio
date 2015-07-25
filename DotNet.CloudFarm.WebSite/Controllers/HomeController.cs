@@ -23,6 +23,8 @@ using Microsoft.AspNet.Identity;
 using Senparc.Weixin.MP.TenPayLibV3;
 using System.Net;
 using System.IO;
+using DotNet.CloudFarm.Domain.Model.Message;
+using DotNet.Common.Collections;
 using DotNet.Common.Models;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -361,10 +363,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(myCenterViewModel);
         }
 
-        public ActionResult OrderList(int pageIndex=1,int pageSize=10)
+        public ActionResult OrderList(int pageIndex=1,int pageSize=2)
         {
             var result = OrderService.GetOrderList(this.UserInfo.UserId, pageIndex, pageSize);
             return View(result);
+        }
+
+        public JsonResult GetOrderList(int pageIndex = 1, int pageSize = 2)
+        {
+            var result = OrderService.GetOrderList(this.UserInfo.UserId, pageIndex, pageSize);
+            return Json(result);
         }
 
         /// <summary>
@@ -408,7 +416,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return result;
         }
 
-        public ActionResult MessageList(int pageIndex=1,int pageSize=10)
+        public ActionResult MessageList(int pageIndex=1,int pageSize=2)
         {
             try
             {
@@ -425,6 +433,25 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 return View(new DotNet.Common.Models.Result<DotNet.CloudFarm.Domain.Model.Message.MessageModel>());
             }
         
+        }
+
+        public JsonResult GetMessageList(int pageIndex = 1, int pageSize = 2)
+        {
+            try
+            {
+                //ControllerContext.RequestContext.HttpContext
+                var result = MessageService.GetMessages(this.UserInfo.UserId, pageIndex, pageSize);
+
+                //修改短信已读状态
+                MessageService.UpdateMessageStatus(this.UserInfo.UserId);
+                return Json(result);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                return Json(new DotNet.Common.Models.Result<PagedList<MessageModel>>());
+            }
+
         }
 
         public ActionResult OrderDetail(long? orderId)

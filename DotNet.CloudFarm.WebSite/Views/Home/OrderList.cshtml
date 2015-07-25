@@ -4,7 +4,7 @@
 @using DotNet.Common.Utility
 @model DotNet.Common.Models.Result<DotNet.Common.Collections.PagedList<DotNet.CloudFarm.Domain.ViewModel.OrderViewModel>>
 
-<div class="sheep_guest my_order" data-bind="foreach:OrderList">
+<div id="orderlist" class="sheep_guest my_order" data-bind="foreach:OrderList">
     <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId()}">
         <p class="order_station clearfix"><span class="span1">订单编号：<em><!--ko text:OrderId--><!--/ko--></em></span><span class="span2"><!--ko text:OrderStatusDesc--><!--/ko--></span></p>
         <div class="order_detail clearfix">
@@ -60,8 +60,11 @@
         </div>
     </section>*@
 </div>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.scrollPagination.js")
 <script type="text/javascript">
-    var orderListServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
+    var orderListServiceJson = @Html.Raw(JsonHelper.ToJson(new { Data = Model.Data, PageSize = Model.Data.PageSize, PageCount = Model.Data.PageCount, PageIndex = Model.Data.PageIndex }));
 
     function OrderListViewModel() {
         var self = this;
@@ -69,37 +72,42 @@
         //订单列表
         self.OrderList = ko.observableArray([]);
 
+        //
+        self.PageIndex = ko.observable();
+
+        self.PageCount = ko.observable();
+
         //取消订单
-        self.CancelOrder=function(order) {
+        self.CancelOrder = function(order) {
             $.ajax({
-                url: "/home/CancelOrder?orderId="+order.OrderId(),
+                url: "/home/CancelOrder?orderId=" + order.OrderId(),
                 type: "post",
-                success: function (result) {
+                success: function(result) {
                     debugger;
                     if (result.Status.Code == "1") {
                         order.Status(result.Data.Status);
                         order.OrderStatusDesc(result.Data.OrderStatusDesc);
                     } else {
-                        
+
                     }
                 }
             });
         }
 
         //去支付
-        self.ToPay=function(order) {
-            location.href = "@Url.Action("Pay","Home")" + "?OrderId=" + order.OrderId();
+        self.ToPay = function(order) {
+            location.href = "@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId();
         }
 
         //赎回
-        self.Redeem=function(order) {
+        self.Redeem = function(order) {
             $.ajax({
-                url: "/home/RedeemOrder?orderId="+order.OrderId(),
+                url: "/home/RedeemOrder?orderId=" + order.OrderId(),
                 type: "post",
-                success: function (result) {
+                success: function(result) {
                     if (result.Status.Code == "1") {
                         order.Status(result.Data.Status);
-                    } else if(result.Status.Code=="-1") {
+                    } else if (result.Status.Code == "-1") {
                         alert(result.Status.Message);
                     }
                 }
@@ -120,12 +128,64 @@
         self.ProductCount = ko.observable();
         self.Price = ko.observable();
         self.Status = ko.observable();
-        self.OrderStatusDesc=ko.observable();
+        self.OrderStatusDesc = ko.observable();
         self.PayType = ko.observable();
+    }
+
+    function scrollPageOrderList() {
+        
+        $("#orderlist").scrollPagination({
+            pageIndex: orderListViewModel.PageIndex(),
+            totalPageNumber: orderListViewModel.PageCount()
+        }, function (settings) {
+            //console.log(settings.pageIndex);
+            //console.log(settings.orderType);
+            //console.log(settings.orderTypeDesc);
+            //console.log(settings.totalPageNumber);
+            if (settings.pageIndex <= settings.totalPageNumber) {
+                settings.pageIndex = settings.pageIndex + 1;
+                $.ajax({
+                    url: "/home/GetOrderList?pageIndex=" + settings.pageIndex+"&pageSize=2",
+                    type: "post",
+                    dataType:"json",
+                    success: function(result) {
+                        console.log(result);
+                        if (result.Status.Code == "1") {
+                            //console.log(result);
+                            var length = result.Data.length;
+                            for (var i = 0; i < length; i++) {
+                                var orderViewModel = new OrderViewModel();
+                                orderViewModel.ProductImgUrl(result.Data[i].ProductImgUrl);
+                                orderViewModel.ProductName(result.Data[i].ProductName);
+                                orderViewModel.TotalMoney(result.Data[i].TotalMoney);
+                                orderViewModel.OrderId(result.Data[i].OrderId);
+                                orderViewModel.UserId(result.Data[i].UserId);
+                                orderViewModel.CreateTime(result.Data[i].CreateTime);
+                                orderViewModel.ProductId(result.Data[i].ProductId);
+                                orderViewModel.ProductCount(result.Data[i].ProductCount);
+                                orderViewModel.Price(result.Data[i].Price);
+                                orderViewModel.Status(result.Data[i].Status);
+                                orderViewModel.OrderStatusDesc(result.Data[i].OrderStatusDesc);
+                                orderViewModel.PayType(result.Data[i].PayType);
+
+                                orderListViewModel.OrderList.push(orderViewModel);
+                            }
+                            window.orderListViewModel.OrderList.push();
+                        } else if (result.Status.Code == "-1") {
+                            alert(result.Status.Message);
+                        }
+                    }
+                });
+                //console.log("加载更多");
+            } else {
+                //console.log("没有更多了");
+            }
+        });
     }
 
     $(function() {
         var orderListViewModel = new OrderListViewModel();
+        window.orderListViewModel = orderListViewModel;
         if (orderListServiceJson && orderListServiceJson.Data && orderListServiceJson.Data.length > 0) {
             var length = orderListServiceJson.Data.length;
             for (var i = 0; i < length; i++) {
@@ -145,9 +205,14 @@
 
                 orderListViewModel.OrderList.push(orderViewModel);
             }
-
+            debugger;
+            orderListViewModel.PageIndex(orderListServiceJson.PageIndex);
+            orderListViewModel.PageCount(orderListServiceJson.PageCount);
         }
 
         ko.applyBindings(orderListViewModel);
+
+        scrollPageOrderList();
     });
 </script>
+}

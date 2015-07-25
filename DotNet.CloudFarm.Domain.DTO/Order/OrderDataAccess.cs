@@ -105,6 +105,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
         public PagedList<OrderViewModel> GetOrderList(int userId, int pageIndex, int pageSize)
         {
             var orderList = new List<OrderViewModel>();
+            var totalOrderCount = 0;
             using (var cmd = DataCommandManager.GetDataCommand("GetOrderList"))
             {
                 cmd.SetParameterValue("@UserId", userId);
@@ -115,7 +116,12 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                     while (dr.Read())
                     {
                         var orderViewModel = new OrderViewModel();
-
+                        if (totalOrderCount == 0)
+                        {
+                            totalOrderCount = !Convert.IsDBNull(dr["TotalOrderCount"])
+                                ? int.Parse(dr["TotalOrderCount"].ToString())
+                                : 0;
+                        }
                         orderViewModel.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? Convert.ToInt64(dr["OrderId"]) : 0;
                         orderViewModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
                         orderViewModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
@@ -134,7 +140,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                     }
                 }
             }
-            var result = new PagedList<OrderViewModel>(orderList, pageIndex, pageSize);
+            var result = new PagedList<OrderViewModel>(orderList, pageIndex, pageSize, totalOrderCount);
             return result;
         }
 
