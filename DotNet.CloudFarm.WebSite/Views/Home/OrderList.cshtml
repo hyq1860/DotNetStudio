@@ -70,23 +70,26 @@
 
         //去支付
         self.ToPay = function(order) {
-            location.href = "@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId();
+            location.href = "@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId()+"&act=Pay";
         }
 
         //赎回
         self.Redeem = function(order) {
-            $.ajax({
+            location.href="@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId()+"&act=Redeem";
+            @*$.ajax({
                 url: "/home/RedeemOrder?orderId=" + order.OrderId(),
                 type: "post",
                 success: function(result) {
                     if (result.Status.Code == "1") {
                         order.Status(result.Data.Status);
                         order.OrderStatusDesc(result.Data.OrderStatusDesc);
+
+                        location.href="@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId()+"&act=Redeem";
                     } else if (result.Status.Code == "-1") {
                         alert(result.Status.Message);
                     }
                 }
-            });
+            });*@
         }
     }
 
@@ -109,7 +112,7 @@
     }
 
     function scrollPageOrderList() {
-        
+
         $("#orderlist").scrollPagination({
             pageIndex: orderListViewModel.PageIndex(),
             totalPageNumber: orderListViewModel.PageCount()
@@ -178,7 +181,7 @@
                 orderViewModel.Status(orderListServiceJson.Data[i].Status);
                 orderViewModel.OrderStatusDesc(orderListServiceJson.Data[i].OrderStatusDesc);
                 orderViewModel.PayType(orderListServiceJson.Data[i].PayType);
-
+                orderViewModel.CanRedeem(orderListServiceJson.Data[i].CanRedeem);
                 orderListViewModel.OrderList.push(orderViewModel);
             }
             debugger;

@@ -79,7 +79,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1,2})
             };
             //result.Data = homeViewModel;
-            return this.CustomJson(homeViewModel, "yyyy年MM月dd日");
+            return this.CustomJson(homeViewModel, "yyyy年MM月dd日HH时mm分ss秒");
             //return result;
         }
 
@@ -198,11 +198,13 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 支付页面
         /// </summary>
         /// <returns></returns>
-        public ActionResult Pay(long? orderId)
+        public ActionResult Pay(long? orderId,string act)
         {
             try
             {
                 var orderPayViewModel = new OrderPayViewModel();
+                orderPayViewModel.Action = act;
+                
                 if (orderId.HasValue)
                 {
                     var orderModel = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
@@ -221,6 +223,17 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             orderPayViewModel.TotalPrice = productModel.Price * orderModel.ProductCount;
                             orderPayViewModel.StartTime = productModel.StartTime;
                             orderPayViewModel.EndTime = productModel.EndTime;
+
+                            if (act.ToLower() == "redeem")
+                            {
+                                orderPayViewModel.Action = "redeem";
+                                orderPayViewModel.Principal = orderPayViewModel.TotalPrice;
+                                orderPayViewModel.Earing = productModel.Earning*orderPayViewModel.Count;
+                            }
+                            else if (act.ToLower() == "pay")
+                            {
+                                orderPayViewModel.Action = "pay";
+                            }
                         }
 
                         #region 微信支付
@@ -417,6 +430,37 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 确认结算
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult ConfirmRedeemOrder(long? orderId,int payType)
+        {
+            var result = new JsonResult();
+            if (orderId.HasValue)
+            {
+                var order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+
+                if (order.Status != OrderStatus.Paid.GetHashCode())
+                {
+                    var data = new Result<OrderViewModel>
+                    {
+                        Status = new Status() { Code = "-1", Message = "当前订单状态不允许赎回。" }
+                    };
+                    result.Data = data;
+                    return result;
+                }
+
+                OrderService.UpdateOrderPayType(orderId.Value, this.UserInfo.UserId, payType);
+
+                result.Data = OrderService.UpdateOrderStatus(this.UserInfo.UserId, orderId.Value,
+                    OrderStatus.WaitingConfirm.GetHashCode());
+            }
+            return result;
+        }
+
+
         public ActionResult MessageList(int pageIndex=1,int pageSize=10)
         {
             try
@@ -483,6 +527,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 return View(new WalletViewModel());
             }
 
+        }
+
+        public JsonResult UpdateOrderPayType(long? orderId,int payType)
+        {
+            if (orderId.HasValue)
+            {
+                if (OrderService.UpdateOrderPayType(orderId.Value, this.UserInfo.UserId, payType))
+                {
+                    return
+                    Json(new Result<object>() { Data = null, Status = new Status() { Code = "1", Message = "" } });
+                }
+                
+            }
+
+            return Json(new Result<object>() { Data = null, Status = new Status() { Code = "0", Message = "订单支付方式修改失败。" } });
         }
 
         /// <summary>

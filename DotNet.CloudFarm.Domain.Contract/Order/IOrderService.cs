@@ -113,5 +113,14 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// </summary>
         /// <returns></returns>
         OrderStatisModel GetOrderStatisModel();
+
+        /// <summary>
+        /// 修改订单支付方式
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="payType"></param>
+        /// <returns></returns>
+        bool UpdateOrderPayType(long orderId, int userId, int payType);
     }
 }

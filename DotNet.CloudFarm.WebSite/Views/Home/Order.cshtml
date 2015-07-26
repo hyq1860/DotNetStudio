@@ -80,6 +80,8 @@
     function OrderViewModel() {
         var self = this;
 
+       
+
         self.Earning = ko.observable();
 
         self.Percentage = ko.observable();
@@ -92,6 +94,8 @@
 
         //购买数量
         self.Count = ko.observable(1);
+
+
 
         self.AddCount=function() {
             var currentCount = self.Count();
@@ -224,7 +228,7 @@
         //认购者数量
         self.BuyCount = ko.observable();
     }
-    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日"));
+    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日HH时mm分ss秒"));
     $(function() {
 
         if (confirmOrderServiceJson) {

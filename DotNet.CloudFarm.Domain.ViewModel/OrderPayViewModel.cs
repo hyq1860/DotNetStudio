@@ -56,5 +56,20 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         public string wxEditAddrParam { get; set; }
 
         public string openid { get; set; }
+
+        /// <summary>
+        /// 赎回收益
+        /// </summary>
+        public decimal Earing { get; set; }
+
+        /// <summary>
+        /// 本金
+        /// </summary>
+        public decimal Principal { get; set; }
+
+        /// <summary>
+        /// 行为
+        /// </summary>
+        public string Action { get; set; }
     }
 }

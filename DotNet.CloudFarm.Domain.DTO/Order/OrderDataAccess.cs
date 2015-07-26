@@ -401,5 +401,16 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
             return orderStatisModel;
         }
+
+        public bool UpdateOrderPayType(long orderId, int userId, int payType)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateOrderPayType"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@OrderId", orderId);
+                cmd.SetParameterValue("@PayType", payType);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }

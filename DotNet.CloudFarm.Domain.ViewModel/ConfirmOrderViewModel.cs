@@ -21,6 +21,7 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         //购买数量
         public int Count { get; set; }
 
+
         /// <summary>
         /// 用户top信息
         /// </summary>
@@ -35,5 +36,7 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 打败百分比
         /// </summary>
         public string Percentage { get; set; }
+
+
     }
 }

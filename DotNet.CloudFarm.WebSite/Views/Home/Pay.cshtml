@@ -20,20 +20,40 @@
                     <p>活动期限：<span><em><!--ko text:StartTime--><!--/ko--></em>至<em><!--ko text:EndTime--><!--/ko--></em></span></p>
                 </div>
             </div>
+            <!--ko if:Action()=='redeem'-->
+            <p class="order_num2">赎回数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
+            <p class="order_num2">订购本金：<span><!--ko text:Principal--><!--/ko-->只</span></p>
+            <p class="order_num2">赎回收益：<span><!--ko text:Earing--><!--/ko-->只</span></p>
+            <p class="order_num2">合计赎回：<span><!--ko text:Total--><!--/ko-->只</span></p>
+            <!--/ko-->
+            <!--ko if:Action()=='pay'-->
             <p class="order_num2">订购数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
             <p class="order_total">合计：<span><!--ko text:TotalPrice--><!--/ko-->元</span></p>
+            <!--/ko-->
+
         </div>
     </section>
     <section class="to_pay">
         <div class="to_pay_box">
             <h3>请选择支付方式</h3>
             <div class="choice_pay_way clearfix">
-                <div id="weixinpay" class="choice_pay_zfb" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/weixin_active.png" selectimage="/images/weixin_active.png"></div><!--当点击选中时 <img src="/images/weixin_active.png">-->
-                <div id="transferaccount" class="choice_pay_zz" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/zhuanzhang.png" selectimage="/images/zhuanzhang_active.png"></div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
+                <div id="weixinpay" class="choice_pay_zfb" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/weixin_active.png" selectimage="/images/weixin_active.png">
+                </div><!--当点击选中时 <img src="/images/weixin_active.png">-->
+                <div id="transferaccount" class="choice_pay_zz" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/zhuanzhang.png" selectimage="/images/zhuanzhang_active.png">
+                </div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
             </div>
         </div>
     </section>
-    <div class="sure_book" data-bind="click:Pay"><a>去支付</a></div>
+    <!--ko if:Action()=='pay'-->
+    <div class="sure_book" data-bind="click:Pay">
+        <a>去支付</a>
+    </div>
+    <!--/ko-->
+    <!--ko if:Action()=='redeem'-->
+    <div class="sure_book" data-bind="click:Redeem">
+        <a>确认赎回</a>
+    </div>
+    <!--/ko-->
 </div>
 
 <script type="text/javascript">
@@ -62,6 +82,19 @@
 
         self.wxEditAddrParam = ko.observable();
 
+        //行为
+        self.Action = ko.observable();
+
+        //赎回收益
+        self.Earing = ko.observable();
+
+        //赎回本金
+        self.Principal = ko.observable();
+
+        self.Total = ko.pureComputed(function() {
+            return self.Earing() + self.Principal();
+        });
+
         //选择支付方式
         self.SelectpayType=function(item,target) {
             var currentDom = $(target.currentTarget);
@@ -80,18 +113,57 @@
         self.Pay=function() {
             var payType = self.PayType();
             if (payType == 1) {
-                location.href = "@Url.Action("TransferAccount", "Home")"+"?OrderId="+self.OrderId();
+                UpdatePayType(self.OrderId(),1,function() {
+                    location.href = "@Url.Action("TransferAccount", "Home")"+"?OrderId="+self.OrderId();
+                });
+
             } else {
                 if ($("#weixinpay").find("img").attr("src") == "/images/weixin_active.png" && $("#weixinpay").find("img").attr("src") == "/images/weixin.png") {
                     alert("请选择支付方式。");
                 } else {
-                    //调用微信支付的js
-                    onBridgeReady();
+                    UpdatePayType(self.OrderId(),0,function() {
+                        //调用微信支付的js
+                        onBridgeReady();
+                    });
                 }
-                
+
             }
             //console.log(ko.toJSON(self));
         }
+
+        //赎回
+        self.Redeem=function() {
+            $.ajax({
+                url: "/home/ConfirmRedeemOrder?orderId=" + self.OrderId()+"&payType="+self.PayType(),
+                type: "post",
+                success: function(result) {
+                    if (result.Status.Code == "1") {
+                       
+                        location.href="@Url.Action("orderList", "Home")";
+                    } else if (result.Status.Code == "-1") {
+                        alert(result.Status.Message);
+                    }
+                }
+            });
+        }
+    }
+
+    function UpdatePayType(orderId,payType,success) {
+        $.ajax({
+            url: "/home/UpdateOrderPayType",
+                type: "post",
+                dataType: "json",
+                data: { orderId: orderId,payType:payType },
+                success: function(result) {
+                    if (result.Status.Code == "1") {
+                        success();
+                    }
+                    else if (result.Status.Code == "0") {
+                        alert(result.Status.Message);
+                    }
+                }
+            }
+        );
     }
 
     //获取共享地址
@@ -100,17 +172,17 @@
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest',
             {
-                "appId": "@ViewBag.appId",     //公众号名称，由商户传入     
-                "timeStamp": "@ViewBag.TimeStamp",         //时间戳，自1970年以来的秒数     
-                "nonceStr": "@ViewBag.NonceStr", //随机串     
+                "appId": "@ViewBag.appId",     //公众号名称，由商户传入
+                "timeStamp": "@ViewBag.TimeStamp",         //时间戳，自1970年以来的秒数
+                "nonceStr": "@ViewBag.NonceStr", //随机串
                 "package": "@ViewBag.Package",
-                "signType": "MD5",         //微信签名方式:     
-                "paySign": "@ViewBag.PaySign" //微信签名 
+                "signType": "MD5",         //微信签名方式:
+                "paySign": "@ViewBag.PaySign" //微信签名
             },
               function (res) {
                   if (res.err_msg == "get_brand_wcpay_request:ok") {
                       window.location.href = "/home/PaySuccess?orderid=@ViewBag.OrderId";
-                  }      
+                  }
               }
           );
     }
@@ -130,6 +202,9 @@
             orderPayViewModel.PayType(OrderPayServiceJson.PayType);
             orderPayViewModel.wxEditAddrParam(OrderPayServiceJson.wxEditAddrParam);
             //alert(OrderPayServiceJson.wxEditAddrParam);
+            orderPayViewModel.Principal(OrderPayServiceJson.Principal);
+            orderPayViewModel.Earing(OrderPayServiceJson.Earing);
+            orderPayViewModel.Action(OrderPayServiceJson.Action);
 
         } else {
             location.href="/Home/Index";
@@ -151,7 +226,7 @@
         }
         else
         {
-            
+
         }
     });
 

@@ -141,6 +141,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return orderDataAccess.GetOrderStatisModel();
         }
 
+        public bool UpdateOrderPayType(long orderId, int userId, int payType)
+        {
+            return orderDataAccess.UpdateOrderPayType(orderId, userId, payType);
+        }
+
         public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)
         {
             var result = new Result<PagedList<OrderManageViewModel>>
