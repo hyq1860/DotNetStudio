@@ -223,7 +223,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             orderPayViewModel.TotalPrice = productModel.Price * orderModel.ProductCount;
                             orderPayViewModel.StartTime = productModel.StartTime;
                             orderPayViewModel.EndTime = productModel.EndTime;
-
+                            orderPayViewModel.ImgUrl = productModel.ImgUrl;
                             if (act.ToLower() == "redeem")
                             {
                                 orderPayViewModel.Action = "redeem";

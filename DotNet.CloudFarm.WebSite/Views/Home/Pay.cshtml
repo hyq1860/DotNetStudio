@@ -12,7 +12,7 @@
             
             <h3><span><!--ko text:Name--><!--/ko--></span></h3>
             <div class="periods clearfix">
-                <div class="periods_l"><img src="/images/no_pic.jpg">
+                <div class="periods_l"><img src="/images/no_pic.jpg" data-bind="attr:{src:ImgUrl}">
                 </div>
                 <div class="periods_r">
                     <p>品种：<span><!--ko text:SheepType--><!--/ko--></span></p>
@@ -94,6 +94,8 @@
         self.Total = ko.pureComputed(function() {
             return self.Earing() + self.Principal();
         });
+
+        self.ImgUrl= ko.observable();
 
         //选择支付方式
         self.SelectpayType=function(item,target) {
@@ -205,6 +207,7 @@
             orderPayViewModel.Principal(OrderPayServiceJson.Principal);
             orderPayViewModel.Earing(OrderPayServiceJson.Earing);
             orderPayViewModel.Action(OrderPayServiceJson.Action);
+            orderPayViewModel.ImgUrl(OrderPayServiceJson.ImgUrl);
 
         } else {
             location.href="/Home/Index";

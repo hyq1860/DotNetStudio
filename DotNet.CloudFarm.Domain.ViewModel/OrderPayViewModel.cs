@@ -71,5 +71,10 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 行为
         /// </summary>
         public string Action { get; set; }
+
+        /// <summary>
+        /// 产品图片URL
+        /// </summary>
+        public string ImgUrl { get; set; }
     }
 }
