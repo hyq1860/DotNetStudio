@@ -10,7 +10,13 @@
         <div class="purchase_claim_section1box">
             <!--ko text:wxEditAddrParam--><!--/ko-->
             
-            <h3><span><!--ko text:Name--><!--/ko--></span></h3>
+            <h3><span> <!--ko if:Action()=='redeem'-->
+                赎回订单【<!--ko text:OrderId--><!--/ko-->】
+                <!--/ko-->
+                    <!--ko if:Action()=='pay'-->
+                <!--ko text:Name--><!--/ko-->
+                    <!--/ko-->
+                </span></h3>
             <div class="periods clearfix">
                 <div class="periods_l"><img src="/images/no_pic.jpg" data-bind="attr:{src:ImgUrl}">
                 </div>
@@ -22,9 +28,9 @@
             </div>
             <!--ko if:Action()=='redeem'-->
             <p class="order_num2">赎回数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
-            <p class="order_num2">订购本金：<span><!--ko text:Principal--><!--/ko-->只</span></p>
-            <p class="order_num2">赎回收益：<span><!--ko text:Earing--><!--/ko-->只</span></p>
-            <p class="order_num2">合计赎回：<span><!--ko text:Total--><!--/ko-->只</span></p>
+            <p class="order_num2">订购本金：<span><!--ko text:Principal--><!--/ko-->元</span></p>
+            <p class="order_num2">赎回收益：<span><!--ko text:Earing--><!--/ko-->元</span></p>
+            <p class="order_num2">合计赎回：<span><!--ko text:Total--><!--/ko-->元</span></p>
             <!--/ko-->
             <!--ko if:Action()=='pay'-->
             <p class="order_num2">订购数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
@@ -57,7 +63,7 @@
 </div>
 
 <script type="text/javascript">
-    var OrderPayServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日HH时mm分ss秒"));
+    var OrderPayServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
 
     function OrderPayViewModel() {
         var self = this;

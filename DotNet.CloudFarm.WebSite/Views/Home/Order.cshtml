@@ -228,7 +228,7 @@
         //认购者数量
         self.BuyCount = ko.observable();
     }
-    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日HH时mm分ss秒"));
+    var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
     $(function() {
 
         if (confirmOrderServiceJson) {

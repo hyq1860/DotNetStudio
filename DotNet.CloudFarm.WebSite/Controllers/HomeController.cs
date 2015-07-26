@@ -79,7 +79,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1,2})
             };
             //result.Data = homeViewModel;
-            return this.CustomJson(homeViewModel, "yyyy年MM月dd日HH时mm分ss秒");
+            return this.CustomJson(homeViewModel, "yyyy-MM-dd HH:mm:ss");
             //return result;
         }
 
@@ -233,55 +233,55 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             else if (act.ToLower() == "pay")
                             {
                                 orderPayViewModel.Action = "pay";
+                                #region 微信支付
+
+
+
+                                var userid = this.UserInfo.UserId;
+                                var openId = this.UserInfo.WxOpenId;
+                                var order = OrderService.GetOrderViewModel(userid, orderId.Value);
+                                if (string.IsNullOrEmpty(order.ProductName) || order.OrderId == 0 || order.TotalMoney == 0M)
+                                {
+                                    return Content("ERROR");
+                                }
+                                var timeStamp = TenPayV3Util.GetTimestamp();
+                                var nonceStr = TenPayV3Util.GetNoncestr();
+
+                                var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(order.ProductName, order.OrderId, order.TotalMoney, Request.UserHostAddress, openId);
+                                if (pre_id == "ERROR" || pre_id == "FAIL")
+                                    return Content("ERROR");
+                                var package = "prepay_id=" + pre_id;
+
+                                var req = new RequestHandler(null);
+                                req.SetParameter("appId", AppId);
+                                req.SetParameter("timeStamp", timeStamp);
+                                req.SetParameter("nonceStr", nonceStr);
+                                req.SetParameter("package", package);
+                                req.SetParameter("signType", "MD5");
+                                var paySign = req.CreateMd5Sign("key", PayKey);
+
+                                //绑定页面数据
+                                ViewBag.TimeStamp = timeStamp;
+                                ViewBag.NonceStr = nonceStr;
+                                ViewBag.PaySign = paySign;
+                                ViewBag.Package = package;
+                                ViewBag.AppId = AppId;
+                                ViewBag.OrderId = order.OrderId;
+
+                                OrderService.InsertOrderPay(new OrderPayModel()
+                                {
+                                    PayId = pre_id,
+                                    OrdeId = order.OrderId,
+                                    UserId = order.UserId,
+                                    Status = 0,
+                                    CreateTime = DateTime.Now
+                                });
+
+                                #endregion
                             }
                         }
 
-                        #region 微信支付
-
-                        //TODO:将该页加入登录页,就可以启用下边的注释
-                        //var userid = UserInfo.UserId;
-                         
-                        var userid = this.UserInfo.UserId;
-                        var openId = this.UserInfo.WxOpenId;
-                        var order = OrderService.GetOrderViewModel(userid, orderId.Value);
-                        if (string.IsNullOrEmpty(order.ProductName) || order.OrderId == 0 || order.TotalMoney == 0M)
-                        {
-                            return Content("ERROR");
-                        }
-                        var timeStamp = TenPayV3Util.GetTimestamp();
-                        var nonceStr = TenPayV3Util.GetNoncestr();
-
-                        var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(order.ProductName, order.OrderId, order.TotalMoney, Request.UserHostAddress, openId);
-                        if (pre_id == "ERROR" || pre_id == "FAIL")
-                            return Content("ERROR");
-                        var package = "prepay_id=" + pre_id;
-
-                        var req = new RequestHandler(null);
-                        req.SetParameter("appId", AppId);
-                        req.SetParameter("timeStamp", timeStamp);
-                        req.SetParameter("nonceStr", nonceStr);
-                        req.SetParameter("package", package);
-                        req.SetParameter("signType", "MD5");
-                        var paySign = req.CreateMd5Sign("key", PayKey);
-
-                        //绑定页面数据
-                        ViewBag.TimeStamp = timeStamp;
-                        ViewBag.NonceStr = nonceStr;
-                        ViewBag.PaySign = paySign;
-                        ViewBag.Package = package;
-                        ViewBag.AppId = AppId;
-                        ViewBag.OrderId = order.OrderId;
-
-                        OrderService.InsertOrderPay(new OrderPayModel()
-                        {
-                            PayId = pre_id,
-                            OrdeId = order.OrderId,
-                            UserId = order.UserId,
-                            Status = 0,
-                            CreateTime = DateTime.Now
-                        });
-
-                        #endregion
+                        
                     }
                 }
                 return View(orderPayViewModel);
