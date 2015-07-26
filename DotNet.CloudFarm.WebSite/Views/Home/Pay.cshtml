@@ -57,7 +57,7 @@
 </div>
 
 <script type="text/javascript">
-    var OrderPayServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日"));
+    var OrderPayServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy年MM月dd日HH时mm分ss秒"));
 
     function OrderPayViewModel() {
         var self = this;
