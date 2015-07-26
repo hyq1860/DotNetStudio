@@ -16,11 +16,11 @@
                 <div class="pasture_weather">
                     <p class="p1">内蒙古鄂尔多斯牧场</p>
                     <div class="Temperature clearfix">
-                        <div class="Temperature_l"><span class="span2"><em>20</em>℃</span><span class="span2">天气倍儿晴朗</span></div>
+                        <div class="Temperature_l"><span class="span2"><em>28</em>℃</span><span class="span2">晴</span></div>
                         <div class="Temperature_r"><span></span></div>
                     </div>
-                    <p class="p2">舍内温度<span>25</span>℃ </p>
-                    <p class="p2">舍外温度<span>25</span>℃ </p>
+                    <p class="p2">舍内温度<span>23</span>℃ </p>
+                    <p class="p2">舍内湿度<span>18</span>% </p>
                     <p class="realtime_pasture_btn"><span></span><a href="/home/video">实时牧场</a></p>
                 </div>
             </div>
@@ -146,7 +146,7 @@
         }
 
         self.ShowDetail = function (product) {
-            $("#detail_" + product.Id()).fadeToggle();
+            $("#detail_" + product.Id()).slideToggle();
             //if (product.IsShowDetail()) {
             //    product.IsShowDetail(false);
                

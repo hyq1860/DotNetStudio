@@ -198,7 +198,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 支付页面
         /// </summary>
         /// <returns></returns>
-        public ActionResult Pay(long? orderId,string act)
+        public ActionResult Pay(long? orderId,string act="pay")
         {
             try
             {
@@ -224,6 +224,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             orderPayViewModel.StartTime = productModel.StartTime;
                             orderPayViewModel.EndTime = productModel.EndTime;
                             orderPayViewModel.ImgUrl = productModel.ImgUrl;
+                            orderPayViewModel.PayType = orderModel.PayType;
                             if (act.ToLower() == "redeem")
                             {
                                 orderPayViewModel.Action = "redeem";
