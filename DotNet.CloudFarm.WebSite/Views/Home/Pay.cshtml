@@ -45,8 +45,15 @@
             <div class="choice_pay_way clearfix">
                 <div id="weixinpay" class="choice_pay_zfb" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/weixin_active.png" selectimage="/images/weixin_active.png">
                 </div><!--当点击选中时 <img src="/images/weixin_active.png">-->
+                <!--ko if:Action()=='pay'-->
                 <div id="transferaccount" class="choice_pay_zz" data-bind="click:function(item,target){SelectpayType(item,target)}"><img src="/images/zhuanzhang.png" selectimage="/images/zhuanzhang_active.png">
                 </div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
+                <!--/ko-->
+                <!--ko if:Action()=='redeem' && PayType()==1-->
+                <div id="transferaccount" class="choice_pay_zz" data-bind="click:function(item,target){SelectpayType(item,target)}">
+                    <img src="/images/zhuanzhang.png" selectimage="/images/zhuanzhang_active.png">
+                </div><!--当点击选中时 <img src="/images/zhuanzhang_active.png">-->
+                <!--/ko-->
             </div>
         </div>
     </section>
