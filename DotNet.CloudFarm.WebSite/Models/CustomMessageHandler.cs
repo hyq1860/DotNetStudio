@@ -91,6 +91,21 @@ namespace DotNet.CloudFarm.WebSite.Models
 
         }
 
+        public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
+        {
+            if(requestMessage.EventKey=="learnmore")
+            {
+                var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+                var str = "羊客——参与众筹，人人成为牧场主，一边吃肉，一边赚钱。回复【1】获取相关信息；回复【2】获取客服电话";
+                responseMessage.Content = str;
+                return responseMessage;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
         {
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
