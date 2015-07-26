@@ -401,5 +401,79 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
             return orderStatisModel;
         }
+
+
+        public PagedList<OrderManageViewModel> GetOrderList(int pageIndex, int pageSize, DateTime? startTime,
+            DateTime? endTime, long? orderId, string mobile,int? status)
+        {
+            var orderList = new List<OrderManageViewModel>();
+            var totalOrderCount = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetOrderListWithCondition"))
+            {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                
+                var command = cmd.CommandText;
+                StringBuilder condition = new StringBuilder();
+                if (startTime!=null)
+                {
+                    condition.Append(" AND op.CreateTime>@StartTime");
+                    cmd.SetParameterValue("@StartTime", startTime.Value);
+                }
+                if (endTime != null)
+                {
+                    condition.Append(" AND op.CreateTime>@EndTime");
+                    cmd.SetParameterValue("@EndTime", endTime.Value);
+                }
+                if (orderId!=null)
+                {
+                    condition.Append(" AND op.OrderId = @OrderId");
+                    cmd.SetParameterValue("@OrderId", orderId.Value);
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    condition.Append(" AND u.Mobile = @Mobile");
+                    cmd.SetParameterValue("@Mobile", mobile);
+
+                }
+                if (status != null)
+                {
+                    condition.Append(" AND op.Status = @Status");
+                    cmd.SetParameterValue("@Status", status.Value);
+                }
+                cmd.CommandText = string.Format(command, condition.ToString());
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        var orderViewModel = new OrderManageViewModel();
+                        if (totalOrderCount == 0)
+                        {
+                            totalOrderCount = !Convert.IsDBNull(dr["TotalOrderCount"])
+                                ? int.Parse(dr["TotalOrderCount"].ToString())
+                                : 0;
+                        }
+                        orderViewModel.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? Convert.ToInt64(dr["OrderId"]) : 0;
+                        orderViewModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        orderViewModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        orderViewModel.ProductId = !Convert.IsDBNull(dr["ProductId"]) ? Convert.ToInt32(dr["ProductId"]) : 0;
+                        orderViewModel.ProductCount = !Convert.IsDBNull(dr["ProductCount"]) ? Convert.ToInt32(dr["ProductCount"]) : 0;
+                        orderViewModel.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
+                        orderViewModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
+                        orderViewModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
+                        orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
+                        orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+                        orderViewModel.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
+
+                        if (orderViewModel.OrderId > 0)
+                        {
+                            orderList.Add(orderViewModel);
+                        }
+                    }
+                }
+            }
+            var result = new PagedList<OrderManageViewModel>(orderList, pageIndex, pageSize, totalOrderCount);
+            return result;
+        }
     }
 }

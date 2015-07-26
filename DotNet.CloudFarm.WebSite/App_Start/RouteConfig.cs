@@ -28,7 +28,7 @@ namespace DotNet.CloudFarm.WebSite
 
             routes.MapRoute(
                 name: "Houtai",
-                url: "{controller}/{action}/{id}",
+                url: "Houtai/{action}/{id}",
                 defaults: new { controller = "Houtai", action = "Index", id = UrlParameter.Optional }
             );
 

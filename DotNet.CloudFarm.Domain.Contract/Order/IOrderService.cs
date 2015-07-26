@@ -33,6 +33,20 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <returns></returns>
         Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize);
 
+
+        /// <summary>
+        /// 获取订单列表（条件）
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="orderId"></param>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize,DateTime? startTime,DateTime? endTime,long? orderId,string mobile,int? status);
+
         /// <summary>
         /// 提交订单
         /// </summary>

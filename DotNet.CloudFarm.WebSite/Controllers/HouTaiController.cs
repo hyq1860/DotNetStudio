@@ -266,9 +266,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
-        public JsonResult GetOrderList(int pageSize=20, int pageIndex=1)
+        public JsonResult GetOrderList(DateTime? startTime,DateTime? endTime,long? orderId, string mobile,int? status,int pageSize=20, int pageIndex=1)
         {
-            var orderList = OrderService.GetOrderList(pageIndex, pageSize);
+            var orderList = OrderService.GetOrderList(pageIndex, pageSize,startTime,endTime,orderId,mobile,status);
             var result = new
             {
                 PageIndex = orderList.Data.PageIndex,
@@ -341,24 +341,33 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var msg = "";
             if(order.Status==OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay)>DateTime.Now)
             {
-                //TODO:调取微信企业支付接口
-                var totalRefund = order.Price * order.ProductCount + product.Earning;
-                var description = string.Format("羊客【{0}】回购",product.Name);
-                var payResult =  WeixinPayApi.QYPay(user.WxOpenId, orderId, totalRefund, description);
-                if (payResult == "SUCCESS")
+                if (order.PayType==0)
                 {
-                    orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
-                    isSuccess = true;
+                    //TODO:调取微信企业支付接口
+                    var totalRefund = order.Price * order.ProductCount + product.Earning;
+                    var description = string.Format("羊客【{0}】结算", product.Name);
+                    var payResult = WeixinPayApi.QYPay(user.WxOpenId, orderId, totalRefund, description);
+                    if (payResult == "SUCCESS")
+                    {
+                        orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+                        isSuccess = true;
+                    }
+                    else
+                    {
+                        msg = "微信企业支付接口出现异常";
+                        orderList = OrderService.GetOrderList(pageIndex, pageSize);
+                    }
                 }
                 else
                 {
-                    msg = "微信企业支付接口出现异常";
-                    orderList = OrderService.GetOrderList(pageIndex, pageSize);
+                    //线下支付，直接修改订单状态
+                    orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
                 }
+               
             }
             else
             {
-                msg = "订单状态不是【待赎回】或订单尚未达到赎回期";
+                msg = "订单状态不是【待确认结算】或订单尚未达到赎回期";
                 orderList = OrderService.GetOrderList(pageIndex, pageSize);
             }
       

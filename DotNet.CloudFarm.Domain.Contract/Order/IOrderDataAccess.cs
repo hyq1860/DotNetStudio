@@ -105,5 +105,17 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// </summary>
         /// <returns></returns>
         OrderStatisModel GetOrderStatisModel();
+
+        /// <summary>
+        /// 订单查询
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="orderId"></param>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        PagedList<OrderManageViewModel> GetOrderList(int pageIndex, int pageSize, DateTime? startTime, DateTime? endTime, long? orderId, string mobile,int? status);
     }
 }

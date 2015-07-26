@@ -236,5 +236,15 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         }
 
 
+
+
+        public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize, DateTime? startTime, DateTime? endTime, long? orderId, string mobile,int? status)
+        {
+            var result = new Result<PagedList<OrderManageViewModel>>
+            {
+                Data = orderDataAccess.GetOrderList(pageIndex, pageSize,startTime,endTime,orderId,mobile,status)
+            };
+            return result;
+        }
     }
 }
