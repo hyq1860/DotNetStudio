@@ -326,7 +326,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         }
 
         /// <summary>
-        /// 确认赎回
+        /// 确认结算
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
@@ -339,7 +339,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             Result<DotNet.Common.Collections.PagedList<OrderManageViewModel>> orderList = new Result<Common.Collections.PagedList<OrderManageViewModel>>();
             var isSuccess = false;
             var msg = "";
-            if(order.Status==OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay)>DateTime.Now)
+            if(order.Status==OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay)<DateTime.Now)
             {
                 if (order.PayType==0)
                 {
@@ -367,7 +367,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
             else
             {
-                msg = "订单状态不是【待确认结算】或订单尚未达到赎回期";
+                msg = "订单状态不是【待确认结算】或订单尚未达到结算期";
                 orderList = OrderService.GetOrderList(pageIndex, pageSize);
             }
       

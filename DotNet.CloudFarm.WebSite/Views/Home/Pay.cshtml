@@ -11,7 +11,7 @@
             <!--ko text:wxEditAddrParam--><!--/ko-->
             
             <h3><span> <!--ko if:Action()=='redeem'-->
-                赎回订单【<!--ko text:OrderId--><!--/ko-->】
+                结算订单【<!--ko text:OrderId--><!--/ko-->】
                 <!--/ko-->
                     <!--ko if:Action()=='pay'-->
                 <!--ko text:Name--><!--/ko-->
@@ -27,10 +27,10 @@
                 </div>
             </div>
             <!--ko if:Action()=='redeem'-->
-            <p class="order_num2">赎回数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
+            <p class="order_num2">结算数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
             <p class="order_num2">订购本金：<span><!--ko text:Principal--><!--/ko-->元</span></p>
-            <p class="order_num2">赎回收益：<span><!--ko text:Earing--><!--/ko-->元</span></p>
-            <p class="order_num2">合计赎回：<span><!--ko text:Total--><!--/ko-->元</span></p>
+            <p class="order_num2">结算收益：<span><!--ko text:Earing--><!--/ko-->元</span></p>
+            <p class="order_num2">合计结算：<span><!--ko text:Total--><!--/ko-->元</span></p>
             <!--/ko-->
             <!--ko if:Action()=='pay'-->
             <p class="order_num2">订购数量：<span><!--ko text:Count--><!--/ko-->只</span></p>
@@ -64,7 +64,7 @@
     <!--/ko-->
     <!--ko if:Action()=='redeem'-->
     <div class="sure_book" data-bind="click:Redeem">
-        <a>确认赎回</a>
+        <a>确认结算</a>
     </div>
     <!--/ko-->
 </div>
@@ -98,10 +98,10 @@
         //行为
         self.Action = ko.observable();
 
-        //赎回收益
+        //结算收益
         self.Earing = ko.observable();
 
-        //赎回本金
+        //结算本金
         self.Principal = ko.observable();
 
         self.Total = ko.pureComputed(function() {
@@ -146,7 +146,7 @@
             //console.log(ko.toJSON(self));
         }
 
-        //赎回
+        //结算
         self.Redeem=function() {
             $.ajax({
                 url: "/home/ConfirmRedeemOrder?orderId=" + self.OrderId()+"&payType="+self.PayType(),

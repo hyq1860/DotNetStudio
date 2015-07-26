@@ -73,7 +73,7 @@
             location.href = "@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId()+"&act=Pay";
         }
 
-        //赎回
+        //结算
         self.Redeem = function(order) {
             location.href="@Url.Action("Pay", "Home")" + "?OrderId=" + order.OrderId()+"&act=Redeem";
             @*$.ajax({

@@ -75,7 +75,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var homeViewModel = new HomeViewModel
             {
                 Products = ProductService.GetProducts(1, 100, 1), 
-                //订单状态为已支付和待赎回的羊的数量
+                //订单状态为已支付和待结算的羊的数量
                 SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId,new List<int>(){1,2})
             };
             //result.Data = homeViewModel;
@@ -419,7 +419,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 {
                     var data = new Result<OrderViewModel>
                     {
-                        Status = new Status() {Code = "-1", Message = "当前订单状态不允许赎回。"}
+                        Status = new Status() {Code = "-1", Message = "当前订单状态不允许结算。"}
                     };
                     result.Data = data;
                     return result;
@@ -447,7 +447,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 {
                     var data = new Result<OrderViewModel>
                     {
-                        Status = new Status() { Code = "-1", Message = "当前订单状态不允许赎回。" }
+                        Status = new Status() { Code = "-1", Message = "当前订单状态不允许结算。" }
                     };
                     result.Data = data;
                     return result;
