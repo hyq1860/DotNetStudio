@@ -29,9 +29,9 @@ namespace DotNet.CloudFarm.Domain.Model.Base
 
 
         /// <summary>
-        /// 待确认赎回
+        /// 待确认结算
         /// </summary>
-        [Description("待确认赎回")]
+        [Description("待确认结算")]
         WaitingConfirm = 2,
 
 

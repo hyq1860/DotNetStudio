@@ -16,39 +16,66 @@
                 </div>
             </div>
             <div class="box-content">
-                <div id="alertMsg" class="alert alert-error hidden fade in"></div>
-                    <fieldset>
-                        <input type="hidden" name="Id" id="msgId" />
-                        <div class="control-group">
-                            <label class="control-label" for="focusedInput">订单号</label>
-                            <div class="controls">
-                                <input class="input-xlarge focused" id="orderid" type="text" maxlength="30" name="OrderId">
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active"><a href="#batch">批量查询</a></li>
+                    <li class=""><a href="#single">精准查询</a></li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div id="batch" class="tab-pane active">
+                        <div class="form-horizontal">
+                            <input type="hidden" name="Id" id="msgId" />
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">交易时间</label>
+                                <div class="controls">
+                                    <input class="input-small datepicker" id="StartTime" type="text"  name="StartTime">
+                                    -
+                                    <input class="input-small datepicker" id="EndTime" type="text" name="EndTime">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="status">订单状态</label>
+                                <div class="controls">
+                                    <select id="status" name="Status">
+                                        <option value="-2">--</option>
+                                        <option value="-1">交易关闭</option>
+                                        <option value="0">待支付</option>
+                                        <option value="1">已支付</option>
+                                        <option value="2">待确认结算</option>
+                                        <option value="10">完成</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" class="btn btn-primary" data-bind="click:BatchSearchOrder">查询</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label" for="focusedInput">用户</label>
-                            <div class="controls">
-                                <input class="input-xlarge focused" id="mobile" type="text" maxlength="30" name="Mobile">
+                    </div>
+                    <div id="single" class="tab-pane">
+                        <div class="form-horizontal">
+                            <input type="hidden" name="Id" id="msgId" />
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">订单号</label>
+                                <div class="controls">
+                                    <input class="input-large focused" id="orderid" type="text" maxlength="30" name="OrderId">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">用户手机号</label>
+                                <div class="controls">
+                                    <input class="input-large focused" id="mobile" type="text" maxlength="30" name="Mobile">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" class="btn btn-primary" data-bind="click:SingleSearchOrder">查询</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label" for="status">订单状态</label>
-                            <div class="controls">
-                                <select id="status" name="Status">
-                                    <option value="-1">交易关闭</option>
-                                    <option value="0">待支付</option>
-                                    <option value="1">已支付</option>
-                                    <option value="2">待确认赎回</option>
-                                    <option value="10">完成</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">添加/编辑</button>
-                            <button class="btn" onclick="cancel(); return false;">取消</button>
-                        </div>
-                    </fieldset>
-            </div>
+                    </div>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="row-fluid sortable">
@@ -183,7 +210,49 @@
         self.PageIndex = ko.observable();
         self.Count = ko.observable();
         self.PageNo = ko.observable();
-
+        self.BatchSearchOrder = function(){
+            var startTime = $("#StartTime").val();
+            var endTime=$("#EndTime").val();
+            var status = $("#status").val();
+            if(status==-2)
+            {
+                status=null;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/houtai/getorderlist",
+                data: "pageIndex=" + pageIndex + "&pageSize=" + pageSize +"&startTime="+startTime
+                 +"&endTime="+endTime+"&status="+status,
+                success: function (data) {
+                    if (data) {
+                        FillOrder(data);
+                        //MD jquery.pager有问题
+                        $("#pages").pager({ pagenumber: data.PageIndex, pagecount: data.PageNo, buttonClickCallback: function(){
+                            self.BatchSearchOrder();
+                        } });
+                    }
+                }
+            });
+        };
+        self.SingleSearchOrder = function(){
+            var mobile= $("#mobile").val();
+            var orderId= $("#orderId").val();
+            $.ajax({
+                type: "POST",
+                url: "/houtai/getorderlist",
+                data: "pageIndex=" + pageIndex + "&pageSize=" + pageSize +"&mobile="+mobile
+                 +"&orderId="+orderId,
+                success: function (data) {
+                    if (data) {
+                        FillOrder(data);
+                        //MD jquery.pager有问题
+                        $("#pages").pager({ pagenumber: data.PageIndex, pagecount: data.PageNo, buttonClickCallback: function(){
+                            self.SingleSearchOrder();
+                        } });
+                    }
+                }
+            });
+        };
     }
     var homeViewModel = new ListViewModel();
 

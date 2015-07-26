@@ -34,7 +34,7 @@
             <div class="Claim_sheep1_box">
                 <div class="hot_sale" data-bind="css:SaleIconClass"></div>
                 <p class="p1"><!--ko text:Name--><!--/ko--></p>
-                <p class="p2">@*出身内蒙古，混在华尔街；羊只认购火热进行中*@</p>
+                <p class="p2">认购期限：<!--ko text:StartTime--><!--/ko-->至<!--ko text:EndTime--><!--/ko--></p>
                 <div class="Claim_sheep1_box_content">
                     <ul class="clearfix">
                         <li class="li1"><img src="/images/no_pic.jpg" data-bind="attr:{src:ImgUrl}"></li>
@@ -81,7 +81,7 @@
                             <td class="td2">人民币<em><!--ko text:Price--><!--/ko--></em>元；小羊费用：<em><!--ko text:SheepPrice--><!--/ko--></em>元，饲料费：<em><!--ko text:FeedPrice--><!--/ko--></em>元；人工费：<em><!--ko text:WorkPrice--><!--/ko--></em>元</td>
                         </tr>
                         <tr>
-                            <td>申购期限</td>
+                            <td>认购期限</td>
                             <td class="td2"><!--ko text:StartTime--><!--/ko-->至<!--ko text:EndTime--><!--/ko--></td>
                         </tr>
                         @*<tr>
@@ -243,7 +243,6 @@
             success: function (data) {
                 if (data) {
                     homeViewModel.SheepCount(data.SheepCount);
-                    debugger;
                     var length = data.Products.length;
                     for (var i = 0; i < length; i++) {
                         var productViewModel = new ProductViewModel();
