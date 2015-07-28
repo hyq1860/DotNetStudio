@@ -45,7 +45,18 @@
         </div>
     </div>
     <!--投资报表-->
-    <div class="Settlement"><a href="/Home/OrderList?tab=3">结算</a></div>
+
+    <!--ko if:HaveCanRedeemOrder-->
+    <div class="Settlement">
+        <a href="/Home/OrderList?tab=3">结算</a>
+    </div>
+    <!--/ko-->
+    <!--ko ifnot:HaveCanRedeemOrder-->
+    <div class="Settlement Disable">
+        <a>结算</a>
+    </div>
+    <!--/ko-->
+    
 </div>
 <script type="text/javascript">
     var walletServiceJson = @Html.Raw((Model??null).ToJson());
@@ -72,6 +83,9 @@
 
         //生长时间
         self.GrowDay = ko.observable();
+
+        //是否有可以结算的订单
+        self.HaveCanRedeemOrder = ko.observable();
     }
 
     $(function() {
@@ -99,6 +113,9 @@
 
             //生长时间
             walletViewModel.GrowDay(walletServiceJson.GrowDay);
+
+            //是否有可以结算的订单
+            walletViewModel.HaveCanRedeemOrder(walletServiceJson.HaveCanRedeemOrder);
         }
 
         ko.applyBindings(walletViewModel);

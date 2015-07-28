@@ -46,7 +46,10 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// </summary>
         public decimal GrowDay { get; set; }
 
-        
+        /// <summary>
+        /// 是否有可以结算的订单
+        /// </summary>
+        public bool HaveCanRedeemOrder { get; set; }
 
         //收益要从活动结束后开始计算
 

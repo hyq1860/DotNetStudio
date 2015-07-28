@@ -26,3 +26,22 @@ function IsNumer(value) {
     //var pattern = /^(\d{8})|(\d{9})$/g; // 正则表达式
     return pattern.test(value);
 }
+
+//制保留2位小数，如：2，会在2后面补上00.即2.00  
+function toDecimal2(x) {
+    var f = parseFloat(x);
+    if (isNaN(f)) {
+        return 0;
+    }
+    var f = Math.round(x * 100) / 100;
+    var s = f.toString();
+    var rs = s.indexOf('.');
+    if (rs < 0) {
+        rs = s.length;
+        s += '.';
+    }
+    while (s.length <= rs + 2) {
+        s += '0';
+    }
+    return parseFloat(s).toFixed(2);
+}

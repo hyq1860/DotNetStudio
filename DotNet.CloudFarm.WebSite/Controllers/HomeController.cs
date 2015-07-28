@@ -333,7 +333,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         {
                             OrdeId = orderId,
                             //long.Parse(resHandler.GetParameter("out_trade_no")), 
-                            Status = OrderStatus.Paid.GetHashCode() });
+                            Status = OrderStatus.Paid.GetHashCode() 
+                        });
                     }
 
                     res = "SUCCESS";

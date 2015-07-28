@@ -131,6 +131,12 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                     //累计投入金额
                     walletViewModel.TotalInvestment = historyOrderList.Sum(s => s.ProductCount * s.Price);
                 }
+
+                walletViewModel.HaveCanRedeemOrder = orderList.Data.Any(s => s.CanRedeem);
+            }
+            else
+            {
+                walletViewModel.HaveCanRedeemOrder = false;
             }
 
             return walletViewModel;

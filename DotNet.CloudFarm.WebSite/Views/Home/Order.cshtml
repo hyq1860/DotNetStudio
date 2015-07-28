@@ -24,7 +24,7 @@
                     <div class="order_numbox clearfix">
                         <div class="order_num">
                             <div class="order_num_l">订购数量</div>
-                            <div class="order_num_r"><span class="span1" data-bind="click:$parent.ReduceCount">-</span><input type="number" class="center" placeholder="" data-bind="value:$parent.Count"><span class="span2" data-bind="click:$parent.AddCount">+</span></div>
+                            <div class="order_num_r"><span class="span1" data-bind="click:$parent.ReduceCount">-</span><input type="number" class="center" min="1" placeholder="" data-bind="value:$parent.Count,attr:{max:ExistCount}"><span class="span2" data-bind="click:$parent.AddCount">+</span></div>
                         </div>
                         <p class="p1 clearfix"><span class="span1">合计</span><span class="span2"><!--ko text:$parent.TotalPrice--><!--/ko-->元</span></p>
                     </div>
@@ -101,7 +101,7 @@
             var currentCount = self.Count();
             
             console.log(currentCount);
-            ++currentCount;
+            currentCount++;
             debugger;
             if (currentCount * self.Product.Price() > 50000) {
                 alert("一次最多购买50000元。");
@@ -134,7 +134,7 @@
         
         //总计金额
         self.TotalPrice = ko.pureComputed(function() {
-            return self.Count() * self.Product.Price();
+            return toDecimal2(self.Count() * self.Product.Price());
         });
 
         self.ReduceCount=function() {
@@ -150,6 +150,14 @@
         self.SubmitOrder=function() {
             if (!self.AgreeContract()) {
                 alert("请选择同意用户协议");
+                return;
+            }
+            if (self.Count() <= 1) {
+                alert("最少认购一只");
+                return;
+            }
+            if (self.Count() > self.Product.ExistCount()) {
+                alert("您的认购数量超出剩余认购数量");
                 return;
             }
             console.log(ko.toJSON(self));
