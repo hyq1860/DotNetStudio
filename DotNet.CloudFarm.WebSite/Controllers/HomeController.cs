@@ -233,6 +233,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             }
                             else if (act.ToLower() == "pay")
                             {
+                                if (!productModel.CanSale)
+                                {
+                                    return RedirectToAction("OrderList", "Home", new { tab = 3 });
+                                }
                                 orderPayViewModel.Action = "pay";
                                 #region 微信支付
 

@@ -20,17 +20,21 @@ using DotNet.Identity.Database;
 using System.Web.Configuration;
 using log4net;
 using DotNet.Common.Utility;
+using Senparc.Weixin.MP.CommonAPIs;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
 
     public class AccountController : BaseController
     {
-
         /// <summary>
         /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
         /// </summary>
         public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
+        /// <summary>
+        /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
 
 
         public AccountController()
@@ -59,7 +63,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             #if DEBUG
             loginUser.WxOpenId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";//"oOGootzpwe38CkQSTj00wyHhKSMk";//
-#endif
+            #endif
 
             var jsonResult = new JsonResult();
             try
@@ -68,6 +72,34 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
                 //check验证码
                 var user = UserService.GetUserByWxOpenId(loginUser.WxOpenId);
+                if (user == null)
+                {
+                    //创建用户
+                    var openId = loginUser.WxOpenId;
+                    var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+                    var wxUser = CommonApi.GetUserInfo(accesstoken, openId);
+                    if (!string.IsNullOrEmpty(wxUser.headimgurl))
+                    {
+                        wxUser.headimgurl = wxUser.headimgurl.Substring(0, wxUser.headimgurl.Length - 1) + "96";
+                    }
+                    var userModel = new UserModel()
+                    {
+                        CreateTime = DateTime.Now,
+                        WxOpenId = openId,
+                        WxHeadUrl = wxUser.headimgurl,
+                        WxNickName = wxUser.nickname,
+                        Status = 1
+                    };
+                    if (UserService.Insert(userModel) > 0)
+                    {
+                        user = UserService.GetUserByWxOpenId(loginUser.WxOpenId);
+                    }
+                    else
+                    {
+                        logger.Error("用户信息insert失败:"+JsonHelper.ToJson(userModel));
+                    }
+                }
+
                 //logger.Info(JsonHelper.ToJson(user));
                 if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
                 {
@@ -83,7 +115,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     //logger.Info(3);
 
                     //用户禁用不让登陆
-                    if (result != null && user != null && user.Status == 1)
+                    if (result != null && user.Status == 1)
                     {
                         //logger.Info(JsonHelper.ToJson(result));
                         await SignInAsync(result.Result, true);
@@ -92,13 +124,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     }
                     else
                     {
-                        jsonResult.Data = new { IsSuccess = false ,Msg ="您的用户已被禁用"};
+                        jsonResult.Data = new { IsSuccess = false, Msg = "您的用户已被禁用" };
                     }
                 }
                 else
                 {
                     jsonResult.Data = new { IsSuccess = false, Msg = "验证码不正确" };
-
                 }
             }
             catch (Exception ex)

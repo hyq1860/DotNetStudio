@@ -90,5 +90,13 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// </summary>
         public bool CanRedeem {
             get { return EndTime.AddDays(EarningDay) <= DateTime.Now && Status == OrderStatus.Paid.GetHashCode(); } }
+
+        /// <summary>
+        /// 是否可以支付
+        /// </summary>
+        public bool CanPay
+        {
+            get { return Status == OrderStatus.Init.GetHashCode() && DateTime.Now<EndTime; }
+        }
     }
 }
