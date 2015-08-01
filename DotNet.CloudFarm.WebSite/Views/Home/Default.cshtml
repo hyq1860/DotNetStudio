@@ -242,6 +242,10 @@
             dataType:"json",
             data: { Mobile: $("#Mobile").val() },
             success: function (data) {
+                if (!data.IsLogin) {
+                    location.href = "Account/Login";
+                    return;
+                }
                 if (data) {
                     homeViewModel.SheepCount(data.SheepCount);
                     var length = data.Products.length;

@@ -21,5 +21,10 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 首页商品集合
         /// </summary>
         public List<ProductModel> Products { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsLogin { get; set; }
     }
 }
