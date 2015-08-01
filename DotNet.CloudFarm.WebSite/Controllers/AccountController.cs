@@ -139,6 +139,33 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return jsonResult;
         }
 
+        /// <summary>
+        /// 后台登录
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BackstageLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> BackstageLogin(BackstageLoginUser loginUser)
+        {
+            var jsonResult = new JsonResult();
+
+            var user= UserService.FindByUserNameAndPassword(loginUser.UserName, loginUser.Password);
+            if (user != null && user.UserId > 0)
+            {
+                await SignInAsync(new CloudFarmIdentityUser(){UserName = user.UserName,Id = user.UserId.ToString()}, true);
+                jsonResult.Data = new { IsSuccess = true };
+            }
+            else
+            {
+                jsonResult.Data = new { IsSuccess = false };
+            }
+            return jsonResult;
+        }
+
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public JsonResult LogOff()

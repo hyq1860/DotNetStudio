@@ -27,4 +27,12 @@ namespace DotNet.CloudFarm.Domain.Model.User
         public string WxOpenId { get; set; }
 
     }
+
+    public class BackstageLoginUser
+    {
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+    }
 }

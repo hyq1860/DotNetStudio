@@ -491,5 +491,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var value = SMSService.SendSMSOrderCreated(tel, 111111111, 10.00M);
             return Content(value.ToString());
         }
+
+        public HouTaiController(IUserService userService) : base(userService)
+        {
+        }
     }
 }

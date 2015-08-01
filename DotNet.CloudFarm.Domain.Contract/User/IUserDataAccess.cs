@@ -98,5 +98,19 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <returns></returns>
         bool UpdateUserCaptchaStatus(int userId);
 
+        /// <summary>
+        /// 根据用户名和密码找后台管理员model
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        BackstageLoginUser FindByUserNameAndPassword(string userName, string password);
+
+        /// <summary>
+        /// 获取后台userid
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        BackstageLoginUser FindBackstageLoginUserByUserId(int userId);
     }
 }

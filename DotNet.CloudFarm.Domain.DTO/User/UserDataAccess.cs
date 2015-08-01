@@ -266,5 +266,42 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 return cmd.ExecuteNonQuery()>0;
             }
         }
+
+        public BackstageLoginUser FindByUserNameAndPassword(string userName, string password)
+        {
+            var backstageLoginUser = new BackstageLoginUser();
+            using (var cmd = DataCommandManager.GetDataCommand("FindByUserNameAndPassword"))
+            {
+                cmd.SetParameterValue("@UserName", userName);
+                cmd.SetParameterValue("@Password", password);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        backstageLoginUser.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        backstageLoginUser.UserName = !Convert.IsDBNull(dr["UserName"]) ? dr["UserName"].ToString() : string.Empty;
+                    }
+                }
+            }
+            return backstageLoginUser;
+        }
+
+        public BackstageLoginUser FindBackstageLoginUserByUserId(int userId)
+        {
+            var backstageLoginUser = new BackstageLoginUser();
+            using (var cmd = DataCommandManager.GetDataCommand("FindBackstageLoginUserByUserId"))
+            {
+                cmd.SetParameterValue("@UserId", userId);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        backstageLoginUser.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        backstageLoginUser.UserName = !Convert.IsDBNull(dr["UserName"]) ? dr["UserName"].ToString() : string.Empty;
+                    }
+                }
+            }
+            return backstageLoginUser;
+        }
     }
 }

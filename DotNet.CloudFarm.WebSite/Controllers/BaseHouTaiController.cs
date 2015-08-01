@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Impl.User;
+using Microsoft.AspNet.Identity;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -28,7 +31,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
 
 
-        public BaseHouTaiController() { }
+        public BaseHouTaiController(IUserService userService)
+        {
+            this.UserService = userService;
+        }
         /// <summary>
         /// 当前登录管理员
         /// </summary>
@@ -37,12 +43,24 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //TODO:暂时返回测试用户，开发完再接入登录
             get
             {
-                return new AdminUser()
+                var adminUser = new AdminUser();
+                if (this.User.Identity.IsAuthenticated)
                 {
-                    AdminName = "Admin",
-                    Id = 1
-                };
+                    var userId = int.Parse(this.User.Identity.GetUserId());
+                    var user=UserService.FindBackstageLoginUserByUserId(userId);
+                    if (user != null)
+                    {
+                        adminUser.Id = user.UserId;
+                        adminUser.AdminName = user.UserName;
+                    }
+                    return adminUser;
+                }
+                return null;
             }
         }
+
+        private IUserService UserService { get; set; }
+
+        
     }
 }

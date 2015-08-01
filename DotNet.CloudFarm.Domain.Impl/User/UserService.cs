@@ -113,6 +113,16 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             return userDataAccess.UpdateUserCaptchaStatus(userId);
         }
 
+        public BackstageLoginUser FindByUserNameAndPassword(string userName, string password)
+        {
+            return userDataAccess.FindByUserNameAndPassword(userName, password);
+        }
+
+        public BackstageLoginUser FindBackstageLoginUserByUserId(int userId)
+        {
+            return userDataAccess.FindBackstageLoginUserByUserId(userId);
+        }
+
         public bool CheckMobileCaptcha(int userId,string mobile,string captcha)
         {
             return userDataAccess.CheckMobileCaptcha(userId, mobile, captcha);

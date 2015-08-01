@@ -26,5 +26,10 @@ namespace DotNet.Identity
         /// 手机验证码
         /// </summary>
         public string MobileCaptcha { get; set; }
+
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public int Role { get; set; }
     }
 }
