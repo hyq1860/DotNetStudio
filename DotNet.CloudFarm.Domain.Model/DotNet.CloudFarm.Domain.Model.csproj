@@ -55,6 +55,7 @@
     <Compile Include="User\UserCaptchaModel.cs" />
     <Compile Include="User\UserModel.cs" />
     <Compile Include="WeiXin\WeixinAutoReplyMessageModel.cs" />
+    <Compile Include="WeiXin\WeixinPayLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Stock\" />

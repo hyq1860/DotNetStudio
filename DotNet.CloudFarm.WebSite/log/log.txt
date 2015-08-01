@@ -288,3 +288,94 @@ INFO  2015-07-26 23:50:23,890 [WeixnPayApi] 统一订单接口返回信息：<xml><return_c
 </xml>
 ERROR 2015-07-26 23:50:23,951 [WeixnPayApi] System.NullReferenceException: 未将对象引用设置到对象的实例。
    在 DotNet.CloudFarm.WebSite.WeixinPay.WeixinPayApi.Unifiedorder(String productName, Int64 orderId, Decimal amount, String createIp, String openId) 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\WeixinPay\WeixinPayApi.cs:行号 154
+INFO  2015-08-01 21:05:44,383 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:06:56,319 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:06:56,815 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:07:31,059 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:07:32,983 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:11:44,751 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:11:52,419 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:12:27,420 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:12:29,229 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:12:56,678 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:13:36,964 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:19:44,691 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>
+INFO  2015-08-01 21:19:48,774 [WeixnPayApi] 企业支付返回信息：<xml>
+<return_code><![CDATA[FAIL]]></return_code>
+<return_msg><![CDATA[付款金额不能小于最低限额.]]></return_msg>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[AMOUNT_LIMIT]]></err_code>
+<err_code_des><![CDATA[付款金额不能小于最低限额.]]></err_code_des>
+</xml>

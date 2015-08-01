@@ -344,24 +344,31 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 if (order.PayType==0)
                 {
                     //TODO:调取微信企业支付接口
-                    var totalRefund = order.Price * order.ProductCount + product.Earning;
-                    var description = string.Format("羊客【{0}】结算", product.Name);
-                    var payResult = WeixinPayApi.QYPay(user.WxOpenId, orderId, totalRefund, description);
-                    if (payResult == "SUCCESS")
+                    var upperLimit = 20000M;//微信支付支持的上限
+                    var refundPrincipal = order.Price*order.ProductCount; //购买本金
+                    var descPrincipal = string.Format("羊客【{0}】结算本金", product.Name);
+                    var payResult = WeixinPayApi.QYPaySplit(user.WxOpenId,orderId,refundPrincipal,descPrincipal,upperLimit);
+
+                    var refundBonus = product.Earning * order.ProductCount;
+                    var descBonus = string.Format("羊客【{0}】结算收益", product.Name);
+                    var payResultBonus = WeixinPayApi.QYPaySplit(user.WxOpenId, orderId, refundBonus, descBonus, upperLimit);
+
+                    if (payResult  && payResultBonus)
                     {
-                        orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
                         isSuccess = true;
                     }
                     else
                     {
                         msg = "微信企业支付接口出现异常";
-                        orderList = OrderService.GetOrderList(pageIndex, pageSize);
                     }
+                    orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+
                 }
                 else
                 {
                     //线下支付，直接修改订单状态
                     orderList = ChangeOrderStatus(orderId, userId, pageIndex, pageSize, status);
+                    isSuccess = true;
                 }
                
             }

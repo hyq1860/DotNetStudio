@@ -11,10 +11,24 @@ namespace DotNet.CloudFarm.Domain.Impl.WeiXin
     {
         private IWeiXinMessageDataAccess messageDataAccess;
 
+        private IWeixinPayLogDataAccess payLogDataAccess;
+
         public WeiXinService(IWeiXinMessageDataAccess access)
         {
             this.messageDataAccess = access;
         }
+
+        public WeiXinService(IWeixinPayLogDataAccess pAccess)
+        {
+            this.payLogDataAccess = pAccess;
+        }
+
+        public WeiXinService(IWeiXinMessageDataAccess messageAccess,IWeixinPayLogDataAccess payAccess)
+        {
+            this.messageDataAccess = messageAccess;
+            this.payLogDataAccess = payAccess;
+        }
+
         /// <summary>
         /// 添加自动回复关键字数据
         /// </summary>
@@ -71,6 +85,12 @@ namespace DotNet.CloudFarm.Domain.Impl.WeiXin
         public WeixinAutoReplyMessageModel AutoReplyMessageGetByKeyword(string keyword)
         {
             return messageDataAccess.GetAutoReplyMessageByKeyword(keyword);
+        }
+
+
+        public int InsertWeixinPayLog(WeixinPayLog weixinPayLog)
+        {
+            return payLogDataAccess.Insert(weixinPayLog);
         }
     }
 }

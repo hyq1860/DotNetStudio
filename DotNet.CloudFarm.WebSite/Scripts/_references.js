@@ -54,3 +54,7 @@
 /// <reference path="jquery.scrollpagination.js" />
 /// <reference path="wxyangke.js" />
 /// <reference path="jquery.cookie.js" />
+/// <reference path="fullpage.min.js" />
+/// <reference path="jquery-1.10.2.min.js" />
+/// <reference path="scrollreveal.min.js" />
+/// <reference path="slider.js" />

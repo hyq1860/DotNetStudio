@@ -49,5 +49,12 @@ namespace DotNet.CloudFarm.Domain.Contract.WeiXin
         /// <param name="keyword"></param>
         /// <returns></returns>
         WeixinAutoReplyMessageModel AutoReplyMessageGetByKeyword(string keyword);
+
+        /// <summary>
+        /// 插入微信支付日志
+        /// </summary>
+        /// <param name="weixinPayLog"></param>
+        /// <returns></returns>
+        int InsertWeixinPayLog(WeixinPayLog weixinPayLog);
     }
 }

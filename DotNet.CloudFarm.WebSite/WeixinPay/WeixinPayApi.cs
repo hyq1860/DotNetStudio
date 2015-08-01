@@ -1,4 +1,7 @@
-﻿using log4net;
+﻿using DotNet.CloudFarm.Domain.DTO.WeiXin;
+using DotNet.CloudFarm.Domain.Impl.WeiXin;
+using DotNet.CloudFarm.Domain.Model.WeiXin;
+using log4net;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.TenPayLibV3;
 using System;
@@ -70,8 +73,9 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
         /// <param name="amount">金额</param>
         /// <param name="desc">付款描述信息</param>
         /// <returns></returns>
-        public static string QYPay(string openId,long orderId,decimal amount,string desc)
+        private static string QYPay(string openId,long orderId,decimal amount,string desc)
         {
+            var payStatus = 1;
             //创建支付应答对象
             RequestHandler packageReqHandler = new RequestHandler(null);
             var nonceStr = TenPayV3Util.GetNoncestr();
@@ -85,7 +89,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
             packageReqHandler.SetParameter("check_name", "NO_CHECK");//不校验用户姓名
             packageReqHandler.SetParameter("desc", desc);
             packageReqHandler.SetParameter("amount", Convert.ToInt32(amount * 100).ToString());
-            packageReqHandler.SetParameter("spbill_create_ip", IP );//TODO:替换成可配置文件
+            packageReqHandler.SetParameter("spbill_create_ip", IP );
             string sign = packageReqHandler.CreateMd5Sign("key", PayKey);
             packageReqHandler.SetParameter("sign", sign);
 
@@ -93,22 +97,97 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
 
             //证书相关
             var cert = new X509Certificate2(SSLCERT_PATH, SSLCERT_PASSWORD);
-
+            var access = new WeixinPayLogDataAccess();
+            var weixinService = new WeiXinService(access);
             try
             {
-                //调用统一订单接口
+                //调用企业支付接口
                 var result = TenPayV3.QYPay(data, cert);
                 logger.Info("企业支付返回信息："+result);
                 var unifiedorderRes = XDocument.Parse(result);
                 string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;
+                if(return_code=="SUCCESS")
+                {
+                    payStatus = 1;
+                }
+                else
+                {
+                    payStatus = 0;
+                }
+              
+                var paylog = new WeixinPayLog() {
+                    OrderId = orderId,
+                    WxOpenId=openId,
+                    Description = desc,
+                    Amount = amount,
+                    Status = payStatus,
+                    CreateTime = DateTime.Now
+                };
+                weixinService.InsertWeixinPayLog(paylog);
                 return return_code;
             }
             catch (Exception e)
             {
                 logger.Error(e);
+                payStatus = 0;
+                var paylog = new WeixinPayLog()
+                {
+                    OrderId = orderId,
+                    WxOpenId = openId,
+                    Description = desc,
+                    Amount = amount,
+                    Status = payStatus,
+                    CreateTime = DateTime.Now
+                };
+                weixinService.InsertWeixinPayLog(paylog);
                 return "ERROR";
             }
         }
+
+        /// <summary>
+        /// 企业支付拆分
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="amount"></param>
+        /// <param name="desc"></param>
+        /// <returns></returns>
+        public static bool QYPaySplit(string openId,long orderId, decimal amount,string desc,decimal payUpperLimit)
+        {
+            var result = "";
+            var isAllSuccess = true;
+            var count = 1;
+            while (amount > 0M)
+            {
+                if (amount<=payUpperLimit)
+                {
+                    if (count>1)
+                    {
+                        desc = string.Format("{0}第{1}笔", desc, count);
+                    }
+                    result= QYPay(openId, orderId, amount, desc);
+                    if (result=="ERROR")
+                    {
+                        isAllSuccess = false;
+                    }
+                    amount = 0M;
+                }
+                else
+                {
+                    desc = string.Format("{0}第{1}笔", desc, count);
+                    result = QYPay(openId, orderId, payUpperLimit, desc);
+                    if (result == "ERROR")
+                    {
+                        isAllSuccess = false;
+                    }
+                    amount = amount - payUpperLimit;
+                }
+
+                count++;
+            }
+            return isAllSuccess;
+        }
+
 
         /// <summary>
         /// 微信支付接口

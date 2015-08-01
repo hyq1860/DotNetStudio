@@ -196,26 +196,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 name = "了解更多"
             });
             btnGroup.button.Add(subButton);
-            var subButton1 = new SubButton()
+            var clickButton = new SingleViewButton()
             {
-                name = "购买页面"
+                url = "http://yk.kerchinsheep.com/",
+                name = "羊羊得益"
             };
-            subButton1.sub_button.Add(new SingleViewButton()
-            {
-                url = "http://yk.kerchinsheep.com/home/default",
-                name = "购买"
-            });
-            subButton1.sub_button.Add(new SingleViewButton()
-            {
-                url = "http://yk.kerchinsheep.com/home/wallet",
-                name = "钱包"
-            });
-            subButton1.sub_button.Add(new SingleViewButton()
-            {
-                url = "http://yk.kerchinsheep.com/home/MyCenter",
-                name = "我的"
-            });
-            btnGroup.button.Add(subButton1);
+            btnGroup.button.Add(clickButton);
             var result = CommonApi.CreateMenu(accesstoken, btnGroup);
             return Json(result,JsonRequestBehavior.AllowGet);
         }

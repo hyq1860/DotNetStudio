@@ -25,7 +25,8 @@
                     <div class="order_numbox clearfix">
                         <div class="order_num">
                             <div class="order_num_l">订购数量</div>
-                            <div class="order_num_r"><span class="span1" data-bind="click:$parent.ReduceCount">-</span><input type="number" class="center" min="1" placeholder="" data-bind="value:$parent.Count,attr:{max:ExistCount}"><span class="span2" data-bind="click:$parent.AddCount">+</span></div>
+                            <div class="order_num_r clearfix"><span class="span1" data-bind="click:$parent.ReduceCount">-</span><input type="number" class="center" min="1" placeholder="" data-bind="value:$parent.Count,attr:{max:ExistCount}"><span class="span2" data-bind="click:$parent.AddCount">+</span></div>
+                             <!--点击加减数量以后增加一个背景为灰色的class名称span2_visited-->
                         </div>
                         <p class="p1 clearfix"><span class="span1">合计</span><span class="span2"><!--ko text:$parent.TotalPrice--><!--/ko-->元</span></p>
                     </div>
@@ -103,7 +104,7 @@
             
             console.log(currentCount);
             currentCount++;
-            debugger;
+            //debugger;
             if (currentCount * self.Product.Price() > 50000) {
                 alert("一次最多购买50000元。");
                 return;
@@ -239,6 +240,14 @@
     }
     var confirmOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
     $(function() {
+        $(".order_num_r .span1,.order_num_r .span2").each(function(i){
+            $(this).mousedown(function(){
+                $(this).addClass("span2_visited");
+            }).mouseup(function(){
+                $(this).removeClass("span2_visited");
+
+            });
+        });
 
         if (confirmOrderServiceJson) {
             var orderViewModel = new OrderViewModel();
