@@ -184,10 +184,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             #if DEBUG
             weixinId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM"; ;//
             #endif
-            logger.Info("获取验证码："+mobile+"|"+weixinId);            
+            //logger.Info("获取验证码："+mobile+"|"+weixinId);            
             //通过微信id获取用户id
             var user = UserService.GetUserByWxOpenId(weixinId);
-            logger.Info(JsonHelper.ToJson(user));
+            //logger.Info(JsonHelper.ToJson(user));
             var userid = user.UserId;
             var result = UserService.GetCaptcha(userid, mobile);
 

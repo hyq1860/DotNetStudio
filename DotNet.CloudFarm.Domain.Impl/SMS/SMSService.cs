@@ -49,7 +49,7 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
                 }
                 var tempParamModel = new
                 {
-                    tel = mobile,
+                    tel = "羊客",
                     code = code,
                     lifetime = expireMinute.ToString()
                 };
