@@ -179,6 +179,13 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return jsonResult;
         }
 
+        public ActionResult BackstageLogOff()
+        {
+            AuthenticationManager.SignOut();
+
+            return RedirectToAction("BackstageLogin","Account");
+        }
+
         public JsonResult GetMobileCaptcha(string mobile,string weixinId)
         {
             #if DEBUG
