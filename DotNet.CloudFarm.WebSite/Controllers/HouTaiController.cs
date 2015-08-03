@@ -26,6 +26,7 @@ using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Impl.SMS;
+using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.CloudFarm.WebSite.WeixinPay;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using DotNet.Common.Models;
@@ -36,7 +37,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     /// <summary>
     /// 后台
     /// </summary>
-     [Authorize]
+    [BackstageAuthorize]
     public class HouTaiController : BaseHouTaiController
     {
         [Ninject.Inject]
@@ -62,7 +63,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         [Ninject.Inject]
         public ISMSService SMSService { get; set; }
-        
+
         public ActionResult Index()
         {
             return View();
