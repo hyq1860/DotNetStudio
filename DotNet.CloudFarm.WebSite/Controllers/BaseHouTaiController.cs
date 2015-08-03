@@ -40,7 +40,6 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         public AdminUser Admin {
 
-            //TODO:暂时返回测试用户，开发完再接入登录
             get
             {
                 var adminUser = new AdminUser();

@@ -36,6 +36,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     /// <summary>
     /// 后台
     /// </summary>
+     [Authorize]
     public class HouTaiController : BaseHouTaiController
     {
         [Ninject.Inject]

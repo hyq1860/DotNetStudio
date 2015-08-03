@@ -29,6 +29,7 @@
     </div>
     <!--天气状况结束-->
     <!--羊只认领-->
+    <!--ko if:Products().length>0-->
     <div class="Claim_sheep" id="productlist" data-bind="foreach:Products" style="display: none">
         
         <div class="Claim_sheep1">
@@ -121,6 +122,13 @@
             </div>
         </div>
     </div>
+    <!--/ko-->
+    <!--ko if:Products().length==0-->
+    <div class="Claim_sheep">
+        <p class="please_waiting">认购已结束，敬请期待下期</p>
+    </div>
+    <!--/ko-->
+    
     <!--羊只认领结束-->
 
 </div>
