@@ -40,7 +40,7 @@ namespace DotNet.CloudFarm.Domain.Impl.User
                 //计算出验证码
                 captcha = StringHelper.GetRandomInt(6, DateTime.Now.Millisecond);
                 //写入验证码发送表
-                userDataAccess.InsertUserCaptcha(userId, captcha, DateTime.Now, 0);
+                userDataAccess.InsertUserCaptcha(userId,mobile, captcha, DateTime.Now, 0);
             }
             else
             {
@@ -108,9 +108,9 @@ namespace DotNet.CloudFarm.Domain.Impl.User
              userDataAccess.UpdateMobileByWxOpenId(mobile, wxOpenId);
         }
 
-        public bool UpdateUserCaptchaStatus(int userId)
+        public bool UpdateUserCaptchaStatus(int userId,string mobile)
         {
-            return userDataAccess.UpdateUserCaptchaStatus(userId);
+            return userDataAccess.UpdateUserCaptchaStatus(userId, mobile);
         }
 
         public BackstageLoginUser FindByUserNameAndPassword(string userName, string password)

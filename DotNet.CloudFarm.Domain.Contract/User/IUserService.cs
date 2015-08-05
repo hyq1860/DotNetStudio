@@ -95,8 +95,9 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// 更新验证码的状态
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="mobile"></param>
         /// <returns></returns>
-        bool UpdateUserCaptchaStatus(int userId);
+        bool UpdateUserCaptchaStatus(int userId,string mobile);
 
         /// <summary>
         /// 根据用户名和密码找后台管理员model

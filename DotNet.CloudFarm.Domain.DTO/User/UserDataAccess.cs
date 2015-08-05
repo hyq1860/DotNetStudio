@@ -179,11 +179,12 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             }
         }
 
-        public bool InsertUserCaptcha(int userId, string captcha, DateTime sendTime, int status)
+        public bool InsertUserCaptcha(int userId,string mobile, string captcha, DateTime sendTime, int status)
         {
             using (var cmd = DataCommandManager.GetDataCommand("InsertUserCaptcha"))
             {
                 cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@Mobile", mobile);
                 cmd.SetParameterValue("@Captcha", captcha);
                 cmd.SetParameterValue("@SendTime", sendTime);
                 cmd.SetParameterValue("@Status", status);
@@ -252,17 +253,19 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             using (var cmd = DataCommandManager.GetDataCommand("CheckMobileCaptcha"))
             {
                 cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@Mobile", mobile);
                 cmd.SetParameterValue("@Captcha", captcha);
                 var returnValue = cmd.ExecuteScalar();
                 return returnValue != null && captcha.ToLower() == returnValue.ToString().ToLower();
             }
         }
 
-        public bool UpdateUserCaptchaStatus(int userId)
+        public bool UpdateUserCaptchaStatus(int userId,string mobile)
         {
             using (var cmd = DataCommandManager.GetDataCommand("UpdateUserCaptchaStatus"))
             {
                 cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@Mobile", mobile);
                 return cmd.ExecuteNonQuery()>0;
             }
         }

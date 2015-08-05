@@ -57,14 +57,15 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         int UpdateUserStatus(int userId, int status);
 
         /// <summary>
-        /// 
+        /// 获取验证码
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="mobile"></param>
         /// <param name="captcha"></param>
         /// <param name="sendTime"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        bool InsertUserCaptcha(int userId,string captcha,DateTime sendTime,int status);
+        bool InsertUserCaptcha(int userId,string mobile,string captcha,DateTime sendTime,int status);
 
         /// <summary>
         /// 获取用户是否存在没有使用的验证码
@@ -95,8 +96,9 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// 更新验证码的状态
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="mobile"></param>
         /// <returns></returns>
-        bool UpdateUserCaptchaStatus(int userId);
+        bool UpdateUserCaptchaStatus(int userId, string mobile);
 
         /// <summary>
         /// 根据用户名和密码找后台管理员model

@@ -72,7 +72,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
                 //check验证码
                 var user = UserService.GetUserByWxOpenId(loginUser.WxOpenId);
-                if (user == null)
+                if (user == null||user.UserId==0)
                 {
                     //创建用户
                     var openId = loginUser.WxOpenId;
@@ -104,7 +104,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 if (UserService.CheckMobileCaptcha(user.UserId, loginUser.Mobile, loginUser.Captcha))
                 {
                     //更新验证码状态
-                    UserService.UpdateUserCaptchaStatus(user.UserId);
+                    UserService.UpdateUserCaptchaStatus(user.UserId, loginUser.Mobile);
                     //logger.Info(1);
 
                     //将用户的手机号与weixinid绑定
