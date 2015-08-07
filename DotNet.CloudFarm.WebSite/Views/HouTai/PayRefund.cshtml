@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "结算确认";
+    Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
+}
+<div id="content" class="span10">
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-align-justify"></i>订单结算页</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>支付流水号</th>
+                            <th>微信OpenId</th>
+                            <th>结算金额</th>
+                            <th>结算描述</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:listViewModel.List()">
+                        <tr>
+                            <td data-bind="text:OrderId"></td>
+                            <td data-bind="text:PayCode"></td>
+                            <td data-bind="text:WxOpenId"></td>
+                            <td data-bind="text:Amount"></td>
+                            <td data-bind="text:Description"></td>
+                            <td>
+                                <!-- ko if: Status()==0 -->
+                                未结算
+                                <!-- /ko -->
+                                <!-- ko if: Status()==1 -->
+                                已结算
+                                <!-- /ko -->
+                            </td>
+                            <td data-bind="text:CreateTime"></td>
+                            <td>
+                                <!-- ko if: Status()==0 -->
+                                <a href="javascript:void(0);" class="btn btn-success" data-bind="click:ConfirmOrderPayReturn"><i class="icon-edit icon-white"></i>确认结算</a>
+                                <!-- /ko -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div><!--/span-->
+
+    </div>
+</div>
+<div class="modal hide fade" id="myAlertDialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>提示</h3>
+    </div>
+    <div class="modal-body">
+        <p id="confirmText">确定要结算该订单吗？</p>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" id="confirmBtn" class="btn btn-primary">确定</a>
+        <a href="#" class="btn" id="cancelBtn" data-dismiss="modal">取消</a>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+      
+        var message = "@ViewBag.Msg";
+        var userId=@ViewBag.UserId;
+        if(message!="")
+        {
+            alert(message);
+            location.href="/houtai/orderlist";
+        }
+    function ListViewModel() {
+        var self = this;
+        self.List = ko.observableArray([]);
+        
+    }
+    function PayLogModel() {
+        var self = this;
+        self.Id = ko.observable();
+        self.PayCode = ko.observable();
+        self.OrderId = ko.observable();
+        self.WxOpenId = ko.observable();
+        self.Amount = ko.observable();
+        self.Description = ko.observable();
+        self.Status = ko.observable();
+        self.CreateTime = ko.observable();
+        self.ConfirmOrderPayReturn = function(){
+            var Id = self.Id();
+            $('#myAlertDialog').modal('show');
+            $("#confirmBtn").unbind("click").click(function()
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "/houtai/ConfirmOrderRefund",
+                    data: "id=" + Id +"&userid="+userId,
+                    success: function (data) {
+                        if(data.IsSuccess==false)
+                        {
+                            alert("结算失败，原因："+data.Message);
+                        }
+                        else {
+                            self.Status(1);
+                        }
+                        $('#myAlertDialog').modal('hide');
+                    }
+                });
+            });
+        };
+    }
+    var payloglist = @Html.Raw(@ViewBag.PayLogList);
+        var listViewModel = new ListViewModel();
+        for (var i = 0; i < payloglist.length; i++) {
+            var paylog = new PayLogModel();
+            var item = payloglist[i];
+            paylog.Id(item.Id);
+            paylog.OrderId(item.OrderId);
+            paylog.PayCode(item.OrderId.toString()+item.Id.toString());
+            paylog.WxOpenId(item.WxOpenId);
+            paylog.Amount(item.Amount);
+            paylog.Description(item.Description);
+            paylog.Status(item.Status);
+            paylog.CreateTime(item.CreateTime);
+            listViewModel.List.push(paylog);
+        }   
+        ko.applyBindings(listViewModel);
+
+        
+    </script>
+
+
+}

@@ -69,11 +69,11 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
         /// 企业支付
         /// </summary>
         /// <param name="openId">openId</param>
-        /// <param name="orderId">订单号</param>
+        /// <param name="payCode">支付ID，订单号+支付日志ID</param>
         /// <param name="amount">金额</param>
         /// <param name="desc">付款描述信息</param>
         /// <returns></returns>
-        private static string QYPay(string openId,long orderId,decimal amount,string desc)
+        public static string QYPay(string openId,string payCode,decimal amount,string desc)
         {
             var payStatus = 1;
             //创建支付应答对象
@@ -84,7 +84,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
             packageReqHandler.SetParameter("mch_appid", AppId);
             packageReqHandler.SetParameter("mchid", Mchid);
             packageReqHandler.SetParameter("nonce_str", nonceStr);
-            packageReqHandler.SetParameter("partner_trade_no", orderId.ToString());
+            packageReqHandler.SetParameter("partner_trade_no", payCode);
             packageReqHandler.SetParameter("openid", openId);
             packageReqHandler.SetParameter("check_name", "NO_CHECK");//不校验用户姓名
             packageReqHandler.SetParameter("desc", desc);
@@ -114,32 +114,23 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
                 {
                     payStatus = 0;
                 }
-              
-                var paylog = new WeixinPayLog() {
-                    OrderId = orderId,
-                    WxOpenId=openId,
-                    Description = desc,
-                    Amount = amount,
-                    Status = payStatus,
-                    CreateTime = DateTime.Now
-                };
-                weixinService.InsertWeixinPayLog(paylog);
+            
                 return return_code;
             }
             catch (Exception e)
             {
                 logger.Error(e);
-                payStatus = 0;
-                var paylog = new WeixinPayLog()
-                {
-                    OrderId = orderId,
-                    WxOpenId = openId,
-                    Description = desc,
-                    Amount = amount,
-                    Status = payStatus,
-                    CreateTime = DateTime.Now
-                };
-                weixinService.InsertWeixinPayLog(paylog);
+                //payStatus = 0;
+                //var paylog = new WeixinPayLog()
+                //{
+                //    OrderId = orderId,
+                //    WxOpenId = openId,
+                //    Description = desc,
+                //    Amount = amount,
+                //    Status = payStatus,
+                //    CreateTime = DateTime.Now
+                //};
+                //weixinService.InsertWeixinPayLog(paylog);
                 return "ERROR";
             }
         }
@@ -165,7 +156,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
                     {
                         desc = string.Format("{0}第{1}笔", desc, count);
                     }
-                    result= QYPay(openId, orderId, amount, desc);
+                    result = QYPay(openId, orderId.ToString(), amount, desc);
                     if (result=="ERROR")
                     {
                         isAllSuccess = false;
@@ -175,7 +166,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
                 else
                 {
                     desc = string.Format("{0}第{1}笔", desc, count);
-                    result = QYPay(openId, orderId, payUpperLimit, desc);
+                    result = QYPay(openId, orderId.ToString(), payUpperLimit, desc);
                     if (result == "ERROR")
                     {
                         isAllSuccess = false;

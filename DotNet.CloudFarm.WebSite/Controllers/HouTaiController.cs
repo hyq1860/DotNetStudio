@@ -30,6 +30,7 @@ using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.CloudFarm.WebSite.WeixinPay;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using DotNet.Common.Models;
+using DotNet.Common.Utility;
 
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -40,6 +41,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     [BackstageAuthorize]
     public class HouTaiController : BaseHouTaiController
     {
+        private readonly decimal payUpperLimit = 20000M;//微信支付支持的上限
         [Ninject.Inject]
         public IProductService ProductService { get; set; }
         /// <summary>
@@ -68,6 +70,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             return View();
         }
+
 
         #region 微信菜单
         /// <summary>
@@ -345,15 +348,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             {
                 if (order.PayType==0)
                 {
-                    //TODO:调取微信企业支付接口
-                    var upperLimit = 20000M;//微信支付支持的上限
+                    //调取微信企业支付接口
                     var refundPrincipal = order.Price*order.ProductCount; //购买本金
                     var descPrincipal = string.Format("羊客【{0}】结算本金", product.Name);
-                    var payResult = WeixinPayApi.QYPaySplit(user.WxOpenId,orderId,refundPrincipal,descPrincipal,upperLimit);
+                    var payResult = WeixinPayApi.QYPaySplit(user.WxOpenId,orderId,refundPrincipal,descPrincipal,payUpperLimit);
 
                     var refundBonus = product.Earning * order.ProductCount;
                     var descBonus = string.Format("羊客【{0}】结算收益", product.Name);
-                    var payResultBonus = WeixinPayApi.QYPaySplit(user.WxOpenId, orderId, refundBonus, descBonus, upperLimit);
+                    var payResultBonus = WeixinPayApi.QYPaySplit(user.WxOpenId, orderId, refundBonus, descBonus, payUpperLimit);
 
                     if (payResult  && payResultBonus)
                     {
@@ -394,6 +396,166 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                  
             return Json(result, JsonRequestBehavior.AllowGet);
 
+        }
+
+        /// <summary>
+        /// 结算详情页
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public ActionResult PayRefund(long orderId,int userId)
+        {
+            var weixinPayLogList = WeiXinService.GetPayLogListByOrderId(orderId);
+            ViewBag.Msg = "";
+            if (weixinPayLogList==null || weixinPayLogList.Count==0)
+            {
+                var msg = "";
+                weixinPayLogList = createWeixinPayLog(orderId,userId, out msg);
+                if (weixinPayLogList==null)
+                {
+                    ViewBag.Msg = msg;
+                    weixinPayLogList = new List<WeixinPayLog>();
+                }
+            }
+            ViewBag.PayLogList = JsonHelper.ToJson(weixinPayLogList);
+            ViewBag.UserId = userId;
+            return View();
+        }
+
+        /// <summary>
+        /// 确认结算AJAX
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult ConfirmOrderRefund(int id,int userId)
+        {
+            var success= true;
+            var msg ="";
+            var paylog = WeiXinService.GetPayLogById(id);
+            if(paylog.Id>0)
+            {
+                //企业支付
+                var payCode = paylog.OrderId.ToString() + paylog.Id.ToString();
+                var payResult = WeixinPayApi.QYPay(paylog.WxOpenId, payCode, paylog.Amount, paylog.Description);
+                if (payResult=="SUCCESS")
+                {
+                    success = true;
+                    //更新paylog状态
+                    WeiXinService.WeixinPayLogUpdateStatus(id,1);
+                    //确认是否都处于结算完成状态
+                   var hasUnRefund =  WeiXinService.WeixinPayLogCheckStatus(paylog.OrderId, 0);//返回是否还有状态为0的数据
+                    //如果没有状态为0的数据,修改订单状态为已完成
+                   if (!hasUnRefund)
+                   {
+                       var orderStatus = OrderStatus.Complete.GetHashCode();
+                       OrderService.UpdateOrderStatus(userId, paylog.OrderId, orderStatus);
+                   }
+
+                }
+                else
+                {
+                    success = false;
+                    msg = "企业支付接口调取失败，请稍后重试";
+                }
+            }
+            else
+            {
+                success = false;
+                msg = "结算记录不存在";
+            }
+            var result = new
+            {
+                IsSuccess = success,
+                Message = msg
+            };
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 根据订单创建paylog
+        /// </summary>
+        /// <returns></returns>
+        private IList<WeixinPayLog> createWeixinPayLog(long orderId,int userId,out string message)
+        {
+            var order = OrderService.GetOrder(userId, orderId);
+            var user = UserService.GetUserByUserId(order.UserId);
+            var product = ProductService.GetProductById(order.ProductId);
+            if (order.Status == OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay) < DateTime.Now)
+            {
+                if (order.PayType == 0)
+                {
+                    var refundPrincipal = order.Price * order.ProductCount; //购买本金
+                    var descPrincipal = string.Format("羊客【{0}】结算本金", product.Name);
+                    var count = 1;
+                    var amount = refundPrincipal;
+                    while (amount > 0M)
+                    {
+                        var desc="";
+                        if (amount <= payUpperLimit)
+                        {
+                            if (count > 1)
+                            {
+                                desc = string.Format("{0}第{1}笔", descPrincipal, count);
+                            }
+                            else
+	                        {
+                                desc = descPrincipal;
+                            }
+                            WeiXinService.InsertWeixinPayLog(new WeixinPayLog()
+                            {
+                                Amount = amount,
+                                Description = desc,
+                                OrderId = order.OrderId,
+                                WxOpenId = user.WxOpenId,
+                                Status = 0,
+                                CreateTime = DateTime.Now
+                            });
+                            amount = 0M;
+                        }
+                        else
+                        {
+                            desc = string.Format("{0}第{1}笔", descPrincipal, count);
+                            WeiXinService.InsertWeixinPayLog(new WeixinPayLog()
+                            {
+                                Amount = payUpperLimit,
+                                Description = desc,
+                                OrderId = order.OrderId,
+                                WxOpenId = user.WxOpenId,
+                                Status = 0,
+                                CreateTime = DateTime.Now
+                            });
+                            amount = amount - payUpperLimit;
+                        }
+                        count++;
+                    }
+
+
+                    var refundBonus = product.Earning * order.ProductCount;
+                    var descBonus = string.Format("羊客【{0}】结算收益", product.Name);
+                    WeiXinService.InsertWeixinPayLog(new WeixinPayLog()
+                    {
+                        Amount = refundBonus,
+                        Description = descBonus,
+                        OrderId = order.OrderId,
+                        WxOpenId = user.WxOpenId,
+                        Status = 0,
+                        CreateTime = DateTime.Now
+                    });
+                    message = "插入成功";
+                    return WeiXinService.GetPayLogListByOrderId(orderId);
+                    
+                }
+                else
+                {
+                    message = "订单为线下支付订单，请直接在订单列表处操作";
+                    return null;
+                }
+            }
+            else
+            {
+                message = "订单状态不是【待确认结算】或订单尚未达到结算期";
+                return null;
+            }
         }
         /// <summary>
         /// 变更订单状态

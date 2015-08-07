@@ -130,7 +130,10 @@
                                     <!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko if: Status()==2 -->
-                                <a href="javascript:void(0);" class="btn btn-success" data-bind="click:ConfirmOrderPayReturn"><i class="icon-edit icon-white"></i>确认结算</a>
+                                <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success"><i class="icon-edit icon-white"></i>确认结算</a>
+                                <!-- /ko -->
+                                <!-- ko if: Status()==10 -->
+                                <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success"><i class="icon-edit icon-white"></i>查看结算流水</a>
                                 <!-- /ko -->
 
                             </td>

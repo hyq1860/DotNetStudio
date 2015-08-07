@@ -589,6 +589,7 @@
     <Content Include="Views\Weixin\Pay.cshtml" />
     <Content Include="Views\Home\Video.cshtml" />
     <Content Include="Views\Account\BackstageLogin.cshtml" />
+    <Content Include="Views\HouTai\PayRefund.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

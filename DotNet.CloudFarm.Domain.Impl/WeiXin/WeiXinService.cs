@@ -92,5 +92,27 @@ namespace DotNet.CloudFarm.Domain.Impl.WeiXin
         {
             return payLogDataAccess.Insert(weixinPayLog);
         }
+
+
+        public IList<WeixinPayLog> GetPayLogListByOrderId(long orderId)
+        {
+            return payLogDataAccess.GetListByOrderId(orderId);
+        }
+
+
+        public WeixinPayLog GetPayLogById(int id)
+        {
+            return payLogDataAccess.GetPayLogById(id);
+        }
+        public bool WeixinPayLogUpdateStatus(int id, int status)
+        {
+            return payLogDataAccess.WeixinPayLogUpdateStatus(id, status);
+        }
+
+
+        public bool WeixinPayLogCheckStatus(long orderId, int status)
+        {
+            return payLogDataAccess.WeixinPayLogCheckStatus(orderId, status);
+        }
     }
 }

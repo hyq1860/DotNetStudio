@@ -102,6 +102,7 @@ namespace DotNet.CloudFarm.WebSite.App_Start
             //微信服务
             kernel.Bind<IWeiXinMessageDataAccess>().To<WeiXinMessageDataAccess>();
             kernel.Bind<IWeiXinService>().To<WeiXinService>();
+            kernel.Bind<IWeixinPayLogDataAccess>().To<WeixinPayLogDataAccess>();
 
             //短信服务
             kernel.Bind<ISMSService>().To<SMSService>();
