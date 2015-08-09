@@ -26,6 +26,8 @@ using System.IO;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
+using Senparc.Weixin.MP.CommonAPIs;
+using Senparc.Weixin.MP.Helpers;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -557,7 +559,19 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult TransferAccount()
         {
-            
+            //获取时间戳
+            var timestamp = JSSDKHelper.GetTimestamp();
+            //获取随机码
+            var nonceStr = JSSDKHelper.GetNoncestr();
+            string ticket = JsApiTicketContainer.TryGetTicket(AppId, AppSecret);
+            JSSDKHelper jsHelper = new JSSDKHelper();
+            //获取签名
+            var signature = jsHelper.GetSignature(ticket, nonceStr, timestamp, Request.Url.AbsoluteUri);
+
+            ViewData["AppId"] = AppId;
+            ViewData["Timestamp"] = timestamp;
+            ViewData["NonceStr"] = nonceStr;
+            ViewData["Signature"] = signature;
             return View();
         }
 

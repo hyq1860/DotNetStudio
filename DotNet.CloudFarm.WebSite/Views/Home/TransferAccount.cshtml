@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "转账";
 }
-
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <div class="sheep_guest">
     <div class="pay_sucess_box">
         <div class="sucess_logo transfer_a_logo"><i class="iconfont"></i></div>
@@ -14,7 +14,7 @@
             <p class="p3">帐  号：<em>110061166018010151268</em></p>
         </div>
     </div>
-    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home")#Order_'+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a></div>
+    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home")#Order_'+OrderId()}">查看订单</a><a id="sharefriendgroup" class="a2">分享给好友</a></div>
 </div>
 <script type="text/javascript">
     function TransferAccountViewModel() {
@@ -23,10 +23,64 @@
         self.OrderId = ko.observable();
     }
 
-    $(function () {
+    $(function() {
         var transferAccountViewModel = new TransferAccountViewModel();
         transferAccountViewModel.OrderId($.QueryString["OrderId"]);
         ko.applyBindings(transferAccountViewModel);
-        
+
+        wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@ViewData["AppId"]', // 必填，公众号的唯一标识
+                timestamp: '@ViewData["Timestamp"]', // 必填，生成签名的时间戳
+                nonceStr: '@ViewData["NonceStr"]', // 必填，生成签名的随机串
+                signature: '@ViewData["Signature"]', // 必填，签名
+                jsApiList: [
+                    'onMenuShareTimeline', // 必填，需要使用的JS接口列表，所有JS接口列表见附录2'checkJsApi',  //判断当前客户端版本是否支持指定JS接口
+                    'onMenuShareTimeline', //分享给好友
+                    'onMenuShareAppMessage', //分享到朋友圈
+                    'onMenuShareQQ', //分享到QQ
+                    'onMenuShareWeibo' //分享到微博
+                ]
+            }
+        );
+        wx.ready(function() {
+            // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+            //document.querySelector('#sharefriendgroup').onclick = function () {
+                wx.onMenuShareTimeline({
+                    title: '我跟一只羊的故事',
+                    link: 'http://yk.kerchinsheep.com',
+                    imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                    trigger: function (res) {
+                        alert('用户点击分享到朋友圈');
+                    },
+                    success: function (res) {
+                        alert('已分享');
+                    },
+                    cancel: function (res) {
+                        alert('已取消');
+                    },
+                    fail: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+            //};
+        });
     });
+
+
+   
+
+    function share() {
+        wx.onMenuShareTimeline({
+            title: '1', // 分享标题
+            link: 'http://yk.kerchinsheep.com', // 分享链接
+            imgUrl: 'http://wx.qlogo.cn/mmopen/ajNVdqHZLLAHqohmbzsmxdUibE9yO5kiad0DHoKDibsmEcKiaLbpEQRwBDBKT2Z3hItI0ibIZraGWlyibxrMlicPBTG1A/96', // 分享图标
+            success: function () {
+                alert('转发成功！');
+            },
+            cancel: function () {
+                alert('转发失败！');
+            }
+        });
+    }
 </script>
