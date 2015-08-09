@@ -72,6 +72,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
                 //check验证码
                 var user = UserService.GetUserByWxOpenId(loginUser.WxOpenId);
+                
                 if (user == null||user.UserId==0)
                 {
                     //创建用户
@@ -97,6 +98,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     else
                     {
                         logger.Error("用户信息insert失败:"+JsonHelper.ToJson(userModel));
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(user.Mobile) && loginUser.Mobile != user.Mobile)
+                    {
+                        jsonResult.Data = new { IsSuccess = false, Msg = "一个微信账号只能绑定一个手机号。" };
+                        return jsonResult;
                     }
                 }
 
