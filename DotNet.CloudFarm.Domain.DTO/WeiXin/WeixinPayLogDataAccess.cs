@@ -127,6 +127,22 @@ namespace DotNet.CloudFarm.Domain.DTO.WeiXin
             return model;
         }
 
-     
+
+        public int WeixinUserInsert(WeixinUser weixinUser)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("WeixinUserInsert"))
+            {
+                cmd.SetParameterValue("@openid", weixinUser.openid);
+                cmd.SetParameterValue("@nickname", weixinUser.nickname);
+                cmd.SetParameterValue("@headimgurl", weixinUser.headimgurl);
+                cmd.SetParameterValue("@createTime", weixinUser.createtime);
+                var result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+                return 0;
+            }
+        }
     }
 }

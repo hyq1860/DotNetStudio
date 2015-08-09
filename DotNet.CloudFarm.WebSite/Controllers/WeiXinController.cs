@@ -26,6 +26,8 @@ using Senparc.Weixin;
 using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.Common.Utility;
+using DotNet.CloudFarm.Domain.Model.WeiXin;
+using DotNet.CloudFarm.Domain.Contract.WeiXin;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -67,6 +69,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [Ninject.Inject]
         public IOrderService OrderService { get; set; }
 
+        [Ninject.Inject]
+        public IWeiXinService WeixinService { get; set; }
 
 
         /// <summary>
@@ -205,6 +209,60 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var result = CommonApi.CreateMenu(accesstoken, btnGroup);
             return Json(result,JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 测试获取所有关注用户
+        /// </summary>
+        /// <returns></returns>
+        //public ContentResult GetAllUser()
+        //{
+        //    try
+        //    {
+        //        var appid = "wxe9fb1463b624aa89";
+        //        var appsecret = "7e0715ade8eaac0f533a6f2d67a7b846 ";
+        //        var nextId = "";
+        //        var accesstoken = AccessTokenContainer.TryGetToken(appid, appsecret);
+
+        //        var openidResultJson = Senparc.Weixin.MP.AdvancedAPIs.User.UserApi.Get(accesstoken, nextId);
+        //        nextId = openidResultJson.next_openid;
+        //        foreach (var openId in openidResultJson.data.openid)
+        //        {
+        //            var open = Senparc.Weixin.MP.AdvancedAPIs.User.UserApi.Info(accesstoken, openId);
+        //            var weixinuser = new WeixinUser()
+        //            {
+        //                openid = open.openid,
+        //                headimgurl = open.headimgurl,
+        //                nickname = open.nickname,
+        //                createtime = DateTime.Now
+        //            };
+        //            WeixinService.WeixinUserInsert(weixinuser);
+        //        }
+
+        //        while (string.IsNullOrEmpty(nextId))
+        //        {
+        //            openidResultJson = Senparc.Weixin.MP.AdvancedAPIs.User.UserApi.Get(accesstoken, nextId);
+        //            nextId = openidResultJson.next_openid;
+        //            foreach (var openId in openidResultJson.data.openid)
+        //            {
+        //                var open = Senparc.Weixin.MP.AdvancedAPIs.User.UserApi.Info(accesstoken, openId);
+        //                var weixinuser = new WeixinUser()
+        //                {
+        //                    openid = open.openid,
+        //                    headimgurl = open.headimgurl,
+        //                    nickname = open.nickname
+        //                };
+        //                WeixinService.WeixinUserInsert(weixinuser);
+
+        //            }
+        //        }
+        //        return Content("done");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        logger.Error(e);
+        //        return Content("error");
+        //    }
+           
+        //}
 
 
         /// <summary>

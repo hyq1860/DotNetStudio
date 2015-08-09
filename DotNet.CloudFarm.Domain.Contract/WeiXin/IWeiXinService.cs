@@ -85,5 +85,13 @@ namespace DotNet.CloudFarm.Domain.Contract.WeiXin
         /// <param name="status">状态</param>
         /// <returns>true:该状态下还存在数据,false:该状态下不存在数据</returns>
         bool WeixinPayLogCheckStatus(long orderId, int status);
+
+        /// <summary>
+        /// 插入微信用户
+        /// </summary>
+        /// <param name="weixinUser"></param>
+        /// <returns></returns>
+        int WeixinUserInsert(WeixinUser weixinUser);
+
     }
 }

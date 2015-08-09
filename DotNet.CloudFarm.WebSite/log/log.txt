@@ -624,3 +624,11 @@ INFO  2015-08-06 17:08:28,959 [WeixnPayApi] 企业支付返回信息：<xml>
 <payment_no><![CDATA[1000018301201508060557907808]]></payment_no>
 <payment_time><![CDATA[2015-08-06 17:08:42]]></payment_time>
 </xml>
+ERROR 2015-08-08 22:35:31,196 [WeiXinController] System.Data.SqlTypes.SqlTypeException: SqlDateTime 溢出。必须介于 1/1/1753 12:00:00 AM 和 12/31/9999 11:59:59 PM 之间。
+   在 DotNet.Data.DataCommand.LogExecutionError(Exception ex) 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.Data\DataCommand.cs:行号 836
+   在 DotNet.Data.DataCommand.ExecuteScalar() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.Data\DataCommand.cs:行号 491
+   在 DotNet.CloudFarm.Domain.DTO.WeiXin.WeixinPayLogDataAccess.WeixinUserInsert(WeixinUser weixinUser) 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.Domain.DTO\WeiXin\WeixinPayLogDataAccess.cs:行号 139
+   在 DotNet.CloudFarm.Domain.Impl.WeiXin.WeiXinService.WeixinUserInsert(WeixinUser weixinUser) 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.Domain.Impl\WeiXin\WeiXinService.cs:行号 121
+   在 DotNet.CloudFarm.WebSite.Controllers.WeixinController.GetAllUser() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\WeiXinController.cs:行号 233
+ERROR 2015-08-08 22:39:41,185 [WeiXinController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.WeixinController.GetAllUser() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\WeiXinController.cs:行号 241

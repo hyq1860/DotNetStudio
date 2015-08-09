@@ -47,5 +47,12 @@ namespace DotNet.CloudFarm.Domain.Contract.WeiXin
         /// <param name="status"></param>
         /// <returns></returns>
         bool WeixinPayLogUpdateStatus(int id, int status);
+
+        /// <summary>
+        /// 插入微信用户信息
+        /// </summary>
+        /// <param name="weixinUser"></param>
+        /// <returns></returns>
+        int WeixinUserInsert(WeixinUser weixinUser);
     }
 }

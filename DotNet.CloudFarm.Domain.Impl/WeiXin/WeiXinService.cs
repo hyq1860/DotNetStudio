@@ -114,5 +114,12 @@ namespace DotNet.CloudFarm.Domain.Impl.WeiXin
         {
             return payLogDataAccess.WeixinPayLogCheckStatus(orderId, status);
         }
+
+
+        public int WeixinUserInsert(WeixinUser weixinUser)
+        {
+            return payLogDataAccess.WeixinUserInsert(weixinUser);
+        }
+
     }
 }
