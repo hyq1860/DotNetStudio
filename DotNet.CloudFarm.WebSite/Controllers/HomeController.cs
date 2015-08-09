@@ -23,6 +23,7 @@ using Microsoft.AspNet.Identity;
 using Senparc.Weixin.MP.TenPayLibV3;
 using System.Net;
 using System.IO;
+using System.Net.Http;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
@@ -595,21 +596,23 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public JsonResult GetWeather()
         {
-            GetWeatherByHttp();
-            return Json(1,JsonRequestBehavior.AllowGet);
+            return Json(GetWeatherByHttp(), JsonRequestBehavior.AllowGet);
         }
 
         private string GetWeatherByHttp()
         {
-            WebRequest request = WebRequest.Create("http://www.weather.com.cn/weather1d/101080701.shtml");
-            request.Method = "GET";
-            HttpWebResponse httpWebResponse = (HttpWebResponse)request.GetResponse();
-             string responseContent ="";
-            using(StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream()))
-            {
-                responseContent = streamReader.ReadToEnd();
-            }
-            return responseContent;
+            //WebRequest request = WebRequest.Create("http://www.weather.com.cn/adat/cityinfo/101080701.html");
+            //request.Method = "GET";
+            //HttpWebResponse httpWebResponse = (HttpWebResponse)request.GetResponse();
+            // string responseContent ="";
+            //using(StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream()))
+            //{
+            //    responseContent = streamReader.ReadToEnd();
+            //}
+            //return responseContent;
+            HttpClient client=new HttpClient();
+            var task= client.GetStringAsync("http://www.weather.com.cn/adat/cityinfo/101080701.html");
+            return task.Result;
         }
     }
 }
