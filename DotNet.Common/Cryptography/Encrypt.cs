@@ -153,8 +153,16 @@ namespace DotNet.Common
         /// <returns></returns>
         public static string Base64Decrypt(string str) 
         {
-            byte[] decbuff = Convert.FromBase64String(str);
-            return Encoding.UTF8.GetString(decbuff);
+            try
+            {
+                byte[] decbuff = Convert.FromBase64String(str);
+                return Encoding.UTF8.GetString(decbuff);
+            }
+            catch (Exception ex)
+            {
+                return str;
+            }
+            
         } 
         #endregion
 

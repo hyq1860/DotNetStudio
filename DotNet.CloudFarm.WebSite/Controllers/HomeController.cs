@@ -276,7 +276,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                                 ViewBag.Package = package;
                                 ViewBag.AppId = AppId;
                                 ViewBag.OrderId = order.OrderId;
-
+                                ViewBag.Uid =
+                                    DotNet.Common.CryptographyHelper.Base64Encrypt(this.UserInfo.UserId.ToString());
                                 OrderService.InsertOrderPay(new OrderPayModel()
                                 {
                                     PayId = pre_id,
@@ -573,6 +574,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             ViewData["Timestamp"] = timestamp;
             ViewData["NonceStr"] = nonceStr;
             ViewData["Signature"] = signature;
+
+            ViewBag.uid = DotNet.Common.CryptographyHelper.Base64Encrypt(this.UserInfo.UserId.ToString());
             return View();
         }
 
@@ -613,6 +616,57 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             HttpClient client=new HttpClient();
             var task= client.GetStringAsync("http://www.weather.com.cn/adat/cityinfo/101080701.html");
             return task.Result;
+        }
+
+        [AllowAnonymous]
+        public ActionResult Share(string uid)
+        {
+            string strUserId = DotNet.Common.CryptographyHelper.Base64Decrypt(uid);
+            if (strUserId == uid)
+            {
+
+            }
+            else
+            {
+                var userInfo = UserService.GetUserByUserId(int.Parse(strUserId));
+                if (userInfo != null)
+                {
+                    var orderStatisModel = OrderService.GetOrderStatisModel();
+                    var info = orderStatisModel.UserOrderList.FirstOrDefault(s => s.UserId == userInfo.UserId);
+                    if (info != null)
+                    {
+                        var walletViewModel = OrderService.GetWalletViewModel(userInfo.UserId, new List<int>() { 1, 2, 10 });
+                        ViewBag.HeadUrl = userInfo.WxHeadUrl;
+                        ViewBag.UserName = userInfo.WxNickName;
+                        var rankingCssClass = "";
+                        if (info.RowId == 1)
+                        {
+                            rankingCssClass = "gold";
+                        }
+                        else if (info.RowId == 2)
+                        {
+                            rankingCssClass = "silver";
+                        }
+                        else
+                        {
+                            rankingCssClass = "copper";
+                        }
+
+                        ViewBag.RankingCssClass = rankingCssClass;
+                        ViewBag.SheepCount = OrderService.GetProductCountWithStatus(userInfo.UserId,
+                            new List<int>() {1, 2});
+                        ViewBag.Percentage = (((decimal)info.RowId / (decimal)orderStatisModel.TotalUserCount) * 100).ToString("F2");
+                        ViewBag.YearEarningRate = walletViewModel.YearEarningRate;
+                    }
+                    else
+                    {
+                        ViewBag.Earning = 0;
+                        ViewBag.YearEarningRate = "0";
+                    }
+                }
+            }
+            
+            return View();
         }
     }
 }

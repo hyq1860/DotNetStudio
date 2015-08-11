@@ -24,7 +24,6 @@ using Senparc.Weixin.MP.CommonAPIs;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
-
     public class AccountController : BaseController
     {
         /// <summary>

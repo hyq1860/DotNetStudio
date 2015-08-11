@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Share";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="sheep_guest share2">
+    <div class="medal_list">
+        <div class="medal_leader">
+            <!--<p class="p1 gold"><img src="images/tx.png"/></p>--><!--金牌羊客-->
+            <!--<p class="p1 silver"><img src="images/tx.png"/></p>--><!--银牌羊客-->
+            <p class="p1 @ViewBag.RankingCssClass"><img src="@ViewBag.HeadUrl" /></p><!--铜牌羊客-->
+            <p class="p2">@ViewBag.UserName</p>
+            <p class="p3">@ViewBag.SheepCount</p>
+            <p class="p3 p4">@ViewBag.Percentage %</p>
+            <p class="p3 p5">@ViewBag.YearEarningRate %</p>
+        </div>
+        <div class="scan_for_weed clearfix">
+            <div class="scan_for_weed_l">
+                长按二维码自动识别
+                关注羊客 即刻养羊
+            </div>
+            <div class="scan_for_weed_r">
+                <a href="weixin://addfriend/kerchinsheep"><img src="/images/ewm.jpg"></a>
+                
+            </div>
+        </div>
+    </div>
+</div>

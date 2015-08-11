@@ -2,7 +2,7 @@
     var controller=ViewContext.RouteData.Values["controller"].ToString();
     var action=ViewContext.RouteData.Values["action"].ToString();
     bool isShowTab = true;
-    if (controller.ToLower() == "account" && action.ToLower() == "login")
+    if ((controller.ToLower() == "account" && action.ToLower() == "login") || (controller.ToLower() == "home" && action.ToLower() == "share"))
     {
         isShowTab = false;
     }
