@@ -315,6 +315,7 @@
     <Content Include="images\bg8.jpg" />
     <Content Include="images\bg9.jpg" />
     <Content Include="images\dot.png" />
+    <Content Include="images\down_arrow2.png" />
     <Content Include="images\ewm_03.png" />
     <Content Include="images\ewm_05.png" />
     <Content Include="images\houtai\logo_20.jpg" />
@@ -438,11 +439,13 @@
     <Content Include="images\houtai\ui-icons_cd0a0a_256x240.png" />
     <Content Include="images\houtai\uploadify-cancel.png" />
     <Content Include="images\last_look.png" />
+    <Content Include="images\last_look_img.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo.png" />
     <Content Include="images\medal.png" />
     <Content Include="images\no_pic.jpg" />
     <Content Include="images\no_read.png" />
+    <Content Include="images\no_sheep.png" />
     <Content Include="images\opacity_bg.png" />
     <Content Include="images\point_01.png" />
     <Content Include="images\point_04.png" />
