@@ -304,13 +304,13 @@ a,a:hover{ text-decoration:none;}
 .sheep_guest_share{ width:100%; background:url(../images/share_bg.png) center top no-repeat #3bb36f; margin-bottom:8rem;}
 .haved_reed{ width:80%; height:auto; margin:0rem 10%; padding:2.5rem 0rem;}
 .haved_reed img { width:100%; height:auto;}
-.medal_list{ padding-top:5rem; width:94%; margin:8rem 3% 0rem; background:#d9f1e2; border-radius:0.5rem; padding-bottom:2.5rem;}
+.medal_list{ margin-top:59%;}
 .medal_leader .p1{ width:6rem; height:7rem; background:url(../images/medal.png) no-repeat; background-size:14.4rem 15rem; margin:-8rem auto 0rem; background-position:0rem 0rem;}
 .medal_leader .gold{background-position:0rem 0rem;}
 .medal_leader .silver{background-position:-7.1rem 0rem;}
 .medal_leader .copper{background-position:0rem -7rem;}
 .medal_leader .p1 img{ width:5.6rem; height:5.4rem; border-radius:50%;}
-.medal_leader .p2{ width:100%; line-height:2rem; text-align:center; font-size:1.6rem; color:#006954;}
+.medal_leader .p2{ width:100%; line-height:2rem; text-align:center; font-size:1.6rem; color:#333;}
 .who_say{ width:90%; margin:1.5rem 5%; position:relative;}
 .who_say .p1{ color:#006954; font-size:1.4rem; padding:1rem; line-height:2rem; background:#fff; border:1px solid #f6b23c;}
 .who_say .p1 em{ color:#ee4056; font-style:italic; margin:0rem 0.5rem;}
@@ -352,8 +352,8 @@ body { *cursor: default;overflow: hidden; -webkit-overflow-scrolling: touch;}
 .current { display: block; z-index: 1;}
 .slide { display: block; z-index: 2;}
 .swipe { display: block; z-index: 3; transition-duration: 0ms !important; -webkit-transition-duration: 0ms !important;}
-.video_playbox{ width:100%; height:13rem;}
-.cam_list li a{ width:100%; display:block; height:13rem; margin-top:1.5rem; background:url(../images/last_look.png) no-repeat;background-size: 100% 13rem;}
+.video_playbox{ width:100%; height:13rem;margin-top:1.5rem; background:url(../images/last_look.png) no-repeat;background-size: 100% 13rem;}
+.cam_list li a{ display:block;}
 /*引导页*/
 .pageContain{ max-width:640px; min-width:320px; margin:0px auto; font-family:"微软雅黑"}
 .guide1{ width:100%; height:100%; background:url(../images/bg5.jpg) no-repeat; background-size:100% 100%;padding-top:6rem;}
@@ -889,3 +889,25 @@ body { *cursor: default;overflow: hidden; -webkit-overflow-scrolling: touch;}
 	 @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){
 	.guide2 .p1 img{ width:90%; margin:0rem 5%;}
 			} 
+		
+/*分享页面改版样式*/			
+.medal_list {margin-top: 17.7rem;}
+.share2{width: 100%;height:640px;background:url(../images/share_bg.jpg) no-repeat; background-size: 100% 100%;position:absolute;}
+.medal_leader .p3{ width:100%; text-align:center; font-size:2rem; color:#ff5d74; text-align:center; margin:0.5rem 0rem 0rem 0rem;}
+.medal_leader .p4{ width:100%; text-align:center; font-size:1.8rem; color:#ff5d74; text-align:center;  margin:1.7rem 0rem 0rem 0rem;}
+.medal_leader .p5{ color:#ffe100;font-size:1.8rem; font-weight:bold; text-align:center;  margin:1.3rem 0rem 0rem 0rem;}
+.scan_for_weed{ margin-top:10rem;}
+.scan_for_weed_l{ float:left; width:45%; margin:3rem 0rem 0rem 10%; font-size:1.6rem; color:#fff;}
+.scan_for_weed_r{ float:left; width:30%; margin-left:2%;}
+.scan_for_weed_r img{ display:block; width:100%; height:auto;}
+@media screen and (max-width:320px){.medal_leader .p4{ width:100%; text-align:center; font-size:1.6rem;margin:1.6rem 0rem 0rem 0rem;}.medal_leader .p5{ color:#ffe100;font-size:1.6rem; margin:1.6rem 0rem 0rem 0rem; text-align:center; }}
+/* iphone6 plus */
+@media (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) {
+   .share2{width: 100%;height:100%;background:url(../images/share_bg.jpg) no-repeat; background-size: 100% 100%;position:absolute;}
+   .medal_list {margin-top: 20.5rem;}
+   .medal_leader .p3{ margin:0.8rem 0rem 0rem 0rem; text-align:center; }
+   .medal_leader .p4{ margin:2rem 0rem 0rem 0rem;text-align:center;}
+   .medal_leader .p5{ margin:2.2rem 0rem 0rem 0rem;text-align:center;}
+   .scan_for_weed{ margin-top:12rem;}
+}
+			
