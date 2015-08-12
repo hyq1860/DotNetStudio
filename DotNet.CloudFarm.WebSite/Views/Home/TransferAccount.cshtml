@@ -6,25 +6,36 @@
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <div class="sheep_guest">
     <div class="pay_sucess_box">
-        <div class="sucess_logo transfer_a_logo"><i class="iconfont"></i></div>
-        <p class="p1" style="text-align:left; margin-left:3%;">银行在线转账正在申请开通中，抱歉给您带来不便！银行汇款信息如下：</p>
+        <div class="sucess_logo transfer_a_logo"><i class="iconfont"></i>
+        </div>
+        <p class="p1" style="text-align: left; margin-left: 3%;">银行在线转账正在申请开通中，抱歉给您带来不便！银行汇款信息如下：</p>
         <div class="sucess_content">
-            <p class="p2"><em>科羊云牧（北京）网络有限公司</em></p>
-            <p class="p2">开户行：<em>交通银行股份有限公司北京东区支行</em></p>
-            <p class="p3">帐  号：<em>110061166018010151268</em></p>
+            <p class="p2"><em>科羊云牧（北京）网络有限公司</em>
+            </p>
+            <p class="p2">开户行：<em>交通银行股份有限公司北京东区支行</em>
+            </p>
+            <p class="p3">帐 号：<em>110061166018010151268</em>
+            </p>
         </div>
     </div>
     <div class="search_order clearfix">
         <a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home")#Order_'+OrderId()}">查看订单</a>
-        <a id="sharefriendgroup" class="a2">分享给好友</a>
-        <a href="@Url.Action("Share", "Home", new { uid = ViewBag.uid })">点我分享</a>
+        <a id="sharefriendgroup" data-bind="click:Share" class="a2">分享给好友</a>
+        @*<a href="@Url.Action("Share", "Home", new {uid = ViewBag.uid})">点我分享</a>*@
     </div>
 </div>
+<div class="share_to_opacity" id="share_to_opacity" style="display: none"></div>
+<div class="share_to_box" id="share_to_box" style="display: none"><img src="/images/share.png"></div>
 <script type="text/javascript">
     function TransferAccountViewModel() {
         var self = this;
 
         self.OrderId = ko.observable();
+
+        self.Share=function() {
+            $("#share_to_opacity").show();
+            $("#share_to_box").show();
+        }
     }
 
     $(function () {
@@ -33,7 +44,7 @@
         ko.applyBindings(transferAccountViewModel);
 
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: '@ViewData["AppId"]', // 必填，公众号的唯一标识
             timestamp: '@ViewData["Timestamp"]', // 必填，生成签名的时间戳
             nonceStr: '@ViewData["NonceStr"]', // 必填，生成签名的随机串
@@ -55,16 +66,16 @@
                     link: 'http://yk.kerchinsheep.com/home/share?uid=@ViewBag.uid',
                     imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
                     trigger: function (res) {
-                        alert('用户点击分享到朋友圈');
+                        //alert('用户点击分享到朋友圈');
                     },
                     success: function (res) {
-                        alert('已分享');
+                        //alert('已分享');
                     },
                     cancel: function (res) {
-                        alert('已取消');
+                        //alert('已取消');
                     },
                     fail: function (res) {
-                        alert(JSON.stringify(res));
+                        //alert(JSON.stringify(res));
                     }
                 });
             //};

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "支付提示";
 }
-
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <div class="sheep_guest">
     <div class="pay_sucess_box">
         <div class="sucess_logo"><i class="iconfont"></i>
@@ -18,11 +18,11 @@
             </p>
         </div>
     </div>
-    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home", new {tab = 3})/#Order_'+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a>
+    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home", new {tab = 3})/#Order_'+OrderId()}">查看订单</a><a data-bind="click:Share" href="#" class="a2">分享给好友</a>
     </div>
 </div>
-<div class="share_to_opacity"></div>
-<div class="share_to_box"><img src="/images/share.png"></div>
+<div class="share_to_opacity" id="share_to_opacity" style="display: none"></div>
+<div class="share_to_box" id="share_to_box" style="display: none"><img src="/images/share.png"></div>
 <script type="text/javascript">
     var payTipServiceJson=@Html.Raw(JsonHelper.ToJson(Model??new PayTipViewModel()));
 
@@ -36,6 +36,11 @@
         self.IsPaySuccess = ko.observable();
 
         self.Message=ko.observable();
+
+        self.Share=function() {
+            $("#share_to_opacity").show();
+            $("#share_to_box").show();
+        }
     }
 
     $(function() {
@@ -52,5 +57,42 @@
         }
 
         ko.applyBindings(payTipViewModel);
+        wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@ViewData["AppId"]', // 必填，公众号的唯一标识
+                timestamp: '@ViewData["Timestamp"]', // 必填，生成签名的时间戳
+                nonceStr: '@ViewData["NonceStr"]', // 必填，生成签名的随机串
+                signature: '@ViewData["Signature"]', // 必填，签名
+                jsApiList: [
+                    'onMenuShareTimeline', // 必填，需要使用的JS接口列表，所有JS接口列表见附录2'checkJsApi',  //判断当前客户端版本是否支持指定JS接口
+                    'onMenuShareTimeline', //分享给好友
+                    'onMenuShareAppMessage', //分享到朋友圈
+                    'onMenuShareQQ', //分享到QQ
+                    'onMenuShareWeibo' //分享到微博
+                ]
+            }
+        );
+        wx.ready(function() {
+            // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+            //document.querySelector('#sharefriendgroup').onclick = function () {
+            wx.onMenuShareTimeline({
+                title: '我跟一只羊的故事',
+                link: 'http://yk.kerchinsheep.com/home/share?uid=@ViewBag.uid',
+                imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                trigger: function (res) {
+                    //alert('用户点击分享到朋友圈');
+                },
+                success: function (res) {
+                    //alert('已分享');
+                },
+                cancel: function (res) {
+                    //alert('已取消');
+                },
+                fail: function (res) {
+                    //alert(JSON.stringify(res));
+                }
+            });
+            //};
+        });
     });
 </script>

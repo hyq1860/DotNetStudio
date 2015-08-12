@@ -57,7 +57,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var homeViewModel = new HomeViewModel
             {
-                Products = ProductService.GetProducts(1, 100, 1),
+                Products = ProductService.GetProducts(1, 100, 1),//.Where(s=>s.CanSale).ToList(),
                 //订单状态为已支付和待结算的羊的数量
                 SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId, new List<int>() { 1, 2 }),
                 IsLogin = this.UserInfo != null && this.UserInfo.UserId > 0
@@ -380,6 +380,22 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             payTipViewModel.PayMoney = orderViewModel.ProductCount*orderViewModel.Price;
             payTipViewModel.IsPaySuccess = orderViewModel.Status == OrderStatus.Paid.GetHashCode();
             payTipViewModel.Message = payTipViewModel.IsPaySuccess ? "支付成功" : "支付失败";
+
+            //获取时间戳
+            var timestamp = JSSDKHelper.GetTimestamp();
+            //获取随机码
+            var nonceStr = JSSDKHelper.GetNoncestr();
+            string ticket = JsApiTicketContainer.TryGetTicket(AppId, AppSecret);
+            JSSDKHelper jsHelper = new JSSDKHelper();
+            //获取签名
+            var signature = jsHelper.GetSignature(ticket, nonceStr, timestamp, Request.Url.AbsoluteUri);
+
+            ViewData["AppId"] = AppId;
+            ViewData["Timestamp"] = timestamp;
+            ViewData["NonceStr"] = nonceStr;
+            ViewData["Signature"] = signature;
+
+            ViewBag.uid = DotNet.Common.CryptographyHelper.Base64Encrypt(this.UserInfo.UserId.ToString());
             return View(payTipViewModel);
         }
 
