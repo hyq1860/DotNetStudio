@@ -25,6 +25,7 @@ using System.Net;
 using System.IO;
 using System.Net.Http;
 using DotNet.CloudFarm.Domain.Model.Message;
+using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
 using Senparc.Weixin.MP.CommonAPIs;
@@ -32,7 +33,7 @@ using Senparc.Weixin.MP.Helpers;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
-    [Authorize]
+    [WebSiteAuthorize]
     public class HomeController : BaseController
     {
         public HomeController(IUserService userService):base(userService)
@@ -54,7 +55,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Default()
         {
-            return View();
+            var homeViewModel = new HomeViewModel
+            {
+                Products = ProductService.GetProducts(1, 100, 1),
+                //订单状态为已支付和待结算的羊的数量
+                SheepCount = OrderService.GetProductCountWithStatus(this.UserInfo.UserId, new List<int>() { 1, 2 }),
+                IsLogin = this.UserInfo != null && this.UserInfo.UserId > 0
+            };
+            return View(homeViewModel);
         }
 
         public ActionResult Index()

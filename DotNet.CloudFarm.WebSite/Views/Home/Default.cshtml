@@ -1,4 +1,6 @@
-﻿@{
+﻿@using DotNet.Common.Utility
+@model DotNet.CloudFarm.Domain.ViewModel.HomeViewModel
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "首页";
 }
@@ -142,6 +144,7 @@
 </div>
 
 <script type="text/javascript">
+    var homeViewModelServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
     function HomeViewModel() {
         var self = this;
 
@@ -159,7 +162,7 @@
             $("#detail_" + product.Id()).slideToggle();
             //if (product.IsShowDetail()) {
             //    product.IsShowDetail(false);
-               
+
 
             //} else {
             //    product.IsShowDetail(true);
@@ -245,12 +248,13 @@
     //初始化首页的数据
     function initHomeData() {
         $("#loading").show();
-        $.ajax({
-            url: "/home/data",
-            type: "post",
-            dataType:"json",
-            data: { Mobile: $("#Mobile").val() },
-            success: function (data) {
+        //$.ajax({
+        //    url: "/home/data",
+        //    type: "post",
+        //    dataType:"json",
+        //    data: { Mobile: $("#Mobile").val() },
+        //    success: function (data) {
+        var data = homeViewModelServiceJson;
                 if (!data.IsLogin) {
                     location.href = "Account/Login";
                     return;
@@ -324,8 +328,8 @@
                 $("#productlist").show();
                 $("#loading").hide();
             }
-        });
-    }
+        //});
+    //}
 
     function getWeather() {
         $.ajax({
@@ -348,13 +352,13 @@
     }
 
     $(function () {
-        
+
         initHomeData();
         try {
             getWeather();
         } catch (e) {
 
-        } 
-        
+        }
+
     });
 </script>
