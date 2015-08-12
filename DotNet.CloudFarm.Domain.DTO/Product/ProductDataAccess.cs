@@ -141,7 +141,8 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             productModel.Id = !Convert.IsDBNull(dr["Id"]) ? Convert.ToInt32(dr["Id"]) : 0;
             productModel.Name = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
             productModel.Stock = !Convert.IsDBNull(dr["Stock"]) ? Convert.ToInt32(dr["Stock"]) : 0;
-            productModel.SaledCount = !Convert.IsDBNull(dr["SaledCount"]) ? Convert.ToInt32(dr["SaledCount"]) : 0;
+            productModel.VirtualSaledCount = !Convert.IsDBNull(dr["VirtualSaledCount"]) ? Convert.ToInt32(dr["VirtualSaledCount"]) : 0;
+            productModel.RealSaledCount = !Convert.IsDBNull(dr["SaledCount"]) ? Convert.ToInt32(dr["SaledCount"]) : 0;
             productModel.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
             productModel.SheepPrice = !Convert.IsDBNull(dr["SheepPrice"]) ? Convert.ToDecimal(dr["SheepPrice"]) : 0;
             productModel.FeedPrice = !Convert.IsDBNull(dr["FeedPrice"]) ? Convert.ToDecimal(dr["FeedPrice"]) : 0;
@@ -169,7 +170,8 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             productModel.Id = !Convert.IsDBNull(dr["Id"]) ? Convert.ToInt32(dr["Id"]) : 0;
             productModel.Name = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
             productModel.Stock = !Convert.IsDBNull(dr["Stock"]) ? Convert.ToInt32(dr["Stock"]) : 0;
-            productModel.SaledCount = !Convert.IsDBNull(dr["SaledCount"]) ? Convert.ToInt32(dr["SaledCount"]) : 0;
+            productModel.VirtualSaledCount = !Convert.IsDBNull(dr["VirtualSaledCount"]) ? Convert.ToInt32(dr["VirtualSaledCount"]) : 0;
+            productModel.RealSaledCount = !Convert.IsDBNull(dr["SaledCount"]) ? Convert.ToInt32(dr["SaledCount"]) : 0;
             productModel.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
             productModel.SheepPrice = !Convert.IsDBNull(dr["SheepPrice"]) ? Convert.ToDecimal(dr["SheepPrice"]) : 0;
             productModel.FeedPrice = !Convert.IsDBNull(dr["FeedPrice"]) ? Convert.ToDecimal(dr["FeedPrice"]) : 0;

@@ -201,10 +201,13 @@
         //销量
         self.SaledCount = ko.observable();
 
+        
+
         //剩余数量
-        self.ExistCount = ko.pureComputed(function() {
-            return self.Stock() - self.SaledCount();
-        });
+        self.ExistCount= ko.observable();
+        //self.ExistCount = ko.pureComputed(function() {
+        //    return self.Stock() - self.SaledCount();
+        //});
 
         //购买数量
         self.Count = ko.observable();
@@ -262,6 +265,8 @@
 
                 //销量
                 product.SaledCount(confirmOrderServiceJson.Product.SaledCount);
+
+                product.ExistCount(confirmOrderServiceJson.Product.ExistCount);
                 //开始时间
                 product.StartTime(confirmOrderServiceJson.Product.StartTime);
 

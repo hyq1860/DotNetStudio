@@ -29,7 +29,30 @@ namespace DotNet.CloudFarm.Domain.Model.Product
         /// <summary>
         /// 当前期销售数量
         /// </summary>
-        public int SaledCount { get; set; }
+        public int SaledCount {
+            get
+            {
+                return RealSaledCount+VirtualSaledCount;
+            } 
+        }
+
+        /// <summary>
+        /// 虚拟销售了多少养只
+        /// </summary>
+        public int VirtualSaledCount { get; set; }
+
+        /// <summary>
+        /// 实际销售了多少
+        /// </summary>
+        public int RealSaledCount { get; set; }
+
+        /// <summary>
+        /// 还剩多少只羊
+        /// </summary>
+        public int ExistCount
+        {
+            get { return Stock - RealSaledCount - VirtualSaledCount; }
+        }
 
         /// <summary>
         /// 单价
@@ -128,7 +151,7 @@ namespace DotNet.CloudFarm.Domain.Model.Product
             get
             {
                 var now = DateTime.Now;
-                return now >= StartTime && now < EndTime && Status==1;
+                return now >= StartTime && now < EndTime && Status==1 && (ExistCount>0);
             }
         }
     }

@@ -8,15 +8,21 @@
 
 <div class="sheep_guest">
     <div class="pay_sucess_box">
-        <div class="sucess_logo"><i class="iconfont"></i></div>
+        <div class="sucess_logo"><i class="iconfont"></i>
+        </div>
         <p class="p1"><!--ko text:Message--><!--/ko--></p>
         <div class="sucess_content">
-            <p class="p2">订单号：<em><!--ko text:OrderId--><!--/ko--></em></p>
-            <p class="p3">金额：<em><!--ko text:PayMoney--><!--/ko-->元</em></p>
+            <p class="p2">订单号：<em><!--ko text:OrderId--><!--/ko--></em>
+            </p>
+            <p class="p3">金额：<em><!--ko text:PayMoney--><!--/ko-->元</em>
+            </p>
         </div>
     </div>
-    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList","Home",new {tab=3})/#Order_'+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a></div>
+    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home", new {tab = 3})/#Order_'+OrderId()}">查看订单</a><a href="#" class="a2">分享给好友</a>
+    </div>
 </div>
+<div class="share_to_opacity"></div>
+<div class="share_to_box"><img src="/images/share.png"></div>
 <script type="text/javascript">
     var payTipServiceJson=@Html.Raw(JsonHelper.ToJson(Model??new PayTipViewModel()));
 
