@@ -124,7 +124,7 @@
     </div>
     <!--/ko-->
     <!--ko if:Products().length==0-->
-    <div class="Claim_sheep">
+    <div class="Claim_sheep" id="noSheep" style="display: none;">
         <img src="/images/no_sheep.png" class="no_sheep" />
         <p class="please_waiting">亲，本期认购已经结束，敬请期待下期认购~</p>
     </div>
@@ -258,63 +258,67 @@
                 if (data) {
                     homeViewModel.SheepCount(data.SheepCount);
                     var length = data.Products.length;
-                    for (var i = 0; i < length; i++) {
-                        var productViewModel = new ProductViewModel();
-                        productViewModel.Id(data.Products[i].Id);
+                    if (length > 0) {
+                        for (var i = 0; i < length; i++) {
+                            var productViewModel = new ProductViewModel();
+                            productViewModel.Id(data.Products[i].Id);
 
-                        //产品名称
-                        productViewModel.Name(data.Products[i].Name);
+                            //产品名称
+                            productViewModel.Name(data.Products[i].Name);
 
-                        //产品数量
-                        productViewModel.Stock(data.Products[i].Stock);
+                            //产品数量
+                            productViewModel.Stock(data.Products[i].Stock);
 
-                        //当前期销量数量
-                        productViewModel.SaledCount(data.Products[i].SaledCount);
+                            //当前期销量数量
+                            productViewModel.SaledCount(data.Products[i].SaledCount);
 
-                        //单价
-                        productViewModel.Price(data.Products[i].Price);
+                            //单价
+                            productViewModel.Price(data.Products[i].Price);
 
-                        //羊金额
-                        productViewModel.SheepPrice(data.Products[i].SheepPrice);
+                            //羊金额
+                            productViewModel.SheepPrice(data.Products[i].SheepPrice);
 
-                        //饲料金额
-                        productViewModel.FeedPrice(data.Products[i].FeedPrice);
+                            //饲料金额
+                            productViewModel.FeedPrice(data.Products[i].FeedPrice);
 
-                        //人工成本
-                        productViewModel.WorkPrice(data.Products[i].WorkPrice);
+                            //人工成本
+                            productViewModel.WorkPrice(data.Products[i].WorkPrice);
 
-                        productViewModel.Earning(data.Products[i].Earning);
-                        //预期年化收益率
-                        productViewModel.YearEarningRate(data.Products[i].YearEarningRate);
+                            productViewModel.Earning(data.Products[i].Earning);
+                            //预期年化收益率
+                            productViewModel.YearEarningRate(data.Products[i].YearEarningRate);
 
-                        //预期收益
-                        productViewModel.EarningRate(data.Products[i].EarningRate);
+                            //预期收益
+                            productViewModel.EarningRate(data.Products[i].EarningRate);
 
-                        //活动持续时间 天
-                        productViewModel.EarningDay(data.Products[i].EarningDay);
+                            //活动持续时间 天
+                            productViewModel.EarningDay(data.Products[i].EarningDay);
 
-                        //羊类型
-                        productViewModel.SheepType(data.Products[i].SheepType);
+                            //羊类型
+                            productViewModel.SheepType(data.Products[i].SheepType);
 
-                        //育肥场
-                        productViewModel.SheepFactory(data.Products[i].SheepFactory);
+                            //育肥场
+                            productViewModel.SheepFactory(data.Products[i].SheepFactory);
 
-                        //开始
-                        productViewModel.StartTime(data.Products[i].StartTime);
-                        //结束
-                        productViewModel.EndTime(data.Products[i].EndTime);
+                            //开始
+                            productViewModel.StartTime(data.Products[i].StartTime);
+                            //结束
+                            productViewModel.EndTime(data.Products[i].EndTime);
 
-                        //商品图片
-                        productViewModel.ImgUrl(data.Products[i].ImgUrl);
+                            //商品图片
+                            productViewModel.ImgUrl(data.Products[i].ImgUrl);
 
-                        //预期收益时间
-                        productViewModel.ExpectEarningDay(data.Products[i].ExpectEarningDay);
+                            //预期收益时间
+                            productViewModel.ExpectEarningDay(data.Products[i].ExpectEarningDay);
 
-                        productViewModel.CanSale(data.Products[i].CanSale);
+                            productViewModel.CanSale(data.Products[i].CanSale);
 
-                        homeViewModel.Products.push(productViewModel);
+                            homeViewModel.Products.push(productViewModel);
+                        }
+                    } else {
+                        $("#noSheep").show();
                     }
-                    
+
                     ko.applyBindings(homeViewModel);
                 }
                 $("#productlist").show();

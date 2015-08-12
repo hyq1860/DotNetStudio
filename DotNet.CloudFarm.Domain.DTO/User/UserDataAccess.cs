@@ -197,7 +197,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             var captcha = string.Empty;
             using (var cmd = DataCommandManager.GetDataCommand("GetUnUsedCaptcha"))
             {
-                cmd.SetParameterValue("@UserId", userId);
+                cmd.SetParameterValue("@Mobile", mobile);
                 var returnValue = cmd.ExecuteScalar();
                 if (returnValue != null)
                 {
