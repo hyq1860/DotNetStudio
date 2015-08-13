@@ -19,7 +19,7 @@
                 <div class="pasture_weather">
                     <p class="p1">内蒙古鄂尔多斯牧场</p>
                     <div class="Temperature clearfix">
-                        <div class="Temperature_l"><span class="span2"><em id="t1">28</em>℃</span><span class="span2" id="weather">晴</span></div>
+                        <div class="Temperature_l"><span class="span2"><em id="t1">28℃</em></span><span class="span2" id="weather">晴</span></div>
                         <div class="Temperature_r"><span><img id="weatherimg" /></span></div>
                     </div>
                     <p class="p2">舍内温度<span id="t2">23</span>℃ </p>
@@ -53,14 +53,17 @@
                     <div class="detail_l" data-bind="click:$parent.ShowDetail">
                         <a href="#" data-bind="click:$parent.ViewProduct">详情</a>
                     </div>
+                    <!--ko if:CanSale-->
+
                     <div class="" data-bind="css:SaleButtonClass">
-                        <!--ko if:CanSale-->
                         <a data-bind="attr:{href:'@Url.Action("order", "home")'+'?productId='+Id()}">立刻认领羊只</a>
-                        <!--/ko-->
-                        <!--ko ifnot:CanSale-->
-                        <a>立刻认领羊只</a>
-                        <!--/ko-->
                     </div>
+                    <!--/ko-->
+                    <!--ko ifnot:CanSale-->
+                    <div class="SaleButtonClass noclick_detail_r">
+                        <a>立刻认领羊只</a>
+                    </div>
+                    <!--/ko-->
                 </div>
                 <div class="detail_content" @*data-bind="visible:IsShowDetail"*@ data-bind="attr:{id:'detail_'+Id()}" style="display: none">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">

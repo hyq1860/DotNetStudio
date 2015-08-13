@@ -8,19 +8,19 @@
     <ul class="cam_list clearfix">
         <li>
             <p class="clearfix"><span class="span1"></span><span class="span2"><i>1</i>号摄像头</span><span class="span3"></span></p>
-            <div id="player1"></div>
+            <a><div class="video_playbox" id="player1"></div></a>
         </li>
         <li>
             <p class="clearfix"><span class="span1"></span><span class="span2"><i>2</i>号摄像头</span><span class="span3"></span></p>
-            <div id="player2"></div>
+            <a><div class="video_playbox"  id="player2"></div></a>
         </li>
         <li>
             <p class="clearfix"><span class="span1"></span><span class="span2"><i>4</i>号摄像头</span><span class="span3"></span></p>
-            <div id="player3"></div>
+            <a><div class="video_playbox" id="player3"></div></a>
         </li>
         <li>
             <p class="clearfix"><span class="span1"></span><span class="span2"><i>6</i>号摄像头</span><span class="span3"></span></p>
-            <div id="player4"></div>
+            <a><div class="video_playbox" id="player4"></div></a>
         </li>
     </ul>
 </div>
@@ -32,23 +32,23 @@
     <script  type="text/javascript">
         var vwidth = "100%";
         var vheght = "100%";
-        var option1 = { width: vwidth, div_id: "player1", device_id: "137893139339" };
-        var player_obj1 = new baidu_cam(option1);
-        player_obj1.play();
-        var option2 = { width: vwidth, div_id: "player2", device_id: "137893139371" };
-        var player_obj2 = new baidu_cam(option2);
-        player_obj2.play();
+       
 
-       // $(document).ready(function () {
-            //var optionList = [];
-            //var deviceIds = ["137893139339", "137893139371", "137893139627", "137893139659"];
-            //for (var i = 0; i < deviceIds.length; i++) {
-            //    var divId = "player" + (i + 1);
-            //    var option = { width: vwidth, height: vheght, div_id: divId, device_id: deviceIds[i] };
-            //    optionList.push(option);
-            //}
+        $(document).ready(function () {
+            var option1 = {  width:"140",height:"160", div_id: "player1", device_id: "137893139371" };
+            var player_obj1 = new baidu_cam(option1);
+            player_obj1.play();
+            var option2 = { width: "100%", height: "160", div_id: "player2", device_id: "137893139755" };
+            var player_obj2 = new baidu_cam(option2);
+            player_obj2.play();
+            var option3 = { height: "160", div_id: "player3", device_id: "137893139723" };
+            var player_obj3 = new baidu_cam(option3);
+            player_obj3.play();
+            var option4 = { height: "160", div_id: "player4", device_id: "137893139339" };
+            var player_obj4 = new baidu_cam(option4);
+            player_obj4.play();
         
-        //});
+        });
 
       
     </script>
