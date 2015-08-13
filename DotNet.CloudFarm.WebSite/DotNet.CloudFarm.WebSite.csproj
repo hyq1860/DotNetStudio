@@ -268,6 +268,7 @@
     <Compile Include="WeixinPay\WeixinWebApi.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -307,6 +308,7 @@
     <Content Include="Configs\Data\DataCommand_User.config" />
     <Content Include="Configs\Params.config" />
     <Content Include="html\micro.html" />
+    <Content Include="html\share2.html" />
     <Content Include="html\take_care.html" />
     <Content Include="images\ad_ctr.png" />
     <Content Include="images\bg5.jpg" />
@@ -316,6 +318,7 @@
     <Content Include="images\bg9.jpg" />
     <Content Include="images\dot.png" />
     <Content Include="images\down_arrow2.png" />
+    <Content Include="images\ewm.jpg" />
     <Content Include="images\ewm_03.png" />
     <Content Include="images\ewm_05.png" />
     <Content Include="images\houtai\logo_20.jpg" />
@@ -462,6 +465,7 @@
     <Content Include="images\share_01.png" />
     <Content Include="images\share_04.png" />
     <Content Include="images\share_05.png" />
+    <Content Include="images\share_bg.jpg" />
     <Content Include="images\share_bg.png" />
     <Content Include="images\sheep_step_03.png" />
     <Content Include="images\sheep_step_07.png" />
@@ -482,6 +486,7 @@
     <Content Include="images\who_07.png" />
     <Content Include="images\zhuanzhang.png" />
     <Content Include="images\zhuanzhang_active.png" />
+    <Content Include="images\修改.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
