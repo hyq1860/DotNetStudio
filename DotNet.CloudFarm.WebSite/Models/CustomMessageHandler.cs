@@ -100,6 +100,13 @@ namespace DotNet.CloudFarm.WebSite.Models
                 responseMessage.Content = str;
                 return responseMessage;
             }
+            else if (requestMessage.EventKey == "updating")
+            {
+                var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+                var str = "全新羊客平台升级中，尽请期待";
+                responseMessage.Content = str;
+                return responseMessage;
+            }
             else
             {
                 return null;
