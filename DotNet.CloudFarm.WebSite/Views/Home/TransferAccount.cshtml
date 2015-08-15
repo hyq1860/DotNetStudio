@@ -65,44 +65,60 @@
         wx.ready(function() {
             // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
             //document.querySelector('#sharefriendgroup').onclick = function () {
-                wx.onMenuShareTimeline({
-                    title: '@string.Format("我刚在羊客领养了{0}只羊，当上牧场主啦！", Model.BuyCount)',
-                    link: 'http://yk.kerchinsheep.com/home/share?uid=@ViewBag.uid',
-                    imgUrl: '@(HttpContext.Current.Request.Url.Host+"/images/logo.png")',
-                    trigger: function (res) {
-                        //alert('用户点击分享到朋友圈');
-                    },
-                    success: function (res) {
-                        //alert('已分享');
-                        ShareComplete();
-                    },
-                    cancel: function (res) {
-                        //alert('已取消');
-                        ShareComplete();
-                    },
-                    fail: function (res) {
-                        //alert(JSON.stringify(res));
-                        ShareComplete();
-                    }
-                });
+            var title = "@string.Format("我刚在羊客领养了{0}只羊，当上牧场主啦！", Model.BuyCount)";
+            var imgUrl = "http://yk.kerchinsheep.com/images/logo.png";
+            var link = "http://yk.kerchinsheep.com/home/share?uid=@ViewBag.uid";
+            wx.onMenuShareTimeline({
+                title: title,
+                link: link,
+                imgUrl: imgUrl,
+                trigger: function (res) {
+                    //alert('用户点击分享到朋友圈');
+                },
+                success: function (res) {
+                    //alert('已分享');
+                    ShareComplete();
+                },
+                cancel: function (res) {
+                    //alert('已取消');
+                    ShareComplete();
+                },
+                fail: function (res) {
+                    //alert(JSON.stringify(res));
+                    ShareComplete();
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: '羊客', // 分享标题
+                desc: title, // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    ShareComplete();
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    ShareComplete();
+                }
+            });
+            wx.onMenuShareQQ({
+                title: '羊客', // 分享标题
+                desc: title, // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    ShareComplete();
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    ShareComplete();
+                }
+            });
             //};
         });
     });
-
-
-
-
-    function share() {
-        wx.onMenuShareTimeline({
-            title: '1', // 分享标题
-            link: 'http://yk.kerchinsheep.com/home/share?uid=@ViewBag.uid', // 分享链接
-            imgUrl: 'http://wx.qlogo.cn/mmopen/ajNVdqHZLLAHqohmbzsmxdUibE9yO5kiad0DHoKDibsmEcKiaLbpEQRwBDBKT2Z3hItI0ibIZraGWlyibxrMlicPBTG1A/96', // 分享图标
-            success: function () {
-                alert('转发成功！');
-            },
-            cancel: function () {
-                alert('转发失败！');
-            }
-        });
-    }
 </script>
