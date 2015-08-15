@@ -75,7 +75,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                 var currentOrderList =
                     orderList.Data.Where(
                         s =>
-                            s.Status == OrderStatus.Paid.GetHashCode() &&
+                            s.Status == OrderStatus.Paid.GetHashCode() ||
                             s.Status == OrderStatus.WaitingConfirm.GetHashCode());
                 var now = DateTime.Now;
                 if (currentOrderList != null && currentOrderList.Any())
@@ -94,10 +94,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                         }
                         else
                         {
-                             rate = (model.EndTime-now).Days/model.EarningDay;
+                             rate = Convert.ToDecimal((now-model.EndTime).Days)/Convert.ToDecimal(model.EarningDay);
                         }
                         walletViewModel.CurrentIncome+=model.Earning*model.ProductCount*rate;
                     }
+                    walletViewModel.CurrentIncome = decimal.Round(walletViewModel.CurrentIncome, 2);
 
 
                     //预期收益

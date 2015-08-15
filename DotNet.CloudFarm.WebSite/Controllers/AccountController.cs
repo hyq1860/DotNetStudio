@@ -35,6 +35,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
 
+#if DEBUG
+        public static readonly string debugOpenId = "ok0TYsz-H2J_zdS5WatEjN_Fpckw";
+#endif
 
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
@@ -61,7 +64,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public async Task<JsonResult> Login(LoginUser loginUser)
         {
             #if DEBUG
-            loginUser.WxOpenId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM";//"oOGootzpwe38CkQSTj00wyHhKSMk";//
+            loginUser.WxOpenId = debugOpenId;//"oOGoot0O0nEuP4uEHdNLQyNpGnwM";//"oOGootzpwe38CkQSTj00wyHhKSMk";//
             #endif
 
             var jsonResult = new JsonResult();
@@ -197,7 +200,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult GetMobileCaptcha(string mobile,string weixinId)
         {
             #if DEBUG
-            weixinId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM"; ;//
+            weixinId = debugOpenId;// "oOGoot0O0nEuP4uEHdNLQyNpGnwM"; ;//
             #endif
             //logger.Info("获取验证码："+mobile+"|"+weixinId);            
             //通过微信id获取用户id

@@ -96,7 +96,10 @@ namespace DotNet.CloudFarm.WebSite.Models
             if(requestMessage.EventKey=="learnmore")
             {
                 var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-                var str = "羊客——参与众筹，人人成为牧场主，一边吃肉，一边赚钱。回复【1】获取相关信息；回复【2】获取客服电话";
+                var str = @"您好，很高兴为您服务。您可以回复数字，查看常见问题的解答，也可以直接发送问题至羊客。
+                            回复【1】了解关于购买和结算；
+                            回复【2】了解关于小羊；
+                            回复【3】了解关于资金安全和收益保障";
                 responseMessage.Content = str;
                 return responseMessage;
             }
@@ -116,7 +119,7 @@ namespace DotNet.CloudFarm.WebSite.Models
         public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
         {
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-            var welcomeStr = "欢迎关注羊客，了解羊客请点击【微场景】，购买请点击【购买】。";
+            var welcomeStr = "欢迎来到羊客，成为牧场主。羊客采取互联网创新思维，让所有牧场主自由领养，全透明地了解养殖标准和流程，获取年化15%的收益或等值的羊肉产品，让你真正实现：一边吃肉，一边赚钱！点击“羊羊得益”马上参与";
             responseMessage.Content = welcomeStr;
             try
             {
