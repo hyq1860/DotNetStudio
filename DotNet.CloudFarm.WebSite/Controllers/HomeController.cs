@@ -688,13 +688,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         ViewBag.RankingCssClass = rankingCssClass;
                         ViewBag.SheepCount = OrderService.GetProductCountWithStatus(userInfo.UserId,
                             new List<int>() {1, 2});
-                        ViewBag.Percentage = (((decimal)info.RowId / (decimal)orderStatisModel.TotalUserCount) * 100).ToString("F2");
+                        ViewBag.Percentage = (((decimal)info.RowId / (decimal)orderStatisModel.TotalUserCount) * 100);
                         ViewBag.YearEarningRate = walletViewModel.YearEarningRate;
                     }
                     else
                     {
                         ViewBag.Earning = 0;
-                        ViewBag.YearEarningRate = "0";
+                        ViewBag.YearEarningRate = 0;
+                        ViewBag.SheepCount = 0;
+                        ViewBag.Percentage = 0;
                     }
                 }
             }

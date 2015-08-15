@@ -12,8 +12,8 @@
             <p class="p1 @ViewBag.RankingCssClass"><img src="@ViewBag.HeadUrl" /></p><!--铜牌羊客-->
             <p class="p2">@ViewBag.UserName</p>
             <p class="p3">@ViewBag.SheepCount</p>
-            <p class="p3 p4">@ViewBag.Percentage %</p>
-            <p class="p3 p5">@ViewBag.YearEarningRate %</p>
+            <p class="p3 p4">@ViewBag.Percentage.ToString("F0")%</p>
+            <p class="p3 p5">@ViewBag.YearEarningRate.ToString("0.0") %</p>
         </div>
         <div class="scan_for_weed clearfix">
             <div class="scan_for_weed_l">
