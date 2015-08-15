@@ -229,3 +229,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+DotNet.CloudFarm.WebSite/log/log.txt
