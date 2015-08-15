@@ -130,7 +130,7 @@
             var payType = self.PayType();
             if (payType == 1) {
                 UpdatePayType(self.OrderId(),1,function() {
-                    location.href = "@Url.Action("TransferAccount", "Home")"+"?OrderId="+self.OrderId();
+                    location.href = "@Url.Action("TransferAccount", "Home")"+"?orderId="+self.OrderId();
                 });
 
             } else {

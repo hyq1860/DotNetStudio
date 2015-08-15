@@ -1,4 +1,4 @@
-﻿
+﻿@model DotNet.CloudFarm.Domain.ViewModel.PayTipViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "转账";
@@ -37,6 +37,10 @@
             $("#share_to_box").show();
         }
     }
+    function ShareComplete() {
+        $("#share_to_opacity").hide();
+        $("#share_to_box").hide();
+    }
 
     $(function () {
         var transferAccountViewModel = new TransferAccountViewModel();
@@ -62,20 +66,23 @@
             // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
             //document.querySelector('#sharefriendgroup').onclick = function () {
                 wx.onMenuShareTimeline({
-                    title: '我跟一只羊的故事',
+                    title: '@string.Format("我刚在羊客领养了{0}只羊，当上牧场主啦！", Model.BuyCount)',
                     link: 'http://yk.kerchinsheep.com/home/share?uid=@ViewBag.uid',
-                    imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                    imgUrl: '@(HttpContext.Current.Request.Url.Host+"/images/logo.png")',
                     trigger: function (res) {
                         //alert('用户点击分享到朋友圈');
                     },
                     success: function (res) {
                         //alert('已分享');
+                        ShareComplete();
                     },
                     cancel: function (res) {
                         //alert('已取消');
+                        ShareComplete();
                     },
                     fail: function (res) {
                         //alert(JSON.stringify(res));
+                        ShareComplete();
                     }
                 });
             //};

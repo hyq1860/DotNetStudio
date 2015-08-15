@@ -380,7 +380,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             payTipViewModel.PayMoney = orderViewModel.ProductCount*orderViewModel.Price;
             payTipViewModel.IsPaySuccess = orderViewModel.Status == OrderStatus.Paid.GetHashCode();
             payTipViewModel.Message = payTipViewModel.IsPaySuccess ? "支付成功" : "支付失败";
-
+            payTipViewModel.BuyCount = orderViewModel.ProductCount;
             //获取时间戳
             var timestamp = JSSDKHelper.GetTimestamp();
             //获取随机码
@@ -583,8 +583,17 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 转账
         /// </summary>
         /// <returns></returns>
-        public ActionResult TransferAccount()
+        public ActionResult TransferAccount(long orderId)
         {
+
+            var payTipViewModel = new PayTipViewModel();
+            var orderViewModel = OrderService.GetOrderViewModel(this.UserInfo.UserId, orderId);
+            payTipViewModel.OrderId = orderViewModel.OrderId;
+            payTipViewModel.PayMoney = orderViewModel.ProductCount * orderViewModel.Price;
+            payTipViewModel.IsPaySuccess = orderViewModel.Status == OrderStatus.Paid.GetHashCode();
+            payTipViewModel.Message = payTipViewModel.IsPaySuccess ? "支付成功" : "支付失败";
+            payTipViewModel.BuyCount = orderViewModel.ProductCount;
+
             //获取时间戳
             var timestamp = JSSDKHelper.GetTimestamp();
             //获取随机码

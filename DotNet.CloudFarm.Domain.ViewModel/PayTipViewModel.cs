@@ -22,6 +22,11 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         public decimal PayMoney { get; set; }
 
         /// <summary>
+        /// 购买的养只数量
+        /// </summary>
+        public int BuyCount { get; set; }
+
+        /// <summary>
         /// 是否支付成功
         /// </summary>
         public bool IsPaySuccess { get; set; }
