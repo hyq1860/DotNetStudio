@@ -140,7 +140,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
                     confirmOrderViewModel.TopOrderInfos = OrderService.GetTopOrderList(1, 5);
 
-                    var orderStatisModel = OrderService.GetOrderStatisModel();
+                    var orderStatisModel = OrderService.GetOrderStatisModel(new List<int>(){10});
                     var info = orderStatisModel.UserOrderList.FirstOrDefault(s => s.UserId == this.UserInfo.UserId);
                     if (info != null)
                     {
@@ -655,7 +655,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 var userInfo = UserService.GetUserByUserId(int.Parse(strUserId));
                 if (userInfo != null)
                 {
-                    var orderStatisModel = OrderService.GetOrderStatisModel();
+                    var orderStatisModel = OrderService.GetOrderStatisModel(new List<int>(){1,2,10});
                     var info = orderStatisModel.UserOrderList.FirstOrDefault(s => s.UserId == userInfo.UserId);
                     if (info != null)
                     {

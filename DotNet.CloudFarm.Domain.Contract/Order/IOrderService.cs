@@ -126,7 +126,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// 订单统计信息
         /// </summary>
         /// <returns></returns>
-        OrderStatisModel GetOrderStatisModel();
+        OrderStatisModel GetOrderStatisModel(List<int> status);
 
         /// <summary>
         /// 修改订单支付方式

@@ -372,11 +372,12 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
         }
 
-        public OrderStatisModel GetOrderStatisModel()
+        public OrderStatisModel GetOrderStatisModel(List<int> status)
         {
             var orderStatisModel = new OrderStatisModel();
             using (var cmd = DataCommandManager.GetDataCommand("GetOrderStatis"))
             {
+                cmd.CommandText = string.Format(cmd.CommandText, string.Join(",", status));
                 using (var dr=cmd.ExecuteDataReader())
                 {
                     while (dr.Read())

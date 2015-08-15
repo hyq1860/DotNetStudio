@@ -143,9 +143,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return walletViewModel;
         }
 
-        public OrderStatisModel GetOrderStatisModel()
+        public OrderStatisModel GetOrderStatisModel(List<int> status)
         {
-            return orderDataAccess.GetOrderStatisModel();
+            return orderDataAccess.GetOrderStatisModel(status);
         }
 
         public bool UpdateOrderPayType(long orderId, int userId, int payType)
