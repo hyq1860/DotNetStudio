@@ -115,7 +115,18 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
                     if (orderViewModel != null)
                     {
-                        walletViewModel.GrowDay = Math.Floor((((decimal)(orderViewModel.EndTime - now).Days) / (decimal)orderViewModel.EarningDay))*100;
+                        if(orderViewModel.EndTime>=now)
+                        {
+                            walletViewModel.GrowDay = 0;
+                        }
+                        else if (orderViewModel.EndTime.AddDays(orderViewModel.EarningDay) <= now)
+                        {
+                            walletViewModel.GrowDay = 100;
+                        }
+                        else
+                        {
+                            walletViewModel.GrowDay = Math.Floor((((decimal)(now - orderViewModel.EndTime).Days) / (decimal)orderViewModel.EarningDay) * 100);
+                        }
                     }
                 }
                 

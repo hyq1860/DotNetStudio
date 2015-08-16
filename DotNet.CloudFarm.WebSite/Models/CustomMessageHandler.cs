@@ -96,10 +96,7 @@ namespace DotNet.CloudFarm.WebSite.Models
             if(requestMessage.EventKey=="learnmore")
             {
                 var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-                var str = @"您好，很高兴为您服务。您可以回复数字，查看常见问题的解答，也可以直接发送问题至羊客。
-                            回复【1】了解关于购买和结算；
-                            回复【2】了解关于小羊；
-                            回复【3】了解关于资金安全和收益保障";
+                var str = "您好，很高兴为您服务。您可以回复数字，查看常见问题的解答，也可以直接发送问题至羊客。\r\n回复【1】了解关于购买和结算；\r\n回复【2】了解关于小羊；\r\n回复【3】了解关于资金安全和收益保障";
                 responseMessage.Content = str;
                 return responseMessage;
             }

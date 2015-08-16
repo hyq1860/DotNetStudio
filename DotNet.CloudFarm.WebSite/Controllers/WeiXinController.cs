@@ -191,7 +191,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             };
             subButton.sub_button.Add(new SingleViewButton()
             {
-                url = "http://yk1.kerchinsheep.com/html/micro.html",
+                url = "http://yk.kerchinsheep.com/html/micro.html",
                 name = "微场景"
             });
             subButton.sub_button.Add(new SingleClickButton()
@@ -202,7 +202,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             btnGroup.button.Add(subButton);
             var clickButton = new SingleViewButton()
             {
-                url = "http://yk1.kerchinsheep.com/",
+                url = "http://yk.kerchinsheep.com/",
                 name = "羊羊得益"
             };
             btnGroup.button.Add(clickButton);
