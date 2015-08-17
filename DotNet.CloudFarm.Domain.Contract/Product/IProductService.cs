@@ -60,5 +60,13 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         /// <param name="id"></param>
         /// <param name="status"></param>
         void UpdateStatus(int id,int status);
+
+
+        /// <summary>
+        /// 更新虚拟库存
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="VirtualSaledCount"></param>
+        void ProductVirtualSaledCount(int id, int VirtualSaledCount);
     }
 }

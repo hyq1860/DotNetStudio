@@ -22,6 +22,8 @@
 									  <th>ID</th>
 									  <th>名称</th>
                                       <th>图像</th>
+                                      <th>已购数量</th>
+                                      <th>虚拟库存</th>
 									  <th>状态</th>
 									  <th>操作</th>                                          
 								  </tr>
@@ -34,6 +36,8 @@
                                     <td class="center">
                                         <img data-bind="attr:{src:ImgUrl}" style="width:120px;height:120px" />
                                     </td>
+                                    <td class="center" data-bind="text:SaledCount"></td>
+                                    <td class="center" data-bind="text:VirtualSaledCount"></td>
                                     <td class="center" >
                                         <span class="label" data-bind="text:Activity"></span>
                                         <!-- ko if: Status()==1 -->
@@ -44,11 +48,11 @@
                                         <!-- /ko -->
                                     </td>
                                     <td class="center">
-                                        <!-- ko if:Activity()=="未开始"-->
                                         <a href="javascript:void(0);" data-bind="click: Edit" class="btn btn-info"><i class="icon-edit icon-white"></i>编辑</a>
+                                        <!-- ko if:Activity()=="未开始"-->
                                         <a href="javascript:void(0);" data-bind="click: Del" class="btn btn-danger"><i class="icon-edit icon-white"></i>删除</a>
-
                                         <!-- /ko -->
+                                        <a href="javascript:void(0);" data-bind="attr:{href: '/houtai/setvirtualsaledcount/'+ Id()}" class="btn btn-info"><i class="icon-edit icon-white"></i>设置库存</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -159,6 +163,7 @@
         //预期年化收益率
         self.YearEarningRate = ko.observable();
 
+        self.VirtualSaledCount = ko.observable();
         //预期收益
         self.Earning = ko.observable();
 
@@ -282,6 +287,7 @@
             //预期年化收益率
             productViewModel.YearEarningRate(data.Products[i].YearEarningRate);
 
+            productViewModel.VirtualSaledCount(data.Products[i].VirtualSaledCount);
             //预期收益
             productViewModel.EarningRate(data.Products[i].EarningRate);
 

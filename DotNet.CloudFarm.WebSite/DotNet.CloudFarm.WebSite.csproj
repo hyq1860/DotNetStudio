@@ -599,6 +599,7 @@
     <Content Include="Views\Account\BackstageLogin.cshtml" />
     <Content Include="Views\HouTai\PayRefund.cshtml" />
     <Content Include="Views\Home\Share.cshtml" />
+    <Content Include="Views\HouTai\SetVirtualSaledCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -264,6 +264,32 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         #endregion
 
+        /// <summary>
+        /// 设置虚拟库存
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult SetVirtualSaledCount(int id)
+        {
+            if (id > 0)
+            {
+                ViewBag.Product = ProductService.GetProductById(id);
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// 设置虚拟库存
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="VirtualSaledCount"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SetVirtualSaledCount(int id, int VirtualSaledCount)
+        {
+            ProductService.ProductVirtualSaledCount(id, VirtualSaledCount);
+            return RedirectToAction("Product");
+        }
 
         #region 订单后台
         public ActionResult OrderList()

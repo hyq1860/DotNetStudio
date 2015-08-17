@@ -275,8 +275,19 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
             }
         }
 
-
-
-
+        /// <summary>
+        /// 更新虚拟库存状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="VirtualSaledCount"></param>
+        public void UpdateVirtualSaledCount(int id, int VirtualSaledCount)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("UpdateVirtualSaledCount"))
+            {
+                cmd.SetParameterValue("@Id", id);
+                cmd.SetParameterValue("@VirtualSaledCount", VirtualSaledCount);
+                cmd.ExecuteScalar();
+            }
+        }
     }
 }

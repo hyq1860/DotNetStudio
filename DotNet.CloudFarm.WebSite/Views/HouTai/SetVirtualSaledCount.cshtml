@@ -1,0 +1,53 @@
+﻿@using DotNet.CloudFarm.Domain.Model.Product;
+@{
+    ViewBag.Title = "设置虚拟库存";
+    Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
+}
+
+<div id="content" class="span10">
+    <!-- content starts -->
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-edit"></i>添加/修改产品</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                @{
+                    ProductModel product = ViewBag.Product;
+                    if (product == null)
+                    {
+                        product = new ProductModel();
+                    }
+                }
+                <div id="alertMsg" class="alert alert-error hidden fade in"></div>
+                <form class="form-horizontal" method="post" id="productForm" enctype="multipart/form-data">
+                    <fieldset>
+                        <input type="hidden" name="Id" id="productId" value="@product.Id" />
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">产品名称</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="Name" disabled="disabled" type="text" name="Name" value="@product.Name" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="focusedInput">虚拟库存</label>
+                            <div class="controls">
+                                <input class="input-xlarge focused" id="VirtualSaledCount" type="text" name="VirtualSaledCount" value="@product.VirtualSaledCount" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">添加/编辑</button>
+                            <button class="btn" onclick="cancel(); return false;">取消</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- content ends -->
+</div>

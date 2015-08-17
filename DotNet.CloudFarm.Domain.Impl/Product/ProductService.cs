@@ -60,5 +60,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
         {
             productDataAccess.UpdateStatus(id,status);
         }
+
+
+        public void ProductVirtualSaledCount(int id, int VirtualSaledCount)
+        {
+            productDataAccess.UpdateVirtualSaledCount(id, VirtualSaledCount);
+        }
     }
 }
