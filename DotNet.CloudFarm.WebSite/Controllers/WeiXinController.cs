@@ -192,7 +192,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             subButton.sub_button.Add(new SingleViewButton()
             {
                 url = "http://yk.kerchinsheep.com/html/micro.html",
-                name = "微场景"
+                name = "羊客介绍"
             });
             subButton.sub_button.Add(new SingleClickButton()
             {

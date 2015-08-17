@@ -115,7 +115,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="payType"></param>
         /// <returns></returns>
         bool UpdateOrderPayType(long orderId, int userId, int payType);
-
+        /// <summary>
         /// 订单查询
         /// </summary>
         /// <param name="pageIndex"></param>

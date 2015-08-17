@@ -12,6 +12,10 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// 下单用户手机号
         /// </summary>
         public string Mobile { get; set; }
+        /// <summary>
+        /// 含有支付
+        /// </summary>
+        public int PayLogCount { get; set; }
 
     }
 }

@@ -262,7 +262,6 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
 
         /// <summary>
         /// 设置虚拟库存
@@ -290,6 +289,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             ProductService.ProductVirtualSaledCount(id, VirtualSaledCount);
             return RedirectToAction("Product");
         }
+        #endregion
+
+       
 
         #region 订单后台
         public ActionResult OrderList()
@@ -496,6 +498,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 Message = msg
             };
             return Json(result);
+        }
+
+        /// <summary>
+        /// AJAX获取微信支付日志
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public JsonResult GetWeixinPayLogByOrderId(long orderId)
+        {
+            return Json(WeiXinService.GetPayLogListByOrderId(orderId));
         }
 
         /// <summary>

@@ -119,7 +119,15 @@
                                 线下支付
                                 <!-- /ko -->
                             </td>
-                            <td class="center" data-bind="text:OrderStatus;attr:{status:Status}"></td>
+                            <td class="center" data-bind="attr:{status:Status}">
+                                <!--ko text:OrderStatus-->
+                                <!--/ko-->
+                                <!-- ko if: Status()==2 -->
+                                <a href="javascript:void(0);" class="btn-small btn-info" data-rel="popover">
+                                    <!--ko text:PayLogCount--><!--/ko-->个成功结算单
+                                </a>
+                                <!--/ko-->
+                            </td>
                             <td class="center" data-bind="text:CreateTime"></td>
 
                             <td class="center">
@@ -130,7 +138,7 @@
                                     <!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko if: Status()==2 -->
-                                <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success"><i class="icon-edit icon-white"></i>确认结算</a>
+                                <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success paylog"><i class="icon-edit icon-white"></i>确认结算</a>
                                 <!-- /ko -->
                                 <!-- ko if: Status()==10 -->
                                 <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success"><i class="icon-edit icon-white"></i>查看结算流水</a>
@@ -272,22 +280,21 @@
         self.Price = ko.observable();
         self.Status = ko.observable();
         self.PayType = ko.observable();
+        self.PayLogCount = ko.observable();
         self.OrderStatus = ko.computed(function () {
             return ConvertOrderStatus(self.Status());
         });
-
-        self.CancelOrder = function(){
+        self.CancelOrder = function () {
             var orderId = self.OrderId();
             var userId = self.UserId();
             $("#confirmText").text("确认要取消订单吗？");
             $('#myAlertDialog').modal('show');
-            $("#confirmBtn").unbind("click").click(function()
-            {
+            $("#confirmBtn").unbind("click").click(function () {
                 $.ajax({
                     type: "POST",
                     url: "/houtai/CancelOrder",
                     data: "pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&orderId=" + orderId
-                    +"&userId="+userId,
+                    + "&userId=" + userId,
                     success: function (data) {
                         $('#myAlertDialog').modal('hide');
                         FillOrder(data);
@@ -295,20 +302,19 @@
                     }
                 });
             });
-        }
+        };
 
-        self.ConfirmOrderPay = function(){
+        self.ConfirmOrderPay = function () {
             var orderId = self.OrderId();
             var userId = self.UserId();
             $("#confirmText").text("确认该订单已支付吗？");
             $('#myAlertDialog').modal('show');
-            $("#confirmBtn").unbind("click").click(function()
-            {
+            $("#confirmBtn").unbind("click").click(function () {
                 $.ajax({
                     type: "POST",
                     url: "/houtai/CofirmOrderPay",
                     data: "pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&orderId=" + orderId
-                    +"&userId="+userId,
+                    + "&userId=" + userId,
                     success: function (data) {
                         $('#myAlertDialog').modal('hide');
                         FillOrder(data);
@@ -316,7 +322,7 @@
                     }
                 });
             });
-        }
+        };
 
         self.ConfirmOrderPayReturn = function(){
             var orderId = self.OrderId();
@@ -406,7 +412,7 @@
             orderViewModel.Price(item.Price);
             orderViewModel.Status(item.Status);
             orderViewModel.PayType(item.PayType);
-
+            orderViewModel.PayLogCount(item.PayLogCount);
             homeViewModel.List.push(orderViewModel);
         }
 

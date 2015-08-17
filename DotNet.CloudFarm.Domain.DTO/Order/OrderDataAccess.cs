@@ -475,7 +475,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
                         orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
                         orderViewModel.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
-
+                        orderViewModel.PayLogCount = !Convert.IsDBNull(dr["PayLogCount"]) ? Convert.ToInt32(dr["PayLogCount"]) : 0;
                         if (orderViewModel.OrderId > 0)
                         {
                             orderList.Add(orderViewModel);
