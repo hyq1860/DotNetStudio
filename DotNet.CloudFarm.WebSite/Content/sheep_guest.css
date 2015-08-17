@@ -55,7 +55,9 @@ a,a:hover{ text-decoration:none;}
 .Temperature_l{ float:left; width:62%; border-right:1px solid #fff;}
 .Temperature_l span{ display:block; text-align:right; margin-right:0.5rem;}
 .Temperature_r{ float:left; width:36%;}
-.Temperature_r span{ display:inline-block; width:3rem; height:3rem; background:url(../images/bg.png) no-repeat; background-size:25rem 25rem; background-position:-5rem -19rem;}
+.Temperature_r span{ display:inline-block; width:3rem; height:3rem; 
+                     /*background:url(../images/bg.png) no-repeat;*/ 
+                     background-size:25rem 25rem; background-position:-5rem -19rem;}
 .realtime_pasture_btn{ width:100%; height:3rem; background:#006a53; border-radius:3px; margin-top:1rem; text-align:center; line-height:3rem;}
 .realtime_pasture_btn a{ font-size:1.4rem; color:#fff; display:inline-block; padding-left:0.5rem; float:left;}
 .realtime_pasture_btn span{ display:inline-block; width:1.6rem; height:1.6rem;background:url(../images/bg.png) no-repeat; background-size:25rem 25rem; background-position:-13.5rem 0.1rem; float: left;margin: 0.7rem 0rem 0rem 20%;}

@@ -24,10 +24,12 @@ using Senparc.Weixin.MP.TenPayLibV3;
 using System.Net;
 using System.IO;
 using System.Net.Http;
+using DotNet.CloudFarm.Domain.Impl.Weather;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
+using DotNet.Common.Utility;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Helpers;
 
@@ -630,9 +632,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
-        public JsonResult GetWeather()
+        public ContentResult GetWeather()
         {
-            return Json(GetWeatherByHttp(), JsonRequestBehavior.AllowGet);
+            return Content(GetWeatherByHttp());
         }
 
         private string GetWeatherByHttp()
@@ -646,9 +648,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //    responseContent = streamReader.ReadToEnd();
             //}
             //return responseContent;
-            HttpClient client=new HttpClient();
-            var task= client.GetStringAsync("http://www.weather.com.cn/adat/cityinfo/101080701.html");
-            return task.Result;
+            //HttpClient client=new HttpClient();
+            //var task= client.GetStringAsync("http://www.weather.com.cn/adat/cityinfo/101080701.html");
+            //return task.Result;
+
+            return WeatherAPI.InStance.WeatherData.Data;
         }
 
         [AllowAnonymous]
