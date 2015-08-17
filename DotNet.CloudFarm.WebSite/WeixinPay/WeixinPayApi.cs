@@ -135,6 +135,79 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
             }
         }
 
+
+        /// <summary>
+        /// 企业支付
+        /// </summary>
+        /// <param name="openId">openId</param>
+        /// <param name="payCode">支付ID，订单号+支付日志ID</param>
+        /// <param name="amount">金额</param>
+        /// <param name="desc">付款描述信息</param>
+        /// <returns></returns>
+        public static string QYPay(string openId, string payCode, decimal amount, string desc, out string msg)
+        {
+            var payStatus = 1;
+            //创建支付应答对象
+            RequestHandler packageReqHandler = new RequestHandler(null);
+            var nonceStr = TenPayV3Util.GetNoncestr();
+
+            //创建请求接口参数
+            packageReqHandler.SetParameter("mch_appid", AppId);
+            packageReqHandler.SetParameter("mchid", Mchid);
+            packageReqHandler.SetParameter("nonce_str", nonceStr);
+            packageReqHandler.SetParameter("partner_trade_no", payCode);
+            packageReqHandler.SetParameter("openid", openId);
+            packageReqHandler.SetParameter("check_name", "NO_CHECK");//不校验用户姓名
+            packageReqHandler.SetParameter("desc", desc);
+            packageReqHandler.SetParameter("amount", Convert.ToInt32(amount * 100).ToString());
+            packageReqHandler.SetParameter("spbill_create_ip", IP);
+            string sign = packageReqHandler.CreateMd5Sign("key", PayKey);
+            packageReqHandler.SetParameter("sign", sign);
+
+            string data = packageReqHandler.ParseXML();
+
+            //证书相关
+            var cert = new X509Certificate2(SSLCERT_PATH, SSLCERT_PASSWORD);
+            var access = new WeixinPayLogDataAccess();
+            var weixinService = new WeiXinService(access);
+            try
+            {
+                //调用企业支付接口
+                var result = TenPayV3.QYPay(data, cert);
+                logger.Info("企业支付返回信息：" + result);
+                var unifiedorderRes = XDocument.Parse(result);
+                string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;
+                msg = unifiedorderRes.Element("xml").Element("return_msg").Value;
+                if (return_code == "SUCCESS")
+                {
+                    payStatus = 1;
+                }
+                else
+                {
+                    payStatus = 0;
+                }
+
+                return return_code;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+                //payStatus = 0;
+                //var paylog = new WeixinPayLog()
+                //{
+                //    OrderId = orderId,
+                //    WxOpenId = openId,
+                //    Description = desc,
+                //    Amount = amount,
+                //    Status = payStatus,
+                //    CreateTime = DateTime.Now
+                //};
+                //weixinService.InsertWeixinPayLog(paylog);
+                msg = e.Message;
+                return "ERROR";
+            }
+        }
+
         /// <summary>
         /// 企业支付拆分
         /// </summary>

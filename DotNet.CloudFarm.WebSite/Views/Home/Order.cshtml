@@ -40,19 +40,22 @@
     <div class="ranking_List"><div class="ranking_List_box">累计收益排行榜</div></div>
     <section class="purchase_claim_section2">
         <ul data-bind="foreach:BuyTops">
-            <!--ko if:$index()<=3-->
-            <li class="li1 clearfix" data-bind="css:'li'+$index()"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:Total--><!--/ko-->元</span></li>
+            <!--ko if:$index()<=2-->
+            <li class="li1 clearfix" data-bind="css:'li'+($index()+1)"><i class="iconfont"></i><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:Total--><!--/ko-->元</span></li>
             <!--/ko-->
-            <!--ko if:$index()>3-->
-            <li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:Total--><!--/ko--></span></li>
+            <!--ko if:$index()>2 &&$index()<=4-->
+            <li class="clearfix"><span class="ranking_num" data-bind="text:($index()+1)"></span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:Total--><!--/ko-->元</span></li>
+            <!--/ko-->
+            <!--ko if:$index()>4-->
+            <li class="clearfix" style="display:none"><span class="ranking_num" data-bind="text:($index()+1)"></span><img src="/images/tx2.png" data-bind="attr:{src:HeadUrl}"><span class="span1"><!--ko text:WxNickName--><!--/ko--></span><span class="span2"><!--ko text:Total--><!--/ko-->元</span></li>
             <!--/ko-->
             @*<li class="li2 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>
             <li class="li3 clearfix"><i class="iconfont"></i><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>*@
             @*<li class="clearfix"><span class="ranking_num">4</span><img src="/images/tx2.png"><span class="span1">18510251039</span><span class="span2">1000只</span></li>*@
         </ul>
-        <!--ko if:BuyTops.length>=5-->
+        <!--ko if:BuyTops().length>5-->
         
-        <div class="loading_more"><a href="#">加载更多</a>
+        <div class="loading_more"><a href="javascript:void(0);" data-bind="click:LoadMore">加载更多</a>
         </div>
         <!--/ko-->
     </section>
@@ -138,6 +141,11 @@
         self.TotalPrice = ko.pureComputed(function() {
             return toDecimal2(self.Count() * self.Product.Price());
         });
+        
+        self.LoadMore = function(){
+            $(".clearfix").show();
+            $(".loading_more").hide();
+        };
 
         self.ReduceCount=function() {
             var currentCount = self.Count();

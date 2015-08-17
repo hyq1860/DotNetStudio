@@ -462,7 +462,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             {
                 //企业支付
                 var payCode = paylog.OrderId.ToString() + paylog.Id.ToString();
-                var payResult = WeixinPayApi.QYPay(paylog.WxOpenId, payCode, paylog.Amount, paylog.Description);
+                var payResultMsg = "";
+                var payResult = WeixinPayApi.QYPay(paylog.WxOpenId, payCode, paylog.Amount, paylog.Description, out payResultMsg);
                 if (payResult=="SUCCESS")
                 {
                     success = true;
@@ -481,7 +482,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 else
                 {
                     success = false;
-                    msg = "企业支付接口调取失败，请稍后重试";
+                    msg = "企业支付接口调取失败，请稍后重试。原因：" + payResultMsg;
                 }
             }
             else
