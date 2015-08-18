@@ -611,7 +611,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             ViewData["Signature"] = signature;
 
             ViewBag.uid = DotNet.Common.CryptographyHelper.Base64Encrypt(this.UserInfo.UserId.ToString());
-            return View();
+            return View(payTipViewModel);
         }
 
         /// <summary>

@@ -540,6 +540,7 @@
     <Content Include="images\sheep_step_17.png" />
     <Content Include="images\ssmc.png" />
     <Content Include="images\step_bg.png" />
+    <Content Include="images\thumb.jpg" />
     <Content Include="images\title.png" />
     <Content Include="images\tx.png" />
     <Content Include="images\tx2.png" />
