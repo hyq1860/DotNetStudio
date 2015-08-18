@@ -214,36 +214,36 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         /// <param name="MemuName"></param>
         /// <returns></returns>
-        public ActionResult CreateMenuTemp()
-        {
-            var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+        //public ActionResult CreateMenuTemp()
+        //{
+        //    var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
 
-            var btnGroup = new ButtonGroup();
-            //二级菜单
-            var subButton = new SubButton()
-            {
-                name = "关于羊客"
-            };
-            subButton.sub_button.Add(new SingleClickButton()
-            {
-                key = "updating",
-                name = "微场景"
-            });
-            subButton.sub_button.Add(new SingleClickButton()
-            {
-                key = "updating",
-                name = "了解更多"
-            });
-            btnGroup.button.Add(subButton);
-            var clickButton = new SingleClickButton()
-            {
-                key = "updating",
-                name = "羊羊得益"
-            };
-            btnGroup.button.Add(clickButton);
-            var result = CommonApi.CreateMenu(accesstoken, btnGroup);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    var btnGroup = new ButtonGroup();
+        //    //二级菜单
+        //    var subButton = new SubButton()
+        //    {
+        //        name = "关于羊客"
+        //    };
+        //    subButton.sub_button.Add(new SingleClickButton()
+        //    {
+        //        key = "updating",
+        //        name = "微场景"
+        //    });
+        //    subButton.sub_button.Add(new SingleClickButton()
+        //    {
+        //        key = "updating",
+        //        name = "了解更多"
+        //    });
+        //    btnGroup.button.Add(subButton);
+        //    var clickButton = new SingleClickButton()
+        //    {
+        //        key = "updating",
+        //        name = "羊羊得益"
+        //    };
+        //    btnGroup.button.Add(clickButton);
+        //    var result = CommonApi.CreateMenu(accesstoken, btnGroup);
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
         /// <summary>
         /// 测试获取所有关注用户
         /// </summary>

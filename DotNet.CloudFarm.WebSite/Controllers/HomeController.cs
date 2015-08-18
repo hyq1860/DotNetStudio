@@ -333,7 +333,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //TODO:这里需要验证签名
 
             ////验证请求是否从微信发过来（安全）
-            logger.Info("IsTenpaySign:" + resHandler.IsTenpaySign());
+            //logger.Info("IsTenpaySign:" + resHandler.IsTenpaySign());
             if (resHandler.IsTenpaySign())
             {
                 try
