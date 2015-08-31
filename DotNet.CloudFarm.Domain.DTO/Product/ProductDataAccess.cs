@@ -289,5 +289,27 @@ namespace DotNet.CloudFarm.Domain.DTO.Product
                 cmd.ExecuteScalar();
             }
         }
+
+        /// <summary>
+        /// 根据条件获取单个产品
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public ProductModel GetProductByCondition(string condition)
+        {
+            var productModel = new ProductModel();
+            using (var cmd = DataCommandManager.GetDataCommand("GetSingleProductByCondition"))
+            {
+                cmd.CommandText = string.Format("{0} where 1=1 and {1}",cmd.CommandText,condition);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        productModel = DataReaderToProductModel(dr);
+                    }
+                }
+            }
+            return productModel;
+        }
     }
 }

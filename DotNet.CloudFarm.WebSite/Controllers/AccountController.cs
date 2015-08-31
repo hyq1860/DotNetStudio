@@ -36,7 +36,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
 
 #if DEBUG
-        public static readonly string debugOpenId = "ok0TYsz-H2J_zdS5WatEjN_Fpckw";
+        public static readonly string debugOpenId = "oOGootzpwe38CkQSTj00wyHhKSMk";
 #endif
 
         public AccountController()

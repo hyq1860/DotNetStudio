@@ -59,5 +59,12 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         /// <param name="id"></param>
         /// <param name="VirtualSaledCount"></param>
         void UpdateVirtualSaledCount(int id, int VirtualSaledCount);
+
+        /// <summary>
+        /// 根据条件获取单个产品
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        ProductModel GetProductByCondition(string condition);
     }
 }

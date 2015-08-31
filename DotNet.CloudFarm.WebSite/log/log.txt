@@ -1121,3 +1121,37 @@ ERROR 2015-08-18 19:50:59,083 [ApplicationError] System.NullReferenceException: 
    在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ERROR 2015-08-31 09:04:36,055 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:36,071 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:35,977 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:36,071 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:36,055 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:36,555 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:36,615 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:36,655 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:38,213 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:38,244 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:45,681 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:04:48,634 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:09:47,199 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:09:48,965 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:09:49,559 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:09:49,824 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-08-31 09:09:50,215 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84

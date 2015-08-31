@@ -707,5 +707,18 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             
             return View();
         }
+
+
+        public ActionResult Active()
+        {
+            var condition = "price=1 and StartTime<=GETDATE() and EndTime>=GETDATE() and [status]=0";
+            var product = ProductService.GetProductByCondition(condition);
+            if(product.Id>0)
+            {
+                return RedirectToAction("Order", new { productId = product.Id });
+            }
+            return Content("活动已经结束，敬请期待下期");
+
+        }
     }
 }
