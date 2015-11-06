@@ -151,7 +151,7 @@ namespace DotNet.CloudFarm.Domain.Model.Product
             get
             {
                 var now = DateTime.Now;
-                return now >= StartTime && now < EndTime && Status==1 && (ExistCount>0);
+                return now >= StartTime && now < EndTime  && (ExistCount>0);
             }
         }
     }

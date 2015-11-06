@@ -1155,3 +1155,5 @@ ERROR 2015-08-31 09:09:49,824 [AccountController] System.NullReferenceException:
    在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
 ERROR 2015-08-31 09:09:50,215 [AccountController] System.NullReferenceException: 未将对象引用设置到对象的实例。
    在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
+ERROR 2015-10-23 16:09:21,388 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 等待的操作过时。
+ERROR 2015-10-23 16:10:19,320 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 等待的操作过时。

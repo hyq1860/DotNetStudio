@@ -128,6 +128,8 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
                 var sign = getSign(requestParamList);
                 requestParamList.Add("sign=" + sign);
                 var content = string.Join("&", requestParamList);
+                content = System.Web.HttpUtility.UrlEncode(content);
+                
                 var returnJson = Post(templateUrl, content);
                 var smsResponseModel = JsonHelper.FromJson<SMSResponseModel>(returnJson);
                 logger.Info("订单短信接口返回：" + returnJson);

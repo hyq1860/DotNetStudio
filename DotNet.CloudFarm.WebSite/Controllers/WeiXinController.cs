@@ -200,6 +200,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 name = "了解更多"
             });
             btnGroup.button.Add(subButton);
+            var clickButton1 = new SingleViewButton()
+            {
+                url = "http://activity.kerchinsheep.com/app/h5/zy",
+                name = "全民套羊"
+            };
+            btnGroup.button.Add(clickButton1);
             var clickButton = new SingleViewButton()
             {
                 url = "http://yk.kerchinsheep.com/",
