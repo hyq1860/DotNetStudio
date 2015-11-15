@@ -7,6 +7,7 @@ using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
+using DotNet.Data;
 
 namespace DotNet.CloudFarm.Domain.Contract.Order
 {
@@ -126,5 +127,14 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="mobile"></param>
         /// <returns></returns>
         PagedList<OrderManageViewModel> GetOrderList(int pageIndex, int pageSize, DateTime? startTime, DateTime? endTime, long? orderId, string mobile,int? status);
+
+        ///// <summary>
+        ///// 根据用户id和分页信息获取订单
+        ///// </summary>
+        ///// <param name="userId"></param>
+        ///// <param name="pageIndex"></param>
+        ///// <param name="pageSize"></param>
+        ///// <returns></returns>
+        //Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize);
     }
 }

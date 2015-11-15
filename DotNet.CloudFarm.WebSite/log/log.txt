@@ -1157,3 +1157,503 @@ ERROR 2015-08-31 09:09:50,215 [AccountController] System.NullReferenceException:
    在 DotNet.CloudFarm.WebSite.Controllers.AccountController.<Login>d__3.MoveNext() 位置 d:\LG\work\羊客\Code\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\AccountController.cs:行号 84
 ERROR 2015-10-23 16:09:21,388 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 等待的操作过时。
 ERROR 2015-10-23 16:10:19,320 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 等待的操作过时。
+ERROR 2015-11-15 23:01:58,359 [ApplicationError] Ninject.ActivationException: Error activating IRepository{PreSaleOrder}
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  4) Injection of dependency IRepository{PreSaleOrder} into parameter preOrdeRepository of constructor of type OrderService
+  3) Injection of dependency IOrderService into property OrderService of type HomeController
+  2) Injection of dependency HomeController into parameter resolutionRoot of constructor of type NinjectDependencyResolver
+  1) Request for IDependencyResolver
+
+Suggestions:
+  1) Ensure that you have defined a binding for IRepository{PreSaleOrder}.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   在 Ninject.KernelBase.Resolve(IRequest request)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.GetValue(IContext context, ITarget target, IEnumerable`1 allPropertyValues)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Pipeline.<>c__DisplayClass2.<Activate>b__0(IActivationStrategy s)
+   在 Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.Map[T](IEnumerable`1 series, Action`1 action)
+   在 Ninject.Activation.Pipeline.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   在 System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2015-11-15 23:04:03,628 [ApplicationError] Ninject.ActivationException: Error activating IEntityFrameworkDbContext
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  5) Injection of dependency IEntityFrameworkDbContext into parameter context of constructor of type EntityFrameworkRepository{PreSaleOrder}
+  4) Injection of dependency IRepository{PreSaleOrder} into parameter preOrdeRepository of constructor of type OrderService
+  3) Injection of dependency IOrderService into property OrderService of type HomeController
+  2) Injection of dependency HomeController into parameter resolutionRoot of constructor of type NinjectDependencyResolver
+  1) Request for IDependencyResolver
+
+Suggestions:
+  1) Ensure that you have defined a binding for IEntityFrameworkDbContext.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   在 Ninject.KernelBase.Resolve(IRequest request)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.GetValue(IContext context, ITarget target, IEnumerable`1 allPropertyValues)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Pipeline.<>c__DisplayClass2.<Activate>b__0(IActivationStrategy s)
+   在 Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.Map[T](IEnumerable`1 series, Action`1 action)
+   在 Ninject.Activation.Pipeline.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   在 System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2015-11-15 23:04:10,317 [ApplicationError] Ninject.ActivationException: Error activating IEntityFrameworkDbContext
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  5) Injection of dependency IEntityFrameworkDbContext into parameter context of constructor of type EntityFrameworkRepository{PreSaleOrder}
+  4) Injection of dependency IRepository{PreSaleOrder} into parameter preOrdeRepository of constructor of type OrderService
+  3) Injection of dependency IOrderService into property OrderService of type HomeController
+  2) Injection of dependency HomeController into parameter resolutionRoot of constructor of type NinjectDependencyResolver
+  1) Request for IDependencyResolver
+
+Suggestions:
+  1) Ensure that you have defined a binding for IEntityFrameworkDbContext.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   在 Ninject.KernelBase.Resolve(IRequest request)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.GetValue(IContext context, ITarget target, IEnumerable`1 allPropertyValues)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Pipeline.<>c__DisplayClass2.<Activate>b__0(IActivationStrategy s)
+   在 Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.Map[T](IEnumerable`1 series, Action`1 action)
+   在 Ninject.Activation.Pipeline.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   在 System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2015-11-15 23:06:21,403 [ApplicationError] Ninject.ActivationException: Error activating string
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  6) Injection of dependency string into parameter connectionString of constructor of type EntityFrameworkDbContext
+  5) Injection of dependency IEntityFrameworkDbContext into parameter context of constructor of type EntityFrameworkRepository{PreSaleOrder}
+  4) Injection of dependency IRepository{PreSaleOrder} into parameter preOrdeRepository of constructor of type OrderService
+  3) Injection of dependency IOrderService into property OrderService of type HomeController
+  2) Injection of dependency HomeController into parameter resolutionRoot of constructor of type NinjectDependencyResolver
+  1) Request for IDependencyResolver
+
+Suggestions:
+  1) Ensure that you have defined a binding for string.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   在 Ninject.KernelBase.Resolve(IRequest request)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.GetValue(IContext context, ITarget target, IEnumerable`1 allPropertyValues)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Pipeline.<>c__DisplayClass2.<Activate>b__0(IActivationStrategy s)
+   在 Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.Map[T](IEnumerable`1 series, Action`1 action)
+   在 Ninject.Activation.Pipeline.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   在 System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2015-11-15 23:08:49,070 [ApplicationError] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.Domain.Impl.Order.OrderService.GetPreSaleOrderList(Int32 userId, Int32 pageIndex, Int32 pageSize) 位置 D:\GitHub\DotNetStudio\DotNet.CloudFarm.Domain.Impl\Order\OrderService.cs:行号 178
+   在 DotNet.CloudFarm.WebSite.Controllers.HomeController.ConfirmPreSaleOrder() 位置 D:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\HomeController.cs:行号 733
+   在 lambda_method(Closure , ControllerBase , Object[] )
+   在 System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   在 System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   在 System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.ActionInvocation.InvokeSynchronousActionMethod()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<BeginInvokeSynchronousActionMethod>b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3d()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass33.<BeginInvokeActionMethodWithFilters>b__32(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   在 System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ERROR 2015-11-15 23:14:14,384 [ApplicationError] System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 DotNet.CloudFarm.Domain.Impl.Order.OrderService.GetPreSaleOrderList(Int32 userId, Int32 pageIndex, Int32 pageSize) 位置 D:\GitHub\DotNetStudio\DotNet.CloudFarm.Domain.Impl\Order\OrderService.cs:行号 178
+   在 DotNet.CloudFarm.WebSite.Controllers.HomeController.ConfirmPreSaleOrder() 位置 D:\GitHub\DotNetStudio\DotNet.CloudFarm.WebSite\Controllers\HomeController.cs:行号 733
+   在 lambda_method(Closure , ControllerBase , Object[] )
+   在 System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   在 System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   在 System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.ActionInvocation.InvokeSynchronousActionMethod()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<BeginInvokeSynchronousActionMethod>b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3d()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass33.<BeginInvokeActionMethodWithFilters>b__32(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   在 System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   在 System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   在 System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   在 System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   在 System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ERROR 2015-11-15 23:24:56,452 [ApplicationError] Ninject.ActivationException: Error activating IRepository{PreSaleOrder}
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  4) Injection of dependency IRepository{PreSaleOrder} into parameter preOrdeRepository of constructor of type OrderService
+  3) Injection of dependency IOrderService into property OrderService of type HomeController
+  2) Injection of dependency HomeController into parameter resolutionRoot of constructor of type NinjectDependencyResolver
+  1) Request for IDependencyResolver
+
+Suggestions:
+  1) Ensure that you have defined a binding for IRepository{PreSaleOrder}.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   在 Ninject.KernelBase.Resolve(IRequest request)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   在 Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   在 Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   在 Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.GetValue(IContext context, ITarget target, IEnumerable`1 allPropertyValues)
+   在 Ninject.Activation.Strategies.PropertyInjectionStrategy.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Pipeline.<>c__DisplayClass2.<Activate>b__0(IActivationStrategy s)
+   在 Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.Map[T](IEnumerable`1 series, Action`1 action)
+   在 Ninject.Activation.Pipeline.Activate(IContext context, InstanceReference reference)
+   在 Ninject.Activation.Context.ResolveInternal(Object scope)
+   在 Ninject.Activation.Context.Resolve()
+   在 Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   在 System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2015-11-15 23:33:05,649 [ApplicationError] System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'dbo.PreSaleOrderInfo'.
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<Reader>b__c(DbCommand t, DbCommandInterceptionContext`1 c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   在 System.Data.Entity.Internal.InterceptableDbCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:fba6d215-c666-4e0a-8f2d-9b93b821fa5b
+Error Number:208,State:1,Class:16
+ERROR 2015-11-15 23:36:16,973 [ApplicationError] System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'dbo.PreSaleOrderInfos'.
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<Reader>b__c(DbCommand t, DbCommandInterceptionContext`1 c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   在 System.Data.Entity.Internal.InterceptableDbCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:90165a7c-8d79-415c-8685-ecb0b92988ce
+Error Number:208,State:1,Class:16
+ERROR 2015-11-15 23:37:27,780 [ApplicationError] System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'dbo.PreSaleOrderInfos'.
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<Reader>b__c(DbCommand t, DbCommandInterceptionContext`1 c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   在 System.Data.Entity.Internal.InterceptableDbCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:90165a7c-8d79-415c-8685-ecb0b92988ce
+Error Number:208,State:1,Class:16
+ERROR 2015-11-15 23:38:54,749 [ApplicationError] System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'PayType'.
+Invalid column name 'User_UserId'.
+Invalid column name 'User_Mobile'.
+Invalid column name 'User_WxOpenId'.
+Invalid column name 'User_WxNickName'.
+Invalid column name 'User_WxSex'.
+Invalid column name 'User_WxHeadUrl'.
+Invalid column name 'User_WxSubTime'.
+Invalid column name 'User_WxUnionId'.
+Invalid column name 'User_WxRemark'.
+Invalid column name 'User_WxGroupId'.
+Invalid column name 'User_Status'.
+Invalid column name 'User_CreateTime'.
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<Reader>b__c(DbCommand t, DbCommandInterceptionContext`1 c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   在 System.Data.Entity.Internal.InterceptableDbCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:fb1c10d6-e35c-4914-846b-6c4c38f59053
+Error Number:207,State:1,Class:16
+ERROR 2015-11-15 23:41:37,612 [ApplicationError] System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'User_UserId'.
+Invalid column name 'User_Mobile'.
+Invalid column name 'User_WxOpenId'.
+Invalid column name 'User_WxNickName'.
+Invalid column name 'User_WxSex'.
+Invalid column name 'User_WxHeadUrl'.
+Invalid column name 'User_WxSubTime'.
+Invalid column name 'User_WxUnionId'.
+Invalid column name 'User_WxRemark'.
+Invalid column name 'User_WxGroupId'.
+Invalid column name 'User_Status'.
+Invalid column name 'User_CreateTime'.
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<Reader>b__c(DbCommand t, DbCommandInterceptionContext`1 c)
+   在 System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   在 System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.Reader(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   在 System.Data.Entity.Internal.InterceptableDbCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+ClientConnectionId:4ca4928d-3830-43e1-acea-add365079a5f
+Error Number:207,State:1,Class:16

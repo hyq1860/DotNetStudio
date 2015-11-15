@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Common.Collections;
@@ -19,10 +20,14 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         private IUserDataAccess userDataAccess;
 
         private ISMSService smsService;
-        public UserService(IUserDataAccess userDataAccess, ISMSService smsService)
+
+        private CloudFarmDbContext cloudFarmDb;
+
+        public UserService(IUserDataAccess userDataAccess, ISMSService smsService, CloudFarmDbContext dbContext)
         {
             this.userDataAccess = userDataAccess;
             this.smsService = smsService;
+            this.cloudFarmDb = dbContext;
         }
 
         public Result<LoginUser> Login(LoginUser loginUser)

@@ -20,6 +20,7 @@ using DotNet.CloudFarm.Domain.Impl.User;
 using DotNet.CloudFarm.Domain.DTO.User;
 using Senparc.Weixin.MP.CommonAPIs;
 using System.Web.Configuration;
+using DotNet.CloudFarm.Domain.Model;
 
 namespace DotNet.CloudFarm.WebSite.Models
 {
@@ -124,7 +125,7 @@ namespace DotNet.CloudFarm.WebSite.Models
             {
                 var openId = requestMessage.FromUserName;
                 var userDataAccess = new UserDataAccess();
-                var userService = new UserService(userDataAccess, null);
+                var userService = new UserService(userDataAccess, null, new CloudFarmDbContext());
                 var user = userService.GetUserByWxOpenId(openId);
                 if (user == null || user.UserId == 0)
                 {

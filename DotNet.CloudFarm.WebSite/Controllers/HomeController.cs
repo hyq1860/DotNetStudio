@@ -720,5 +720,19 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Content("活动已经结束，敬请期待下期");
 
         }
+
+        #region 预售
+
+        public ActionResult PreSaleProduct()
+        {
+            return View();
+        }
+
+        public ActionResult ConfirmPreSaleOrder()
+        {
+            OrderService.GetPreSaleOrderList(1, 1, 1);
+            return View();
+        }
+        #endregion
     }
 }

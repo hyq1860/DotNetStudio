@@ -136,5 +136,14 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="payType"></param>
         /// <returns></returns>
         bool UpdateOrderPayType(long orderId, int userId, int payType);
+
+        /// <summary>
+        /// 根据用户id和分页信息获取订单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize);
     }
 }

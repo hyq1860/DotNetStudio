@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,5 +68,15 @@ namespace DotNet.CloudFarm.Domain.Model.User
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+    }
+
+    public class UserModelEfMap : EntityTypeConfiguration<UserModel>
+    {
+        public UserModelEfMap()
+        {
+            ToTable("User");
+            HasKey(c => c.UserId);
+            Property(c => c.UserId).HasColumnName("ID");
+        }
     }
 }

@@ -486,5 +486,19 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var result = new PagedList<OrderManageViewModel>(orderList, pageIndex, pageSize, totalOrderCount);
             return result;
         }
+
+        //public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
+
+    //public class PreSaleOrderRepository : IPreSaleOrderRepository
+    //{
+    //    private IRepository<PreSaleOrder> preSaleOrdeRepository; 
+    //    public PreSaleOrderRepository(IRepository<PreSaleOrder> preSaleOrdeRepository)
+    //    {
+    //        this.preSaleOrdeRepository = preSaleOrdeRepository;
+    //    }
+    //}
 }

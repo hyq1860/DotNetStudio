@@ -77,6 +77,10 @@
       <Project>{BA5478CC-902C-49E0-A63C-6FF87553A240}</Project>
       <Name>DotNet.CloudFarm.Domain.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj">
+      <Project>{53E3C58A-E08F-4594-A9ED-5EC9A0D97085}</Project>
+      <Name>DotNet.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

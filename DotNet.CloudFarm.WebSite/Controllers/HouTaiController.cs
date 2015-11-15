@@ -698,5 +698,17 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public HouTaiController(IUserService userService) : base(userService)
         {
         }
+
+        #region 预售
+
+        /// <summary>
+        /// 预售订单列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PreSaleOrderlist()
+        {
+            return View();
+        }
+        #endregion
     }
 }

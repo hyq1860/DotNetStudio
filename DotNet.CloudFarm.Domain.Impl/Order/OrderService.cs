@@ -9,12 +9,14 @@ using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Model;
 using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
+using DotNet.Data;
 
 namespace DotNet.CloudFarm.Domain.Impl.Order
 {
@@ -31,13 +33,19 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         private IMessageService messageService;
 
-        public OrderService(IOrderDataAccess orderDataAccess, ISMSService smsService, IUserService userService, IProductService productService, IMessageService messageService)
+        private CloudFarmDbContext cloudFarmDb;
+
+        private EntityFrameworkRepository<PreSaleOrder> preSaleOrdeRepository;
+
+        public OrderService(IOrderDataAccess orderDataAccess, ISMSService smsService, IUserService userService, IProductService productService, IMessageService messageService, CloudFarmDbContext cloudFarmDb, EntityFrameworkRepository<PreSaleOrder> preOrdeRepository)
         {
             this.orderDataAccess = orderDataAccess;
             this.smsService = smsService;
             this.userService = userService;
             this.productService = productService;
             this.messageService = messageService;
+            this.cloudFarmDb = cloudFarmDb;
+            this.preSaleOrdeRepository = preOrdeRepository;
         }
 
         public Result<PagedList<OrderViewModel>> GetOrderList(int userId, int pageIndex, int pageSize)
@@ -162,6 +170,13 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         public bool UpdateOrderPayType(long orderId, int userId, int payType)
         {
             return orderDataAccess.UpdateOrderPayType(orderId, userId, payType);
+        }
+
+        public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)
+        {
+            var result=new Result<PagedList<PreSaleOrder>>();
+            result.Data = new PagedList<PreSaleOrder>(preSaleOrdeRepository.GetPagedList(s => s.UserId == userId, s => s.OrderId, "", pageIndex, pageSize).ToList(),pageIndex,pageSize);
+            return result;
         }
 
         public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)

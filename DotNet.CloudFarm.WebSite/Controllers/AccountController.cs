@@ -18,6 +18,7 @@ using DotNet.Common.Models;
 using DotNet.Identity;
 using DotNet.Identity.Database;
 using System.Web.Configuration;
+using DotNet.CloudFarm.Domain.Model;
 using log4net;
 using DotNet.Common.Utility;
 using Senparc.Weixin.MP.CommonAPIs;
@@ -36,20 +37,23 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
 
 #if DEBUG
-        public static readonly string debugOpenId = "oOGootzpwe38CkQSTj00wyHhKSMk";
+        public static readonly string debugOpenId = "oOGoot0O0nEuP4uEHdNLQyNpGnwM"; //oOGootzpwe38CkQSTj00wyHhKSMk
 #endif
 
         public AccountController()
             : this(new UserManager<CloudFarmIdentityUser>(new CloudFarmUserStore()))
         {
-            UserService=new UserService(new UserDataAccess(),new SMSService());
+            UserService=new UserService(new UserDataAccess(),new SMSService(),new CloudFarmDbContext());
             SmsService=new SMSService();
         }
 
         public AccountController(UserManager<CloudFarmIdentityUser> userManager)
         {
             UserManager = userManager;
+            //CloudFarmDbContext = dbContext;
         }
+
+        
 
         private ILog logger = LogManager.GetLogger("AccountController");
 
@@ -57,6 +61,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         [Ninject.Inject]
         public IUserService UserService { get; set; }
+
+        //[Ninject.Inject]
+        //public CloudFarmDbContext CloudFarmDbContext { get; set; }
 
         public ISMSService SmsService { get; set; }
 
@@ -216,7 +223,6 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Login()
         {
-
             if (Request.Cookies[COOKIE_OPENID_KEY]!=null)
             {
                 ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;

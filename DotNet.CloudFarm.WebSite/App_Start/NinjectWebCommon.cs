@@ -13,7 +13,11 @@ using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.User;
 using DotNet.CloudFarm.Domain.Impl.WeiXin;
+using DotNet.CloudFarm.Domain.Model;
+using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.WebSite.Controllers;
+using DotNet.Data;
+using DotNet.Data.Repositories;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(DotNet.CloudFarm.WebSite.App_Start.NinjectWebCommon), "Stop")]
@@ -80,8 +84,17 @@ namespace DotNet.CloudFarm.WebSite.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            
+
             //业务接口注入点
+
+            //entityframework的注入
+            kernel.Bind<CloudFarmDbContext>().ToSelf().InRequestScope();
+
+            kernel.Bind<IDbContext>().To<CloudFarmDbContext>().InRequestScope();
+            kernel.Bind<IEntityFrameworkDbContext>().To<CloudFarmDbContext>().InRequestScope();
+
+            //预售订单
+            kernel.Bind<EntityFrameworkRepository<PreSaleOrder>>().ToSelf().InRequestScope();
 
             //消息
             kernel.Bind<IMessageDataAccess>().To<MessageDataAccess>();
@@ -107,6 +120,8 @@ namespace DotNet.CloudFarm.WebSite.App_Start
             //短信服务
             kernel.Bind<ISMSService>().To<SMSService>();
 
+
+            
         }        
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.Product;
+using DotNet.CloudFarm.Domain.Model;
 using DotNet.CloudFarm.Domain.Model.Product;
 using DotNet.Common.Collections;
 
@@ -15,9 +16,13 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
     public class ProductService:IProductService
     {
         private IProductDataAccess productDataAccess;
-        public ProductService(IProductDataAccess productDataAccess)
+
+        private CloudFarmDbContext cloudFarmDb;
+
+        public ProductService(IProductDataAccess productDataAccess,CloudFarmDbContext cloudFarmDb)
         {
             this.productDataAccess = productDataAccess;
+            this.cloudFarmDb = cloudFarmDb;
         }
 
         public PagedList<ProductModel> GetProducts(int pageIndex, int pageSize)
@@ -73,6 +78,16 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
         public ProductModel GetProductByCondition(string condition)
         {
             return productDataAccess.GetProductByCondition(condition);
+        }
+
+        public PreSaleProduct GetPreSaleProduct(int productId)
+        {
+            return cloudFarmDb.PreSaleProducts.FirstOrDefault(s=>s.Id== productId);
+        }
+
+        public List<PreSaleProduct> GetPreSaleProducts()
+        {
+            return cloudFarmDb.PreSaleProducts.ToList();
         }
     }
 }

@@ -97,6 +97,16 @@
     <Compile Include="Exceptions\DesignByContractException.cs" />
     <Compile Include="Exceptions\PostconditionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BaseEntity.cs" />
+    <Compile Include="Repositories\EnfityFrameworkConfiguration.cs" />
+    <Compile Include="Repositories\EntityFrameworkExtensions.cs" />
+    <Compile Include="Repositories\EntityFrameworkRepository.cs" />
+    <Compile Include="Repositories\EntityFrameworkRepositoryContext.cs" />
+    <Compile Include="Repositories\EntityFrameworkSqlLogFormatter.cs" />
+    <Compile Include="Repositories\IDbContext.cs" />
+    <Compile Include="Repositories\IEntityFrameworkDbContext.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\Log4NetCommandInterceptor.cs" />
     <Compile Include="Utility\SqlHelper.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,7 @@
     <Compile Include="Message\IMessageService.cs" />
     <Compile Include="Order\IOrderDataAccess.cs" />
     <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="Order\IPreSaleOrderRepository.cs" />
     <Compile Include="Product\IProductDataAccess.cs" />
     <Compile Include="Product\IProductService.cs" />
     <Compile Include="SMS\ISMSService.cs" />
@@ -65,6 +66,10 @@
     <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
       <Project>{55e1d54c-fbd4-4d79-97bb-a0f00dc14fb7}</Project>
       <Name>DotNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj">
+      <Project>{53E3C58A-E08F-4594-A9ED-5EC9A0D97085}</Project>
+      <Name>DotNet.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -667,6 +668,9 @@
     <Content Include="Views\HouTai\PayRefund.cshtml" />
     <Content Include="Views\Home\Share.cshtml" />
     <Content Include="Views\HouTai\SetVirtualSaledCount.cshtml" />
+    <Content Include="Views\Home\PreSaleProduct.cshtml" />
+    <Content Include="Views\Home\ConfirmPreSaleOrder.cshtml" />
+    <Content Include="Views\HouTai\PreSaleOrderlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -702,6 +706,10 @@
     <ProjectReference Include="..\DotNet.Common\DotNet.Common.csproj">
       <Project>{55e1d54c-fbd4-4d79-97bb-a0f00dc14fb7}</Project>
       <Name>DotNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNet.Data\DotNet.Data.csproj">
+      <Project>{53E3C58A-E08F-4594-A9ED-5EC9A0D97085}</Project>
+      <Name>DotNet.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\DotNet.Identity\DotNet.Identity.csproj">
       <Project>{365238B7-DE36-4172-B8C8-5004E9C0ECAF}</Project>
