@@ -17,7 +17,6 @@ using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.WeiXin;
 using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
-using DotNet.CloudFarm.Domain.Model.WeiXin;
 using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.CloudFarm.Domain.Model.Product;
 using DotNet.CloudFarm.Domain.Model.Base;
@@ -25,6 +24,7 @@ using DotNet.CloudFarm.Domain.ViewModel;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.Contract.SMS;
+using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Impl.SMS;
 using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.CloudFarm.WebSite.WeixinPay;
@@ -42,6 +42,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
     public class HouTaiController : BaseHouTaiController
     {
         private readonly decimal payUpperLimit = 20000M;//微信支付支持的上限
+
+        [Ninject.Inject]
+        public IPreSaleOrderService PreSaleOrderService { get; set; }
+
         [Ninject.Inject]
         public IProductService ProductService { get; set; }
         /// <summary>
@@ -708,6 +712,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult PreSaleOrderlist()
         {
             return View();
+        }
+
+        public ActionResult GetPreSaleOrderlist(int pageIndex=1,int pageSize=20)
+        {
+            var data=PreSaleOrderService.GetPreSaleOrderCollection(null, p => p.OrderId, "desc", pageIndex, pageSize);
+            return Content(JsonHelper.ToJson(data));
         }
         #endregion
     }

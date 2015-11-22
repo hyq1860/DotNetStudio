@@ -73,6 +73,8 @@ namespace DotNet.Data
         /// <returns></returns>
         T GetById(int id);
 
+        T GetById(string id);
+
         /// <summary>
         /// 获取数据列表
         /// </summary>

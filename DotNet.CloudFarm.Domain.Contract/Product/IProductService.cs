@@ -82,10 +82,6 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         /// <returns></returns>
         PreSaleProduct GetPreSaleProduct(int productId);
 
-        /// <summary>
-        /// 获取商品列表
-        /// </summary>
-        /// <returns></returns>
-        List<PreSaleProduct> GetPreSaleProducts();
+        
     }
 }

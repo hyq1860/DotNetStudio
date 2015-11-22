@@ -14,7 +14,7 @@ using DotNet.Data.Repositories;
 
 namespace DotNet.Data
 {
-    public class EntityFrameworkRepository<T> :IRepository<T> where T:class 
+    public class GenericRepository<T> :IRepository<T> where T:class 
     {
         private IEntityFrameworkDbContext context;
 
@@ -31,7 +31,7 @@ namespace DotNet.Data
             }
         }
 
-        public EntityFrameworkRepository(IEntityFrameworkDbContext context,bool isNoTracking = true)
+        public GenericRepository(IEntityFrameworkDbContext context,bool isNoTracking = true)
         {
             this.context = context;
             this.isNoTracking = isNoTracking;
@@ -252,6 +252,11 @@ namespace DotNet.Data
         }
 
         public T GetById(int id)
+        {
+            return Entities.Find(id);
+        }
+
+        public T GetById(string id)
         {
             return Entities.Find(id);
         }

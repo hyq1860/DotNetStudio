@@ -100,7 +100,7 @@
     <Compile Include="Repositories\BaseEntity.cs" />
     <Compile Include="Repositories\EnfityFrameworkConfiguration.cs" />
     <Compile Include="Repositories\EntityFrameworkExtensions.cs" />
-    <Compile Include="Repositories\EntityFrameworkRepository.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\EntityFrameworkRepositoryContext.cs" />
     <Compile Include="Repositories\EntityFrameworkSqlLogFormatter.cs" />
     <Compile Include="Repositories\IDbContext.cs" />

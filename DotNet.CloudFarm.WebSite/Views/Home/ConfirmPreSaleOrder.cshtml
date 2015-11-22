@@ -1,7 +1,327 @@
 ﻿
 @{
-    ViewBag.Title = "ConfirmPreSaleOrder";
+    ViewBag.Title = "预售确认订单";
+    Layout = "~/Views/Shared/_LayoutPreSale.cshtml";
 }
 
-<h2>ConfirmPreSaleOrder</h2>
+@using DotNet.Common.Utility
+@model DotNet.CloudFarm.Domain.ViewModel.PreSaleOrderViewModel
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<div class="layout layout_orderDetail">
+    <!--订单信息S-->
+    <section class="orderInfo">
+        <div class="orderProduct">
+            <img src="@Model.PreSaleProduct.Image" alt="">
+            <span>@Model.PreSaleProduct.Name</span>
+        </div>
+        <div class="orInderMore">
+            <p class="price">
+                <span class="orange">￥<strong>@Model.PreSaleProduct.Price</strong></span>
+                <span>市场参考价：￥@Model.PreSaleProduct.MarketPrice</span>
+            </p>
+            <dl>
+                <dt>礼盒内容：</dt>
+                <dd>羔羊肉馅0.5kg*2  |  羔羊法式前腱1.1kg*1  |  羔羊蝴蝶排0.5kg*2  |  羔羊法式前腱1.1kg*1</dd>
+            </dl>
+            <dl>
+                <dt>产&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地：</dt>
+                <dd>@Model.PreSaleProduct.Place</dd>
+            </dl>
+            <dl>
+                <dt>保质期：</dt>
+                <dd>@Model.PreSaleProduct.ShelfLife</dd>
+            </dl>
+            <dl>
+                <dt>储藏条件：</dt>
+                <dd>@Model.PreSaleProduct.StorageCondition</dd>
+            </dl>
+            <dl>
+                <dt>配送范围：</dt>
+                <dd>@Model.PreSaleProduct.DeliveryArea</dd>
+            </dl>
+        </div>
+    </section>
+    <!--订单信息E-->
+    <!--订购数量S-->
+    <section class="orderNum">
+        <span class="txt">预购数量</span>
+        <span class="buy_amount">
+            <a data-action="minus" href="javascript:void(0)" class="minus" data-bind="click:ReduceCount">-</a>
+            <input type="text" data-action="numInput" value="1" class="text-amount" data-bind="value:Count">
+            <a data-action="plus" href="javascript:void(0)" class="plus" data-bind="click:AddCount">+</a>
+        </span>
+    </section>
+    <!--订购数量E-->
+    <!--收货人信息S-->
+    <section class="buyerInfo">
+        <p>
+            <span class="txt">收货人姓名</span>
+            <input type="text" placeholder="请输入收货人姓名" data-bind="value:UserName">
+        </p>
+        <p>
+            <span class="txt">收货人联系方式</span>
+            <input type="text" placeholder="请输入收货人联系方式" data-bind="value:Phone">
+        </p>
+        <p>
+            <span class="txt">收货地址</span>
+            <select data-bind="
+    options: Provinces,
+    optionsCaption:'请选择',
+    optionsText: 'Name',
+    optionsValue:'Code',
+    value:ProvinceId,
+    event: { change : provinceChange}
+    ">
+                
+            </select>
+            <select data-bind="
+    options: Cities,
+    optionsCaption:'请选择',
+    optionsText: 'Name',
+    optionsValue:'Code',
+    value:CityId,
+    event: { change : cityChange}
+    ">
+            </select>
+            <select data-bind="
+    options: Areas,
+    optionsCaption:'请选择',
+    optionsText: 'Name',
+    optionsValue:'Code',
+    value:AreaId,
+    event:{change:areaChange}
+    ">
+            </select>
+        </p>
+        <p>
+            <span class="txt">详细地址</span>
+            <input type="text" value="" placeholder="请点击输入" data-bind="value:Address">
+        </p>
+    </section>
+    <!--收货人信息E-->
+    <!--提交S-->
+    <section class="buyBtn" data-bind="css:{ buyBtn: !IsSubmiting(), nobuyBtn: IsSubmiting() }"><input type="button" value="去支付" data-bind="click:SubmitOrder"></section>
+    <!--提交E-->
+    <!--购买须知S-->
+    <section class="buyNote">
+        <h2><img src="/presaleimages/knowTit1.png" alt=""></h2>
+        <ul class="knowInfo">
+            <li>如需开发票，请联系羊客微信客服。</li>
+            <li>本商品在生产过程中若有少许误差（不超过5%），属于合理范围，具体规格以实际产品为准。</li>
+        </ul>
+        <div class="knowMore">
+            <h3>购买科尔沁羊业产品你必须知道的三件事</h3>
+            <dl>
+                <dt><span>本次礼盒产品的羊肉出自哪里？</span></dt>
+                <dd><span>本次礼盒产品羊肉来自山西右玉走地羊，即天然放牧，原始放羊，非集中圈养的育肥羊，无任何工业饲料</span></dd>
+            </dl>
+            <dl>
+                <dt><span>相比其他同类产品，为什么价格不一样？</span></dt>
+                <dd><span>科尔沁羊业拥有自有牧场、羊源及销售渠道，省略中间环节，避免层层加价，并且专注精选高品质的羊肉产品，让你享受到货真架势的美味。</span></dd>
+            </dl>
 
+            <dl>
+                <dt><span>收到的产品出现问题怎么办？</span></dt>
+                <dd><span>运输过程中轻微化冻属于正常现象，请收到产品后立即冷冻储存或者食用；如签收后发现产品破损、错发、变质等问题，请联系羊客微信客户或者拨打400-656-8876，我们会尽快为您确认问题并采取相应措施。</span></dd>
+            </dl>
+        </div>
+    </section>
+    <!--购买须知E-->
+</div>
+@*<script type="text/javascript" src="http://mat1.gtimg.com/www/mobi/js/zepto.min.js"></script>*@
+@*<script type="text/javascript" src="http://mat1.gtimg.com/joke/and/js/touch.js"></script>*@
+
+<script type="text/javascript">
+    //获取共享地址
+    function onBridgeReady(appId,TimeStamp,NonceStr,Package,PaySign)
+    {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            {
+                "appId": appId,     //公众号名称，由商户传入
+                "timeStamp": TimeStamp,         //时间戳，自1970年以来的秒数
+                "nonceStr": NonceStr, //随机串
+                "package": Package,
+                "signType": "MD5",         //微信签名方式:
+                "paySign": PaySign //微信签名
+            },
+              function (res) {
+                  alert(res.err_msg);
+                  if (res.err_msg == "get_brand_wcpay_request:ok") {
+                      window.preSaleOrderViewModel.IsSubmiting(false);
+                      window.location.href = "/home/PreSaleOrderList?orderid=@Model.OrderId";
+                  } else {
+                      window.preSaleOrderViewModel.IsSubmiting(false);
+                  }
+              }
+          );
+    }
+
+    var preSaleOrderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
+    function PreSaleOrderViewModel() {
+        var self = this;
+
+        //预售商品
+        self.PreSaleProduct = ko.observable();
+
+        //省
+        self.Provinces = ko.observableArray([]);
+        self.ProvinceId = ko.observable();
+        self.provinceChange=function() {
+            console.log(self.ProvinceId());
+            if (self.ProvinceId()) {
+                $.ajax({
+                    url: "/home/GetCities",
+                    type: "post",
+                    data: {provinceCode:self.ProvinceId()},
+                    dataType:'json',
+                    success: function (result) {
+                        console.log(result);
+                        if (result) {
+
+                            preSaleOrderViewModel.Cities(result);
+                            preSaleOrderViewModel.Areas([]);
+                        }
+                    }
+                });
+            }
+
+        }
+
+        //市
+        self.Cities = ko.observableArray([]);
+        self.CityId = ko.observable();
+        self.cityChange=function() {
+            console.log(self.CityId());
+            if (self.CityId()) {
+                $.ajax({
+                    url: "/home/GetAreas",
+                    type: "post",
+                    data: {cityCode:self.CityId()},
+                    dataType:'json',
+                    success: function (result) {
+                        console.log(result);
+                        if (result) {
+                            preSaleOrderViewModel.Areas(result);
+                        }
+                    }
+                });
+            }
+
+        }
+
+        //区县
+        self.Areas = ko.observableArray([]);
+        self.AreaId = ko.observable();
+        self.areaChange=function() {
+            //console.log(self.AreaId());
+        }
+
+        //微信支付相关
+        self.TimeStamp = "";
+
+        self.NonceStr = "";
+
+        self.PaySign = "";
+
+        self.Package = "";
+
+        self.AppId = "";
+
+        //收货人信息
+
+        //用户名
+        self.UserName = ko.observable();
+
+        //联系方式
+        self.Phone= ko.observable();
+
+        //详细地址
+        self.Address= ko.observable();
+
+        //数量
+        self.Count=ko.observable(1);
+        self.ReduceCount=function() {
+            var currentCount = self.Count();
+            if (currentCount <= 1) {
+                self.Count(1);
+            } else {
+                self.Count(--currentCount);
+            }
+        }
+        //增加数量
+        self.AddCount=function() {
+            var currentCount = self.Count();
+
+            console.log(currentCount);
+            currentCount++;
+            //debugger;
+            if (currentCount * self.PreSaleProduct().Price > 50000) {
+                alert("一次最多购买50000元。");
+                return;
+            }
+            self.Count(currentCount);
+        }
+
+        //订单是否正在处理中
+        self.IsSubmiting = ko.observable(false);
+        //提交预售订单
+        self.SubmitOrder=function() {
+            //收集值
+            preSaleOrderServiceJson.UserName = self.UserName();
+            preSaleOrderServiceJson.Phone = self.Phone();
+            preSaleOrderServiceJson.Address = self.Address();
+            preSaleOrderServiceJson.Count = self.Count();
+            preSaleOrderServiceJson.ProvinceId = self.ProvinceId();
+            preSaleOrderServiceJson.CityId = self.CityId();
+            preSaleOrderServiceJson.AreaId = self.AreaId();
+            preSaleOrderServiceJson.Address = self.Address();
+            preSaleOrderServiceJson.Provinces = [];
+            if (!self.IsSubmiting()) {
+                self.IsSubmiting(true);
+                $.ajax({
+                    url: "/home/SubmitPreSaleOrder",
+                    type: "post",
+                    data: preSaleOrderServiceJson,
+                    dataType:'json',
+                    success: function (result) {
+                        //alert("订单编号"+result.OrderId);
+                        //下单成功
+                        if (result.OrderId > 0) {
+                            //alert(result.AppId);
+                            //alert(result.TimeStamp);
+                            //alert(result.NonceStr);
+                            //alert(result.Package);
+                            //alert(result.PaySign);
+                            onBridgeReady(result.AppId, result.TimeStamp, result.NonceStr,result.Package, result.PaySign);
+                        } else {
+                            self.IsSubmiting(false);
+                            alert("订单提交失败。");
+                        }
+                    },error:function(error) {
+                        console.log(error);
+                        alert("错误信息"+error);
+                    }
+                });
+            }
+            
+        }
+    }
+    var preSaleOrderViewModel = new PreSaleOrderViewModel();
+    
+    $(function () {
+        window.preSaleOrderViewModel = preSaleOrderViewModel;
+        preSaleOrderViewModel.PreSaleProduct(preSaleOrderServiceJson.PreSaleProduct);
+        preSaleOrderViewModel.Provinces(preSaleOrderServiceJson.Provinces);
+        preSaleOrderViewModel.ProvinceId(preSaleOrderServiceJson.ProvinceId);
+
+        preSaleOrderViewModel.Cities(preSaleOrderServiceJson.Cities);
+        preSaleOrderViewModel.CityId(preSaleOrderServiceJson.CityId);
+
+        preSaleOrderViewModel.Areas(preSaleOrderServiceJson.Areas);
+        preSaleOrderViewModel.AreaId(preSaleOrderServiceJson.Code);
+
+        preSaleOrderViewModel.Address(preSaleOrderServiceJson.Address);
+        ko.applyBindings(preSaleOrderViewModel);
+    });
+</script>

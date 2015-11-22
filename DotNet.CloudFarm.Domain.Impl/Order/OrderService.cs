@@ -35,9 +35,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         private CloudFarmDbContext cloudFarmDb;
 
-        private EntityFrameworkRepository<PreSaleOrder> preSaleOrdeRepository;
+        private GenericRepository<PreSaleOrder> preSaleOrdeRepository;
 
-        public OrderService(IOrderDataAccess orderDataAccess, ISMSService smsService, IUserService userService, IProductService productService, IMessageService messageService, CloudFarmDbContext cloudFarmDb, EntityFrameworkRepository<PreSaleOrder> preOrdeRepository)
+        public OrderService(IOrderDataAccess orderDataAccess, ISMSService smsService, IUserService userService, IProductService productService, IMessageService messageService, CloudFarmDbContext cloudFarmDb, GenericRepository<PreSaleOrder> preOrdeRepository)
         {
             this.orderDataAccess = orderDataAccess;
             this.smsService = smsService;
@@ -175,7 +175,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)
         {
             var result=new Result<PagedList<PreSaleOrder>>();
-            result.Data = new PagedList<PreSaleOrder>(preSaleOrdeRepository.GetPagedList(s => s.UserId == userId, s => s.OrderId, "", pageIndex, pageSize).ToList(),pageIndex,pageSize);
+            result.Data = new PagedList<PreSaleOrder>(preSaleOrdeRepository.GetPagedList(s => s.UserId == userId, s => s.OrderId, "desc", pageIndex, pageSize).ToList(),pageIndex,pageSize);
             return result;
         }
 

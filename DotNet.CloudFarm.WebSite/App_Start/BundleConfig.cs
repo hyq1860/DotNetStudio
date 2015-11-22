@@ -37,6 +37,15 @@ namespace DotNet.CloudFarm.WebSite
                       "~/Content/bootstrap.css",
                       "~/Content/reset.css",
                       "~/Content/sheep_guest.css"));
+            //knockout
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                      "~/Scripts/knockout-3.3.0.js"));
+
+            //预售的样式
+            bundles.Add(new StyleBundle("~/Content/presalecss").Include(
+                      "~/Content/presale.css"));
+
+            
 
             bundles.Add(new StyleBundle("~/Content/houtai/css").Include(
                 "~/Content/houtai/bootstrap-cerulean.css",
@@ -57,6 +66,13 @@ namespace DotNet.CloudFarm.WebSite
                 "~/Content/houtai/opa-icons.css",
                 "~/Content/houtai/uploadify.css"
                 ));
+
+            //bootsttrap-table
+            bundles.Add(new StyleBundle("~/Content/houtai/bootsttrap-table-css").Include(
+                "~/Content/houtai/bootstrap-table.min.css"));
+            bundles.Add(new ScriptBundle("~/Content/houtai/bootsttrap-table-js").Include(
+                "~/Scripts/houtai/bootstrap-table.min.js",
+                "~/Scripts/houtai/bootstrap-table-zh-CN.min.js")); 
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<!--
@@ -21,6 +25,12 @@
 	@*<link id="bs-css" href="/Content/houtai/bootstrap-cerulean.css" rel="stylesheet">*@
 	
 	@Styles.Render("~/Content/houtai/css")
+    @if (action.ToLower() == "presaleorderlist")
+    {
+        @Styles.Render("~/Content/houtai/bootsttrap-table-css")
+    }
+
+    @*@Scripts.Render("~/Content/houtai/bootsttrap-table-js")*@
     <style type="text/css">
         body {
             padding-bottom: 40px;
@@ -182,7 +192,13 @@
     <script src="/Scripts/houtai/jquery.pager.js"></script>
 
     <!--knockout script -->
-    <script src="~/Scripts/knockout-3.3.0.js"></script>
+<script src="~/Scripts/knockout-3.3.0.js"></script>
+@if (action.ToLower() == "presaleorderlist")
+{
+    @Scripts.Render("~/Content/houtai/bootsttrap-table-js")
+}
+
+
     @RenderSection("scripts", required: false)
 
 

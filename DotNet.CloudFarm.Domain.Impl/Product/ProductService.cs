@@ -82,12 +82,9 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
 
         public PreSaleProduct GetPreSaleProduct(int productId)
         {
-            return cloudFarmDb.PreSaleProducts.FirstOrDefault(s=>s.Id== productId);
+            return cloudFarmDb.PreSaleProducts.FirstOrDefault(s=>s.ProductId == productId);
         }
 
-        public List<PreSaleProduct> GetPreSaleProducts()
-        {
-            return cloudFarmDb.PreSaleProducts.ToList();
-        }
+        
     }
 }

@@ -1,13 +1,16 @@
+using DotNet.CloudFarm.Domain.Contract.Address;
 using DotNet.CloudFarm.Domain.Contract.Message;
 using DotNet.CloudFarm.Domain.Contract.Order;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Contract.WeiXin;
+using DotNet.CloudFarm.Domain.DTO.Address;
 using DotNet.CloudFarm.Domain.DTO.WeiXin;
 using DotNet.CloudFarm.Domain.DTO.Message;
 using DotNet.CloudFarm.Domain.DTO.Order;
 using DotNet.CloudFarm.Domain.DTO.Product;
 using DotNet.CloudFarm.Domain.DTO.User;
+using DotNet.CloudFarm.Domain.Impl.Address;
 using DotNet.CloudFarm.Domain.Impl.Message;
 using DotNet.CloudFarm.Domain.Impl.Order;
 using DotNet.CloudFarm.Domain.Impl.Product;
@@ -88,13 +91,22 @@ namespace DotNet.CloudFarm.WebSite.App_Start
             //业务接口注入点
 
             //entityframework的注入
-            kernel.Bind<CloudFarmDbContext>().ToSelf().InRequestScope();
+            //kernel.Bind<CloudFarmDbContext>().ToSelf().InRequestScope();
 
-            kernel.Bind<IDbContext>().To<CloudFarmDbContext>().InRequestScope();
+            //kernel.Bind<IDbContext>().To<CloudFarmDbContext>().InRequestScope();
             kernel.Bind<IEntityFrameworkDbContext>().To<CloudFarmDbContext>().InRequestScope();
 
+            //预售商品
+            kernel.Bind<IPreSaleProductAccess>().To<PreSaleProductAccess>().InRequestScope();
+            kernel.Bind<IPreSaleProductService>().To<PreSaleProductService>().InRequestScope();
+
             //预售订单
-            kernel.Bind<EntityFrameworkRepository<PreSaleOrder>>().ToSelf().InRequestScope();
+            kernel.Bind<IPreSaleOrderDataAccess>().To<PreSaleOrderDataAccess>().InRequestScope();
+            kernel.Bind<IPreSaleOrderService>().To<PreSaleOrderService>().InRequestScope();
+
+            //省市区
+            kernel.Bind<IAddressDataAccess>().To<AddressDataAccess>().InRequestScope();
+            kernel.Bind<IAddressService>().To<AddressService>().InRequestScope();
 
             //消息
             kernel.Bind<IMessageDataAccess>().To<MessageDataAccess>();

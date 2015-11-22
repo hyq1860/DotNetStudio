@@ -1,7 +1,129 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "支付";
+    Layout = "~/Views/Shared/_LayoutPreSale.cshtml";
+    ViewBag.Title = "礼盒预售";
 }
+@using DotNet.Common.Utility
+@model List<DotNet.CloudFarm.Domain.Model.Product.PreSaleProduct>
 
-<h2>PreSaleProduct</h2>
+<div class="layout layout_index">
+    <!--头部S-->
+    <section class="indexTop">
+        <div class="process"><img src="/presaleimages/process.png" alt=""></div>
+    </section>
+    <!--头部E-->
+    <!--商品列表S-->
+    <section class="productList" data-bind="foreach:PreSaleProducts">
+        <!--一个S-->
+            <div class="productItem">
+                <!--上面商品信息S-->
+                <article class="productBox">
+                    <div class="productPic">
+                        <img src="" alt="" data-bind="attr:{src:Image}">
+                    </div>
+                    <div class="productInfo">
+                        <h2><!--ko text:Name--><!--/ko--></h2>
+                        <p class="salePrice">预售价：<span class="orange">￥<strong><!--ko text:Price--><!--/ko--></strong></span></p>
+                        <p class="referencePrice">市场参考价：￥<!--ko text:MarketPrice--><!--/ko--></p>
+                        <p class="buyBtn">
+                            <a  data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}">立即预购</a>
+                        </p>
+                    </div>
+                </article>
+                <!--上面商品信息E-->
+                <!--礼盒信息S-->
+                <article class="liheBox">
+                    <!--礼盒清单1S-->
+                    <div class="liheItem">
+                        <div class="productPic">
+                            <img src="http://q3.qlogo.cn/g?b=qq&k=fRTVj0icCl13iaVWZIaeUpTA&s=100&t=1371164867" alt="">
+                        </div>
+                        <div class="productInfo">
+                            <h2>标题文字标题文字</h2>
+                            <p>
+                                <span>数量：2件</span>
+                                <span>重量：1kg</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!--礼盒清单1E-->
+                    <!--礼盒清单1S-->
+                    <div class="liheItem">
+                        <div class="productPic">
+                            <img src="http://q3.qlogo.cn/g?b=qq&k=fRTVj0icCl13iaVWZIaeUpTA&s=100&t=1371164867" alt="">
+                        </div>
+                        <div class="productInfo">
+                            <h2>标题文字标题文字</h2>
+                            <p>
+                                <span>数量：2件</span>
+                                <span>重量：1kg</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!--礼盒清单1E-->
+                </article>
+                <!--礼盒信息E-->
+                <h3 class="lihetxt">收起</h3>
+            </div>
+        <!--一个E-->
+    </section>
+    <!--商品列表E-->
+    <!--包装板块S-->
+    <section class="package">
+        <h2><img src="/presaleimages/packageTxt.png" alt="我们的包装"></h2>
+        <!--包装样本S-->
+        <ul class="packageSam">
+            <li>
+                <img src="/presaleimages/package1.png" alt="">
+                <span>彩礼盒</span>
+            </li>
+            <li>
+                <img src="/presaleimages/package2.png" alt="">
+                <span>泡沫箱</span>
+            </li>
+            <li>
+                <img src="/presaleimages/package3.png" alt="">
+                <span>彩礼盒</span>
+            </li>
+            <li>
+                <img src="/presaleimages/package4.png" alt="">
+                <span>彩礼盒</span>
+            </li>
+        </ul>
+        <!--包装样本E-->
+        <!--礼盒包装S-->
+        <div class="packageWrap">
+            <h2><img src="/presaleimages/wenyang.png" alt=""></h2>
+            <p class="packagePic"><img src="/presaleimages/packagePic.jpg" alt=""></p>
+        </div>
+        <!--礼盒包装E-->
+    </section>
+    <!--包装板块E-->
+    <!--物流S-->
+    <section class="wuliu">
+        <img src="/presaleimages/wuliu.png" alt="">
+    </section>
+    <!--物流E-->
+    <!--关于我们S-->
+    <section class="about">
+        <span class="mobile"><img src="/presaleimages/mobile.png" alt=""></span>
+        <span class="twoma"><img src="/presaleimages/twoma.jpg" alt=""></span>
+    </section>
+    <!--关于我们E-->
+</div>
+@*<script type="text/javascript" src="http://mat1.gtimg.com/www/mobi/js/zepto.min.js"></script>*@
+<script type="text/javascript">
+    var preSaleProducServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
+    function PreSaleProductViewModel() {
+        var self = this;
+
+        //商品
+        self.PreSaleProducts = ko.observableArray(preSaleProducServiceJson);
+    }
+
+    $(function() {
+        var preSaleProductViewModel = new PreSaleProductViewModel();
+        preSaleProductViewModel.PreSaleProducts(preSaleProducServiceJson);
+        ko.applyBindings(preSaleProductViewModel);
+    });
+</script>
 

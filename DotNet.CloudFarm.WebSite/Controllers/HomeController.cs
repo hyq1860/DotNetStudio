@@ -24,12 +24,14 @@ using Senparc.Weixin.MP.TenPayLibV3;
 using System.Net;
 using System.IO;
 using System.Net.Http;
+using DotNet.CloudFarm.Domain.Contract.Address;
 using DotNet.CloudFarm.Domain.Impl.Weather;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
 using DotNet.Common.Utility;
+using Ninject;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Helpers;
 
@@ -43,20 +45,32 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             
         }
 
-        [Ninject.Inject]
+        [Inject]
+        public IAddressService AddressService { get; set; }
+
+        [Inject]
+        public IPreSaleOrderService PreSaleOrderService { get; set; }
+
+        [Inject]
+        public IPreSaleProductService PreSaleProductService { get; set; }
+
+        [Inject]
         public IUserService UserService { get; set; }
 
-        [Ninject.Inject]
+        [Inject]
         public IProductService ProductService { get; set; }
 
-        [Ninject.Inject]
+        [Inject]
         public IMessageService MessageService { get; set; }
 
-        [Ninject.Inject]
+        [Inject]
         public IOrderService OrderService { get; set; }
 
         public ActionResult Default()
         {
+            var test=PreSaleProductService.GetPreSaleProducts();
+            var data=AddressService.GetAddresses();
+
             var homeViewModel = new HomeViewModel
             {
                 Products = ProductService.GetProducts(1, 100, 1),//.Where(s=>s.CanSale).ToList(),
@@ -420,6 +434,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View(result);
         }
 
+        
+
         public JsonResult GetOrderList(int pageIndex = 1, int pageSize = 10)
         {
             var result = OrderService.GetOrderList(this.UserInfo.UserId, pageIndex, pageSize);
@@ -725,13 +741,136 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult PreSaleProduct()
         {
-            return View();
+            var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.ProductId, "desc");
+            return View(products);
         }
 
-        public ActionResult ConfirmPreSaleOrder()
+        public ActionResult ConfirmPreSaleOrder(int productId)
         {
-            OrderService.GetPreSaleOrderList(1, 1, 1);
-            return View();
+            PreSaleOrderViewModel preSaleOrderViewModel=new PreSaleOrderViewModel();
+            preSaleOrderViewModel.OrderId = OrderService.GetNewOrderId();
+            //预售商品
+            preSaleOrderViewModel.PreSaleProduct=PreSaleProductService.GetPreSaleProduct(productId);
+
+            //加载地址及上一次订单地址
+            var addresses = AddressService.GetAddresses();
+            preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == "").ToList();
+
+            var lastOrder = PreSaleOrderService.GetPreSaleOrderList(o=>o.UserId ==this.UserInfo.UserId,1, 1).Data.FirstOrDefault();
+            if (lastOrder != null)
+            {
+                preSaleOrderViewModel.ProvinceId = lastOrder.ProvinceId;
+                preSaleOrderViewModel.CityId = lastOrder.CityId;
+                preSaleOrderViewModel.AreaId = lastOrder.Code;
+                preSaleOrderViewModel.Address = lastOrder.Address;
+            }
+            //OrderService.GetPreSaleOrderList(1, 1, 1);
+            
+
+            if (!string.IsNullOrEmpty(preSaleOrderViewModel.ProvinceId))
+            {
+                preSaleOrderViewModel.Cities =
+                addresses.Where(s => s.ParentCode == preSaleOrderViewModel.ProvinceId).ToList();
+                if (!string.IsNullOrEmpty(preSaleOrderViewModel.AreaId))
+                {
+                    preSaleOrderViewModel.Areas =
+                        addresses.Where(s => s.ParentCode == preSaleOrderViewModel.CityId).ToList();
+                }
+            }
+            
+            return View(preSaleOrderViewModel);
+        }
+
+        public ActionResult SubmitPreSaleOrder(PreSaleOrderViewModel preSaleOrderViewModel)
+        {
+            var jsonResult=new JsonResult();
+            var preSaleOrder = new PreSaleOrder
+            {
+                OrderId = preSaleOrderViewModel.OrderId,//OrderService.GetNewOrderId(),
+                UserId = this.UserInfo.UserId,
+                ProductId = preSaleOrderViewModel.PreSaleProduct.ProductId,
+                Price = preSaleOrderViewModel.PreSaleProduct.Price,
+                Count = preSaleOrderViewModel.Count,
+                ProvinceId = preSaleOrderViewModel.ProvinceId,
+                CityId = preSaleOrderViewModel.CityId,
+                Code = preSaleOrderViewModel.AreaId,
+                Address = preSaleOrderViewModel.Address,
+                Status = 0,
+                CreateTime = DateTime.Now,
+                Receiver = preSaleOrderViewModel.UserName,
+                Phone=preSaleOrderViewModel.Phone,
+                TotalMoney = preSaleOrderViewModel.Count* preSaleOrderViewModel.PreSaleProduct.Price,
+                ExpressDelivery = string.Empty
+            };
+
+            
+
+            var result=PreSaleOrderService.SubmitPreSaleOrder(preSaleOrder);
+
+            if (result > 0)
+            {
+                #region 微信支付所需数据计算
+                var timeStamp = TenPayV3Util.GetTimestamp();
+                var nonceStr = TenPayV3Util.GetNoncestr();
+                var openId = this.UserInfo.WxOpenId;
+                var pre_id = WeixinPay.WeixinPayApi.Unifiedorder(preSaleOrderViewModel.PreSaleProduct.Name,
+                    preSaleOrder.OrderId, preSaleOrder.Price* preSaleOrder.Count, Request.UserHostAddress, openId);
+                if (pre_id == "ERROR" || pre_id == "FAIL")
+                    return Content("ERROR");
+                var package = "prepay_id=" + pre_id;
+
+                var req = new RequestHandler(null);
+                req.SetParameter("appId", AppId);
+                req.SetParameter("timeStamp", timeStamp);
+                req.SetParameter("nonceStr", nonceStr);
+                req.SetParameter("package", package);
+                req.SetParameter("signType", "MD5");
+                var paySign = req.CreateMd5Sign("key", PayKey);
+
+
+                #endregion
+
+                preSaleOrderViewModel.NonceStr = nonceStr;
+                preSaleOrderViewModel.TimeStamp = timeStamp;
+                preSaleOrderViewModel.Package = package;
+                preSaleOrderViewModel.AppId = AppId;
+                preSaleOrderViewModel.PaySign = paySign;
+            }
+            else
+            {
+                preSaleOrderViewModel.OrderId = 0;
+            }
+
+            jsonResult.Data = preSaleOrderViewModel;
+            return jsonResult;
+        }
+
+        public ActionResult GetCities(string provinceCode)
+        {
+            
+            var addresses = AddressService.GetChildrenByParentId(provinceCode);
+            
+            return Content(JsonHelper.ToJson(addresses));
+        }
+
+        public ActionResult GetAreas(string cityCode)
+        {
+            //var jsonResult = new JsonResult();
+            var addresses = AddressService.GetChildrenByParentId(cityCode);
+            //jsonResult.Data = addresses;
+            return Content(JsonHelper.ToJson(addresses));
+        }
+
+        /// <summary>
+        /// 预售订单列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public ActionResult PreSaleOrderList(int pageIndex = 1, int pageSize = 10)
+        {
+            var result=PreSaleOrderService.GetPreSaleOrderList(p => p.UserId == this.UserInfo.UserId, pageIndex, pageSize);
+            return View(result);
         }
         #endregion
     }

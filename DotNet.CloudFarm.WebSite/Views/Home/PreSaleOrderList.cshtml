@@ -1,0 +1,58 @@
+﻿@using DotNet.Common.Utility
+
+@{
+    ViewBag.Title = "预售订单列表";
+    Layout = "~/Views/Shared/_LayoutPreSale.cshtml";
+}
+
+<div class="layout layout_orderList" data-bind="foreach:PreSaleOrderList">
+    <!--订单列表S-->
+    <section class="orderList">
+        <div class="orderTitle">
+            <span class="orderNum">订单编号：<!--ko text:OrderId--><!--/ko--></span>
+            <span class="orderStatus orderShip"><!--ko text:StatusDesc--><!--/ko--></span>
+        </div>
+        <div class="orderDetail">
+            <div class="orderProductInfo">
+                <img src="" alt="" data-bind="attr:{src:PreSaleProduct.Image}">
+                <h4><!--ko text:PreSaleProduct.Name--><!--/ko--></h4>
+            </div>
+            <div class="orderOther">
+                <p>单价：<!--ko text:Price--><!--/ko-->元</p>
+                <p>数量：<!--ko text:Count--><!--/ko--></p>
+                <p>合计：<!--ko text:TotalMoney--><!--/ko-->元</p>
+            </div>
+        </div>
+    </section>
+    <!--订单列表E-->
+    <!----收货地址S-->
+    <section class="orderAddress">
+        <div class="orAddress">
+            <p><span class="name"><!--ko text:Receiver--><!--/ko--></span>|<span class="phone"><!--ko text:Phone--><!--/ko--></span></p>
+            <p><!--ko text:Area.FullName--><!--/ko--><!--ko text:Address--><!--/ko--></p>
+            <p class="orderWlnum"><span>物流单号：</span><!--ko text:ExpressDelivery--><!--/ko--></p>
+        </div>
+    </section>
+    <!----收货地址E-->
+</div>
+@*<script type="text/javascript" src="http://mat1.gtimg.com/www/mobi/js/zepto.min.js"></script>
+<script type="text/javascript" src="http://mat1.gtimg.com/joke/and/js/touch.js"></script>*@
+@Scripts.Render("~/Scripts/jquery.scrollPagination.js")
+<script type="text/javascript">
+    var preSaleOrderListServiceJson = @Html.Raw(JsonHelper.ToJson(new { Data = Model.Data, PageSize = Model.Data.PageSize, PageCount = Model.Data.PageCount, PageIndex = Model.Data.PageIndex }));
+    function PreSaleOrderListViewModel() {
+        var self = this;
+        //预售订单列表
+        self.PreSaleOrderList = ko.observableArray([]);
+        //
+        self.PageIndex = ko.observable();
+
+        self.PageCount = ko.observable();
+    }
+    $(function () {
+        var preSaleOrderListViewModel = new PreSaleOrderListViewModel();
+        preSaleOrderListViewModel.PreSaleOrderList(preSaleOrderListServiceJson.Data);
+        ko.applyBindings(preSaleOrderListViewModel);
+    });
+</script>
+

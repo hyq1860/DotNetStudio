@@ -39,11 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address\IAddressDataAccess.cs" />
+    <Compile Include="Address\IAddressService.cs" />
     <Compile Include="Message\IMessageDataAccess.cs" />
     <Compile Include="Message\IMessageService.cs" />
     <Compile Include="Order\IOrderDataAccess.cs" />
     <Compile Include="Order\IOrderService.cs" />
-    <Compile Include="Order\IPreSaleOrderRepository.cs" />
+    <Compile Include="Order\IPreSaleOrderDataAccess.cs" />
+    <Compile Include="Order\IPreSaleOrderService.cs" />
+    <Compile Include="Product\IPreSaleProductAccess.cs" />
+    <Compile Include="Product\IPreSaleProductService.cs" />
     <Compile Include="Product\IProductDataAccess.cs" />
     <Compile Include="Product\IProductService.cs" />
     <Compile Include="SMS\ISMSService.cs" />
