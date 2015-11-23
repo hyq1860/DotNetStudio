@@ -130,6 +130,8 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         /// </summary>
         public string Phone { get; set; }
 
+        public DateTime? ModifyTime { get; set; }
+
         public virtual PreSaleProduct PreSaleProduct { get; set; }
     }
 

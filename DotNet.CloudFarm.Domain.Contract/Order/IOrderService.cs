@@ -145,5 +145,12 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="pageSize"></param>
         /// <returns></returns>
         Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 校验是否是老的订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        bool CheckOrderExist(long orderId);
     }
 }

@@ -56,11 +56,11 @@
     <section class="buyerInfo">
         <p>
             <span class="txt">收货人姓名</span>
-            <input type="text" placeholder="请输入收货人姓名" data-bind="value:UserName">
+            <input type="text" placeholder="请输入收货人姓名" maxlength="30" data-bind="value:UserName">
         </p>
         <p>
             <span class="txt">收货人联系方式</span>
-            <input type="text" placeholder="请输入收货人联系方式" data-bind="value:Phone">
+            <input type="text" placeholder="请输入收货人联系方式" maxlength="11" data-bind="value:Phone">
         </p>
         <p>
             <span class="txt">收货地址</span>
@@ -95,7 +95,7 @@
         </p>
         <p>
             <span class="txt">详细地址</span>
-            <input type="text" value="" placeholder="请点击输入" data-bind="value:Address">
+            <input type="text" value="" placeholder="请点击输入" maxlength="120" data-bind="value:Address">
         </p>
     </section>
     <!--收货人信息E-->
@@ -267,6 +267,50 @@
         self.IsSubmiting = ko.observable(false);
         //提交预售订单
         self.SubmitOrder=function() {
+            //校验
+            if (typeof self.Count()=='undefined' || self.Count() <= 0) {
+                self.Count(1);
+                alert("最小购买数量为1");
+                return;
+            }
+
+            var receiver = self.UserName();
+            var mobile = self.Phone();
+            var address = self.Address();
+            if (typeof receiver=='undefined' || receiver == "") {
+                alert("收货人姓名不能为空");
+                return;
+            }
+
+            if (typeof mobile=='undefined' || mobile == "") {
+                alert("收货人手机号不能为空。");
+                return;
+            }
+            if (!isMobile(mobile)) {
+                alert("收货人手机号格式不正确。");
+                return;
+            }
+
+            if (typeof self.ProvinceId()=='undefined' || self.ProvinceId() == "") {
+                alert("请选择省市！");
+                return;
+            }
+
+            if (typeof self.CityId()=='undefined' || self.CityId() == "") {
+                alert("请选择市区县！");
+                return;
+            }
+
+            if (typeof self.AreaId()=='undefined' ||self.AreaId() == "") {
+                alert("请选择区县！");
+                return;
+            }
+
+            if (typeof address =='undefined' ||address == "") {
+                alert("请填写详细的收货地址！");
+                return;
+            }
+
             //收集值
             preSaleOrderServiceJson.UserName = self.UserName();
             preSaleOrderServiceJson.Phone = self.Phone();

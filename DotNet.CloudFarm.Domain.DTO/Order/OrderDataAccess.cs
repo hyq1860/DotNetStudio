@@ -12,6 +12,7 @@ using DotNet.Common.Collections;
 using DotNet.Common.Models;
 using DotNet.Data;
 using System.Data;
+using System.Net.Configuration;
 
 namespace DotNet.CloudFarm.Domain.DTO.Order
 {
@@ -485,6 +486,20 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
             var result = new PagedList<OrderManageViewModel>(orderList, pageIndex, pageSize, totalOrderCount);
             return result;
+        }
+
+        public bool CheckOrderExist(long orderId)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("CheckOrderExist"))
+            {
+                cmd.SetParameterValue("@OrderId", orderId);
+                var temp = cmd.ExecuteScalar();
+                if (temp != null)
+                {
+                    return Convert.ToInt32(temp) >0;
+                }
+                return false;
+            }
         }
 
         //public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)

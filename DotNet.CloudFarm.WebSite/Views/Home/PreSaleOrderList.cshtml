@@ -35,8 +35,6 @@
     </section>
     <!----收货地址E-->
 </div>
-@*<script type="text/javascript" src="http://mat1.gtimg.com/www/mobi/js/zepto.min.js"></script>
-<script type="text/javascript" src="http://mat1.gtimg.com/joke/and/js/touch.js"></script>*@
 @Scripts.Render("~/Scripts/jquery.scrollPagination.js")
 <script type="text/javascript">
     var preSaleOrderListServiceJson = @Html.Raw(JsonHelper.ToJson(new { Data = Model.Data, PageSize = Model.Data.PageSize, PageCount = Model.Data.PageCount, PageIndex = Model.Data.PageIndex }));

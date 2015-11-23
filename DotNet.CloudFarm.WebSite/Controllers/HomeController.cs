@@ -362,12 +362,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             orderId = Convert.ToInt64(out_trade_no);
                         }
                         logger.Info("orderId:" + orderId+"|out_trade_no="+out_trade_no);
-                        OrderService.UpdateOrderPay(new OrderPayModel()
+                        //判断老订单和预售订单
+                        var flag = OrderService.CheckOrderExist(orderId);
+                        if (flag)
                         {
-                            OrdeId = orderId,
-                            //long.Parse(resHandler.GetParameter("out_trade_no")), 
-                            Status = OrderStatus.Paid.GetHashCode() 
-                        });
+                            OrderService.UpdateOrderPay(new OrderPayModel()
+                            {
+                                OrdeId = orderId,
+                                //long.Parse(resHandler.GetParameter("out_trade_no")), 
+                                Status = OrderStatus.Paid.GetHashCode()
+                            });
+                        }
+                        else
+                        {
+                            PreSaleOrderService.ModifyPreOrder(new PreSaleOrder() {OrderId = orderId,Status = 1});
+                        }
                     }
 
                     res = "SUCCESS";

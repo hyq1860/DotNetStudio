@@ -26,5 +26,9 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="pageSize"></param>
         /// <returns></returns>
         Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize);
+
+        bool ModifyPreOrder(PreSaleOrder preSaleOrder);
+
+        PreSaleOrder GetPreSaleOrder(long orderId);
     }
 }

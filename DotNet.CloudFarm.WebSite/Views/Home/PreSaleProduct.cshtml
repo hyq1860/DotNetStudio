@@ -31,7 +31,7 @@
                 </article>
                 <!--上面商品信息E-->
                 <!--礼盒信息S-->
-                <article class="liheBox">
+                <article class="liheBox" style="display: none" data-bind="attr:{id:'box_'+ProductId}">
                     <!--礼盒清单1S-->
                     <div class="liheItem">
                         <div class="productPic">
@@ -62,7 +62,7 @@
                     <!--礼盒清单1E-->
                 </article>
                 <!--礼盒信息E-->
-                <h3 class="lihetxt">收起</h3>
+                <h3 class="lihetxt" data-bind="attr:{data_id:ProductId}">点击查看礼盒</h3>
             </div>
         <!--一个E-->
     </section>
@@ -124,6 +124,18 @@
         var preSaleProductViewModel = new PreSaleProductViewModel();
         preSaleProductViewModel.PreSaleProducts(preSaleProducServiceJson);
         ko.applyBindings(preSaleProductViewModel);
+
+        $(".lihetxt").on("click", function() {
+            var self = $(this);
+            var productId = self.attr("data_id");
+            if ($("#box_" + productId).is(':visible')) {
+                $("#box_" + productId).slideToggle();
+                self.text("收起");
+            } else {
+                $("#box_" + productId).slideToggle();
+                self.text("点击查看礼盒");
+            }
+        });
     });
 </script>
 

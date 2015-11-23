@@ -179,6 +179,11 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return result;
         }
 
+        public bool CheckOrderExist(long orderId)
+        {
+            return orderDataAccess.CheckOrderExist(orderId);
+        }
+
         public Result<PagedList<OrderManageViewModel>> GetOrderList(int pageIndex, int pageSize)
         {
             var result = new Result<PagedList<OrderManageViewModel>>
