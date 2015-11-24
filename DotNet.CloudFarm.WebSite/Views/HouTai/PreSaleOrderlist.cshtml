@@ -4,69 +4,242 @@
     Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
 }
 
-<table id="PreSaleOrderlist"></table>
+<div id="PreSaleOrderlist" class="span10">
+    <!-- content starts -->
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-edit"></i>查询</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active"><a href="#batch">批量查询</a></li>
+                    <li class=""><a href="#single">精准查询</a></li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div id="batch" class="tab-pane active">
+                        <div class="form-horizontal">
+                            <input type="hidden" name="Id" id="msgId" />
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">交易时间</label>
+                                <div class="controls">
+                                    <input class="input-small datepicker" id="StartTime" type="text" name="StartTime">
+                                    -
+                                    <input class="input-small datepicker" id="EndTime" type="text" name="EndTime">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="status">订单状态</label>
+                                <div class="controls">
+                                    <select id="status" name="Status">
+                                        <option value="">--</option>
+                                        <option value="0">待支付</option>
+                                        <option value="1">已支付</option>
+                                        <option value="2">已发货</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" class="btn btn-primary" @*data-bind="click:BatchSearchOrder"*@>查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="single" class="tab-pane">
+                        <div class="form-horizontal">
+                            <input type="hidden" name="Id" id="msgId" />
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">订单号</label>
+                                <div class="controls">
+                                    <input class="input-large focused" id="orderid" type="text" maxlength="30" name="OrderId">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">用户手机号</label>
+                                <div class="controls">
+                                    <input class="input-large focused" id="mobile" type="text" maxlength="30" name="Mobile">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" class="btn btn-primary" @*data-bind="click:SingleSearchOrder"*@>查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-align-justify"></i>预售订单列表</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>用户手机号</th>
+                            <th>产品名称</th>
+                            <th>购买数量</th>
+                            <th>总价</th>
+                            <th>收货地址</th>
+                            <th>订单状态</th>
+                            <th>下单时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: PreSaleOrderList">
+
+                        <tr>
+                            <td><!--ko text:OrderId--><!--/ko--></td>
+                            <td class="center"><!--ko text:Phone--><!--/ko--></td>
+                            <td class="center"><!--ko text:ProductName--><!--/ko--></td>
+                            <td class="center"><!--ko text:Count--><!--/ko--></td>
+                            <td class="center"><!--ko text:TotalMoney--><!--/ko--></td>
+                            <td class="center"><!--ko text:Address--><!--/ko--></td>
+                            <td class="center">
+                                <!--ko text:StatusDesc--><!--/ko-->
+                            </td>
+                            <td class="center" data-bind="text:CreateTime"></td>
+
+                            <td class="center">
+                                <!-- ko if: Status()==1 -->
+                                <input value="运单号"/>
+                                <a href="javascript:void(0);" class="btn btn-info" @*data-bind="click:ConfirmOrderPay"*@><i class="icon-edit icon-white"></i>填写运单号</a>
+                                <!-- /ko -->
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="pages"></div>
+            </div>
+        </div><!--/span-->
+
+    </div>
+
+    <div class="modal hide fade" id="myAlertDialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>提示</h3>
+        </div>
+        <div class="modal-body">
+            <p id="confirmText">确定要删除该项吗？</p>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" id="confirmBtn" class="btn btn-primary">确定</a>
+            <a href="#" class="btn" id="cancelBtn" data-dismiss="modal">取消</a>
+        </div>
+    </div>
+
+    <!-- content ends -->
+</div>
+
 @section scripts{
     <script type="text/javascript">
         $(function() {
-            //1.初始化Table
-            var oTable = new TableInit();
-            oTable.Init();
+
 
         });
 
-        var TableInit = function() {
-            var oTableInit = new Object();
-            //初始化Table
-            oTableInit.Init = function() {
-                $('#PreSaleOrderlist').bootstrapTable({
-                    url: '/Houtai/GetPreSaleOrderlist', //请求后台的URL（*）
-                    method: 'get', //请求方式（*）
-                    //toolbar: '#toolbar',                //工具按钮用哪个容器
-                    striped: true, //是否显示行间隔色
-                    cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-                    pagination: true, //是否显示分页（*）
-                    sortable: false, //是否启用排序
-                    sortOrder: "asc", //排序方式
-                    queryParams: oTableInit.queryParams, //传递参数（*）
-                    sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
-                    pageNumber: 1, //初始化加载第一页，默认第一页
-                    pageSize: 10, //每页的记录行数（*）
-                    pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
-                    search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-                    strictSearch: true,
-                    showColumns: true, //是否显示所有的列
-                    showRefresh: true, //是否显示刷新按钮
-                    minimumCountColumns: 2, //最少允许的列数
-                    clickToSelect: true, //是否启用点击选中行
-                    height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-                    uniqueId: "OrderId", //每一行的唯一标识，一般为主键列
-                    showToggle: true, //是否显示详细视图和列表视图的切换按钮
-                    cardView: false, //是否显示详细视图
-                    detailView: false, //是否显示父子表
-                    columns: [
-                        {
-                            checkbox: true
-                        }, {
-                            field: 'OrderId',
-                            title: '订单编号'
-                        }, {
-                            field: 'Phone',
-                            title: '联系方式'
-                        }
-                    ]
-                });
-            };
+        function PreSaleOrderViewModel() {
+            var self = this;
 
-            //得到查询的参数
-            oTableInit.queryParams = function(params) {
-                var temp = {
-//这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                    pageIndex: params.pageIndex, //页面大小
-                    pageSize: params.pageSize, //页码
-                };
-                return temp;
-            };
-            return oTableInit;
-        };
+            self.ProductName = ko.observable();
+            self.Count = ko.observable();
+            self.TotalMoney = ko.observable();
+
+            self.OrderId = ko.observable();
+            
+            self.CreateTime = ko.observable();
+            self.ProductCount = ko.observable();
+            self.Price = ko.observable();
+            self.Status = ko.observable();
+            self.StatusDesc = ko.observable();
+
+            self.Receiver = ko.observable();
+            self.Phone = ko.observable();
+            self.Address = ko.observable();
+        }
+
+        function PreSaleOrderListViewModel() {
+            var self = this;
+            //预售订单列表
+            self.PreSaleOrderList = ko.observableArray([]);
+            //当前订单页码
+            self.PageIndex = ko.observable();
+            //一共有多少页
+            self.PageCount = ko.observable();
+            //订单总数
+            self.TotalCount = ko.observable();
+            //每页多少
+            self.PageSize = ko.observable();
+        }
+
+        $(function() {
+            var preSaleOrderListViewModel = new PreSaleOrderListViewModel();
+            
+            ko.applyBindings(preSaleOrderListViewModel);
+
+            $.ajax({
+                url: "/HouTai/GetPreSaleOrderlist",
+                type: "post",
+                data: {},
+                dataType: 'json',
+                success: function(result) {
+                    console.log(result);
+                    //preSaleOrderListViewModel.PreSaleOrderList(result.items);
+                    var count = result.items.length;
+                    for (var i = 0; i < count; i++) {
+                        var order = result.items[i];
+                        var preSaleOrderViewModel = new PreSaleOrderViewModel();
+
+                        preSaleOrderViewModel.ProductName(order.PreSaleProduct.Name);
+                        preSaleOrderViewModel.Count(order.Count);
+                        preSaleOrderViewModel.TotalMoney(order.TotalMoney);
+
+                        preSaleOrderViewModel.OrderId(order.OrderId);
+
+                        preSaleOrderViewModel.CreateTime(order.CreateTime);
+                        preSaleOrderViewModel.ProductCount(order.ProductCount);
+                        preSaleOrderViewModel.Price(order.Price);
+                        preSaleOrderViewModel.Status(order.Status);
+                        preSaleOrderViewModel.StatusDesc(order.StatusDesc);
+
+                        preSaleOrderViewModel.Receiver(order.Receiver);
+                        preSaleOrderViewModel.Phone(order.Phone);
+                        preSaleOrderViewModel.Address(order.Area.FullName + order.Address);
+
+
+                        preSaleOrderListViewModel.PreSaleOrderList.push(preSaleOrderViewModel);
+                    }
+
+                    preSaleOrderListViewModel.PageIndex(result.PageIndex);
+                    preSaleOrderListViewModel.PageSize(result.PageSize);
+                    preSaleOrderListViewModel.PageCount(result.PageCount);
+                    preSaleOrderListViewModel.TotalCount(result.TotalCount);
+                },
+                error: function(error) {
+                    console.log(error);
+                    alert("错误信息" + error);
+                }
+            });
+        });
+
+
     </script>
 }

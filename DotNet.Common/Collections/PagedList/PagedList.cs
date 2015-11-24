@@ -29,6 +29,16 @@ namespace DotNet.Common.Collections
         [DataMember]
         public int PageSize { get; set; }
 
+        //public object GetMetaData()
+        //{
+        //    return new
+        //    {
+        //        TotalCount= TotalCount,
+        //        PageIndex= PageIndex,
+        //        PageSize= PageSize
+        //    };
+        //}
+
         private int pageCount;
 
         [DataMember]

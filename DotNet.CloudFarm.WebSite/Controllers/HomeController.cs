@@ -878,7 +878,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult PreSaleOrderList(int pageIndex = 1, int pageSize = 10)
         {
-            var result=PreSaleOrderService.GetPreSaleOrderList(p => p.UserId == this.UserInfo.UserId, pageIndex, pageSize);
+            //前台订单列表只显示支付成功的订单
+            var result=PreSaleOrderService.GetPreSaleOrderList(p => p.UserId == this.UserInfo.UserId&&(p.Status==1||p.Status==2), pageIndex, pageSize);
             return View(result);
         }
         #endregion
