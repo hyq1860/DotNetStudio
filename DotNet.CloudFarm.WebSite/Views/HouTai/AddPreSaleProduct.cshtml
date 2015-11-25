@@ -126,7 +126,11 @@
                     data: { productJson: preSaleProductViewModel },
                     dataType: 'json',
                     success: function(result) {
-                        console.log(result);
+                        if (result.Status.Code == 1) {
+                            alert(result.Status);
+                        } else {
+                            alert(result.Message);
+                        }
                     },
                     error: function(error) {
                         console.log(error);

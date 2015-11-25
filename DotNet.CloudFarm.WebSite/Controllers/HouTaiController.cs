@@ -767,7 +767,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             {
                 var product=PreSaleProductService.GetPreSaleProduct(preSaleProduct.ProductId);
                 product.Name = preSaleProduct.Name;
+                product.Image = preSaleProduct.Image;
                 product.Price = preSaleProduct.Price;
+                product.MarketPrice = preSaleProduct.MarketPrice;
+                product.ShelfLife = preSaleProduct.ShelfLife;
+                product.Unit = preSaleProduct.Unit;
+                product.StorageCondition = preSaleProduct.StorageCondition;
+                product.DeliveryArea = preSaleProduct.DeliveryArea;
+                product.Place = preSaleProduct.Place;
+                product.Package = preSaleProduct.Package;
                 if (preSaleProduct.Details != null)
                 {
                     product.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
@@ -786,7 +794,6 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 flag = PreSaleProductService.Add(preSaleProduct);
             }
             
-
             result.Status=new Status() {Code = flag?"1":"0",Message = flag?"保存成功":"保存失败"};
             return Content(JsonHelper.ToJson(result), "application/javascript");
             //var result = new Result<PreSaleProduct>();

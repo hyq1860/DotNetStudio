@@ -25,6 +25,7 @@ namespace DotNet.CloudFarm.Domain.ViewModel
 
         public List<Address> Areas { get; set; } 
 
+        public string DetailsStr { get; set; }
 
         public string ProvinceId { get; set; }
 

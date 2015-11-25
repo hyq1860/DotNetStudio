@@ -27,6 +27,7 @@ using System.Net.Http;
 using DotNet.CloudFarm.Domain.Contract.Address;
 using DotNet.CloudFarm.Domain.Impl.Weather;
 using DotNet.CloudFarm.Domain.Model.Message;
+using DotNet.CloudFarm.Domain.Model.Product;
 using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
@@ -757,9 +758,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult ConfirmPreSaleOrder(int productId)
         {
             PreSaleOrderViewModel preSaleOrderViewModel=new PreSaleOrderViewModel();
+
+            
             preSaleOrderViewModel.OrderId = OrderService.GetNewOrderId();
             //预售商品
             preSaleOrderViewModel.PreSaleProduct=PreSaleProductService.GetPreSaleProduct(productId);
+
+            preSaleOrderViewModel.PreSaleProduct.Details =
+                JsonHelper.FromJson<List<PreSaleProductDetail>>(preSaleOrderViewModel.PreSaleProduct.DetailJson);
+            foreach (var detail in preSaleOrderViewModel.PreSaleProduct.Details)
+            {
+                preSaleOrderViewModel.DetailsStr += string.Format("{0} {1}*{2}|", detail.Name, detail.Weight,
+                    detail.Count);
+            }
+            preSaleOrderViewModel.DetailsStr =
+                preSaleOrderViewModel.DetailsStr.Remove(preSaleOrderViewModel.DetailsStr.Length - 1, 1);
 
             //加载地址及上一次订单地址
             var addresses = AddressService.GetAddresses();
