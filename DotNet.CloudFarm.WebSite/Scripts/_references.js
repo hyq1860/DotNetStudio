@@ -48,6 +48,7 @@
 /// <reference path="jquery.validate.unobtrusive.js" />
 /// <reference path="jquery-1.10.2.min.js" />
 /// <reference path="jquery-2.1.4.js" />
+/// <reference path="knockout.mapping-latest.js" />
 /// <reference path="knockout-3.3.0.js" />
 /// <reference path="modernizr-2.8.3.js" />
 /// <reference path="npm.js" />

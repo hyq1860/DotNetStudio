@@ -71,7 +71,7 @@ namespace DotNet.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        T GetById(int id);
+        T GetById(long id);
 
         T GetById(string id);
 

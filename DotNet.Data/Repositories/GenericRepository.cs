@@ -251,7 +251,7 @@ namespace DotNet.Data
             return this.context.SaveChanges();
         }
 
-        public T GetById(int id)
+        public T GetById(long id)
         {
             return Entities.Find(id);
         }

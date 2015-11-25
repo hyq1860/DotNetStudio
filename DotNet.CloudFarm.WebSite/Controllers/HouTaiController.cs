@@ -25,12 +25,14 @@ using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Impl.Order;
+using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.SMS;
 using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.CloudFarm.WebSite.WeixinPay;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using DotNet.Common.Models;
 using DotNet.Common.Utility;
+using Ninject;
 
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -45,6 +47,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         [Ninject.Inject]
         public IPreSaleOrderService PreSaleOrderService { get; set; }
+
+        [Inject]
+        public IPreSaleProductService PreSaleProductService { get; set; }
 
         [Ninject.Inject]
         public IProductService ProductService { get; set; }
@@ -714,6 +719,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 预售订单列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public ActionResult GetPreSaleOrderlist(int pageIndex=1,int pageSize=20)
         {
             var data=PreSaleOrderService.GetPreSaleOrderCollection(null, p => p.OrderId, "desc", pageIndex, pageSize);
@@ -726,6 +737,67 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 PageCount=data.PageCount
             }), "application/javascript");
         }
+
+        public ActionResult ModifyPreOrder(long? orderId,string express)
+        {
+            var result=new Result<PreSaleOrder>();
+            if (orderId.HasValue && !string.IsNullOrEmpty(express))
+            {
+                var flag= PreSaleOrderService.ModifyPreOrder(new PreSaleOrder() { OrderId = orderId.Value, ExpressDelivery = express,Status = 2});
+                result.Data = PreSaleOrderService.GetPreSaleOrder(orderId.Value);
+                result.Status = new Status() {Code = flag?"1":"0",Message = flag?"保存发货单号成功": "保存发货单号失败" };
+            }
+            return Content(JsonHelper.ToJson(result), "application/javascript");
+        }
+
+        public ActionResult AddPreSaleProduct(string productJson)
+        {
+            var productList = PreSaleProductService.GetPreSaleProducts(p => p.IsSale, p => p.ProductId, "asc");
+            return View(productList);
+            //var result = new Result<PreSaleProduct>();
+            //return Content(JsonHelper.ToJson(result), "application/javascript");
+        }
+
+        public ActionResult EditPreSaleProduct(string productJson)
+        {
+            var result=new Result<bool>();
+            PreSaleProduct preSaleProduct = JsonHelper.FromJson<PreSaleProduct>(productJson);
+            var flag = false;
+            if (preSaleProduct.ProductId > 0)
+            {
+                var product=PreSaleProductService.GetPreSaleProduct(preSaleProduct.ProductId);
+                product.Name = preSaleProduct.Name;
+                product.Price = preSaleProduct.Price;
+                if (preSaleProduct.Details != null)
+                {
+                    product.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
+                }
+                //修改
+                flag = PreSaleProductService.Update(product);
+            }
+            else
+            {
+                //新增
+                preSaleProduct.CreateTime = DateTime.Now;
+                if (preSaleProduct.Details != null)
+                {
+                    preSaleProduct.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
+                }
+                flag = PreSaleProductService.Add(preSaleProduct);
+            }
+            
+
+            result.Status=new Status() {Code = flag?"1":"0",Message = flag?"保存成功":"保存失败"};
+            return Content(JsonHelper.ToJson(result), "application/javascript");
+            //var result = new Result<PreSaleProduct>();
+            //return Content(JsonHelper.ToJson(result), "application/javascript");
+        }
+
+        //public ActionResult PreSaleProductList()
+        //{
+            
+        //    return Content(JsonHelper.ToJson(productList), "application/javascript");
+        //}
         #endregion
     }
 }

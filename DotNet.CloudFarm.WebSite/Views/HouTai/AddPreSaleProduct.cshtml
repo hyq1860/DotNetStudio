@@ -1,0 +1,215 @@
+﻿@using DotNet.Common.Utility
+
+@{
+    ViewBag.Title = "新增预售商品";
+    Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
+}
+@model List<DotNet.CloudFarm.Domain.Model.Product.PreSaleProduct>
+<div id="PreSaleProductlist" class="span10">
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-content" id="productContainer">
+                <input type="hidden" data-bind="value:ProductId"/>
+                预售商品名称：<input data-bind="value:Name"/><br/>
+                预售商品图片地址：<input data-bind="value:Image"/><br/>
+                商品单价：<input data-bind="value:Price"/><br/>
+                产品规格描述：<input data-bind="value:Unit"/><br/>
+                <div>
+                    <ul data-bind="foreach:{data:Details,as :'P'}">
+                        <li>
+                            名称:<input data-bind="value:P.Name"/><br/>
+                            数量:<input data-bind="value:P.Count"/><br/>
+                            图片地址:<input data-bind="value:P.Image"/><br/>
+                            重量:<input data-bind="value:P.Weight"/>
+                            <input value="删除明细" type="button" data-bind="click:$parent.DeleteDetail" />
+                        </li>
+                    </ul>
+                    
+                    <input value="增加礼包内部明细" type="button" data-bind="click:AddDetail"/>
+                </div>
+                市场参考价：<input data-bind="value:MarketPrice"/><br/>
+                产地：<input data-bind="value:Place"/><br/>
+                保质期：<input data-bind="value:ShelfLife"/><br/>
+                储存条件：<input data-bind="value:StorageCondition"/><br/>
+                配送区域说明：<input data-bind="value:DeliveryArea"/><br/>
+                产品包装描述：<input data-bind="value:Package"/><br/>
+                <input type="button" value="保存" data-bind="click:Save"/><br/>
+            </div>
+        </div>
+    </div>
+    <!-- content starts -->
+    <div class="row-fluid sortable" id="productListContainer">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2>
+                    <i class="icon-align-justify"></i>预售商品列表
+                </h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>礼包编号</th>
+                            <th>礼包名称</th>
+                            <th>产品图片</th>
+                            <th>价格</th>
+                            <th>市场价</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: PreSaleProductList">
+                        <tr>
+                            <td class="center"><!--ko text:ProductId--><!--/ko--></td>
+                            <td class="center"><!--ko text:Name--><!--/ko--></td>
+                            <td class="center"><img data-bind="attr:{src:Image}"/></td>
+                            <td class="center"><!--ko text:Price--><!--/ko-->元</td>
+                            <td class="center"><!--ko text:MarketPrice--><!--/ko-->元</td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-info" data-bind="click:$parent.EditProduct"><i class="icon-edit icon-white"></i>编辑</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="pages"></div>
+            </div>
+        </div><!--/span-->
+
+    </div>
+    <!-- content ends -->
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var preSaleProductListServiceJson=@Html.Raw(JsonHelper.ToJson(Model));
+        function PreSaleProductViewModel() {
+            var self = this;
+
+            self.ProductId = ko.observable();
+
+            self.Details = ko.observableArray([]);
+
+            self.Name = ko.observable();
+
+            self.Image = ko.observable();
+
+            self.Price = ko.observable();
+
+            self.Unit = ko.observable();
+
+            self.Package = ko.observable();
+
+            self.MarketPrice = ko.observable();
+
+            self.ShelfLife = ko.observable();
+
+            self.StorageCondition = ko.observable();
+
+            self.DeliveryArea = ko.observable();
+
+            self.PackageDetail = ko.observable();
+
+            self.PackageIn = ko.observable();
+
+            self.Place = ko.observable();
+
+            self.Save = function() {
+                var preSaleProductViewModel = ko.toJSON(self);
+                console.log(preSaleProductViewModel);
+                
+                $.ajax({
+                    url: "/HouTai/EditPreSaleProduct",
+                    type: "post",
+                    data: { productJson: preSaleProductViewModel },
+                    dataType: 'json',
+                    success: function(result) {
+                        console.log(result);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        alert("错误信息" + error);
+                    }
+                });
+            }
+
+            self.AddDetail = function() {
+                self.Details.push(new DetailViewModel());
+            }
+
+            self.DeleteDetail=function() {
+                self.Details.remove(this);
+            }
+        }
+
+        function PreSaleProductListViewModel() {
+            var self = this;
+            self.EditProduct=function(product) {
+                console.log(product);
+                window.preSaleProductViewModel.ProductId(product.ProductId);
+                var details = JSON.parse(product.DetailJson);
+                
+                for (var i = 0; i < details.length; i++) {
+                    window.preSaleProductViewModel.Details.push(details[i]);
+                }
+                
+
+                window.preSaleProductViewModel.Name(product.Name);
+
+                window.preSaleProductViewModel.Image(product.Image);
+
+                window.preSaleProductViewModel.Price(product.Price);
+
+                window.preSaleProductViewModel.Unit(product.Unit);
+
+                window.preSaleProductViewModel.Package(product.Package);
+
+                window.preSaleProductViewModel.MarketPrice(product.MarketPrice);
+
+                window.preSaleProductViewModel.ShelfLife(product.ShelfLife);
+
+                window.preSaleProductViewModel.StorageCondition(product.StorageCondition);
+
+                window.preSaleProductViewModel.DeliveryArea(product.DeliveryArea);
+
+                window.preSaleProductViewModel.PackageDetail(product.PackageDetail);
+
+                window.preSaleProductViewModel.PackageIn(product.PackageIn);
+
+                window.preSaleProductViewModel.Place(product.Place);
+                
+            }
+            self.PreSaleProductList = ko.observableArray([]);
+        }
+
+        function DetailViewModel() {
+            var self = this;
+
+            self.Name = ko.observable();
+
+            self.Image = ko.observable();
+
+            self.Count = ko.observable();
+
+            self.Weight = ko.observable();
+
+            
+        }
+
+        $(function() {
+            var preSaleProductViewModel = new PreSaleProductViewModel();
+            window.preSaleProductViewModel = preSaleProductViewModel;
+
+            preSaleProductViewModel.Details.push(new DetailViewModel());
+
+            ko.applyBindings(preSaleProductViewModel, document.getElementById("productContainer"));
+
+            var preSaleProductList = new PreSaleProductListViewModel();
+            preSaleProductList.PreSaleProductList(preSaleProductListServiceJson);
+
+            ko.applyBindings(preSaleProductList, document.getElementById("productListContainer"));
+        });
+    </script>
+}

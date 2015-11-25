@@ -25,5 +25,9 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         /// <param name="id"></param>
         /// <returns></returns>
         PreSaleProduct GetPreSaleProduct(int id);
+
+        bool Add(PreSaleProduct preSaleProduct);
+
+        bool Update(PreSaleProduct preSaleProduct);
     }
 }

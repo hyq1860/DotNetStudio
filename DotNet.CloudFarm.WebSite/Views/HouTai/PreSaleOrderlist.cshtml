@@ -118,8 +118,8 @@
 
                             <td class="center">
                                 <!-- ko if: Status()==1 -->
-                                <input value="运单号"/>
-                                <a href="javascript:void(0);" class="btn btn-info" @*data-bind="click:ConfirmOrderPay"*@><i class="icon-edit icon-white"></i>填写运单号</a>
+                                <input value="运单号" data-bind="value:ExpressDelivery"/>
+                                <a href="javascript:void(0);" class="btn btn-info" data-bind="click:function(order){$parent.AddExpress(order)}"><i class="icon-edit icon-white"></i>填写运单号</a>
                                 <!-- /ko -->
 
                             </td>
@@ -164,6 +164,7 @@
             self.TotalMoney = ko.observable();
 
             self.OrderId = ko.observable();
+            self.UserId = ko.observable();
             
             self.CreateTime = ko.observable();
             self.ProductCount = ko.observable();
@@ -174,6 +175,10 @@
             self.Receiver = ko.observable();
             self.Phone = ko.observable();
             self.Address = ko.observable();
+
+            self.ExpressDelivery = ko.observable();
+
+            
         }
 
         function PreSaleOrderListViewModel() {
@@ -188,6 +193,29 @@
             self.TotalCount = ko.observable();
             //每页多少
             self.PageSize = ko.observable();
+
+            //增加运单号
+            self.AddExpress = function (order) {
+                console.log(order);
+                //ModifyPreOrder
+                var data = ko.mapping.toJS(order);
+                console.log(data);
+                $.ajax({
+                    url: "/HouTai/ModifyPreOrder",
+                    type: "post",
+                    data: { OrderId: data.OrderId, Express: data.ExpressDelivery },
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                        order.Status(result.Data.Status);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("错误信息" + error);
+                    }
+                });
+
+            }
         }
 
         $(function() {
@@ -223,7 +251,7 @@
                         preSaleOrderViewModel.Receiver(order.Receiver);
                         preSaleOrderViewModel.Phone(order.Phone);
                         preSaleOrderViewModel.Address(order.Area.FullName + order.Address);
-
+                        preSaleOrderViewModel.ExpressDelivery(order.ExpressDelivery);
 
                         preSaleOrderListViewModel.PreSaleOrderList.push(preSaleOrderViewModel);
                     }

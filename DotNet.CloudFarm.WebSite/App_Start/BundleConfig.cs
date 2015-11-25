@@ -31,7 +31,8 @@ namespace DotNet.CloudFarm.WebSite
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.min.js",
-                      "~/Scripts/knockout-3.3.0.js"));
+                      "~/Scripts/knockout-3.3.0.js",
+                      "~/Scripts/knockout.mapping-latest.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

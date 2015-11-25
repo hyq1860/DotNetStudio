@@ -63,7 +63,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         public bool ModifyPreOrder(PreSaleOrder preSaleOrder)
         {
-            var order= preSaleOrderDataAccess.GetById(preSaleOrder.OrderId.ToString());
+            var order= preSaleOrderDataAccess.GetById(preSaleOrder.OrderId);
             if (order != null)
             {
                 order.Status = preSaleOrder.Status;
@@ -79,7 +79,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         public PreSaleOrder GetPreSaleOrder(long orderId)
         {
-            return preSaleOrderDataAccess.GetById(orderId.ToString());
+            return preSaleOrderDataAccess.GetById(orderId);
         }
     }
 }

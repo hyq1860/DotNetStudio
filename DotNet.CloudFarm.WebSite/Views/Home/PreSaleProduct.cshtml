@@ -31,31 +31,17 @@
                 </article>
                 <!--上面商品信息E-->
                 <!--礼盒信息S-->
-                <article class="liheBox" style="display: none" data-bind="attr:{id:'box_'+ProductId}">
+                <article class="liheBox" style="display: none" data-bind="attr:{id:'box_'+ProductId},foreach:{data:Details,as :'P'}">
                     <!--礼盒清单1S-->
                     <div class="liheItem">
                         <div class="productPic">
-                            <img src="http://q3.qlogo.cn/g?b=qq&k=fRTVj0icCl13iaVWZIaeUpTA&s=100&t=1371164867" alt="">
+                            <img src="http://q3.qlogo.cn/g?b=qq&k=fRTVj0icCl13iaVWZIaeUpTA&s=100&t=1371164867" data-bind="attr:{src:P.Image}" alt="">
                         </div>
                         <div class="productInfo">
-                            <h2>标题文字标题文字</h2>
+                            <h2 data-bind="text:P.Name"></h2>
                             <p>
-                                <span>数量：2件</span>
-                                <span>重量：1kg</span>
-                            </p>
-                        </div>
-                    </div>
-                    <!--礼盒清单1E-->
-                    <!--礼盒清单1S-->
-                    <div class="liheItem">
-                        <div class="productPic">
-                            <img src="http://q3.qlogo.cn/g?b=qq&k=fRTVj0icCl13iaVWZIaeUpTA&s=100&t=1371164867" alt="">
-                        </div>
-                        <div class="productInfo">
-                            <h2>标题文字标题文字</h2>
-                            <p>
-                                <span>数量：2件</span>
-                                <span>重量：1kg</span>
+                                <span>数量：<!--ko text:Count--><!--/ko--></span>
+                                <span>重量：<!--ko text:Weight--><!--/ko--></span>
                             </p>
                         </div>
                     </div>

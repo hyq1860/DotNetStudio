@@ -13,6 +13,10 @@ namespace DotNet.CloudFarm.Domain.Model.Product
     /// </summary>
     public class PreSaleProduct
     {
+        public PreSaleProduct()
+        {
+            CreateTime=new DateTime();
+        }
         /// <summary>
         /// 预售商品id
         /// </summary>
@@ -83,10 +87,28 @@ namespace DotNet.CloudFarm.Domain.Model.Product
         /// </summary>
         public DateTime CreateTime { get; set; }
 
+        public List<PreSaleProductDetail> Details { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DetailJson { get; set; }
+
         /// <summary>
         /// 是否销售
         /// </summary>
         public bool IsSale { get; set; }
+    }
+
+    public class PreSaleProductDetail
+    {
+        public string Name { get; set; }
+
+        public string Image { get; set; }
+
+        public string Weight { get; set; }
+
+        public string Count { get; set; }
     }
 
     public class PreSaleProductEfMap:EntityTypeConfiguration<PreSaleProduct>
@@ -95,7 +117,8 @@ namespace DotNet.CloudFarm.Domain.Model.Product
         {
             ToTable("PreSaleProducts");
             HasKey(c => c.ProductId);
-            Property(c => c.ProductId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(c => c.ProductId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Ignore(c => c.Details);
         }
     }
 }

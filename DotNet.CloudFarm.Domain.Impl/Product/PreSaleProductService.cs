@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNet.CloudFarm.Domain.Contract.Product;
 using DotNet.CloudFarm.Domain.Model.Product;
+using DotNet.Common.Utility;
 
 namespace DotNet.CloudFarm.Domain.Impl.Product
 {
@@ -37,12 +38,27 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
                 }
             }
             queryable=queryable.Where(whereFunc);
-            return queryable.ToList();
+            var dataList = queryable.ToList();
+            foreach (var product in dataList)
+            {
+                product.Details = JsonHelper.FromJson<List<PreSaleProductDetail>>(product.DetailJson);
+            }
+            return dataList;
         }
 
         public PreSaleProduct GetPreSaleProduct(int id)
         {
             return preSaleProductAccess.GetById(id);
+        }
+
+        public bool Add(PreSaleProduct preSaleProduct)
+        {
+            return preSaleProductAccess.Add(preSaleProduct)>0;
+        }
+
+        public bool Update(PreSaleProduct preSaleProduct)
+        {
+            return preSaleProductAccess.Update(preSaleProduct)>0;
         }
     }
 }
