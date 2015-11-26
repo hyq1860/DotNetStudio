@@ -18,6 +18,7 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         public PreSaleOrder()
         {
             ExpressDelivery = string.Empty;
+            DeleteTag = 0;
         }
 
         /// <summary>
@@ -133,6 +134,8 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         public DateTime? ModifyTime { get; set; }
 
         public virtual PreSaleProduct PreSaleProduct { get; set; }
+
+        public int DeleteTag { get; set; }
     }
 
     public class PreSaleOrderEfMap : EntityTypeConfiguration<PreSaleOrder>

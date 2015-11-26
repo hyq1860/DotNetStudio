@@ -47,6 +47,7 @@
                             <div class="control-group">
                                 <div class="controls">
                                     <button type="button" class="btn btn-primary" @*data-bind="click:BatchSearchOrder"*@>查询</button>
+                                    <button id="export" type="button" class="btn btn-primary">导出</button>
                                 </div>
                             </div>
                         </div>
@@ -97,6 +98,7 @@
                             <th>购买数量</th>
                             <th>总价</th>
                             <th>收货地址</th>
+                            <th>运单单号</th>
                             <th>订单状态</th>
                             <th>下单时间</th>
                             <th>操作</th>
@@ -111,9 +113,11 @@
                             <td class="center"><!--ko text:Count--><!--/ko--></td>
                             <td class="center"><!--ko text:TotalMoney--><!--/ko--></td>
                             <td class="center"><!--ko text:Address--><!--/ko--></td>
+                            <td class="center"><!--ko text:ExpressDelivery--><!--/ko--></td>
                             <td class="center">
                                 <!--ko text:StatusDesc--><!--/ko-->
                             </td>
+                            
                             <td class="center" data-bind="text:CreateTime"></td>
 
                             <td class="center">
@@ -121,7 +125,9 @@
                                 <input value="运单号" data-bind="value:ExpressDelivery"/>
                                 <a href="javascript:void(0);" class="btn btn-info" data-bind="click:function(order){$parent.AddExpress(order)}"><i class="icon-edit icon-white"></i>填写运单号</a>
                                 <!-- /ko -->
-
+                                <!-- ko if: DeleteTag()==0 -->
+                                <a href="javascript:void(0);" class="btn btn-info" data-bind="click:function(order){$parent.LogicDelete(order)}"><i class="icon-edit icon-white"></i>逻辑删除</a>
+                                <!-- /ko -->
                             </td>
                         </tr>
                     </tbody>
@@ -158,6 +164,8 @@
 
         function PreSaleOrderViewModel() {
             var self = this;
+
+            self.DeleteTag = ko.observable();
 
             self.ProductName = ko.observable();
             self.Count = ko.observable();
@@ -216,9 +224,47 @@
                 });
 
             }
+
+            //逻辑删除
+            self.LogicDelete = function (order) {
+                var data = ko.mapping.toJS(order);
+                console.log(data);
+                $.ajax({
+                    url: "/HouTai/ModifyPreOrder",
+                    type: "post",
+                    data: { OrderId: data.OrderId,DeleteTag:1 },
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                        order.Status(result.Data.Status);
+                        order.DeleteTag(1);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("错误信息" + error);
+                    }
+                });
+            }
+
         }
 
-        $(function() {
+        //导出excel
+        function ExportReportList() {
+            var $Iframe = $("#downloadcsv");
+            var url = "/HouTai/GetExportOrderList";
+            if ($Iframe.length == 0) {
+                $('body').append("<iframe id=\"downloadcsv\" style=\"display:none\" src=\"" + url + "\"></iframe>");
+            } else {
+                $Iframe.attr('src', url);
+            }
+        }
+
+        $(function () {
+
+            $("#export").on("click", function () {
+                ExportReportList();
+            });
+
             var preSaleOrderListViewModel = new PreSaleOrderListViewModel();
             
             ko.applyBindings(preSaleOrderListViewModel);
@@ -235,11 +281,11 @@
                     for (var i = 0; i < count; i++) {
                         var order = result.items[i];
                         var preSaleOrderViewModel = new PreSaleOrderViewModel();
-
+                        
                         preSaleOrderViewModel.ProductName(order.PreSaleProduct.Name);
                         preSaleOrderViewModel.Count(order.Count);
                         preSaleOrderViewModel.TotalMoney(order.TotalMoney);
-
+                        preSaleOrderViewModel.DeleteTag(order.DeleteTag);
                         preSaleOrderViewModel.OrderId(order.OrderId);
 
                         preSaleOrderViewModel.CreateTime(order.CreateTime);

@@ -5,35 +5,89 @@
     Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
 }
 @model List<DotNet.CloudFarm.Domain.Model.Product.PreSaleProduct>
+<style>
+    li {
+        list-style-type: none;
+    }
+    .w600{width:600px;}
+</style>
+
 <div id="PreSaleProductlist" class="span10">
     <div class="row-fluid sortable">
         <div class="box span12">
             <div class="box-content" id="productContainer">
-                <input type="hidden" data-bind="value:ProductId"/>
-                预售商品名称：<input data-bind="value:Name"/><br/>
-                预售商品图片地址：<input data-bind="value:Image"/><br/>
-                商品单价：<input data-bind="value:Price"/><br/>
-                产品规格描述：<input data-bind="value:Unit"/><br/>
-                <div>
-                    <ul data-bind="foreach:{data:Details,as :'P'}">
-                        <li>
-                            名称:<input data-bind="value:P.Name"/><br/>
-                            数量:<input data-bind="value:P.Count"/><br/>
-                            图片地址:<input data-bind="value:P.Image"/><br/>
-                            重量:<input data-bind="value:P.Weight"/>
-                            <input value="删除明细" type="button" data-bind="click:$parent.DeleteDetail" />
-                        </li>
-                    </ul>
-                    
-                    <input value="增加礼包内部明细" type="button" data-bind="click:AddDetail"/>
-                </div>
-                市场参考价：<input data-bind="value:MarketPrice"/><br/>
-                产地：<input data-bind="value:Place"/><br/>
-                保质期：<input data-bind="value:ShelfLife"/><br/>
-                储存条件：<input data-bind="value:StorageCondition"/><br/>
-                配送区域说明：<input data-bind="value:DeliveryArea"/><br/>
-                产品包装描述：<input data-bind="value:Package"/><br/>
-                <input type="button" value="保存" data-bind="click:Save"/><br/>
+                <form class="form-horizontal" method="post" id="productForm" enctype="multipart/form-data">
+                    <input type="hidden" data-bind="value:ProductId" />
+                    <table>
+                        <tr>
+                            <td>预售商品名称:</td>
+                            <td colspan="2"><input data-bind="value:Name" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>预售商品图片地址:</td>
+                            <td colspan="2"><input data-bind="value:Image" class="w600"  /></td>
+                        </tr>
+                        <tr>
+                            <td>商品单价:</td>
+                            <td colspan="2"><input data-bind="value:Price" class="w600"/></td>
+                        </tr>
+                        <tr>
+                            <td>市场参考价:</td>
+                            <td colspan="2"><input data-bind="value:MarketPrice" class="w600" /></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>产品规格描述:</td>
+                            <td colspan="2"><input data-bind="value:Unit" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>产地:</td>
+                            <td colspan="2"><input data-bind="value:Place" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>保质期:</td>
+                            <td colspan="2"><input data-bind="value:ShelfLife" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>储存条件:</td>
+                            <td colspan="2"><input data-bind="value:StorageCondition" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>配送区域说明:</td>
+                            <td colspan="2"><input data-bind="value:DeliveryArea" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>产品包装描述:</td>
+                            <td colspan="2"><input data-bind="value:Package" class="w600" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                礼包内部明细:
+                            </td>
+                            <td>
+                                <table data-bind="foreach:{data:Details,as :'P'}" style="">
+                                    <tr>
+                                        <td>
+                                            名称:<input data-bind="value:P.Name"/><br/>
+                                            数量:<input data-bind="value:P.Count"/><br/>
+                                            图片:<input data-bind="value:P.Image" class="image"/><br/>
+                                            重量:<input data-bind="value:P.Weight"/>
+                                        </td>
+                                        <td>
+                                            <input value="删除明细" type="button" data-bind="click:$parent.DeleteDetail" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td><input value="增加礼包内部明细" type="button" data-bind="click:AddDetail" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="button" value="保存" data-bind="click:Save"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
@@ -57,6 +111,7 @@
                             <th>礼包编号</th>
                             <th>礼包名称</th>
                             <th>产品图片</th>
+                            <th>礼包明细</th>
                             <th>价格</th>
                             <th>市场价</th>
                             <th>操作</th>
@@ -67,6 +122,15 @@
                             <td class="center"><!--ko text:ProductId--><!--/ko--></td>
                             <td class="center"><!--ko text:Name--><!--/ko--></td>
                             <td class="center"><img data-bind="attr:{src:Image}"/></td>
+                            <td class="center" >
+                                <table data-bind="foreach:{data:Details,as:'D'}">
+                                    <tr>
+                                        <td><!--ko text:D.Name--><!--/ko--></td>
+                                        <td><!--ko text:D.Weight--><!--/ko--></td>
+                                        <td><!--ko text:D.Count--><!--/ko--></td>
+                                    </tr>
+                                </table>
+                            </td>
                             <td class="center"><!--ko text:Price--><!--/ko-->元</td>
                             <td class="center"><!--ko text:MarketPrice--><!--/ko-->元</td>
                             <td>
@@ -91,6 +155,17 @@
             self.ProductId = ko.observable();
 
             self.Details = ko.observableArray([]);
+
+            self.DetailInfo = ko.computed(function() {
+                var str = "111111";
+                var length = self.Details().length;
+                console.log(length);
+                for (var i = 0; i < length; i++) {
+                    var item = self.Details()[i];
+                    str += item.Name + item.Weight + item.Count+"|";
+                }
+                return str;
+            });
 
             self.Name = ko.observable();
 
@@ -119,7 +194,7 @@
             self.Save = function() {
                 var preSaleProductViewModel = ko.toJSON(self);
                 console.log(preSaleProductViewModel);
-                
+
                 $.ajax({
                     url: "/HouTai/EditPreSaleProduct",
                     type: "post",
@@ -143,6 +218,7 @@
                 self.Details.push(new DetailViewModel());
             }
 
+            //删除明细
             self.DeleteDetail=function() {
                 self.Details.remove(this);
             }
@@ -150,15 +226,19 @@
 
         function PreSaleProductListViewModel() {
             var self = this;
+            //编辑商品
             self.EditProduct=function(product) {
                 console.log(product);
                 window.preSaleProductViewModel.ProductId(product.ProductId);
                 var details = JSON.parse(product.DetailJson);
-                
+                var array = window.preSaleProductViewModel.Details();
+                for (var i = 0; i < array.length; i++) {
+                    window.preSaleProductViewModel.Details.remove(array[i]);
+                }
                 for (var i = 0; i < details.length; i++) {
                     window.preSaleProductViewModel.Details.push(details[i]);
                 }
-                
+
 
                 window.preSaleProductViewModel.Name(product.Name);
 
@@ -183,7 +263,7 @@
                 window.preSaleProductViewModel.PackageIn(product.PackageIn);
 
                 window.preSaleProductViewModel.Place(product.Place);
-                
+
             }
             self.PreSaleProductList = ko.observableArray([]);
         }
@@ -199,14 +279,14 @@
 
             self.Weight = ko.observable();
 
-            
+
         }
 
         $(function() {
             var preSaleProductViewModel = new PreSaleProductViewModel();
             window.preSaleProductViewModel = preSaleProductViewModel;
 
-            preSaleProductViewModel.Details.push(new DetailViewModel());
+            //preSaleProductViewModel.Details.push(new DetailViewModel());
 
             ko.applyBindings(preSaleProductViewModel, document.getElementById("productContainer"));
 
@@ -214,6 +294,54 @@
             preSaleProductList.PreSaleProductList(preSaleProductListServiceJson);
 
             ko.applyBindings(preSaleProductList, document.getElementById("productListContainer"));
+
+            $(".image").on("click", function() {
+                console.log("哈哈");
+            });
         });
+
+        function UploadImage() {
+            var uploader = new qq.FineUploaderBasic({
+                button: document.getElementById('fine-uploader-basic'),
+                request: {
+                    endpoint: '/Upload/UploadFile'
+                },
+                multiple: false,
+                validation: {
+                    allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+                    sizeLimit: 20480000 // 200 kB = 200 * 1024 bytes
+                },
+                callbacks: {
+                    onValidate: function (data) {
+                        console.log(data);
+                    },
+                    onSubmit: function (id, fileName) {
+                        
+                    },
+                    onUpload: function (id, fileName) {
+                    },
+                    onProgress: function (id, fileName, loaded, total) {
+                    },
+                    onComplete: function (id, fileName, responseJSON) {
+                        if (responseJSON.success) {
+                            $('#file-' + id).removeClass('alert-info')
+                                            .addClass('alert-success')
+                                            .html('<i class="icon-ok"></i> ' +
+                                                  'Successfully saved ' +
+                                                  '“' + fileName + '”' +
+                                                  '<br><img src="img/success.jpg" alt="' + fileName + '">');
+                        } else {
+                            $('#file-' + id).removeClass('alert-info')
+                                            .addClass('alert-error')
+                                            .html('<i class="icon-exclamation-sign"></i> ' +
+                                                  'Error with ' +
+                                                  '“' + fileName + '”: ' +
+                                                  responseJSON.error);
+                        }
+                    }
+                },
+                debug: true
+            });
+        }
     </script>
 }

@@ -33,6 +33,8 @@ using Senparc.Weixin.MP.AdvancedAPIs;
 using DotNet.Common.Models;
 using DotNet.Common.Utility;
 using Ninject;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 
 namespace DotNet.CloudFarm.WebSite.Controllers
@@ -727,7 +729,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult GetPreSaleOrderlist(int pageIndex=1,int pageSize=20)
         {
-            var data=PreSaleOrderService.GetPreSaleOrderCollection(null, p => p.OrderId, "desc", pageIndex, pageSize);
+            var data=PreSaleOrderService.GetPreSaleOrderCollection(p=>p.DeleteTag==0, p => p.OrderId, "desc", pageIndex, pageSize);
             return Content(JsonHelper.ToJson(new
             {
                 items = data,
@@ -738,16 +740,100 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }), "application/javascript");
         }
 
-        public ActionResult ModifyPreOrder(long? orderId,string express)
+        public ActionResult ModifyPreOrder(long? orderId,string express,int? deleteTag)
         {
             var result=new Result<PreSaleOrder>();
-            if (orderId.HasValue && !string.IsNullOrEmpty(express))
+            if (orderId.HasValue)
             {
-                var flag= PreSaleOrderService.ModifyPreOrder(new PreSaleOrder() { OrderId = orderId.Value, ExpressDelivery = express,Status = 2});
+                
+                var preSaleOrder = new PreSaleOrder() {OrderId = orderId.Value,  Status = 2};
+                if (deleteTag.HasValue)
+                {
+                    preSaleOrder.DeleteTag = deleteTag.Value;
+                }
+                if (!string.IsNullOrEmpty(express))
+                {
+                    preSaleOrder.ExpressDelivery = express;
+                }
+                var flag= PreSaleOrderService.ModifyPreOrder(preSaleOrder);
                 result.Data = PreSaleOrderService.GetPreSaleOrder(orderId.Value);
-                result.Status = new Status() {Code = flag?"1":"0",Message = flag?"保存发货单号成功": "保存发货单号失败" };
+                result.Status = new Status() {Code = flag?"1":"0",Message = flag?"成功": "失败" };
             }
             return Content(JsonHelper.ToJson(result), "application/javascript");
+        }
+
+        public ActionResult GetExportOrderList()
+        {
+            IWorkbook workbook = new XSSFWorkbook();
+            ISheet sheet = workbook.CreateSheet("预售订单列表");
+
+            var preSaleOrders= PreSaleOrderService.GetPreSaleOrderCollection(p => p.DeleteTag == 1, p => p.OrderId, "desc", 1, int.MaxValue);
+            var columnLength = 8;
+            var rowLength = preSaleOrders.Count;
+
+            //头部
+            IRow headRow = sheet.CreateRow(0);
+            headRow.CreateCell(0).SetCellValue("预售订单编号");
+            headRow.CreateCell(1).SetCellValue("手机号");
+            headRow.CreateCell(2).SetCellValue("产品名称");
+            headRow.CreateCell(3).SetCellValue("购买数量");
+            headRow.CreateCell(4).SetCellValue("总价");
+            headRow.CreateCell(5).SetCellValue("收货地址");
+            headRow.CreateCell(6).SetCellValue("运单单号");
+            headRow.CreateCell(7).SetCellValue("订单状态");
+
+            IRow row;
+            ICell cell;
+            for (int i = 0; i < rowLength; i++)
+            {
+                var order = preSaleOrders[i];
+                row = sheet.CreateRow(i + 1);
+                for (int j = 0; j < columnLength; j++)
+                {
+                    cell = row.CreateCell(j);
+                    string cellValue = string.Empty;
+                    switch (j)
+                    {
+                        case 0:
+                            cellValue = order.OrderId.ToString();
+                            sheet.SetColumnWidth(j, 256 * 20);
+                            break;
+                        case 1:
+                            cellValue = order.Phone;
+                            sheet.SetColumnWidth(j, 256 * 15);
+                            break;
+                        case 2:
+                            cellValue = order.PreSaleProduct.Name;
+                            sheet.SetColumnWidth(j, 256 * 10);
+                            break;
+                        case 3:
+                            cellValue = order.Count.ToString();
+                            sheet.SetColumnWidth(j, 256 * 20);
+                            break;
+                        case 4:
+                            cellValue = order.TotalMoney.ToString();
+                            sheet.SetColumnWidth(j, 256 * 15);
+                            break;
+                        case 5:
+                            cellValue =order.Area.FullName+order.Address;
+                            sheet.SetColumnWidth(j, 256 * 20);
+                            break;
+                        case 6:
+                            cellValue = order.ExpressDelivery;
+                            break;
+                        case 7:
+                            cellValue =order.StatusDesc;
+                            break;
+                    }
+
+                    cell.SetCellValue(cellValue);
+                }
+
+            }
+            var fileName = string.Format("预售订单-{0}.xlsx", DateTime.Now.ToString("yyyyMMddhhmmss"));
+            MemoryStream stream = new MemoryStream();
+            workbook.Write(stream);
+            return File(stream.ToArray(), "application/vnd.ms-excel", fileName);
         }
 
         public ActionResult AddPreSaleProduct(string productJson)
@@ -761,40 +847,50 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult EditPreSaleProduct(string productJson)
         {
             var result=new Result<bool>();
-            PreSaleProduct preSaleProduct = JsonHelper.FromJson<PreSaleProduct>(productJson);
             var flag = false;
-            if (preSaleProduct.ProductId > 0)
+            string message = string.Empty;
+            try
             {
-                var product=PreSaleProductService.GetPreSaleProduct(preSaleProduct.ProductId);
-                product.Name = preSaleProduct.Name;
-                product.Image = preSaleProduct.Image;
-                product.Price = preSaleProduct.Price;
-                product.MarketPrice = preSaleProduct.MarketPrice;
-                product.ShelfLife = preSaleProduct.ShelfLife;
-                product.Unit = preSaleProduct.Unit;
-                product.StorageCondition = preSaleProduct.StorageCondition;
-                product.DeliveryArea = preSaleProduct.DeliveryArea;
-                product.Place = preSaleProduct.Place;
-                product.Package = preSaleProduct.Package;
-                if (preSaleProduct.Details != null)
+                PreSaleProduct preSaleProduct = JsonHelper.FromJson<PreSaleProduct>(productJson);
+                
+                if (preSaleProduct.ProductId > 0)
                 {
-                    product.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
+                    var product = PreSaleProductService.GetPreSaleProduct(preSaleProduct.ProductId);
+                    product.Name = preSaleProduct.Name;
+                    product.Image = preSaleProduct.Image;
+                    product.Price = preSaleProduct.Price;
+                    product.MarketPrice = preSaleProduct.MarketPrice;
+                    product.ShelfLife = preSaleProduct.ShelfLife;
+                    product.Unit = preSaleProduct.Unit;
+                    product.StorageCondition = preSaleProduct.StorageCondition;
+                    product.DeliveryArea = preSaleProduct.DeliveryArea;
+                    product.Place = preSaleProduct.Place;
+                    product.Package = preSaleProduct.Package;
+                    if (preSaleProduct.Details != null)
+                    {
+                        product.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
+                    }
+                    //修改
+                    flag = PreSaleProductService.Update(product);
                 }
-                //修改
-                flag = PreSaleProductService.Update(product);
+                else
+                {
+                    //新增
+                    preSaleProduct.CreateTime = DateTime.Now;
+                    if (preSaleProduct.Details != null)
+                    {
+                        preSaleProduct.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
+                    }
+                    flag = PreSaleProductService.Add(preSaleProduct);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //新增
-                preSaleProduct.CreateTime = DateTime.Now;
-                if (preSaleProduct.Details != null)
-                {
-                    preSaleProduct.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
-                }
-                flag = PreSaleProductService.Add(preSaleProduct);
+                flag = false;
+                message = ex.Message;
             }
             
-            result.Status=new Status() {Code = flag?"1":"0",Message = flag?"保存成功":"保存失败"};
+            result.Status=new Status() {Code = flag?"1":"0",Message = flag?"保存成功": message };
             return Content(JsonHelper.ToJson(result), "application/javascript");
             //var result = new Result<PreSaleProduct>();
             //return Content(JsonHelper.ToJson(result), "application/javascript");

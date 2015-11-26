@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="bootstrap.js" />
 /// <reference path="common.js" />
+/// <reference path="fine-uploader.min.js" />
 /// <reference path="fullpage.min.js" />
 /// <reference path="houtai/bootstrap-alert.js" />
 /// <reference path="houtai/bootstrap-button.js" />

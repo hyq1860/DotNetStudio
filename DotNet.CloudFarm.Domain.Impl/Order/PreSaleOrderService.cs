@@ -52,7 +52,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
         public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)
         {
             var result=new Result<PagedList<PreSaleOrder>>();
-            var total = preSaleOrderDataAccess.GetList().Count(p => p.UserId == userId);
+            var total = preSaleOrderDataAccess.GetList().Count(p => p.UserId == userId && p.DeleteTag==0);
             var data =
                 preSaleOrderDataAccess.GetPagedList(p => p.UserId == userId, p => p.OrderId, "desc", pageIndex, pageSize)
                     .ToList();
@@ -70,6 +70,10 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
                 if (!string.IsNullOrEmpty(preSaleOrder.ExpressDelivery))
                 {
                     order.ExpressDelivery = preSaleOrder.ExpressDelivery;
+                }
+                if (preSaleOrder.DeleteTag == 1)
+                {
+                    order.DeleteTag = 1;
                 }
                 order.ModifyTime=DateTime.Now;
                 return preSaleOrderDataAccess.Update(order) > 0;
