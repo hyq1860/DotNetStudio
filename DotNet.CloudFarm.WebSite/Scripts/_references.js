@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="bootstrap.js" />
+/// <reference path="bootstrap-select.min.js" />
 /// <reference path="common.js" />
 /// <reference path="fine-uploader.min.js" />
 /// <reference path="fullpage.min.js" />

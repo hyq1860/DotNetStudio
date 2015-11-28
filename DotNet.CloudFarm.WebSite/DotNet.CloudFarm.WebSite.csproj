@@ -290,6 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
+    <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -590,6 +591,7 @@
     <Content Include="images\zhuanzhang.png" />
     <Content Include="images\zhuanzhang_active.png" />
     <Content Include="images\修改.jpg" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\common.js" />
@@ -635,6 +637,7 @@
     <Content Include="Scripts\houtai\jquery.uniform.min.js" />
     <Content Include="Scripts\houtai\jquery.uploadify-3.1.min.js" />
     <Content Include="Scripts\houtai\jquery.validate-houtai.js" />
+    <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

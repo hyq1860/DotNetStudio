@@ -221,8 +221,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         private readonly static string COOKIE_OPENID_KEY = "wx_openId";
 
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             if (Request.Cookies[COOKIE_OPENID_KEY]!=null)
             {
                 ViewBag.OpenId = Request.Cookies[COOKIE_OPENID_KEY].Value;
@@ -235,7 +236,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 #if DEBUG
             ViewBag.OpenId = "oOGootzpwe38CkQSTj00wyHhKSMk";
 #endif
-            return View();
+            var viewResult = View();
+            return viewResult;
         }
 
         private ActionResult RedirectToLocal(string returnUrl)

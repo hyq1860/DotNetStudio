@@ -55,7 +55,7 @@
         }
     }
     $(function () {
-
+        console.log(document);
         $("body").attr("style", "").attr("style", "background:#63b670");
         //绑定事件
 
@@ -118,10 +118,11 @@
             $.ajax({
                 url: "/account/login",
                 type: "post",
-                data: { Mobile: mobile, Captcha: captcha, WxOpenId: wxopenId },
+                data: { Mobile: mobile, Captcha: captcha, WxOpenId: wxopenId},
                 success: function (data) {
                     if (data.IsSuccess) {
-                        location.href = "/home/default";
+                        //location.href = "/home/default";
+                        location.href = decodeURIComponent(GetQueryString('ReturnUrl'));
                     } else {
                         alert(data.Msg);
                     }

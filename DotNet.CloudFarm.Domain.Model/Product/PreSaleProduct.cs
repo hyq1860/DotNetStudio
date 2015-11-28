@@ -98,6 +98,11 @@ namespace DotNet.CloudFarm.Domain.Model.Product
         /// 是否销售
         /// </summary>
         public bool IsSale { get; set; }
+
+        /// <summary>
+        /// 限定北京
+        /// </summary>
+        public int BeiJinLimit { get; set; }
     }
 
     public class PreSaleProductDetail

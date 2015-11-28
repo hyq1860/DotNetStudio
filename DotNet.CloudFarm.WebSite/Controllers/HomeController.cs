@@ -776,15 +776,33 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
             //加载地址及上一次订单地址
             var addresses = AddressService.GetAddresses();
-            preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == "").ToList();
+            if (preSaleOrderViewModel.PreSaleProduct.BeiJinLimit == 1)
+            {
+                preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == ""&&s.Code== "110000").ToList();
+            }
+            else
+            {
+                preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == "").ToList();
+            }
+            
 
             var lastOrder = PreSaleOrderService.GetPreSaleOrderList(o=>o.UserId ==this.UserInfo.UserId,1, 1).Data.FirstOrDefault();
             if (lastOrder != null)
             {
-                preSaleOrderViewModel.ProvinceId = lastOrder.ProvinceId;
-                preSaleOrderViewModel.CityId = lastOrder.CityId;
-                preSaleOrderViewModel.AreaId = lastOrder.Code;
-                preSaleOrderViewModel.Address = lastOrder.Address;
+                if (preSaleOrderViewModel.PreSaleProduct.BeiJinLimit == 1&& lastOrder.ProvinceId!= "110000")
+                {
+                    preSaleOrderViewModel.ProvinceId = "110000";
+                }
+                else
+                {
+                    preSaleOrderViewModel.ProvinceId = lastOrder.ProvinceId;
+                    preSaleOrderViewModel.CityId = lastOrder.CityId;
+                    preSaleOrderViewModel.AreaId = lastOrder.Code;
+                    preSaleOrderViewModel.Address = lastOrder.Address;
+                    preSaleOrderViewModel.UserName = lastOrder.Receiver;
+                    preSaleOrderViewModel.Phone = lastOrder.Phone;
+                }
+                
             }
             //OrderService.GetPreSaleOrderList(1, 1, 1);
             

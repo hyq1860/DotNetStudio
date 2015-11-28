@@ -7,6 +7,9 @@
 @using DotNet.Common.Utility
 @model DotNet.CloudFarm.Domain.ViewModel.PreSaleOrderViewModel
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<style>
+
+</style>
 <div class="layout layout_orderDetail">
     <!--订单信息S-->
     <section class="orderInfo">
@@ -64,37 +67,42 @@
             <span class="txt">收货人联系方式</span>
             <input type="text" placeholder="请输入收货人联系方式" maxlength="11" data-bind="value:Phone">
         </p>
-        <p>
+        <div class="selAdress">
             <span class="txt">收货地址</span>
-            <select data-bind="
+            <div class="select">
+                <select class="text" data-bind="
     options: Provinces,
     optionsCaption:'请选择',
     optionsText: 'Name',
     optionsValue:'Code',
     value:ProvinceId,
     event: { change : provinceChange}
-    ">
-                
-            </select>
-            <select data-bind="
+    "></select>
+                @*<a href="javascript:" class="arrow-down" data-bind="click:provinceChange"></a>*@
+            </div>
+            <div class="select">
+                <select class="text" data-bind="
     options: Cities,
     optionsCaption:'请选择',
     optionsText: 'Name',
     optionsValue:'Code',
     value:CityId,
     event: { change : cityChange}
-    ">
-            </select>
-            <select data-bind="
+    "></select>
+                @*<a href="javascript:" class="arrow-down" data-bind="click:cityChange"></a>*@
+            </div>
+            <div class="select">
+                <select class="text" data-bind="
     options: Areas,
     optionsCaption:'请选择',
     optionsText: 'Name',
     optionsValue:'Code',
     value:AreaId,
     event:{change:areaChange}
-    ">
-            </select>
-        </p>
+    "></select>
+            @*<a href="javascript:" class="arrow-down"></a>*@
+                </div>
+</div>
         <p>
             <span class="txt">详细地址</span>
             <input type="text" value="" placeholder="请点击输入" maxlength="120" data-bind="value:Address">
@@ -130,8 +138,6 @@
     </section>
     <!--购买须知E-->
 </div>
-@*<script type="text/javascript" src="http://mat1.gtimg.com/www/mobi/js/zepto.min.js"></script>*@
-@*<script type="text/javascript" src="http://mat1.gtimg.com/joke/and/js/touch.js"></script>*@
 
 <script type="text/javascript">
     //获取共享地址
@@ -356,6 +362,10 @@
     var preSaleOrderViewModel = new PreSaleOrderViewModel();
     
     $(function () {
+
+        //
+        
+
         window.preSaleOrderViewModel = preSaleOrderViewModel;
         preSaleOrderViewModel.PreSaleProduct(preSaleOrderServiceJson.PreSaleProduct);
         preSaleOrderViewModel.Provinces(preSaleOrderServiceJson.Provinces);
@@ -367,7 +377,10 @@
         preSaleOrderViewModel.Areas(preSaleOrderServiceJson.Areas);
         preSaleOrderViewModel.AreaId(preSaleOrderServiceJson.Code);
 
+        preSaleOrderViewModel.UserName(preSaleOrderServiceJson.UserName);
+        preSaleOrderViewModel.Phone(preSaleOrderServiceJson.Phone);
         preSaleOrderViewModel.Address(preSaleOrderServiceJson.Address);
         ko.applyBindings(preSaleOrderViewModel);
+        
     });
 </script>
