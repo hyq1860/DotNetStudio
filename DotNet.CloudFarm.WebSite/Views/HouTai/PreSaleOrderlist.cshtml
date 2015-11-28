@@ -132,7 +132,21 @@
                         </tr>
                     </tbody>
                 </table>
-                <div id="pages"></div>
+                <div id="pages">
+                    <div class="pagination pagination-centered">
+                        <button type="button" class="btn btn-primary" data-bind="click:Prev">
+                            上一页
+                        </button>
+                        <ul data-bind="foreach:PageNumbers">
+                            <li class="active">
+                                <a href="#" data-bind="text:$data,click:$root.Goto"></a>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn btn-primary" data-bind="click:Next">
+                            下一页
+                        </button>
+                    </div>
+                </div>
             </div>
         </div><!--/span-->
 
@@ -157,10 +171,6 @@
 
 @section scripts{
     <script type="text/javascript">
-        $(function() {
-
-
-        });
 
         function PreSaleOrderViewModel() {
             var self = this;
@@ -185,8 +195,6 @@
             self.Address = ko.observable();
 
             self.ExpressDelivery = ko.observable();
-
-            
         }
 
         function PreSaleOrderListViewModel() {
@@ -199,6 +207,8 @@
             self.PageCount = ko.observable();
             //订单总数
             self.TotalCount = ko.observable();
+            //页码数
+            this.PageNumbers = ko.observableArray([]);
             //每页多少
             self.PageSize = ko.observable();
 
@@ -246,6 +256,82 @@
                 });
             }
 
+            self.Prev=function() {
+                self.PageIndex(self.PageIndex() - 1);
+                self.Refresh();
+            }
+
+            self.Next=function() {
+                self.PageIndex(self.PageIndex() + 1);
+                self.Refresh();
+            }
+
+            self.Goto=function(data) {
+                self.PageIndex(data);
+                self.Refresh();
+            }
+
+            //刷新
+            self.Refresh = function () {
+                //页码
+                if (self.PageIndex() < 1) {
+                    self.PageIndex(1);
+                }
+                if (self.PageIndex() > self.PageCount()) {
+                    self.PageIndex(self.PageCount());
+                }
+
+                $.ajax({
+                    url: "/HouTai/GetPreSaleOrderlist",
+                    type: "post",
+                    data: { pageIndex: self.PageIndex(),pageSize:self.PageSize() },
+                    dataType: 'json',
+                    success: function (result) {
+                        //console.log(result);
+                        var count = result.items.length;
+                        self.PreSaleOrderList.removeAll();
+                        for (var i = 0; i < count; i++) {
+                            var order = result.items[i];
+                            var preSaleOrderViewModel = new PreSaleOrderViewModel();
+
+                            preSaleOrderViewModel.ProductName(order.PreSaleProduct.Name);
+                            preSaleOrderViewModel.Count(order.Count);
+                            preSaleOrderViewModel.TotalMoney(order.TotalMoney);
+                            preSaleOrderViewModel.DeleteTag(order.DeleteTag);
+                            preSaleOrderViewModel.OrderId(order.OrderId);
+
+                            preSaleOrderViewModel.CreateTime(order.CreateTime);
+                            preSaleOrderViewModel.ProductCount(order.ProductCount);
+                            preSaleOrderViewModel.Price(order.Price);
+                            preSaleOrderViewModel.Status(order.Status);
+                            preSaleOrderViewModel.StatusDesc(order.StatusDesc);
+
+                            preSaleOrderViewModel.Receiver(order.Receiver);
+                            preSaleOrderViewModel.Phone(order.Phone);
+                            preSaleOrderViewModel.Address(order.Area.FullName + order.Address);
+                            preSaleOrderViewModel.ExpressDelivery(order.ExpressDelivery);
+
+                            self.PreSaleOrderList.push(preSaleOrderViewModel);
+                        }
+
+                        self.PageIndex(result.PageIndex);
+                        self.PageSize(result.PageSize);
+                        self.PageCount(result.PageCount);
+                        self.TotalCount(result.TotalCount);
+
+                        //构建页码数
+                        self.PageNumbers.removeAll();
+                        for (var i = 1; i <= result.PageCount; i++) {
+                            self.PageNumbers.push(i);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("错误信息" + error);
+                    }
+                });
+            }
+            self.Refresh();
         }
 
         //导出excel
@@ -260,7 +346,7 @@
         }
 
         $(function () {
-
+            //导出数据
             $("#export").on("click", function () {
                 ExportReportList();
             });
@@ -268,50 +354,6 @@
             var preSaleOrderListViewModel = new PreSaleOrderListViewModel();
             
             ko.applyBindings(preSaleOrderListViewModel);
-
-            $.ajax({
-                url: "/HouTai/GetPreSaleOrderlist",
-                type: "post",
-                data: {},
-                dataType: 'json',
-                success: function(result) {
-                    console.log(result);
-                    //preSaleOrderListViewModel.PreSaleOrderList(result.items);
-                    var count = result.items.length;
-                    for (var i = 0; i < count; i++) {
-                        var order = result.items[i];
-                        var preSaleOrderViewModel = new PreSaleOrderViewModel();
-                        
-                        preSaleOrderViewModel.ProductName(order.PreSaleProduct.Name);
-                        preSaleOrderViewModel.Count(order.Count);
-                        preSaleOrderViewModel.TotalMoney(order.TotalMoney);
-                        preSaleOrderViewModel.DeleteTag(order.DeleteTag);
-                        preSaleOrderViewModel.OrderId(order.OrderId);
-
-                        preSaleOrderViewModel.CreateTime(order.CreateTime);
-                        preSaleOrderViewModel.ProductCount(order.ProductCount);
-                        preSaleOrderViewModel.Price(order.Price);
-                        preSaleOrderViewModel.Status(order.Status);
-                        preSaleOrderViewModel.StatusDesc(order.StatusDesc);
-
-                        preSaleOrderViewModel.Receiver(order.Receiver);
-                        preSaleOrderViewModel.Phone(order.Phone);
-                        preSaleOrderViewModel.Address(order.Area.FullName + order.Address);
-                        preSaleOrderViewModel.ExpressDelivery(order.ExpressDelivery);
-
-                        preSaleOrderListViewModel.PreSaleOrderList.push(preSaleOrderViewModel);
-                    }
-
-                    preSaleOrderListViewModel.PageIndex(result.PageIndex);
-                    preSaleOrderListViewModel.PageSize(result.PageSize);
-                    preSaleOrderListViewModel.PageCount(result.PageCount);
-                    preSaleOrderListViewModel.TotalCount(result.TotalCount);
-                },
-                error: function(error) {
-                    console.log(error);
-                    alert("错误信息" + error);
-                }
-            });
         });
 
 
