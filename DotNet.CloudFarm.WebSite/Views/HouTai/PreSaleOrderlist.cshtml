@@ -125,7 +125,7 @@
                                 <input value="运单号" data-bind="value:ExpressDelivery"/>
                                 <a href="javascript:void(0);" class="btn btn-info" data-bind="click:function(order){$parent.AddExpress(order)}"><i class="icon-edit icon-white"></i>填写运单号</a>
                                 <!-- /ko -->
-                                <!-- ko if: DeleteTag()==0 -->
+                                <!-- ko if: (DeleteTag()==0 && Status()==0) -->
                                 <a href="javascript:void(0);" class="btn btn-info" data-bind="click:function(order){$parent.LogicDelete(order)}"><i class="icon-edit icon-white"></i>逻辑删除</a>
                                 <!-- /ko -->
                             </td>

@@ -202,9 +202,10 @@
                     dataType: 'json',
                     success: function(result) {
                         if (result.Status.Code == 1) {
-                            alert(result.Status);
+                            alert(result.Status.Message);
+                            location.href = location.href;
                         } else {
-                            alert(result.Message);
+                            alert(result.Status.Message);
                         }
                     },
                     error: function(error) {

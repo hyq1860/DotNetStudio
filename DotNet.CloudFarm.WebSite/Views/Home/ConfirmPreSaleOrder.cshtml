@@ -52,7 +52,7 @@
         <span class="txt">预购数量</span>
         <span class="buy_amount">
             <a data-action="minus" href="javascript:void(0)" class="minus" data-bind="click:ReduceCount">-</a>
-            <input type="text" data-action="numInput" value="1" class="text-amount" data-bind="value:Count">
+            <input type="number" data-action="numInput" value="1" class="text-amount" data-bind="value:Count">
             <a data-action="plus" href="javascript:void(0)" class="plus" data-bind="click:AddCount">+</a>
         </span>
     </section>
@@ -154,7 +154,7 @@
                 "paySign": PaySign //微信签名
             },
               function (res) {
-                  alert(res.err_msg);
+                  //alert(res.err_msg);
                   if (res.err_msg == "get_brand_wcpay_request:ok") {
                       window.preSaleOrderViewModel.IsSubmiting(false);
                       window.location.href = "/home/PreSaleOrderList?orderid=@Model.OrderId";
