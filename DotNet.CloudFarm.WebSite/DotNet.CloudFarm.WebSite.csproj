@@ -605,6 +605,7 @@
     <Content Include="presaleimages\package2.png" />
     <Content Include="presaleimages\package3.png" />
     <Content Include="presaleimages\package4.png" />
+    <Content Include="presaleimages\packagePic.jpg" />
     <Content Include="presaleimages\packagePic.png" />
     <Content Include="presaleimages\packageTxt.png" />
     <Content Include="presaleimages\process.png" />
