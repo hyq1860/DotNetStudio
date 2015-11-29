@@ -156,16 +156,16 @@
 
             self.Details = ko.observableArray([]);
 
-            self.DetailInfo = ko.computed(function() {
-                var str = "111111";
-                var length = self.Details().length;
-                console.log(length);
-                for (var i = 0; i < length; i++) {
-                    var item = self.Details()[i];
-                    str += item.Name + item.Weight + item.Count+"|";
-                }
-                return str;
-            });
+            //self.DetailInfo = ko.computed(function() {
+            //    var str = "111111";
+            //    var length = self.Details().length;
+            //    //console.log(length);
+            //    for (var i = 0; i < length; i++) {
+            //        var item = self.Details()[i];
+            //        str += item.Name + item.Weight + item.Count+"|";
+            //    }
+            //    return str;
+            //});
 
             self.Name = ko.observable();
 
