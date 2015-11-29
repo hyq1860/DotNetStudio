@@ -866,6 +866,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     product.DeliveryArea = preSaleProduct.DeliveryArea;
                     product.Place = preSaleProduct.Place;
                     product.Package = preSaleProduct.Package;
+                    product.IsSale = true;
                     if (preSaleProduct.Details != null)
                     {
                         product.DetailJson = JsonHelper.ToJson(preSaleProduct.Details);
@@ -875,6 +876,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 }
                 else
                 {
+                    preSaleProduct.IsSale = true;
                     //新增
                     preSaleProduct.CreateTime = DateTime.Now;
                     if (preSaleProduct.Details != null)
