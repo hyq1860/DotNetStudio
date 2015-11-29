@@ -22,12 +22,24 @@
                 <span class="orange">￥<strong>@Model.PreSaleProduct.Price</strong></span>
                 <span>市场参考价：￥@Model.PreSaleProduct.MarketPrice</span>
             </p>
+@if (!string.IsNullOrEmpty(Model.DetailsStr ))
+{
             <dl>
                 <dt>礼盒内容：</dt>
                 <dd >
                     @Model.DetailsStr
                 </dd>
             </dl>
+}
+else
+{
+    <dl>
+        <dt>产品规格描述：</dt>
+        <dd>
+            @Model.PreSaleProduct.Unit
+        </dd>
+    </dl>
+}
             <dl>
                 <dt>产&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地：</dt>
                 <dd>@Model.PreSaleProduct.Place</dd>

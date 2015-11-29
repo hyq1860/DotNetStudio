@@ -42,8 +42,8 @@ namespace DotNet.CloudFarm.WebSite
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                       "~/Scripts/knockout-3.3.0.js"));
             //knockout
-            //bundles.Add(new ScriptBundle("~/bundles/bootstrap-select").Include(
-            //          ));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-select").Include(
+                      "~/Scripts/bootstrap-select.min.js"));
 
             //预售的样式
             bundles.Add(new StyleBundle("~/Content/presalecss").Include(

@@ -751,7 +751,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult PreSaleProduct()
         {
-            var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.ProductId, "desc");
+            var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.ProductId, "order");
             return View(products);
         }
 
@@ -771,6 +771,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 preSaleOrderViewModel.DetailsStr += string.Format("{0} {1}*{2}|", detail.Name, detail.Weight,
                     detail.Count);
             }
+            if (!string.IsNullOrEmpty(preSaleOrderViewModel.DetailsStr))
             preSaleOrderViewModel.DetailsStr =
                 preSaleOrderViewModel.DetailsStr.Remove(preSaleOrderViewModel.DetailsStr.Length - 1, 1);
 
