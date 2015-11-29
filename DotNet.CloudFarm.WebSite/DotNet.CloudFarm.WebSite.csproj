@@ -591,6 +591,35 @@
     <Content Include="images\zhuanzhang.png" />
     <Content Include="images\zhuanzhang_active.png" />
     <Content Include="images\修改.jpg" />
+    <Content Include="presaleimages\1.jpg" />
+    <Content Include="presaleimages\2.jpg" />
+    <Content Include="presaleimages\3.jpg" />
+    <Content Include="presaleimages\aboutBg.png" />
+    <Content Include="presaleimages\jiaoL.png" />
+    <Content Include="presaleimages\jiaoR.png" />
+    <Content Include="presaleimages\knowTit1.png" />
+    <Content Include="presaleimages\knowTit2.png" />
+    <Content Include="presaleimages\line.png" />
+    <Content Include="presaleimages\mobile.png" />
+    <Content Include="presaleimages\package1.png" />
+    <Content Include="presaleimages\package2.png" />
+    <Content Include="presaleimages\package3.png" />
+    <Content Include="presaleimages\package4.png" />
+    <Content Include="presaleimages\packagePic.png" />
+    <Content Include="presaleimages\packageTxt.png" />
+    <Content Include="presaleimages\process.png" />
+    <Content Include="presaleimages\s1.jpg" />
+    <Content Include="presaleimages\s2.jpg" />
+    <Content Include="presaleimages\s3.jpg" />
+    <Content Include="presaleimages\s4.jpg" />
+    <Content Include="presaleimages\s5.jpg" />
+    <Content Include="presaleimages\s6.jpg" />
+    <Content Include="presaleimages\s7.jpg" />
+    <Content Include="presaleimages\sjdown.png" />
+    <Content Include="presaleimages\toppic.png" />
+    <Content Include="presaleimages\twoma.jpg" />
+    <Content Include="presaleimages\wenyang.png" />
+    <Content Include="presaleimages\wuliu.png" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -719,7 +748,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="presaleimages\" />
     <Folder Include="refdll\" />
   </ItemGroup>
   <ItemGroup>

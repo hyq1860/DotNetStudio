@@ -42,8 +42,8 @@ namespace DotNet.CloudFarm.WebSite.Attributes
                             {
                                 controller = "Account",
                                 action = "Login",
-                                //ReturnUrl= HttpUtility.UrlEncode(filterContext.RequestContext.HttpContext.Request.RawUrl)
-                                ReturnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl
+                                ReturnUrl= HttpUtility.UrlEncode(filterContext.RequestContext.HttpContext.Request.RawUrl)
+                                //ReturnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl
                             })
                         );
         }
