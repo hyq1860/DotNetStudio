@@ -29,6 +29,7 @@ html{font-size:62.5%}
 .productBox .productPic img{width:100px;height:100px;}
 .productInfo{padding-left:10px;/* -webkit-flex:1;flex:1; */-webkit-box-flex: 1}
 .productInfo h2{font-size:1.6rem;}
+.productInfo h2 a{ color: #000;}
 .productInfo p{margin-top:5px;font-size:1.4rem;}
 .salePrice strong{font-size:2.5rem;}
 .referencePrice{color: #909496;text-decoration: line-through;}
@@ -53,8 +54,9 @@ html{font-size:62.5%}
 	overflow:hidden;
 	margin: 0 5px;
 	-webkit-box-flex: 1;
+    text-align: center;
 }
-.packageSam li img{width:65px;height:65px;border: 1px solid #ccc;border-radius:5px;}
+.packageSam li img{display: inline-block; width:65px;height:65px;border: 1px solid #ccc;border-radius:5px;}
 .packageSam span{display: block;text-align: center;color: #679b20;padding: 10px 0 0;}
 /*礼盒包装*/
 .packageWrap{margin-top:15px;}
@@ -259,11 +261,12 @@ html{font-size:62.5%}
 
 
 /**订单列表页**/
-.orderList{background: #fff;width:100%;padding: 10px 0;margin-bottom:10px;}
+.orderList{background: #fff;width:100%;padding: 10px 0;margin-top:10px;}
 .orderTitle,.orderDetail,.orAddress{width:94%;margin: 0 auto;}
 .orderTitle{padding:0 3%;border-bottom:1px solid #eee;height:34px;line-height:34px;overflow: hidden;}
 .orderBh{font-size:1.4rem;color: #909496;}
-.orderStatus{float: right;font-size:1.6rem;color: #303132;}
+.orderBh{font-size:1.4rem;color: #909496;}
+.orderStatus{float: right;font-size:1.6rem;color: #be2539;}
 .orderPayed{color: #be2539;}
 .orderShip{color: #3fb76e;}
 .orderDetail{padding-top:15px;overflow: hidden;}
@@ -292,7 +295,8 @@ html{font-size:62.5%}
 .orAddress p.orderWlnum{text-align: right;padding-top:12px;}
 .orAddress .name{margin-right:6px;}.orAddress .phone{margin-left:6px;}
 .orderWlnum span{font-size:1.2rem;color: #909496;}
-
+.orderStep{ width: 100%;padding: 8px 0 5px;background: #fff;}
+.orderStep img{ width: 100%;}
 
 
 /*媒体查询*/
