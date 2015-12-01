@@ -14,7 +14,7 @@
     <!--订单信息S-->
     <section class="orderInfo">
         <div class="orderProduct">
-            <img src="@Model.PreSaleProduct.Image" alt="">
+            <img src="@("http://yk.kerchinsheep.com/presaleimages/"+Model.PreSaleProduct.Image)" alt="">
             <span>@Model.PreSaleProduct.Name</span>
         </div>
         <div class="orInderMore">
@@ -22,7 +22,7 @@
                 <span class="orange">￥<strong>@Model.PreSaleProduct.Price</strong></span>
                 <span>市场参考价：￥@Model.PreSaleProduct.MarketPrice</span>
             </p>
-@if (!string.IsNullOrEmpty(Model.DetailsStr ))
+@if (!string.IsNullOrEmpty(Model.DetailsStr))
 {
             <dl>
                 <dt>礼盒内容：</dt>
