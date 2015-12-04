@@ -122,7 +122,12 @@
                 success: function (data) {
                     if (data.IsSuccess) {
                         //location.href = "/home/default";
-                        location.href = decodeURIComponent(decodeURIComponent(GetQueryString('ReturnUrl')));
+                        var reUrl = decodeURIComponent(decodeURIComponent(GetQueryString('ReturnUrl')));
+                        if (reUrl == null || reUrl == undefined || reUrl == "null")
+                        {
+                            reUrl="/";
+                        }
+                        location.href = reUrl;
                     } else {
                         alert(data.Msg);
                     }
