@@ -187,31 +187,46 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //二级菜单
             var subButton = new SubButton()
             {
-                name = "关于羊客"
+                name = "羊客商城"
             };
+            subButton.sub_button.Add(new SingleViewButton() {
+                url="http://yk.kerchinsheep.com/home/presaleproduct",
+                name = "羊客商城"
+            });
             subButton.sub_button.Add(new SingleViewButton()
             {
-                url = "http://yk.kerchinsheep.com/html/micro.html",
-                name = "羊客介绍"
-            });
-            subButton.sub_button.Add(new SingleClickButton()
-            {
-                key = "learnmore",
-                name = "了解更多"
+                url = "http://yk.kerchinsheep.com/home/PreSaleOrderList",
+                name = "商城订单"
             });
             btnGroup.button.Add(subButton);
-            var clickButton1 = new SingleViewButton()
-            {
-                url = "http://activity.kerchinsheep.com/app/h5/zy",
-                name = "全民套羊"
-            };
-            btnGroup.button.Add(clickButton1);
             var clickButton = new SingleViewButton()
             {
                 url = "http://yk.kerchinsheep.com/",
                 name = "羊羊得益"
             };
             btnGroup.button.Add(clickButton);
+            var subButton1 = new SubButton()
+            { 
+              name="更多精彩"
+            };
+            subButton1.sub_button.Add(new SingleViewButton()
+            {
+                url = "http://yk.kerchinsheep.com/html/micro.html",
+                name = "羊客介绍"
+            });
+            subButton1.sub_button.Add(new SingleClickButton()
+            {
+                key = "learnmore",
+                name = "了解更多"
+            });
+           
+            var clickButton1 = new SingleViewButton()
+            {
+                url = "http://activity.kerchinsheep.com/app/h5/zy",
+                name = "全民套羊"
+            };
+            subButton1.sub_button.Add(clickButton1);
+            btnGroup.button.Add(subButton1);
             var result = CommonApi.CreateMenu(accesstoken, btnGroup);
             return Json(result,JsonRequestBehavior.AllowGet);
         }

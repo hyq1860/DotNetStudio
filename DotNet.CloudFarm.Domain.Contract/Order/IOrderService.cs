@@ -152,5 +152,7 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderId"></param>
         /// <returns></returns>
         bool CheckOrderExist(long orderId);
+
+        
     }
 }

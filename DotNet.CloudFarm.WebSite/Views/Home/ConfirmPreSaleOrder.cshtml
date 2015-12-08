@@ -14,7 +14,7 @@
     <!--订单信息S-->
     <section class="orderInfo">
         <div class="orderProduct">
-            <img src="@("http://yk.kerchinsheep.com/presaleimages/"+Model.PreSaleProduct.Image)" alt="">
+            <img src="@("http://yk.kerchinsheep.com/presaleimages/b_"+Model.PreSaleProduct.Image)" alt="">
             <span>@Model.PreSaleProduct.Name</span>
         </div>
         <div class="orInderMore">
@@ -170,7 +170,12 @@ else
                   if (res.err_msg == "get_brand_wcpay_request:ok") {
                       window.preSaleOrderViewModel.IsSubmiting(false);
                       window.location.href = "/home/PreSaleOrderList?orderid=@Model.OrderId";
-                  } else {
+                  }
+                  else if(res.err_msg=="get_brand_wcpay_request:cancel")
+                  {
+                      window.location.href = "/home/presaleproduct";
+                  }
+                  else {
                       window.preSaleOrderViewModel.IsSubmiting(false);
                   }
               }
@@ -387,7 +392,7 @@ else
         preSaleOrderViewModel.CityId(preSaleOrderServiceJson.CityId);
 
         preSaleOrderViewModel.Areas(preSaleOrderServiceJson.Areas);
-        preSaleOrderViewModel.AreaId(preSaleOrderServiceJson.Code);
+        preSaleOrderViewModel.AreaId(preSaleOrderServiceJson.AreaId);
 
         preSaleOrderViewModel.UserName(preSaleOrderServiceJson.UserName);
         preSaleOrderViewModel.Phone(preSaleOrderServiceJson.Phone);

@@ -290,7 +290,7 @@ namespace DotNet.CloudFarm.WebSite.WeixinPay
               try
             {
                 //调用统一订单接口
-                var result = TenPayV3.Unifiedorder(data, cert);
+                var result = TenPayV3.Unifiedorder(data, cert,30000);
                 logger.Info("统一订单接口返回信息："+result);
                 var unifiedorderRes = XDocument.Parse(result);
                 string return_code = unifiedorderRes.Element("xml").Element("return_code").Value;

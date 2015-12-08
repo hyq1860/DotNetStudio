@@ -35,6 +35,7 @@ using DotNet.Common.Utility;
 using Ninject;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Helpers;
+using DotNet.CloudFarm.Domain.Contract.SMS;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -66,6 +67,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         [Inject]
         public IOrderService OrderService { get; set; }
+
+        [Inject]
+        public ISMSService SMSService { get; set; }
 
         public ActionResult Default()
         {
@@ -377,6 +381,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                         else
                         {
                             PreSaleOrderService.ModifyPreOrder(new PreSaleOrder() {OrderId = orderId,Status = 1});
+                            var preOrder = PreSaleOrderService.GetPreSaleOrder(orderId);
+                            var mobile = preOrder.Phone;
+                            SMSService.SendSMSPreOrderCreated(mobile, "12月19日");
                         }
                     }
 
@@ -752,6 +759,24 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult PreSaleProduct()
         {
             var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.ProductId, "order");
+
+            #region 分享相关
+            //获取时间戳
+            var timestamp = JSSDKHelper.GetTimestamp();
+            //获取随机码
+            var nonceStr = JSSDKHelper.GetNoncestr();
+            string ticket = JsApiTicketContainer.TryGetTicket(AppId, AppSecret);
+            JSSDKHelper jsHelper = new JSSDKHelper();
+            //获取签名
+            var signature = jsHelper.GetSignature(ticket, nonceStr, timestamp, Request.Url.AbsoluteUri);
+
+            ViewData["AppId"] = AppId;
+            ViewData["Timestamp"] = timestamp;
+            ViewData["NonceStr"] = nonceStr;
+            ViewData["Signature"] = signature;
+
+
+            #endregion
             return View(products);
         }
 
@@ -819,6 +844,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 }
             }
             
+         
             return View(preSaleOrderViewModel);
         }
 

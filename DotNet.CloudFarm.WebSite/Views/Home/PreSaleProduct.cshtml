@@ -18,7 +18,7 @@
                 <!--上面商品信息S-->
                 <article class="productBox">
                     <div class="productPic">
-                        <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}"><img src="" alt="" data-bind="attr:{src:'http://yk.kerchinsheep.com/presaleimages/s_'+Image}"></a>
+                        <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}"><img src="" alt="" data-bind="attr:{src:'http://yk.kerchinsheep.com/presaleimages/'+Image}"></a>
                     </div>
                     <div class="productInfo">
                         
@@ -101,6 +101,7 @@
     <!--关于我们E-->
 </div>
 @*<script type="text/javascript" src="http://mat1.gtimg.com/www/mobi/js/zepto.min.js"></script>*@
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
     var preSaleProducServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
     function PreSaleProductViewModel() {
@@ -126,6 +127,72 @@
                 $("#box_" + productId).slideToggle();
                 self.text("点击查看礼盒");
             }
+        });
+
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@ViewData["AppId"]', // 必填，公众号的唯一标识
+            timestamp: '@ViewData["Timestamp"]', // 必填，生成签名的时间戳
+            nonceStr: '@ViewData["NonceStr"]', // 必填，生成签名的随机串
+            signature: '@ViewData["Signature"]', // 必填，签名
+            jsApiList: [
+                'onMenuShareTimeline', // 必填，需要使用的JS接口列表，所有JS接口列表见附录2'checkJsApi',  //判断当前客户端版本是否支持指定JS接口
+                'onMenuShareTimeline', //分享给好友
+                'onMenuShareAppMessage', //分享到朋友圈
+                'onMenuShareQQ', //分享到QQ
+                'onMenuShareWeibo' //分享到微博
+            ]
+        }
+);
+        wx.ready(function() {
+            // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+            //document.querySelector('#sharefriendgroup').onclick = function () {
+            var title =  "天然放养走地羊肉礼盒预售——科尔沁羊业出品";
+            var imgUrl = "http://yk.kerchinsheep.com/images/logo.png";
+            var link = "http://yk.kerchinsheep.com/home/presaleproduct";
+            wx.onMenuShareTimeline({
+                title: title,
+                link: link,
+                imgUrl: imgUrl,
+                trigger: function (res) {
+                    //alert('用户点击分享到朋友圈');
+                },
+                success: function (res) {
+                    //alert('已分享');
+                },
+                cancel: function (res) {
+                    //alert('已取消');
+                },
+                fail: function (res) {
+                    //alert(JSON.stringify(res));
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: '羊客', // 分享标题
+                desc: title, // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+            wx.onMenuShareQQ({
+                title: '羊客', // 分享标题
+                desc: title, // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
         });
     });
 </script>

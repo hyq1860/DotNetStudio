@@ -28,5 +28,13 @@ namespace DotNet.CloudFarm.Domain.Contract.SMS
         /// <param name="totalPrice">总价</param>
         /// <returns>0为成功</returns>
         int SendSMSOrderCreated(string mobile, long orderId, decimal totalPrice);
+
+        /// <summary>
+        /// 发送预售商城短信
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        int SendSMSPreOrderCreated(string mobile,string date);
     }
 }
