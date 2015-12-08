@@ -117,7 +117,13 @@ namespace DotNet.CloudFarm.WebSite.Models
         public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
         {
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-            var welcomeStr = "欢迎来到羊客！赶快点击“羊羊得益”领养小羊成为牧场主吧。羊客拥有自有牧场的羊做保证，且每只羊都买了保险，您可以选择年化15%的养殖投资收益或直接消费羊肉。羊客养羊更绿色更安全。";
+            var welcomeStr = @"Hi 主人，欢迎来到羊客！
+
+1、点击“<a href='http://yk.kerchinsheep.com/home/presaleproduct'>羊客商城</a>”即可预订科尔沁羊业出品的天然放养、高品质走地羊肉礼盒哦。
+
+2、点击“<a href='http://yk.kerchinsheep.com/'>羊羊得益</a>”即可到羊客自有牧场领养小羊成为牧场主，获取年化15%的养殖投资收益，羊客养羊更绿色更安全哦。
+
+3、点击“更多精彩”会发现更多惊喜哦！";
             //var welcomeStr = "【双11新粉福利】欢迎来到羊客！赶快戳链接获取999元红包大礼：http://yk.kerchinsheep.com/home/active  仅1元就能领到1只价值1000元的小羊成为牧场主，4个月结算返还1元+50元养殖收益，每人限领1只，多领无50元收益哦！";
 
             responseMessage.Content = welcomeStr;

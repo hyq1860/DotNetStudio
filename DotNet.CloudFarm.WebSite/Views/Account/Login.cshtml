@@ -145,11 +145,12 @@
      <script type="text/javascript">
          var appid= "@ViewBag.AppId";
          var openId = "@ViewBag.OpenId";
+         
          var code_settings = {
              apiUrl: "https://open.weixin.qq.com/connect/oauth2/authorize",
              appid: appid,
-             response_type:"code",
-             redirect_uri: encodeURIComponent("http://yk.kerchinsheep.com/account/login"),
+             response_type: "code",
+             redirect_uri: encodeURIComponent(window.location.href),
              scope: "snsapi_userinfo",
              anchor: "#wechat_redirect"
          };

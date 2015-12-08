@@ -727,9 +727,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult GetPreSaleOrderlist(int pageIndex=1,int pageSize=1)
+        public ActionResult GetPreSaleOrderlist(int pageIndex=1,int pageSize=30)
         {
-            var data=PreSaleOrderService.GetPreSaleOrderCollection(p=>p.DeleteTag==0, p => p.OrderId, "desc", pageIndex, pageSize);
+            var data=PreSaleOrderService.GetPreSaleOrderCollection(p=>p.DeleteTag==0 && p.Status!=0, p => p.OrderId, "desc", pageIndex, pageSize);
             return Content(JsonHelper.ToJson(new
             {
                 items = data,
