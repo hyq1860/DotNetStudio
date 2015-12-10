@@ -38,7 +38,7 @@
                                 <div class="controls">
                                     <select id="status" name="Status">
                                         <option value="">--</option>
-                                        <option value="0">待支付</option>
+                                        @*<option value="0">待支付</option>*@
                                         <option value="1">已支付</option>
                                         <option value="2">已发货</option>
                                     </select>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button type="button" class="btn btn-primary" @*data-bind="click:BatchSearchOrder"*@>查询</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click:function(){Refresh(0)}">查询</button>
                                     <button id="export" type="button" class="btn btn-primary">导出</button>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button type="button" class="btn btn-primary" @*data-bind="click:SingleSearchOrder"*@>查询</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click:function(){Refresh(1)}">查询</button>
                                 </div>
                             </div>
                         </div>
@@ -272,10 +272,30 @@
             }
 
             //刷新
-            self.Refresh = function () {
+            self.Refresh = function (tab) {
+                var startTime;
+                var endTime;
+                var status;
+                var mobile ;
+                var orderId;
+                if (tab == 0) {
+                    var startTime = $("#StartTime").val();
+                    var endTime = $("#EndTime").val();
+                    var status = $("#status").val();
+                    if (status == "") {
+                        status = null;
+                    }
+                } else {
+                    var mobile = $("#mobile").val();
+                    var orderId = $("#orderid").val();
+                }
+                
                 //页码
                 if (self.PageIndex() < 1) {
                     self.PageIndex(1);
+                }
+                if (self.PageCount() < 1) {
+                    self.PageCount(1);
                 }
                 if (self.PageIndex() > self.PageCount()) {
                     self.PageIndex(self.PageCount());
@@ -284,7 +304,7 @@
                 $.ajax({
                     url: "/HouTai/GetPreSaleOrderlist",
                     type: "post",
-                    data: { pageIndex: self.PageIndex(),pageSize:self.PageSize() },
+                    data: { pageIndex: self.PageIndex(), pageSize: self.PageSize(), startTime: startTime, endTime: endTime, status: status, orderId: orderId, mobile: mobile },
                     dataType: 'json',
                     success: function (result) {
                         //console.log(result);
@@ -332,12 +352,25 @@
                 });
             }
             self.Refresh();
+
+            
         }
 
         //导出excel
         function ExportReportList() {
+            var startTime;
+            var endTime;
+            var status;
+            
+            var startTime = $("#StartTime").val();
+            var endTime = $("#EndTime").val();
+            var status = $("#status").val();
+            if (status == "") {
+                status = null;
+            }
+            
             var $Iframe = $("#downloadcsv");
-            var url = "/HouTai/GetExportOrderList";
+            var url = "/HouTai/GetExportOrderList?" + "startTime=" + startTime + "&endTime=" + endTime + "&status=" + status;
             if ($Iframe.length == 0) {
                 $('body').append("<iframe id=\"downloadcsv\" style=\"display:none\" src=\"" + url + "\"></iframe>");
             } else {

@@ -7,6 +7,7 @@ using Senparc.Weixin.MP.Entities;
 using Senparc.Weixin.MP.Entities.Request;
 using Senparc.Weixin.MP;
 using System.IO;
+using System.Linq.Expressions;
 using System.Web.Configuration;
 using Senparc.Weixin.MP.MvcExtension;
 using DotNet.CloudFarm.WebSite.Models;
@@ -29,6 +30,7 @@ using DotNet.CloudFarm.Domain.Impl.Product;
 using DotNet.CloudFarm.Domain.Impl.SMS;
 using DotNet.CloudFarm.WebSite.Attributes;
 using DotNet.CloudFarm.WebSite.WeixinPay;
+using DotNet.Common;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using DotNet.Common.Models;
 using DotNet.Common.Utility;
@@ -727,9 +729,28 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult GetPreSaleOrderlist(int pageIndex=1,int pageSize=30)
+        public ActionResult GetPreSaleOrderlist(DateTime? startTime, DateTime? endTime, long? orderId, string mobile, int? status,int pageIndex=1,int pageSize=30)
         {
-            var data=PreSaleOrderService.GetPreSaleOrderCollection(p=>p.DeleteTag==0 && p.Status!=0, p => p.OrderId, "desc", pageIndex, pageSize);
+            var predicate = PredicateBuilder.True<PreSaleOrder>();
+            predicate = predicate.And(p => p.DeleteTag == 0 && p.Status != 0);
+            if (startTime.HasValue && endTime.HasValue)
+            {
+                predicate = predicate.And(p => p.CreateTime >= startTime.Value && p.CreateTime <= endTime.Value);
+            }
+            if (orderId.HasValue)
+            {
+                predicate = predicate.And(p => p.OrderId == orderId.Value);
+            }
+            if (!string.IsNullOrEmpty(mobile))
+            {
+                predicate = predicate.And(p => p.Phone == mobile);
+            }
+            if (status.HasValue)
+            {
+                predicate = predicate.And(p => p.Status == status.Value);
+            }
+
+            var data=PreSaleOrderService.GetPreSaleOrderCollection(predicate, p => p.OrderId, "desc", pageIndex, pageSize);
             return Content(JsonHelper.ToJson(new
             {
                 items = data,
@@ -762,12 +783,31 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Content(JsonHelper.ToJson(result), "application/javascript");
         }
 
-        public ActionResult GetExportOrderList()
+        public ActionResult GetExportOrderList(DateTime? startTime, DateTime? endTime, long? orderId, string mobile, int? status)
         {
             IWorkbook workbook = new XSSFWorkbook();
             ISheet sheet = workbook.CreateSheet("预售订单列表");
 
-            var preSaleOrders= PreSaleOrderService.GetPreSaleOrderCollection(p => p.DeleteTag == 1, p => p.OrderId, "desc", 1, int.MaxValue);
+            var predicate = PredicateBuilder.True<PreSaleOrder>();
+            predicate = predicate.And(p => p.DeleteTag == 0 && p.Status != 0);
+            if (startTime.HasValue && endTime.HasValue)
+            {
+                predicate = predicate.And(p => p.CreateTime >= startTime.Value && p.CreateTime <= endTime.Value);
+            }
+            if (orderId.HasValue)
+            {
+                predicate = predicate.And(p => p.OrderId == orderId.Value);
+            }
+            if (!string.IsNullOrEmpty(mobile))
+            {
+                predicate = predicate.And(p => p.Phone == mobile);
+            }
+            if (status.HasValue)
+            {
+                predicate = predicate.And(p => p.Status == status.Value);
+            }
+
+            var preSaleOrders= PreSaleOrderService.GetPreSaleOrderCollection(predicate, p => p.OrderId, "desc", 1, int.MaxValue);
             var columnLength = 8;
             var rowLength = preSaleOrders.Count;
 

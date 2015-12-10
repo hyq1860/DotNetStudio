@@ -21,7 +21,7 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
 
         public PagedList<PreSaleOrder> GetPreSaleOrderCollection(Expression<Func<PreSaleOrder, bool>> whereFunc, Expression<Func<PreSaleOrder, long>> orderByFunc, string orderType,int pageIndex,int pageSize)
         {
-            var all = preSaleOrderDataAccess.GetList();
+            var all = preSaleOrderDataAccess.GetList().Where(whereFunc);
             var condition = all.OrderBy(orderByFunc);
             var total = condition.Count();
             var data = condition.Skip(pageSize*(pageIndex - 1)).Take(pageSize).ToList();

@@ -164,6 +164,7 @@
     <Compile Include="IO\FileSystemChangeEventHandler.cs" />
     <Compile Include="IO\PathUtils.cs" />
     <Compile Include="IO\ZipHelper.cs" />
+    <Compile Include="LambdaHelper.cs" />
     <Compile Include="Logging\ILogProvider.cs" />
     <Compile Include="Logging\Log4NetLogProvider.cs" />
     <Compile Include="Logging\LogCategoryAttribute.cs" />
