@@ -138,7 +138,12 @@
                                     <!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko if: Status()==2 -->
+                                <!-- ko if: PayType()==0 -->
                                 <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success paylog"><i class="icon-edit icon-white"></i>确认结算</a>
+                                <!-- /ko -->
+                                <!-- ko if: PayType()==1 -->
+                                <a data-bind="click:ConfirmOrderPayReturn" class="btn btn-success paylog"><i class="icon-edit icon-white"></i>确认结算</a>
+                                <!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko if: Status()==10 -->
                                 <a data-bind="attr:{href:'/houtai/payrefund?orderid='+OrderId()+'&userid='+UserId()}" class="btn btn-success"><i class="icon-edit icon-white"></i>查看结算流水</a>

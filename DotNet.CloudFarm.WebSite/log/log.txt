@@ -4666,3 +4666,17 @@ INFO  2015-12-07 23:28:56,829 [WeixnPayApi] 统一订单接口返回信息：<xml><return_c
 <prepay_id><![CDATA[wx2015120723284929f068a9d20575866005]]></prepay_id>
 <trade_type><![CDATA[JSAPI]]></trade_type>
 </xml>
+ERROR 2015-12-14 18:06:23,805 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:23,805 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:23,805 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:23,805 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:23,805 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:23,805 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:24,602 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:24,789 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:24,883 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:24,914 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:24,946 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:26,414 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:26,914 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。
+ERROR 2015-12-14 18:06:27,102 [ApplicationError] System.ComponentModel.Win32Exception (0x80004005): 这是在主机名解析时通常出现的暂时错误，它意味着本地服务器没有从权威服务器上收到响应。

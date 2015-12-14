@@ -313,6 +313,10 @@
     <Content Include="Content\houtai\opa-icons.css" />
     <Content Include="Content\houtai\uniform.default.css" />
     <Content Include="Content\houtai\uploadify.css" />
+    <Content Include="Content\recipeStyle.css" />
+    <Content Include="Content\recipe\component.css" />
+    <Content Include="Content\recipe\demo.css" />
+    <Content Include="Content\recipe\normalize.css" />
     <Content Include="Content\reset.css" />
     <Content Include="Content\sheep_guest.css" />
     <Content Include="favicon.ico" />
@@ -331,6 +335,8 @@
     <Content Include="Configs\Data\DataCommand_User.config" />
     <Content Include="Configs\Params.config" />
     <Content Include="html\micro.html" />
+    <Content Include="html\recipe.html" />
+    <Content Include="html\recipeMain.html" />
     <Content Include="html\share2.html" />
     <Content Include="html\take_care.html" />
     <Content Include="images\40x40\day\00.png" />
@@ -560,6 +566,16 @@
     <Content Include="images\quartity_01.png" />
     <Content Include="images\quartity_05.png" />
     <Content Include="images\quartity_08.png" />
+    <Content Include="images\recipe\congbaoyangrou.jpg" />
+    <Content Include="images\recipe\heijiaokaoyangpai.jpg" />
+    <Content Include="images\recipe\huluoboshaoyangrou.jpg" />
+    <Content Include="images\recipe\sanzhazhimayangrou.jpg" />
+    <Content Include="images\recipe\shuanyangrou.jpg" />
+    <Content Include="images\recipe\xiangjianfashiyangpai.jpg" />
+    <Content Include="images\recipe\yangroujiaozi.jpg" />
+    <Content Include="images\recipe\yangrouluobotang.jpg" />
+    <Content Include="images\recipe\yangroushouzhuafan.jpg" />
+    <Content Include="images\recipe\ziranyangrou.jpg" />
     <Content Include="images\share.png" />
     <Content Include="images\share_01.png" />
     <Content Include="images\share_04.png" />
@@ -689,6 +705,8 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\r.js" />
+    <Content Include="Scripts\recipeCtrl.js" />
+    <Content Include="Scripts\recipe\recipeCtrl.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -751,6 +769,7 @@
     <Content Include="Views\HouTai\PreSaleOrderlist.cshtml" />
     <Content Include="Views\Shared\_LayoutPreSale.cshtml" />
     <Content Include="Views\HouTai\AddPreSaleProduct.cshtml" />
+    <Content Include="Scripts\json\recipeData.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

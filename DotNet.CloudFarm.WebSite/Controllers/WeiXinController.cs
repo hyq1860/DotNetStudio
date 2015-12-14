@@ -198,6 +198,11 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 url = "http://yk.kerchinsheep.com/home/PreSaleOrderList",
                 name = "商城订单"
             });
+            subButton.sub_button.Add(new SingleViewButton()
+            {
+                url = "http://yk.kerchinsheep.com/html/recipeMain.html",
+                name = "羊客食谱"
+            });
             btnGroup.button.Add(subButton);
             var clickButton = new SingleViewButton()
             {

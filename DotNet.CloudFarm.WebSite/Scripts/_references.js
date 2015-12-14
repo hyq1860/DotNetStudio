@@ -62,3 +62,5 @@
 /// <reference path="slider.js" />
 /// <reference path="underscore.min.js" />
 /// <reference path="wxyangke.js" />
+/// <reference path="recipectrl.js" />
+/// <reference path="recipe/recipectrl.js" />
