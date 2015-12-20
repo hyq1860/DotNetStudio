@@ -808,7 +808,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
 
             var preSaleOrders= PreSaleOrderService.GetPreSaleOrderCollection(predicate, p => p.OrderId, "desc", 1, int.MaxValue);
-            var columnLength = 8;
+            var columnLength = 10;
             var rowLength = preSaleOrders.Count;
 
             //头部
@@ -821,7 +821,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             headRow.CreateCell(5).SetCellValue("收货地址");
             headRow.CreateCell(6).SetCellValue("运单单号");
             headRow.CreateCell(7).SetCellValue("订单状态");
-
+            headRow.CreateCell(8).SetCellValue("收货人");
+            headRow.CreateCell(9).SetCellValue("下单时间");
             IRow row;
             ICell cell;
             for (int i = 0; i < rowLength; i++)
@@ -863,6 +864,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                             break;
                         case 7:
                             cellValue =order.StatusDesc;
+                            break;
+                        case 8:
+                            cellValue = order.Receiver;
+                            break;
+                        case 9:
+                            cellValue = order.CreateTime.ToString();
                             break;
                     }
 

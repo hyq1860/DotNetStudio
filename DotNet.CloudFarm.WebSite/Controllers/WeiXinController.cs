@@ -531,6 +531,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
 
         }
+
+
+
+        public ContentResult GetQRCode()
+        {
+             var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+            var qrResult =  Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.Create(accesstoken, 1800, 1);
+            var link =Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.GetShowQrCodeUrl(qrResult.ticket);
+            return Content(link);
+        }
       
     }
 }

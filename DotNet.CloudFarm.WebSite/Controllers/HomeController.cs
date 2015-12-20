@@ -780,7 +780,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         #endregion
 
         #region 预售
-
+        [AllowAnonymous]
         public ActionResult PreSaleProduct()
         {
             var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.ProductId, "order");
