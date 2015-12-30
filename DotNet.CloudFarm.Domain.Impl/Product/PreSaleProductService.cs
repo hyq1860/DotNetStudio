@@ -46,6 +46,29 @@ namespace DotNet.CloudFarm.Domain.Impl.Product
             return dataList;
         }
 
+        public List<PreSaleProduct> GetPreSaleProducts(Expression<Func<PreSaleProduct, bool>> whereFunc, Expression<Func<PreSaleProduct, DateTime>> orderByFunc, string orderType)
+        {
+            var queryable = preSaleProductAccess.GetList();
+            if (orderByFunc != null)
+            {
+                if (string.IsNullOrEmpty(orderType) || orderType.ToLower() == "desc")
+                {
+                    queryable = queryable.OrderByDescending(orderByFunc);
+                }
+                else
+                {
+                    queryable = queryable.OrderBy(orderByFunc);
+                }
+            }
+            queryable = queryable.Where(whereFunc);
+            var dataList = queryable.ToList();
+            foreach (var product in dataList)
+            {
+                product.Details = JsonHelper.FromJson<List<PreSaleProductDetail>>(product.DetailJson);
+            }
+            return dataList;
+        }
+
         public PreSaleProduct GetPreSaleProduct(int id)
         {
             return preSaleProductAccess.GetById(id);

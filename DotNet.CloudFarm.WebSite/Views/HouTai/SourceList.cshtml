@@ -1,0 +1,263 @@
+﻿@using DotNet.CloudFarm.Domain.Model.Product;
+@{
+    ViewBag.Title = "来源统计列表";
+    Layout = "~/Views/Shared/_LayoutHouTai.cshtml";
+}
+<div id="content" class="span10">
+    <!-- content starts -->
+    @*<div class="form-horizontal">
+        <div class="control-group">
+            <label for="focusedInput" class="control-label">按手机号/ID搜索：</label>
+            <div class="controls">
+                <input type="text" id="focusedInput" class="input-xlarge focused" data-bind="value:SearchKey" />
+                <button class="btn btn-primary" type="button" data-bind="click:SearchUser">查询</button>
+                <button class="btn" type="reset" data-bind="click:Reset">重置</button>
+            </div>
+        </div>
+    </div>*@
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header well" data-original-title>
+                <h2><i class="icon-align-justify"></i> 来源统计列表</h2>
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>手机号</th>
+                            <th>微信昵称</th>
+                            <th>OpenId</th>
+                            <th>注册时间</th>
+                            <th>状态</th>
+                            <th>邀请用户数量</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: homeViewModel.List()">
+
+                        <tr>
+                            <td data-bind="text:UserId"></td>
+                            <td class="center" data-bind="text:Mobile"></td>
+                            <td class="center" data-bind="text:WxNickName"></td>
+                            <td class="center" data-bind="text:WxOpenId"></td>
+                            <td class="center" data-bind="text:CreateTime"></td>
+                            <td class="center">
+                                <!-- ko if: Status()==1 -->
+                                <span class="label label-success">正常</span>
+                                <!-- /ko -->
+                                <!-- ko if: Status()==0 -->
+                                <span class="label label-warning">禁用</span>
+                                <!-- /ko -->
+                            </td>
+                            <td class="center" >
+                                <!-- ko if: SourceCount()==0 -->
+                                0
+                                <!-- /ko -->
+                                <!-- ko if: SourceCount()>0 -->
+                                <a data-bind="text:SourceCount,attr:{href:'/houtai/userlistbysourceId?sourceId='+UserId()} "></a>
+                                <!-- /ko -->
+
+                            </td>
+                        
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="pages"></div>
+                @*<div class="pagination pagination-centered">
+                      <ul>
+                        <li><a href="#">Prev</a></li>
+                        <li class="active">
+                          <a href="#">1</a>
+                        </li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">Next</a></li>
+                      </ul>
+                    </div>*@
+            </div>
+        </div><!--/span-->
+
+    </div>
+
+    <div class="modal hide fade" id="myAlertDialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>提示</h3>
+        </div>
+        <div class="modal-body">
+            <p id="confirmText"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" id="confirmBtn" class="btn btn-primary">确定</a>
+            <a href="#" class="btn" id="cancelBtn" data-dismiss="modal">取消</a>
+        </div>
+    </div>
+
+    <!-- content ends -->
+</div>
+@section scripts{
+    <script type="text/javascript">
+    var pageSize = 20;
+    var pageIndex = 1;
+    var init = true;
+    $(document).ready(function () {
+        getusers();
+    });
+
+
+    function pager(index,no)
+    {
+        $("#pages").pager({ pagenumber: index, pagecount: no, buttonClickCallback: pageClick });
+    }
+    function pageClick(pn)
+    {
+        pageIndex = pn;
+        getusers();
+    }
+
+    function ChangeDateFormat(val) {
+        if(val!=null)
+        {
+            var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+            return date.Format("yyyy-MM-dd hh:mm:ss");
+        }
+        return null;
+    }
+
+    function ListViewModel() {
+        var self = this;
+        self.List = ko.observableArray([]);
+        self.PageSize = ko.observable();
+        self.PageIndex = ko.observable();
+        self.Count = ko.observable();
+        self.PageNo = ko.observable();
+        self.SearchKey = ko.observable("");
+        self.SearchUser = function () {
+            var keyword = self.SearchKey();
+            if (keyword == "")
+                return;
+            $.ajax({
+                type: "POST",
+                url: "/houtai/SearchUser",
+                data: "mobile=" + keyword,
+                success: function (data) {
+                    if (data.List.length>0 && data.List[0].UserId == 0) {
+                        alert("未查到对应用户");
+                    }
+                    else {
+                        FillUser(data);
+                    }
+
+                }
+            });
+        };
+        self.Reset = function () {
+            self.SearchKey("");
+            getusers();
+        };
+
+
+    }
+    var homeViewModel = new ListViewModel();
+
+    function UserViewModel() {
+        var self = this;
+
+        self.UserId = ko.observable();
+        self.Mobile = ko.observable();
+        self.WxOpenId = ko.observable();
+        self.WxNickName = ko.observable();
+        self.WxSex = ko.observable();
+        self.WxHeadUrl = ko.observable();
+        self.WxSubTime = ko.observable();
+        self.WxUnionId = ko.observable();
+        self.WxRemark = ko.observable();
+        self.WxGroupId = ko.observable();
+        self.Status = ko.observable();
+        self.SourceCount = ko.observable();
+        self.CreateTime = ko.observable();
+
+
+    }
+
+
+
+    function getusers()
+    {
+        $.ajax({
+            type: "POST",
+            url: "/houtai/GetSourceUsers",
+            data: "pageIndex=" + pageIndex + "&pageSize=" + pageSize,
+            success: function (data) {
+                if (data) {
+                    FillUser(data);
+                    pager(data.PageIndex, data.PageNo);
+                    if (init == true) {
+                        ko.applyBindings(homeViewModel);
+                        init = false;
+                    }
+                }
+            }
+        });
+    }
+
+    function FillUser(data)
+    {
+        var length = data.List.length;
+        pageSize = data.PageSize;
+        pageIndex = data.PageIndex;
+        homeViewModel.PageIndex(data.PageIndex);
+        homeViewModel.PageSize(data.pageSize);
+        homeViewModel.Count(data.Count);
+        homeViewModel.List.removeAll();
+        for (var i = 0; i < length; i++) {
+            var userViewModel = new UserViewModel();
+            var item = data.List[i];
+            userViewModel.UserId(item.UserId);
+            userViewModel.Mobile(item.Mobile);
+            userViewModel.WxOpenId(item.WxOpenId);
+            userViewModel.WxNickName(item.WxNickName);
+            userViewModel.WxSex(item.WxSex);
+            userViewModel.CreateTime(ChangeDateFormat(item.CreateTime));
+            userViewModel.WxHeadUrl(item.WxHeadUrl);
+            userViewModel.WxSubTime(ChangeDateFormat(item.WxSubTime));
+            userViewModel.WxUnionId(item.WxUnionId);
+            userViewModel.Status(item.Status);
+            userViewModel.WxRemark(item.WxRemark);
+            userViewModel.WxGroupId(item.WxGroupId);
+            userViewModel.SourceCount(item.SourceCount);
+
+            homeViewModel.List.push(userViewModel);
+        }
+
+    }
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    </script>
+}

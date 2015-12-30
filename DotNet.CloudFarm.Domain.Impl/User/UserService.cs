@@ -88,6 +88,11 @@ namespace DotNet.CloudFarm.Domain.Impl.User
             return userDataAccess.GetUser(userName);
         }
 
+        public UserModel SearchUser(string searchKey)
+        {
+            return userDataAccess.SearchUser(searchKey);
+        }
+
         public int Insert(UserModel userModel)
         {
             return userDataAccess.Insert(userModel);
@@ -96,6 +101,14 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         public PagedList<UserModel> GetUserList(int pageIndex, int pageSize)
         {
             return userDataAccess.GetUserList(pageIndex, pageSize);
+        }
+        public PagedList<UserModel> GetSourceUsers(int pageIndex, int pageSize)
+        {
+            return userDataAccess.GetSourceUsers(pageIndex, pageSize);
+        }
+        public PagedList<UserModel> GetUserListBySourceId(string sourceId, int pageIndex, int pageSize)
+        {
+            return userDataAccess.GetUserListBySourceId(sourceId, pageIndex, pageSize);
         }
 
         public int UpdateUserStatus(int userId, int status)
@@ -131,6 +144,18 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         public bool CheckMobileCaptcha(int userId,string mobile,string captcha)
         {
             return userDataAccess.CheckMobileCaptcha(userId, mobile, captcha);
+        }
+
+
+        public int InsertQRCode(QRCode qr)
+        {
+            return userDataAccess.InsertQRCode(qr);
+        }
+
+
+        public PagedList<QRCode> GetQRList(int pageIndex, int pageSize)
+        {
+            return userDataAccess.GetQRList(pageIndex, pageSize);
         }
     }
 }

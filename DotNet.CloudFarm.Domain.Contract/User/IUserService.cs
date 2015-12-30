@@ -55,6 +55,13 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         UserModel GetUser(string userName);
 
         /// <summary>
+        /// 根据用户名
+        /// </summary>
+        /// <param name="searchKey"></param>
+        /// <returns></returns>
+        UserModel SearchUser(string searchKey);
+
+        /// <summary>
         /// 新增用户
         /// </summary>
         /// <param name="userModel"></param>
@@ -69,6 +76,21 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <returns></returns>
         PagedList<UserModel> GetUserList(int pageIndex, int pageSize);
 
+        /// <summary>
+        /// 分页获取来源用户列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        PagedList<UserModel> GetSourceUsers(int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 分页获取用户列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        PagedList<UserModel> GetUserListBySourceId(string sourceId,int pageIndex, int pageSize);
         /// <summary>
         /// 更新用户状态
         /// </summary>
@@ -113,5 +135,20 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="userId"></param>
         /// <returns></returns>
         BackstageLoginUser FindBackstageLoginUserByUserId(int userId);
+
+        /// <summary>
+        /// 插入QRCode
+        /// </summary>
+        /// <param name="qr"></param>
+        /// <returns></returns>
+        int InsertQRCode(QRCode qr);
+
+        /// <summary>
+        /// 分页获取QR
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        PagedList<QRCode> GetQRList(int pageIndex, int pageSize);
     }
 }

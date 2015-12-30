@@ -193,7 +193,7 @@
 
             self.Save = function() {
                 var preSaleProductViewModel = ko.toJSON(self);
-                console.log(preSaleProductViewModel);
+                //console.log(preSaleProductViewModel);
 
                 $.ajax({
                     url: "/HouTai/EditPreSaleProduct",
@@ -229,7 +229,6 @@
             var self = this;
             //编辑商品
             self.EditProduct=function(product) {
-                console.log(product);
                 window.preSaleProductViewModel.ProductId(product.ProductId);
                 var details = JSON.parse(product.DetailJson);
                 var array = window.preSaleProductViewModel.Details();
@@ -297,7 +296,7 @@
             ko.applyBindings(preSaleProductList, document.getElementById("productListContainer"));
 
             $(".image").on("click", function() {
-                console.log("哈哈");
+                //console.log("哈哈");
             });
         });
 

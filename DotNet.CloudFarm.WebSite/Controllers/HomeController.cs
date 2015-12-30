@@ -783,7 +783,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [AllowAnonymous]
         public ActionResult PreSaleProduct()
         {
-            var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.ProductId, "order");
+            var products=PreSaleProductService.GetPreSaleProducts(p=>p.IsSale,p=>p.CreateTime, "order");
 
             #region 分享相关
             //获取时间戳
@@ -836,25 +836,25 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == "").ToList();
             }
             
-
-            var lastOrder = PreSaleOrderService.GetPreSaleOrderList(o=>o.UserId ==this.UserInfo.UserId,1, 1).Data.FirstOrDefault();
-            if (lastOrder != null)
-            {
-                if (preSaleOrderViewModel.PreSaleProduct.BeiJinLimit == 1&& lastOrder.ProvinceId!= "110000")
-                {
-                    preSaleOrderViewModel.ProvinceId = "110000";
-                }
-                else
-                {
-                    preSaleOrderViewModel.ProvinceId = lastOrder.ProvinceId;
-                    preSaleOrderViewModel.CityId = lastOrder.CityId;
-                    preSaleOrderViewModel.AreaId = lastOrder.Code;
-                    preSaleOrderViewModel.Address = lastOrder.Address;
-                    preSaleOrderViewModel.UserName = lastOrder.Receiver;
-                    preSaleOrderViewModel.Phone = lastOrder.Phone;
-                }
+            //去除上一次的地址
+            //var lastOrder = PreSaleOrderService.GetPreSaleOrderList(o=>o.UserId ==this.UserInfo.UserId,1, 1).Data.FirstOrDefault();
+            //if (lastOrder != null)
+            //{
+            //    if (preSaleOrderViewModel.PreSaleProduct.BeiJinLimit == 1&& lastOrder.ProvinceId!= "110000")
+            //    {
+            //        preSaleOrderViewModel.ProvinceId = "110000";
+            //    }
+            //    else
+            //    {
+            //        preSaleOrderViewModel.ProvinceId = lastOrder.ProvinceId;
+            //        preSaleOrderViewModel.CityId = lastOrder.CityId;
+            //        preSaleOrderViewModel.AreaId = lastOrder.Code;
+            //        preSaleOrderViewModel.Address = lastOrder.Address;
+            //        preSaleOrderViewModel.UserName = lastOrder.Receiver;
+            //        preSaleOrderViewModel.Phone = lastOrder.Phone;
+            //    }
                 
-            }
+            //}
             //OrderService.GetPreSaleOrderList(1, 1, 1);
             
 
@@ -964,6 +964,19 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //前台订单列表只显示支付成功的订单
             var result=PreSaleOrderService.GetPreSaleOrderList(p => p.UserId == this.UserInfo.UserId&&(p.Status==1||p.Status==2), pageIndex, pageSize);
             return View(result);
+        }
+        #endregion
+
+
+        #region 二维码
+
+        public ContentResult GetQRCode(string openId)
+        {
+            var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+            var qrResult = Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.Create(accesstoken, 1800, UserInfo.UserId);
+            var link = Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.GetShowQrCodeUrl(qrResult.ticket);
+            Response.Redirect(link, true);
+            return Content("");
         }
         #endregion
     }

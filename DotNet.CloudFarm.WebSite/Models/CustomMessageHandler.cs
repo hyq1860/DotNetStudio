@@ -63,6 +63,11 @@ namespace DotNet.CloudFarm.WebSite.Models
             return responseMessage;
         }
 
+        /// <summary>
+        /// 文本信息处理
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
         public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
         {
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
@@ -91,7 +96,11 @@ namespace DotNet.CloudFarm.WebSite.Models
            
 
         }
-
+        /// <summary>
+        /// 事件点击
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
         public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
         {
             if(requestMessage.EventKey=="learnmore")
@@ -113,10 +122,15 @@ namespace DotNet.CloudFarm.WebSite.Models
                 return null;
             }
         }
-
+        /// <summary>
+        /// 订阅事件
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
         public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
         {
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
+            logger.Debug("订阅事件：" + JsonHelper.ToJson(requestMessage));
             var welcomeStr = @"Hi 主人，欢迎来到羊客！
 
 1、点击“<a href='http://yk.kerchinsheep.com/home/presaleproduct'>羊客商城</a>”即可预订科尔沁羊业出品的天然放养、高品质走地羊肉礼盒哦。
@@ -133,6 +147,7 @@ namespace DotNet.CloudFarm.WebSite.Models
                 var userDataAccess = new UserDataAccess();
                 var userService = new UserService(userDataAccess, null, new CloudFarmDbContext());
                 var user = userService.GetUserByWxOpenId(openId);
+                
                 if (user == null || user.UserId == 0)
                 {
                     var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
@@ -141,13 +156,20 @@ namespace DotNet.CloudFarm.WebSite.Models
                     {
                         wxUser.headimgurl = wxUser.headimgurl.Substring(0, wxUser.headimgurl.Length - 1) + "96";
                     }
+                    var sourceId= "";
+                    if (!string.IsNullOrEmpty(requestMessage.EventKey)&& requestMessage.EventKey.StartsWith("qrscene_"))
+                    {
+                        sourceId = requestMessage.EventKey.Replace("qrscene_", "");
+                        //int.TryParse(key, out sourceId);
+                    }
                     var userModel = new UserModel()
                     {
                         CreateTime = DateTime.Now,
                         WxOpenId = openId,
                         WxHeadUrl = wxUser.headimgurl,
                         WxNickName = wxUser.nickname,
-                        Status=1
+                        Status=1,
+                        SourceId = sourceId
                     };
                     userService.Insert(userModel);
                 }

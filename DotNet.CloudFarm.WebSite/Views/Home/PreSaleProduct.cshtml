@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutPreSale.cshtml";
-    ViewBag.Title = "礼盒预售";
+    ViewBag.Title = "羊客商城";
 }
 @using DotNet.Common.Utility
 @model List<DotNet.CloudFarm.Domain.Model.Product.PreSaleProduct>
@@ -26,7 +26,7 @@
                             <p class="salePrice">预售价：<span class="orange">￥<strong><!--ko text:Price--><!--/ko--></strong></span></p>
                             <p class="referencePrice">市场参考价：￥<!--ko text:MarketPrice--><!--/ko--></p>
                             <p class="buyBtn">
-                                <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}">立即预购</a>
+                                <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}">立即购买</a>
                             </p>
 </div>
                 </article>
@@ -147,11 +147,12 @@
         wx.ready(function() {
             // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
             //document.querySelector('#sharefriendgroup').onclick = function () {
-            var title =  "天然放养走地羊肉礼盒预售——科尔沁羊业出品";
-            var imgUrl = "http://yk.kerchinsheep.com/images/logo.png";
+            var title =  "天然放养走地羊肉礼盒立即预购——科尔沁羊业出品";
+            var imgUrl = "http://yk.kerchinsheep.com/images/package1.png";
             var link = "http://yk.kerchinsheep.com/home/presaleproduct";
             wx.onMenuShareTimeline({
-                title: title,
+                title: '羊客商城', // 分享标题
+                desc:title,
                 link: link,
                 imgUrl: imgUrl,
                 trigger: function (res) {
@@ -168,7 +169,7 @@
                 }
             });
             wx.onMenuShareAppMessage({
-                title: '羊客', // 分享标题
+                title: '羊客商城', // 分享标题
                 desc: title, // 分享描述
                 link: link, // 分享链接
                 imgUrl: imgUrl, // 分享图标
@@ -182,7 +183,7 @@
                 }
             });
             wx.onMenuShareQQ({
-                title: '羊客', // 分享标题
+                title: '羊客商城', // 分享标题
                 desc: title, // 分享描述
                 link: link, // 分享链接
                 imgUrl: imgUrl, // 分享图标

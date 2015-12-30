@@ -34,7 +34,16 @@ namespace DotNet.CloudFarm.Domain.Contract.SMS
         /// </summary>
         /// <param name="mobile"></param>
         /// <param name="date"></param>
-        /// <returns></returns>
+        /// <returns>0为成功</returns>
         int SendSMSPreOrderCreated(string mobile,string date);
+
+
+        /// <summary>
+        /// 发送预售商城发货短信
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="id"></param>
+        /// <returns>0为成功</returns>
+        int SendSMSPreOrderSendProduct(string mobile, string id);
     }
 }

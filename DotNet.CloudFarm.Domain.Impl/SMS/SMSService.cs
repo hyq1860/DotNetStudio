@@ -275,5 +275,53 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
                 return 1;
             }
         }
+
+
+        public int SendSMSPreOrderSendProduct(string mobile, string id)
+        {
+            try
+            {
+                //开关，避免测试发送过多短信
+                if (smsSendOnOff == "0")
+                {
+                    return 0;
+                }
+                var tempParamModel = new
+                {
+                    id = id
+                };
+                var token = getToken();
+                var smsRequestModel = new SMSRequestModel()
+                {
+                    acceptor_tel = mobile,
+                    access_token = token,
+                    app_id = appId,
+                    template_id = "91550003",
+                    template_param = tempParamModel.ToJson(),
+                    timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+                var requestParamList = new List<string>();
+                requestParamList.Add("acceptor_tel=" + smsRequestModel.acceptor_tel);
+                requestParamList.Add("access_token=" + smsRequestModel.access_token);
+                requestParamList.Add("app_id=" + smsRequestModel.app_id);
+                requestParamList.Add("template_id=" + smsRequestModel.template_id);
+                requestParamList.Add("template_param=" + smsRequestModel.template_param);
+                requestParamList.Add("timestamp=" + smsRequestModel.timestamp);
+                var sign = getSign(requestParamList);
+                requestParamList.Add("sign=" + sign);
+                var content = string.Join("&", requestParamList);
+                //content = System.Web.HttpUtility.UrlEncode(content);
+                logger.Info("预售订单发货短信接口返回content：" + content);
+                var returnJson = Post(templateUrl, content);
+                var smsResponseModel = JsonHelper.FromJson<SMSResponseModel>(returnJson);
+                logger.Info("预售订单发货短信接口返回：" + returnJson);
+                return smsResponseModel.res_code;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return 1;
+            }
+        }
     }
 }

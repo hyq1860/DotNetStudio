@@ -79,6 +79,18 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [Ninject.Inject]
         public ISMSService SMSService { get; set; }
 
+        /// <summary>
+        /// 与微信公众账号后台的AppId设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppId = WebConfigurationManager.AppSettings["WeixinAppId"];
+        /// <summary>
+        /// 与微信公众账号后台的AppSecret设置保持一致，区分大小写。
+        /// </summary>
+        public static readonly string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+
+        private ILog logger = LogManager.GetLogger("HoutaiController");
+
+
         public ActionResult Index()
         {
             return View();
@@ -627,6 +639,67 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         #endregion
 
         #region 用户后台
+
+        /// <summary>
+        /// 用户来源查询
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SourceList()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 获取用户来源数据统计
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public JsonResult GetSourceUsers(int pageIndex = 1, int pageSize = 20)
+        {
+            var userList = UserService.GetSourceUsers(pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = userList.PageIndex,
+                PageSize = userList.PageSize,
+                List = userList.ToList(),
+                Count = userList.TotalCount,
+                PageNo = userList.TotalCount % userList.PageSize != 0 ?
+                    (userList.TotalCount / userList.PageSize) + 1 :
+                    userList.TotalCount / userList.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 按用户
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserListBySourceId(string sourceId)
+        {
+            ViewBag.SourceId = sourceId;
+            return View();
+        }
+        /// <summary>
+        /// 获取用户来源数据统计
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public JsonResult GetUserListBySourceId(string sourceId,int pageIndex = 1, int pageSize = 20)
+        {
+            var userList = UserService.GetUserListBySourceId(sourceId, pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = userList.PageIndex,
+                PageSize = userList.PageSize,
+                List = userList.ToList(),
+                Count = userList.TotalCount,
+                PageNo = userList.TotalCount % userList.PageSize != 0 ?
+                    (userList.TotalCount / userList.PageSize) + 1 :
+                    userList.TotalCount / userList.PageSize
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// 用户列表
         /// </summary>
@@ -689,6 +762,12 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult SearchUser(string mobile)
         {
             var user = UserService.GetUser(mobile);
+            int userid = 0;
+            int.TryParse(mobile,out userid);
+            if (user.UserId==0 && userid>0)
+            {
+                user = UserService.GetUserByUserId(userid);
+            }
             var result = new
             {
                 PageIndex = 1,
@@ -696,6 +775,70 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 List = new List<UserModel>(){user},
                 Count = 1,
                 PageNo = 1,
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+
+        #region 二维码管理
+        /// <summary>
+        /// 二维码管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QRCode()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 添加二维码
+        /// </summary>
+        /// <param name="qr"></param>
+        /// <returns></returns>
+        public JsonResult AddQRCode(string qr)
+        {
+            var result=new Result<bool>();
+            var flag = false;
+            string message = string.Empty;
+            var isInsert = 0;
+            try
+            {
+                var qrModel = JsonHelper.FromJson<QRCode>(qr);
+                    //preSaleProduct = JsonHelper.FromJson<PreSaleProduct>(productJson);
+
+                var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
+                var qrResult = Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.CreateByStr(accesstoken, qrModel.SourceCode);
+                var qrLink = Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.GetShowQrCodeUrl(qrResult.ticket);
+                qrModel.QRCodeUrl = qrLink;
+                qrModel.CreateTime = DateTime.Now;
+                qrModel.Status = 1;
+                 isInsert = UserService.InsertQRCode(qrModel);
+
+            }
+            catch(Exception ex)
+            {
+                isInsert = 0;
+            }
+            return Json(isInsert);
+        }
+
+        /// <summary>
+        /// ajax获取二维码列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult getqrList(int pageIndex=1,int pageSize=20)
+        {
+            var qrList = UserService.GetQRList(pageIndex, pageSize);
+            var result = new
+            {
+                PageIndex = qrList.PageIndex,
+                PageSize = qrList.PageSize,
+                List = qrList.ToList(),
+                Count = qrList.TotalCount,
+                PageNo = qrList.TotalCount % qrList.PageSize != 0 ?
+                    (qrList.TotalCount / qrList.PageSize) + 1 :
+                    qrList.TotalCount / qrList.PageSize
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -767,7 +910,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             if (orderId.HasValue)
             {
                 
-                var preSaleOrder = new PreSaleOrder() {OrderId = orderId.Value,  Status = 2};
+                //var preSaleOrder = new PreSaleOrder() {OrderId = orderId.Value,  Status = 2};
+                var preSaleOrder = PreSaleOrderService.GetPreSaleOrder(orderId.Value);
+                preSaleOrder.Status=2;
                 if (deleteTag.HasValue)
                 {
                     preSaleOrder.DeleteTag = deleteTag.Value;
@@ -777,10 +922,21 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     preSaleOrder.ExpressDelivery = express;
                 }
                 var flag= PreSaleOrderService.ModifyPreOrder(preSaleOrder);
+                if(flag)
+                {
+                    SMSService.SendSMSPreOrderSendProduct(preSaleOrder.Phone, preSaleOrder.OrderId.ToString());
+                }
                 result.Data = PreSaleOrderService.GetPreSaleOrder(orderId.Value);
                 result.Status = new Status() {Code = flag?"1":"0",Message = flag?"成功": "失败" };
             }
             return Content(JsonHelper.ToJson(result), "application/javascript");
+        }
+        public ActionResult AddPreSaleProduct(string productJson)
+        {
+            var productList = PreSaleProductService.GetPreSaleProducts(p => p.IsSale, p => p.ProductId, "asc");
+            return View(productList);
+            //var result = new Result<PreSaleProduct>();
+            //return Content(JsonHelper.ToJson(result), "application/javascript");
         }
 
         public ActionResult GetExportOrderList(DateTime? startTime, DateTime? endTime, long? orderId, string mobile, int? status)
@@ -883,13 +1039,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return File(stream.ToArray(), "application/vnd.ms-excel", fileName);
         }
 
-        public ActionResult AddPreSaleProduct(string productJson)
-        {
-            var productList = PreSaleProductService.GetPreSaleProducts(p => p.IsSale, p => p.ProductId, "asc");
-            return View(productList);
-            //var result = new Result<PreSaleProduct>();
-            //return Content(JsonHelper.ToJson(result), "application/javascript");
-        }
+        //public ActionResult ModifyPreOrder(string productJson)
+        //{
+
+
+        //    var productList = PreSaleProductService.GetPreSaleProducts(p => p.IsSale, p => p.ProductId, "asc");
+        //    return View(productList);
+        //    //var result = new Result<PreSaleProduct>();
+        //    //return Content(JsonHelper.ToJson(result), "application/javascript");
+        //}
 
         public ActionResult EditPreSaleProduct(string productJson)
         {

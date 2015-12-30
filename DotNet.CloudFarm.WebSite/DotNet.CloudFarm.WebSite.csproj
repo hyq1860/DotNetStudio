@@ -770,6 +770,9 @@
     <Content Include="Views\Shared\_LayoutPreSale.cshtml" />
     <Content Include="Views\HouTai\AddPreSaleProduct.cshtml" />
     <Content Include="Scripts\json\recipeData.json" />
+    <Content Include="Views\HouTai\SourceList.cshtml" />
+    <Content Include="Views\HouTai\UserListBySourceId.cshtml" />
+    <Content Include="Views\HouTai\QRCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

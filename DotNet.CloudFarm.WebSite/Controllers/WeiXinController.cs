@@ -28,6 +28,8 @@ using DotNet.CloudFarm.Domain.Model.Order;
 using DotNet.Common.Utility;
 using DotNet.CloudFarm.Domain.Model.WeiXin;
 using DotNet.CloudFarm.Domain.Contract.WeiXin;
+using DotNet.CloudFarm.Domain.Contract.User;
+using DotNet.CloudFarm.Domain.Contract.SMS;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -72,6 +74,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         [Ninject.Inject]
         public IWeiXinService WeixinService { get; set; }
 
+        [Ninject.Inject]
+        public ISMSService SMSService{get;set;}
+        [Ninject.Inject]
+        public IUserService UserService { get; set; }
 
         /// <summary>
         /// 微信后台验证地址（使用Get），微信后台的“接口配置信息”的Url
@@ -164,16 +170,6 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 return Content("");
             }
         }
-
-        /// <summary>
-        /// 微信支付回调地址
-        /// </summary>
-        /// <returns></returns>
-        public ContentResult PayNotify()
-        {
-            return Content("1");
-        }
-
         /// <summary>
         /// 测试创建菜单的部分
         /// </summary>
@@ -532,14 +528,23 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         }
 
+        /// <summary>
+        /// 测试用手机
+        /// </summary>
+        /// <param name="mobile"></param>
+        public ContentResult SendSMS(string mobile,string orderId)
+        {
+            var result = SMSService.SendSMSPreOrderSendProduct(mobile, orderId);
+            return Content("result=" + result);
+        }
 
-
-        public ContentResult GetQRCode()
+        public ContentResult GetQRCode(string openId)
         {
              var accesstoken = AccessTokenContainer.TryGetToken(AppId, AppSecret);
-            var qrResult =  Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.Create(accesstoken, 1800, 1);
+             var qrResult = Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.Create(accesstoken, 1800, 1);
             var link =Senparc.Weixin.MP.AdvancedAPIs.QrCode.QrCodeApi.GetShowQrCodeUrl(qrResult.ticket);
-            return Content(link);
+            Response.Redirect(link, true);
+            return Content("");
         }
       
     }

@@ -69,6 +69,7 @@
     <Compile Include="SMS\SMSRequestModel.cs" />
     <Compile Include="User\AdminUser.cs" />
     <Compile Include="User\LoginUser.cs" />
+    <Compile Include="User\QRCode.cs" />
     <Compile Include="User\UserCaptchaModel.cs" />
     <Compile Include="User\UserModel.cs" />
     <Compile Include="WeiXin\WeixinAutoReplyMessageModel.cs" />

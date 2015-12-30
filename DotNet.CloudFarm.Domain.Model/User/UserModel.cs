@@ -68,6 +68,16 @@ namespace DotNet.CloudFarm.Domain.Model.User
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 邀请来源ID
+        /// </summary>
+        public string SourceId { get; set; }
+
+        /// <summary>
+        /// 邀请来源数量
+        /// </summary>
+        public int SourceCount { get; set; }
     }
 
     public class UserModelEfMap : EntityTypeConfiguration<UserModel>

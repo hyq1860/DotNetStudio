@@ -19,6 +19,9 @@ namespace DotNet.CloudFarm.Domain.Contract.Product
         List<PreSaleProduct> GetPreSaleProducts(Expression<Func<PreSaleProduct, bool>> whereFunc,
             Expression<Func<PreSaleProduct, long>> orderByFunc, string orderType);
 
+        List<PreSaleProduct> GetPreSaleProducts(Expression<Func<PreSaleProduct, bool>> whereFunc,
+            Expression<Func<PreSaleProduct, DateTime>> orderByFunc, string orderType);
+
         /// <summary>
         /// 根据商品id获取预售商品
         /// </summary>

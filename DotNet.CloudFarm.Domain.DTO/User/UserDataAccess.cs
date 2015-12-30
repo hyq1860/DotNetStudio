@@ -64,6 +64,8 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                         user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
                         user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
                         user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        user.SourceId = !Convert.IsDBNull(dr["SourceId"]) ? dr["SourceId"].ToString() : string.Empty;
+
                     }
                 }
             }
@@ -92,10 +94,23 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                         user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
                         user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
                         user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        user.SourceId = !Convert.IsDBNull(dr["SourceId"]) ? dr["SourceId"].ToString() : string.Empty;
+
                     }
                 }
             }
             return user;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchKey"></param>
+        /// <returns></returns>
+        public UserModel SearchUser(string searchKey)
+        {
+            //TODO:暂时不需要，但是可以实现
+            return new UserModel();
         }
 
         public int Insert(UserModel userModel)
@@ -113,7 +128,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 cmd.SetParameterValue("@WxGroupId", userModel.WxGroupId);
                 cmd.SetParameterValue("@Status", userModel.Status);
                 cmd.SetParameterValue("@CreateTime", userModel.CreateTime);
-
+                cmd.SetParameterValue("@SourceId", userModel.SourceId);
                 var result = cmd.ExecuteScalar();
                 if (result != null)
                 {
@@ -151,6 +166,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                             user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
                             user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
                             user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                            user.SourceId = !Convert.IsDBNull(dr["SourceId"]) ? dr["SourceId"].ToString() : string.Empty;
                             userList.Add(user);
                         }
                         var countDr = ds.Tables[1].Rows[0][0];
@@ -162,7 +178,84 @@ namespace DotNet.CloudFarm.Domain.DTO.User
             }
         }
 
+        public PagedList<UserModel> GetSourceUsers(int pageIndex, int pageSize)
+        {
+            var userList = new List<UserModel>();
+            var count = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetSourceUserByPageList"))
+            {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                using (var ds = cmd.ExecuteDataSet())
+                {
+                    if (ds.Tables.Count >= 2)
+                    {
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            var user = new UserModel();
+                            user.UserId = !Convert.IsDBNull(dr["ID"]) ? int.Parse(dr["ID"].ToString()) : 0;
+                            user.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
+                            user.WxOpenId = !Convert.IsDBNull(dr["WxOpenId"]) ? dr["WxOpenId"].ToString() : string.Empty;
+                            user.WxNickName = !Convert.IsDBNull(dr["WxNickName"]) ? dr["WxNickName"].ToString() : string.Empty;
+                            user.WxSex = !Convert.IsDBNull(dr["WxSex"]) ? int.Parse(dr["WxSex"].ToString()) : 0;
+                            user.WxHeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;
+                            user.WxSubTime = !Convert.IsDBNull(dr["WxSubTime"]) ? Convert.ToDateTime(dr["WxSubTime"]) : DateTime.MinValue;
+                            user.WxUnionId = !Convert.IsDBNull(dr["WxUnionId"]) ? dr["WxUnionId"].ToString() : string.Empty;
+                            user.WxRemark = !Convert.IsDBNull(dr["WxRemark"]) ? dr["WxRemark"].ToString() : string.Empty;
+                            user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
+                            user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
+                            user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                            user.SourceCount = !Convert.IsDBNull(dr["SourceCount"]) ? int.Parse(dr["SourceCount"].ToString()) : 0;
+                            userList.Add(user);
+                        }
+                        var countDr = ds.Tables[1].Rows[0][0];
+                        count = !Convert.IsDBNull(countDr) ? Convert.ToInt32(countDr) : 0;
+                    }
+                }
+                var result = new PagedList<UserModel>(userList, pageIndex, pageSize, count);
+                return result;
+            }
+        }
 
+        public PagedList<UserModel> GetUserListBySourceId(string sourceId, int pageIndex, int pageSize)
+        {
+            var userList = new List<UserModel>();
+            var count = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetUserByPageListAndSourceId"))
+            {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                cmd.SetParameterValue("@SourceId", sourceId);
+                using (var ds = cmd.ExecuteDataSet())
+                {
+                    if (ds.Tables.Count >= 2)
+                    {
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            var user = new UserModel();
+                            user.UserId = !Convert.IsDBNull(dr["ID"]) ? int.Parse(dr["ID"].ToString()) : 0;
+                            user.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
+                            user.WxOpenId = !Convert.IsDBNull(dr["WxOpenId"]) ? dr["WxOpenId"].ToString() : string.Empty;
+                            user.WxNickName = !Convert.IsDBNull(dr["WxNickName"]) ? dr["WxNickName"].ToString() : string.Empty;
+                            user.WxSex = !Convert.IsDBNull(dr["WxSex"]) ? int.Parse(dr["WxSex"].ToString()) : 0;
+                            user.WxHeadUrl = !Convert.IsDBNull(dr["WxHeadUrl"]) ? dr["WxHeadUrl"].ToString() : string.Empty;
+                            user.WxSubTime = !Convert.IsDBNull(dr["WxSubTime"]) ? Convert.ToDateTime(dr["WxSubTime"]) : DateTime.MinValue;
+                            user.WxUnionId = !Convert.IsDBNull(dr["WxUnionId"]) ? dr["WxUnionId"].ToString() : string.Empty;
+                            user.WxRemark = !Convert.IsDBNull(dr["WxRemark"]) ? dr["WxRemark"].ToString() : string.Empty;
+                            user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
+                            user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
+                            user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                            user.SourceId = !Convert.IsDBNull(dr["SourceId"]) ? dr["SourceId"].ToString() : string.Empty;
+                            userList.Add(user);
+                        }
+                        var countDr = ds.Tables[1].Rows[0][0];
+                        count = !Convert.IsDBNull(countDr) ? Convert.ToInt32(countDr) : 0;
+                    }
+                }
+                var result = new PagedList<UserModel>(userList, pageIndex, pageSize, count);
+                return result;
+            }
+        }
 
         public int UpdateUserStatus(int userId, int status)
         {
@@ -231,6 +324,7 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                         user.WxGroupId = !Convert.IsDBNull(dr["WxGroupId"]) ? int.Parse(dr["WxGroupId"].ToString()) : 0;
                         user.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
                         user.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        user.SourceId = !Convert.IsDBNull(dr["SourceId"]) ? dr["SourceId"].ToString() : string.Empty;
                     }
                 }
             }
@@ -305,6 +399,59 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 }
             }
             return backstageLoginUser;
+        }
+
+
+        public int InsertQRCode(QRCode qr)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("InsertQRCode"))
+            {
+                cmd.SetParameterValue("@QRCodeUrl", qr.QRCodeUrl);
+                cmd.SetParameterValue("@SourceCode", qr.SourceCode);
+                cmd.SetParameterValue("@SourceName", qr.SourceName);
+                cmd.SetParameterValue("@Status", qr.Status);
+                cmd.SetParameterValue("@CreateTime", qr.CreateTime);
+                var result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+                return 0;
+            }
+        }
+
+
+        public PagedList<QRCode> GetQRList(int pageIndex, int pageSize)
+        {
+            var qrList = new List<QRCode>();
+            var count = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetQRListByPage"))
+            {
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                using (var ds = cmd.ExecuteDataSet())
+                {
+                    if (ds.Tables.Count >= 2)
+                    {
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            var qrcode = new QRCode();
+                            qrcode.Id = !Convert.IsDBNull(dr["Id"]) ? int.Parse(dr["Id"].ToString()) : 0;
+                            qrcode.SourceCode = !Convert.IsDBNull(dr["SourceCode"]) ? dr["SourceCode"].ToString() : string.Empty;
+                            qrcode.SourceName = !Convert.IsDBNull(dr["SourceName"]) ? dr["SourceName"].ToString() : string.Empty;
+                            qrcode.QRCodeUrl = !Convert.IsDBNull(dr["QRCodeUrl"]) ? dr["QRCodeUrl"].ToString() : string.Empty;
+                            qrcode.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
+                            qrcode.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                            qrcode.SourceCount = !Convert.IsDBNull(dr["SourceCount"]) ? int.Parse(dr["SourceCount"].ToString()) : 0;
+                            qrList.Add(qrcode);
+                        }
+                        var countDr = ds.Tables[1].Rows[0][0];
+                        count = !Convert.IsDBNull(countDr) ? Convert.ToInt32(countDr) : 0;
+                    }
+                }
+                var result = new PagedList<QRCode>(qrList, pageIndex, pageSize, count);
+                return result;
+            }
         }
     }
 }
