@@ -119,6 +119,10 @@ else
             <span class="txt">详细地址</span>
             <input type="text" value="" placeholder="请点击输入" maxlength="120" data-bind="value:Address">
         </p>
+        <p>
+            <span class="txt">邀请码</span>
+            <input type="text" value="" placeholder="请点击输入" maxlength="10" data-bind="value:InviteCode">
+        </p>
     </section>
     <!--收货人信息E-->
     <!--提交S-->
@@ -128,7 +132,7 @@ else
     <section class="buyNote">
         <h2><img src="/presaleimages/knowTit1.png" alt=""></h2>
         <ul class="knowInfo">
-            <li>如需开发票，请联系羊客微信客服。</li>
+            <li>如需开发票，请在购买当月内联系羊客微信客服。</li>
             <li>本商品在生产过程中若有少许误差（不超过5%），属于合理范围，具体规格以实际产品为准。</li>
         </ul>
         <div class="knowMore">
@@ -263,7 +267,8 @@ else
 
         //详细地址
         self.Address= ko.observable();
-
+        //邀请码
+        self.InviteCode = ko.observable();
         //数量
         self.Count=ko.observable(1);
         self.ReduceCount=function() {
@@ -345,6 +350,8 @@ else
             preSaleOrderServiceJson.CityId = self.CityId();
             preSaleOrderServiceJson.AreaId = self.AreaId();
             preSaleOrderServiceJson.Address = self.Address();
+            preSaleOrderServiceJson.InviteCode=self.InviteCode();
+
             preSaleOrderServiceJson.Provinces = [];
             if (!self.IsSubmiting()) {
                 self.IsSubmiting(true);

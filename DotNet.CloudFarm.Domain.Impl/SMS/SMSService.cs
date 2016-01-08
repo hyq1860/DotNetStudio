@@ -238,18 +238,15 @@ namespace DotNet.CloudFarm.Domain.Impl.SMS
                 {
                     return 0;
                 }
-                var tempParamModel = new
-                {
-                    date = date
-                };
+              
                 var token = getToken();
                 var smsRequestModel = new SMSRequestModel()
                 {
                     acceptor_tel = mobile,
                     access_token = token,
                     app_id = appId,
-                    template_id = "91549848",
-                    template_param = tempParamModel.ToJson(),
+                    template_id = "91550062",
+                    template_param = "{}",//tempParamModel.ToJson(),
                     timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 };
                 var requestParamList = new List<string>();

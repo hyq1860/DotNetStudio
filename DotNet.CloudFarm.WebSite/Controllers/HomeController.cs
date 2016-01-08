@@ -829,14 +829,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var addresses = AddressService.GetAddresses();
             if (preSaleOrderViewModel.PreSaleProduct.BeiJinLimit == 1)
             {
-                preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == ""&&s.Code== "110000").ToList();
+                preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == "" && (s.Code == "110000" || s.Code == "120000" || s.Code == "130000")).ToList();
             }
             else
             {
                 preSaleOrderViewModel.Provinces = addresses.Where(s => s.ParentCode == "").ToList();
             }
-            
-            //去除上一次的地址
+
+            ////去除上一次的地址
             //var lastOrder = PreSaleOrderService.GetPreSaleOrderList(o=>o.UserId ==this.UserInfo.UserId,1, 1).Data.FirstOrDefault();
             //if (lastOrder != null)
             //{
@@ -853,9 +853,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             //        preSaleOrderViewModel.UserName = lastOrder.Receiver;
             //        preSaleOrderViewModel.Phone = lastOrder.Phone;
             //    }
-                
+
             //}
-            //OrderService.GetPreSaleOrderList(1, 1, 1);
+            ////OrderService.GetPreSaleOrderList(1, 1, 1);
             
 
             if (!string.IsNullOrEmpty(preSaleOrderViewModel.ProvinceId))
@@ -876,6 +876,10 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult SubmitPreSaleOrder(PreSaleOrderViewModel preSaleOrderViewModel)
         {
             var jsonResult=new JsonResult();
+            if (!string.IsNullOrEmpty(preSaleOrderViewModel.InviteCode))
+            {
+                preSaleOrderViewModel.InviteCode = preSaleOrderViewModel.InviteCode.Replace(" ", "");
+            }
             var preSaleOrder = new PreSaleOrder
             {
                 OrderId = preSaleOrderViewModel.OrderId,//OrderService.GetNewOrderId(),
@@ -892,7 +896,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 Receiver = preSaleOrderViewModel.UserName,
                 Phone=preSaleOrderViewModel.Phone,
                 TotalMoney = preSaleOrderViewModel.Count* preSaleOrderViewModel.PreSaleProduct.Price,
-                ExpressDelivery = string.Empty
+                ExpressDelivery = string.Empty,
+                InviteCode = preSaleOrderViewModel.InviteCode
             };
 
             

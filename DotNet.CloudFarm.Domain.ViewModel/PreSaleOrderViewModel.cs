@@ -33,6 +33,8 @@ namespace DotNet.CloudFarm.Domain.ViewModel
 
         public string AreaId { get; set; }
 
+        public string InviteCode { get; set; }
+
         #region 微信支付先关
         public string TimeStamp { get; set; }
 

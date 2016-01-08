@@ -136,6 +136,11 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         public virtual PreSaleProduct PreSaleProduct { get; set; }
 
         public int DeleteTag { get; set; }
+
+        /// <summary>
+        /// 邀请码
+        /// </summary>
+        public string InviteCode { get; set; }
     }
 
     public class PreSaleOrderEfMap : EntityTypeConfiguration<PreSaleOrder>

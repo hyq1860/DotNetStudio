@@ -534,7 +534,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <param name="mobile"></param>
         public ContentResult SendSMS(string mobile,string orderId)
         {
-            var result = SMSService.SendSMSPreOrderSendProduct(mobile, orderId);
+            //var result = SMSService.SendSMSPreOrderSendProduct(mobile, orderId);
+            var result = SMSService.SendSMSPreOrderCreated(mobile, "");
             return Content("result=" + result);
         }
 

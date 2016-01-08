@@ -23,7 +23,7 @@
                     <div class="productInfo">
                         
                             <h2><a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}"><!--ko text:Name--><!--/ko--></a></h2>
-                            <p class="salePrice">预售价：<span class="orange">￥<strong><!--ko text:Price--><!--/ko--></strong></span></p>
+                            <p class="salePrice">售价：<span class="orange">￥<strong><!--ko text:Price--><!--/ko--></strong></span></p>
                             <p class="referencePrice">市场参考价：￥<!--ko text:MarketPrice--><!--/ko--></p>
                             <p class="buyBtn">
                                 <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}">立即购买</a>
@@ -147,7 +147,7 @@
         wx.ready(function() {
             // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
             //document.querySelector('#sharefriendgroup').onclick = function () {
-            var title =  "天然放养走地羊肉礼盒立即预购——科尔沁羊业出品";
+            var title =  "天然放养走地羊肉礼盒立即订购——科尔沁羊业出品";
             var imgUrl = "http://yk.kerchinsheep.com/images/package1.png";
             var link = "http://yk.kerchinsheep.com/home/presaleproduct";
             wx.onMenuShareTimeline({
