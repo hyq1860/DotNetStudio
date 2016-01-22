@@ -55,6 +55,7 @@
     <Compile Include="Base\Address.cs" />
     <Compile Include="Base\CloudFarmDbContext.cs" />
     <Compile Include="Base\OrderStatus.cs" />
+    <Compile Include="Base\PageLog.cs" />
     <Compile Include="Message\MessageModel.cs" />
     <Compile Include="Order\OrderModel.cs" />
     <Compile Include="Order\OrderPayModel.cs" />

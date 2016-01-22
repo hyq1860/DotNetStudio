@@ -1,4 +1,5 @@
-﻿using DotNet.CloudFarm.Domain.Model.Message;
+﻿using DotNet.CloudFarm.Domain.Model.Base;
+using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Common.Collections;
 using DotNet.Common.Models;
@@ -150,5 +151,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="pageSize"></param>
         /// <returns></returns>
         PagedList<QRCode> GetQRList(int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 插入页面访问
+        /// </summary>
+        /// <param name="pageLog"></param>
+        /// <returns></returns>
+        bool InsertPageLog(PageLog pageLog);
     }
 }

@@ -132,13 +132,25 @@ namespace DotNet.CloudFarm.WebSite.Models
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
             logger.Debug("订阅事件：" + JsonHelper.ToJson(requestMessage));
             var welcomeStr = @"Hi 主人，欢迎来到羊客！
+1、点击“<a href='http://yk.kerchinsheep.com/home/presaleproduct'>羊客商城</a>”挑选科尔沁羊业出品的天然放养、高品质走地羊肉礼盒哦；
 
-1、点击“<a href='http://yk.kerchinsheep.com/home/presaleproduct'>羊客商城</a>”即可预订科尔沁羊业出品的天然放养、高品质走地羊肉礼盒哦。
+2、点击“<a href='http://yk.kerchinsheep.com/'>羊羊得益</a>”前往羊客自有牧场领养小羊成为牧场主，获取年化15%的养殖投资收益，羊客养羊更绿色更安全哦；
 
-2、点击“<a href='http://yk.kerchinsheep.com/'>羊羊得益</a>”即可到羊客自有牧场领养小羊成为牧场主，获取年化15%的养殖投资收益，羊客养羊更绿色更安全哦。
+3、点击“更多精彩”会发现更多惊喜哦！
 
-3、点击“更多精彩”会发现更多惊喜哦！";
-            //var welcomeStr = "【双11新粉福利】欢迎来到羊客！赶快戳链接获取999元红包大礼：http://yk.kerchinsheep.com/home/active  仅1元就能领到1只价值1000元的小羊成为牧场主，4个月结算返还1元+50元养殖收益，每人限领1只，多领无50元收益哦！";
+本期活动：全民套羊得现金红包和电影票
+活动时间：2016年1月20日至1月25日
+活动方式：完成游戏，回复“领奖”，我们的客服将会在24小时内回复，请您耐心等待。
+
+羊客工作时间：每周一至周五 9:00-18:00
+如有任何问题，欢迎联系羊客客服哦！";
+            //            var welcomeStr = @"Hi 主人，欢迎来到羊客！
+
+            //1、点击“<a href='http://yk.kerchinsheep.com/home/presaleproduct'>羊客商城</a>”即可预订科尔沁羊业出品的天然放养、高品质走地羊肉礼盒哦。
+
+            //2、点击“<a href='http://yk.kerchinsheep.com/'>羊羊得益</a>”即可到羊客自有牧场领养小羊成为牧场主，获取年化15%的养殖投资收益，羊客养羊更绿色更安全哦。
+
+            //3、点击“更多精彩”会发现更多惊喜哦！";
 
             responseMessage.Content = welcomeStr;
             try

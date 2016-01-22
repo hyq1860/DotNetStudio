@@ -195,6 +195,16 @@
                 }
             });
         });
+
+
+        $.ajax({
+            type: "POST",
+            url: "/home/PageVisit",
+            data:"source=presale",
+            success: function (data) {
+                console.log(data);
+            }
+        });
     });
 </script>
 

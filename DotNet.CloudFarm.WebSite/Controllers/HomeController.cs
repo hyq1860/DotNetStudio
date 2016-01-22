@@ -36,6 +36,7 @@ using Ninject;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Helpers;
 using DotNet.CloudFarm.Domain.Contract.SMS;
+using System.Text.RegularExpressions;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -970,6 +971,57 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var result=PreSaleOrderService.GetPreSaleOrderList(p => p.UserId == this.UserInfo.UserId&&(p.Status==1||p.Status==2), pageIndex, pageSize);
             return View(result);
         }
+
+        /// <summary>
+        /// 页面访问记录
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public JsonResult PageVisit(string source)
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                return Json(false);
+            }
+            var ip = GetIpaddress();
+            var result   = UserService.InsertPageLog(new PageLog() {
+                Ip=ip, PageSource=source
+            });
+            return Json(result);
+
+
+
+        }
+
+        /// <summary>
+        ///   获取IP地址
+        /// </summary>
+        /// <returns></returns>
+        public  string GetIpaddress()
+        {
+            string result = String.Empty;
+            result = HttpContext.Request.ServerVariables["HTTP_CDN_SRC_IP"];
+            if (string.IsNullOrEmpty(result))
+                result = HttpContext.Request.ServerVariables["REMOTE_ADDR"];
+
+            if (string.IsNullOrEmpty(result))
+                result = HttpContext.Request.UserHostAddress;
+
+            if (string.IsNullOrEmpty(result) || !IsIP(result))
+                return "127.0.0.1";
+
+            return result;
+        }
+        /// <summary>
+        /// 判断是否为IP
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public  bool IsIP(string ip)
+        {
+            return Regex.IsMatch(ip, "^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
+        }
         #endregion
 
 
@@ -984,5 +1036,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             return Content("");
         }
         #endregion
+
+
+
     }
 }

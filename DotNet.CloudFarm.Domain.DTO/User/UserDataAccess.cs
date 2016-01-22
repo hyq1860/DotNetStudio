@@ -9,6 +9,7 @@ using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Data;
 using System.Data;
 using DotNet.Common.Collections;
+using DotNet.CloudFarm.Domain.Model.Base;
 
 namespace DotNet.CloudFarm.Domain.DTO.User
 {
@@ -451,6 +452,16 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 }
                 var result = new PagedList<QRCode>(qrList, pageIndex, pageSize, count);
                 return result;
+            }
+        }
+
+        public bool InsertPageLog(PageLog pageLog)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("InsertPageLog"))
+            {
+                cmd.SetParameterValue("@IP", pageLog.Ip);
+                cmd.SetParameterValue("@PageSource", pageLog.PageSource);
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
     }

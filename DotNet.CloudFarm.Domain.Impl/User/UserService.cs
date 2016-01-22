@@ -7,6 +7,7 @@ using DotNet.CloudFarm.Domain.Contract;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model;
+using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Common.Collections;
@@ -156,6 +157,11 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         public PagedList<QRCode> GetQRList(int pageIndex, int pageSize)
         {
             return userDataAccess.GetQRList(pageIndex, pageSize);
+        }
+
+        public bool InsertPageLog(PageLog pageLog)
+        {
+            return userDataAccess.InsertPageLog(pageLog);
         }
     }
 }

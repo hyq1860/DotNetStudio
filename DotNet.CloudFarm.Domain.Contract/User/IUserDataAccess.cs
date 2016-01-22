@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.User;
 
 namespace DotNet.CloudFarm.Domain.Contract.User
@@ -156,5 +157,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="pageSize"></param>
         /// <returns></returns>
         Common.Collections.PagedList<QRCode> GetQRList(int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 插入pageLog
+        /// </summary>
+        /// <param name="pageLog"></param>
+        /// <returns></returns>
+        bool InsertPageLog(PageLog pageLog);
     }
 }
