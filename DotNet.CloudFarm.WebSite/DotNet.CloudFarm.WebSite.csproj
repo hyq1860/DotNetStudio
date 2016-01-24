@@ -775,6 +775,9 @@
     <Content Include="Views\HouTai\SourceList.cshtml" />
     <Content Include="Views\HouTai\UserListBySourceId.cshtml" />
     <Content Include="Views\HouTai\QRCode.cshtml" />
+    <Content Include="Views\Home\SendGift.cshtml" />
+    <Content Include="Views\Home\SendGiftList.cshtml" />
+    <Content Include="Views\Home\ReceiveGiftList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

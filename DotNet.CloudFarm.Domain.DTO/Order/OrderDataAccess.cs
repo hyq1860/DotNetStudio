@@ -502,6 +502,28 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
         }
 
+        public long SendGift(long orderId, int userId, int sendUserId)
+        {
+            using (var cmd = DataCommandManager.GetDataCommand("SendGift"))
+            {
+                cmd.SetParameterValue("@UserId", userId);//赠送人
+                cmd.SetParameterValue("@OrderId", orderId);
+                cmd.SetParameterValue("@SendUserId", sendUserId);//被赠送人
+                cmd.SetParameterValue("@SendDate", DateTime.Now);//赠送时间
+                var temp = cmd.ExecuteScalar();
+                if (temp != null)
+                {
+                    return orderId;
+                }
+                return 0;
+            }
+        }
+
+        public PagedList<OrderManageViewModel> GetGiftOrderList(int pageIndex, int pageSize, DateTime? startTime, DateTime? endTime, long? orderId, string sendMobile, string receiveMobile, int? status)
+        {
+            throw new NotImplementedException();
+        }
+
         //public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)
         //{
         //    throw new NotImplementedException();

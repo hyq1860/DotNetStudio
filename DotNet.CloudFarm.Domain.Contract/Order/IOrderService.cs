@@ -153,6 +153,13 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <returns></returns>
         bool CheckOrderExist(long orderId);
 
-        
+        /// <summary>
+        /// 赠送订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="sendUserId"></param>
+        /// <returns></returns>
+        Result<OrderModel> SendGift(long orderId, int userId, int sendUserId);
     }
 }

@@ -289,5 +289,12 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             };
             return result;
         }
+
+        public Result<OrderModel> SendGift(long orderId, int userId, int sendUserId)
+        {
+            var result = new Result<OrderModel>();
+
+            return result;
+        }
     }
 }

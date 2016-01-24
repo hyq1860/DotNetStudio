@@ -143,5 +143,28 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderId"></param>
         /// <returns></returns>
         bool CheckOrderExist(long orderId);
+
+        /// <summary>
+        /// 赠送订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="sendUserId"></param>
+        /// <returns></returns>
+        long SendGift(long orderId, int userId,int sendUserId);
+
+        /// <summary>
+        /// 获取赠送订单
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="orderId"></param>
+        /// <param name="sendMobile"></param>
+        /// <param name="receiveMobile"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        PagedList<OrderManageViewModel> GetGiftOrderList(int pageIndex, int pageSize, DateTime? startTime, DateTime? endTime, long? orderId, string sendMobile,string receiveMobile, int? status);
     }
 }

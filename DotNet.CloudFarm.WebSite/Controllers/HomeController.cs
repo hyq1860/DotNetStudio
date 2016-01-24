@@ -1038,6 +1038,60 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         #endregion
 
 
+        #region 赠送
 
+        /// <summary>
+        /// 赠送页面
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public ActionResult SendGift(long orderId)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 赠送ajax处理
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        public ActionResult ProcessSendGift(long orderId,string mobile)
+        {
+            var jsonResult = new JsonResult();
+            var sendUser = UserService.GetUser(mobile);
+            if(sendUser==null)
+            {
+                //jsonResult.Data
+                var result = new Result<OrderModel>();
+                result.Status = new Status() { Code="0",Message="被赠送人尚未关注羊客，不能被赠送。"};
+
+                jsonResult.Data = result;
+            }
+            else
+            {
+                jsonResult.Data=OrderService.SendGift(orderId, this.UserInfo.UserId, sendUser.UserId);
+            }
+            return new JsonResult();
+        }
+
+        /// <summary>
+        /// 送出的订单列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SendGiftList()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 收到的订单列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ReceiveGiftList()
+        {
+            return View();
+        }
+        #endregion
     }
 }
