@@ -592,6 +592,7 @@
     <Content Include="images\step_bg.png" />
     <Content Include="images\thumb.jpg" />
     <Content Include="images\title.png" />
+    <Content Include="images\toppic.jpg" />
     <Content Include="images\toppic.png" />
     <Content Include="images\twoma.jpg" />
     <Content Include="images\tx.png" />
