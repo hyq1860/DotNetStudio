@@ -71,8 +71,8 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>二维码标识</th>
                             <th>二维码名称</th>
+                            <th>二维码标识</th>
                             <th>二维码图形地址</th>
                             <th>创建时间</th>
                             <th>邀请用户数量</th>
@@ -165,7 +165,7 @@
             self.CreateTime = ko.observable();
             self.SourceCount = ko.observable();
             self.Save = function () {
-                if (isNaN(self.SourceCode)) {
+                if (!isNaN(self.SourceCode())) {
                     alert("二维码标识不能为纯数字");
                     $("#SourceCode").focus();
                     return;

@@ -74,8 +74,8 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
         public ActionResult Default()
         {
-            var test=PreSaleProductService.GetPreSaleProducts();
-            var data=AddressService.GetAddresses();
+            //var test=PreSaleProductService.GetPreSaleProducts();
+            //var data=AddressService.GetAddresses();
 
             var homeViewModel = new HomeViewModel
             {
