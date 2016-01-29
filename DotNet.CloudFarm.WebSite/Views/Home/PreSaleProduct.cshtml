@@ -19,15 +19,33 @@
                 <!--上面商品信息S-->
                 <article class="productBox">
                     <div class="productPic">
+                        <!-- ko if: ProductId !=5 -->
                         <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}"><img src="" alt="" data-bind="attr:{src:'http://yk.kerchinsheep.com/presaleimages/'+Image}"></a>
+                        <!--/ko-->
+                        <!-- ko if: ProductId ==5 -->
+                        <a data-bind=""javascript:void(0);"><img src="" alt="" data-bind="attr:{src:'http://yk.kerchinsheep.com/presaleimages/'+Image}"></a>
+                        <!--/ko-->
+
                     </div>
                     <div class="productInfo">
                         
-                            <h2><a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}"><!--ko text:Name--><!--/ko--></a></h2>
+                            <h2>
+                                <!-- ko if: ProductId !=5 -->
+                        <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}"><!--ko text:Name--><!--/ko--></a>
+                                <!--/ko-->
+                                <!-- ko if: ProductId ==5 -->
+                                <a href="javascript:void(0);"><!--ko text:Name--><!--/ko--></a>
+                                <!--/ko-->
+                            </h2>
                             <p class="salePrice">售价：<span class="orange">￥<strong><!--ko text:Price--><!--/ko--></strong></span></p>
                             <p class="referencePrice">市场参考价：￥<!--ko text:MarketPrice--><!--/ko--></p>
                             <p class="buyBtn">
+                                <!-- ko if: ProductId !=5 -->
                                 <a data-bind="attr:{href:'@Url.Action("ConfirmPreSaleOrder","Home")'+'?productId='+ProductId}">立即购买</a>
+                                <!--/ko-->
+                                <!-- ko if: ProductId ==5 -->
+                                <a href="javascript:void(0);" style="background: #808080;">已售罄（节后上新）</a>
+                                <!--/ko-->
                             </p>
 </div>
                 </article>
