@@ -18,8 +18,17 @@
             </p>
         </div>
     </div>
-    <div class="search_order clearfix"><a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home", new {tab = 3})/#Order_'+OrderId()}">查看订单</a><a data-bind="click:Share" href="#" class="a2">分享给好友</a>
+    <div class="search_order clearfix">
+        <a href="#" class="a1" data-bind="attr:{href:'@Url.Action("OrderList", "Home", new {tab = 3})/#Order_'+OrderId()}">查看订单</a>
+        <a data-bind="click:Share" href="#" class="a2">分享给好友</a>
     </div>
+    <!--送红包S-->
+    <div class="pay_sendgift">
+        <p class="pay_giftnote">您可以将本次订单的所有小羊以红包的形式赠送给好友。</p>
+        <a class="pay_sendgiftbtn" href="">发红包</a>
+    </div>
+    <!--送红包E-->
+
 </div>
 <div class="share_to_opacity" id="share_to_opacity" style="display: none"></div>
 <div class="share_to_box" id="share_to_box" style="display: none"><img src="/images/share.png"></div>

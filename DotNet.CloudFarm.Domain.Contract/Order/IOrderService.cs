@@ -160,6 +160,6 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="userId"></param>
         /// <param name="sendUserId"></param>
         /// <returns></returns>
-        Result<OrderModel> SendGift(long orderId, int userId, int sendUserId);
+        Result<OrderModel> SendGift(long orderId, int userId, int sendUserId,string remark);
     }
 }

@@ -290,10 +290,28 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             return result;
         }
 
-        public Result<OrderModel> SendGift(long orderId, int userId, int sendUserId)
+        public Result<OrderModel> SendGift(long orderId, int userId, int sendUserId,string remark)
         {
             var result = new Result<OrderModel>();
-
+            //判断订单是否已经被送过了 不能重复送
+            var order = orderDataAccess.GetOrder(orderId, userId);
+            if (order != null && order.SendUserId > 0)
+            {
+                result.Status = new Status() { Code = "0",Message = string.Format("订单{0}已经被送出啦，不能再次赠送。", order.OrderId) };
+                result.Data = orderDataAccess.GetOrder(orderId, userId);
+                return result;
+            }
+            var flag = orderDataAccess.SendGift(orderId, userId, sendUserId, remark);
+            if (flag > 0)
+            {
+                result.Status=new Status() {Code = "1"};
+                result.Data = orderDataAccess.GetOrder(orderId, userId);
+            }
+            else
+            {
+                result.Status = new Status() { Code = "0" };
+                result.Data = orderDataAccess.GetOrder(orderId, userId);
+            }
             return result;
         }
     }

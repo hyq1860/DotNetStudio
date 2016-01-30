@@ -1,18 +1,104 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutSendGift.cshtml";
+    ViewBag.Title = "赠送红包";
 }
+@using DotNet.Common.Utility
+@model DotNet.CloudFarm.Domain.Model.Order.OrderModel
+<div>
+    赠予人手机号<input type="tel" value="" data-bind="value:Mobile" maxlength="11"/><br/>
+    赠言：<textarea id="remark" data-bind="value:Remark" maxlength="125"></textarea>
+    <input type="button" value="赠送" data-bind="click:GetUserName"/>
+</div>
+<script type="text/javascript"> 
 
-<!DOCTYPE html>
+    function GiftViewModel() {
+        var self = this;
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    赠予人手机号<input type="tel" value=""  /><br />
-    <input type="button" value="赠送" />
-    </div>
-</body>
-</html>
+        //订单编号
+        self.OrderId = ko.observable();
+
+        //养数量
+        self.Count = ko.observable();
+
+        //总钱数
+        self.TotalPrice = ko.observable();
+
+        //被赠送人手机号
+        self.Mobile = ko.observable();
+
+        //被赠送人的昵称
+        self.SendUserName = ko.observable();
+
+        //留言
+        self.Remark = ko.observable();
+
+        //自己的手机号
+        self.SelfMobile=ko.observable();
+
+        self.GetUserName=function() {
+            var mobile = self.Mobile();
+            //手机号格式验证
+            if (typeof mobile=='undefined' || mobile == "") {
+                alert("被赠送人手机号不能为空。");
+                return;
+            }
+            if (!isMobile(mobile)) {
+                alert("被赠送人手机号格式不正确。");
+                return;
+            }
+            //不能自己赠送自己
+            if (mobile==self.SelfMobile()) {
+                alert("不能自己赠送自己。");
+                return;
+            }
+            $.ajax({
+                url: "/home/GetSendUserName",
+                type: "post",
+                data: { mobile: self.Mobile()},
+                success: function (result) {
+                    console.log(result);
+                    if (result.Status.Code == "0") {
+                        alert(result.Status.Message);
+                    } else {
+                        //弹出对话框
+                        self.SendUserName(result.WxNickName);
+                    }
+                }
+            });
+        }
+
+        //赠送礼物
+        self.SendGift=function() {
+            var data = ko.toJSON(self);
+            
+            $.ajax({
+                url: "/home/ProcessSendGift",
+                type: "post",
+                data: { orderId: self.OrderId(), mobile: self.Mobile(), remark: self.Remark() },
+                success: function (result) {
+                    console.log(result);
+                    if (result.Status.Code == "0") {
+                        alert(result.Status.Message);
+                    } else {
+                        alert("赠送成功");
+                    }
+                }
+            });
+        }
+    }
+
+    $(function() {
+        var orderServiceJson=@Html.Raw(JsonHelper.ToJson(Model, "yyyy-MM-dd HH:mm:ss"));
+        
+        if (orderServiceJson) {
+            var giftViewModel = new GiftViewModel();
+            giftViewModel.OrderId(orderServiceJson.OrderId);
+            giftViewModel.Count(orderServiceJson.ProductCount);
+            giftViewModel.TotalPrice(orderServiceJson.ProductCount*orderServiceJson.Price);
+            //自己的手机号
+            giftViewModel.SelfMobile(@ViewBag.SelfMobile);
+            ko.applyBindings(giftViewModel);
+        }
+    });
+</script>
+

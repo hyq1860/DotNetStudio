@@ -1,0 +1,47 @@
+﻿/*支付成功页*/
+.search_order{border-bottom: 1px solid #d0d0d0;}
+/*赠送红包*/
+.pay_sendgift {
+    margin-top: 1rem;
+    width: 100%;
+    border-top: 1px solid #ebda8d;
+    border-bottom: 1px solid #d0d0d0;
+    background: #fff;
+    padding: 1.8rem 1.5rem 1.5rem;
+}
+.pay_giftnote {
+    font-size: 1.6rem;
+    line-height: 2rem;
+}
+.pay_sendgiftbtn {
+    display: block;
+    margin: 1.3rem auto 0;
+    width: 15rem;
+    height: 3rem;
+    background: #fd5657;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.6rem;
+    text-align: center;
+    line-height: 3rem;
+}
+
+/*媒体查询*/
+@media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
+    .sucess_logo{ height: 6rem;padding-top: 1rem;}
+    .search_order a{ height: 3.0rem;line-height: 3.0rem;}
+    .pay_sendgift{padding: 1rem 1.5rem;}
+    .pay_sendgiftbtn{ margin-top: 0.8rem;}
+}
+
+@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
+    .class{}
+}
+
+@media (device-height:667px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 */
+    .class{}
+}
+
+@media (device-height:736px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 Plus */
+    .class{}
+}

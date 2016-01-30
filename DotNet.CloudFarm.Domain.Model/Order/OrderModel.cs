@@ -51,5 +51,20 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         /// 支付方式 0-微信支付；1-线下支付
         /// </summary>
         public int PayType { get; set; }
+
+        /// <summary>
+        /// 赠送留言
+        /// </summary>
+        public string SendRemark { get; set; }
+
+        /// <summary>
+        /// 赠送时间
+        /// </summary>
+        public DateTime SendDate { get; set; } 
+
+        /// <summary>
+        /// 被赠送人id
+        /// </summary>
+        public int SendUserId { get; set; }
     }
 }

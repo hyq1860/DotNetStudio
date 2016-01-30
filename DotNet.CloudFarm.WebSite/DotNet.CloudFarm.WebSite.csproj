@@ -295,6 +295,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\gift.css" />
     <Content Include="Content\presale.css" />
     <Content Include="Content\houtai\bootstrap-cerulean.css" />
     <Content Include="Content\houtai\bootstrap-responsive.css" />
@@ -779,6 +780,8 @@
     <Content Include="Views\Home\SendGift.cshtml" />
     <Content Include="Views\Home\SendGiftList.cshtml" />
     <Content Include="Views\Home\ReceiveGiftList.cshtml" />
+    <Content Include="Views\Shared\_LayoutSendGift.cshtml" />
+    <Content Include="Views\Home\ShareGift.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

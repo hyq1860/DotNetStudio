@@ -1,0 +1,23 @@
+﻿@using DotNet.CloudFarm.Domain.Model;
+@using DotNet.CloudFarm.Domain.Model.Order
+@using DotNet.CloudFarm.Domain.Model.User
+@{
+    Layout = "~/Views/Shared/_LayoutSendGift.cshtml";
+    ViewBag.Title = "红包分享";
+    //订单信息
+    OrderModel orderModel = ViewBag.Order??new OrderModel();
+    //赠送人信息
+    UserModel UserInfo = ViewBag.UserInfo??new UserModel();
+    //被赠送人信息
+    UserModel SendUserInfo = ViewBag.SendUserInfo ?? new UserModel();
+}
+
+<img src="@UserInfo.WxHeadUrl"/>
+@UserInfo.WxNickName<br/>
+@UserInfo.Mobile<br/>
+
+@string.Format("在羊客送你了{0}只小羊，总价值￥{1}",orderModel.ProductCount,orderModel.ProductCount*orderModel.Price)
+<a href="@orderModel.OrderId">去查看我的小羊</a>
+<script type="text/javascript">
+
+</script>

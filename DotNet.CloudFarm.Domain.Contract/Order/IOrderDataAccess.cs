@@ -150,8 +150,9 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="orderId"></param>
         /// <param name="userId"></param>
         /// <param name="sendUserId"></param>
+        /// <param name="remark"></param>
         /// <returns></returns>
-        long SendGift(long orderId, int userId,int sendUserId);
+        long SendGift(long orderId, int userId,int sendUserId,string remark);
 
         /// <summary>
         /// 获取赠送订单

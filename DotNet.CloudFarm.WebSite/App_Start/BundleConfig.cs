@@ -37,7 +37,8 @@ namespace DotNet.CloudFarm.WebSite
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/reset.css",
-                      "~/Content/sheep_guest.css"));
+                      "~/Content/sheep_guest.css",
+                      "~/Content/gift.css"));
             //knockout
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                       "~/Scripts/knockout-3.3.0.js"));

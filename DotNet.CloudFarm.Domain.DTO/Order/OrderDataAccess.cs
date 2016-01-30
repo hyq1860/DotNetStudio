@@ -13,6 +13,7 @@ using DotNet.Common.Models;
 using DotNet.Data;
 using System.Data;
 using System.Net.Configuration;
+using DotNet.CloudFarm.Domain.Model;
 
 namespace DotNet.CloudFarm.Domain.DTO.Order
 {
@@ -96,6 +97,9 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderModel.Status = !Convert.IsDBNull("Status") ? int.Parse(dr["Status"].ToString()) : 0;
                         orderModel.PayType = !Convert.IsDBNull("PayType") ? int.Parse(dr["PayType"].ToString()) : 0;
                         orderModel.CreateTime = !Convert.IsDBNull("CreateTime") ? DateTime.Parse(dr["CreateTime"].ToString()) : DateTime.MinValue;
+                        orderModel.SendUserId = !Convert.IsDBNull("SendUserId") ? int.Parse(dr["SendUserId"].ToString()) : 0;
+                        orderModel.SendRemark = !Convert.IsDBNull("SendRemark") ? dr["SendRemark"].ToString() : string.Empty;
+                        orderModel.SendDate = !Convert.IsDBNull("SendDate") ? DateTime.Parse(dr["SendDate"].ToString()) : DateTime.MinValue;
                     }
                 }
             }
@@ -502,8 +506,9 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             }
         }
 
-        public long SendGift(long orderId, int userId, int sendUserId)
+        public long SendGift(long orderId, int userId, int sendUserId,string remark)
         {
+            /*
             using (var cmd = DataCommandManager.GetDataCommand("SendGift"))
             {
                 cmd.SetParameterValue("@UserId", userId);//赠送人
@@ -516,7 +521,17 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                     return orderId;
                 }
                 return 0;
-            }
+            }*/
+            return DapperHelper.ExecuteNonQuery(ApplicationConfig.Instance.DbConnectionString,
+                "update OrderInfo set SendUserId=@SendUserId,SendDate=@SendDate,SendRemark=@SendRemark where OrderId=@OrderId and UserId=@UserId",
+                new
+                {
+                    SendUserId = sendUserId,
+                    SendDate = DateTime.Now,
+                    SendRemark = remark,
+                    UserId = userId,
+                    OrderId = orderId
+                });
         }
 
         public PagedList<OrderManageViewModel> GetGiftOrderList(int pageIndex, int pageSize, DateTime? startTime, DateTime? endTime, long? orderId, string sendMobile, string receiveMobile, int? status)

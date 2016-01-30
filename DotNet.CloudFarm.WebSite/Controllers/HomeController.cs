@@ -1045,9 +1045,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public ActionResult SendGift(long orderId)
+        public ActionResult SendGift(long? orderId)
         {
-            return View();
+            var order=new OrderModel();
+            if (orderId.HasValue)
+            {
+                order=OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                ViewBag.SelfMobile = this.UserInfo.Mobile;
+            }
+            return View(order);
         }
 
         /// <summary>
@@ -1056,7 +1062,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <param name="orderId"></param>
         /// <param name="mobile"></param>
         /// <returns></returns>
-        public ActionResult ProcessSendGift(long orderId,string mobile)
+        public ActionResult ProcessSendGift(long orderId,string mobile,string remark)
         {
             var jsonResult = new JsonResult();
             var sendUser = UserService.GetUser(mobile);
@@ -1070,9 +1076,45 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             }
             else
             {
-                jsonResult.Data=OrderService.SendGift(orderId, this.UserInfo.UserId, sendUser.UserId);
+                jsonResult.Data=OrderService.SendGift(orderId, this.UserInfo.UserId, sendUser.UserId,remark);
             }
-            return new JsonResult();
+            return jsonResult;
+        }
+
+        public ActionResult GetSendUserName(string mobile)
+        {
+            var jsonResult = new JsonResult();
+            var sendUser = UserService.GetUser(mobile);
+            var result = new Result<UserModel>();
+            if (sendUser == null)
+            {
+                result.Status = new Status() { Code = "0", Message = "被赠送人尚未关注羊客，不能被赠送。" };
+                result.Data = sendUser;
+            }
+            else
+            {
+                result.Status = new Status() { Code = "1" };
+                result.Data = sendUser;
+            }
+            jsonResult.Data = result;
+            return jsonResult;
+        }
+
+        public ActionResult ShareGift(long? orderId)
+        {
+            var order = new OrderModel();
+            if (orderId.HasValue)
+            {
+                order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                if (order != null)
+                {
+                    ViewBag.UserInfo = this.UserInfo;
+                    ViewBag.SendUserInfo = UserService.GetUserByUserId(order.SendUserId);
+                    ViewBag.Order = order;
+                }
+            }
+
+            return View();
         }
 
         /// <summary>

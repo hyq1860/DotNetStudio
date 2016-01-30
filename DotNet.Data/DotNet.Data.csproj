@@ -83,6 +83,7 @@
     <Compile Include="Configuration\DataOperationParameter.cs" />
     <Compile Include="Configuration\FilterEnum.cs" />
     <Compile Include="Configuration\FixSqlConfig.cs" />
+    <Compile Include="DapperHelper.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="DatabaseProvider\AccessProvider.cs" />
     <Compile Include="DatabaseProvider\IDbProvider.cs" />

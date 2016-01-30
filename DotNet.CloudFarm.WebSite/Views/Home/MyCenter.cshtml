@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "我的";
 }
+<style>
+.my_list ul .gifticon .span_logo {
+    background: url(../images/gift_icon.png) no-repeat;
+    background-size: 2.6rem 2.6rem;
+}
+</style>
 <div class="sheep_guest my">
     <!--ko with:User-->
     <div class="my_top">
@@ -28,8 +34,7 @@
                 <span class="span2"></span></a></li>
             <li class="li2 clearfix"><a href="@Url.Action("OrderList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的订单</span><span class="span2"></span></a></li>
             <li class="li2 clearfix"><a href="@Url.Action("PreSaleOrderList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">预售订单</span><span class="span2"></span></a></li>
-            <li class="li2 clearfix"><a href="@Url.Action("SendGiftList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">送出红包</span><span class="span2"></span></a></li>
-            <li class="li2 clearfix"><a href="@Url.Action("ReceiveGiftList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">收的红包</span><span class="span2"></span></a></li>
+            <li class="gifticon clearfix"><a href="@Url.Action("SendGiftList", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的红包</span><span class="span2"></span></a></li>
             <li class="li3 clearfix"><a href="@Url.Action("Contract", "Home", new { tab = 3 })"><span class="span_logo"></span><span class="span1">我的合同</span><span class="span2"></span></a></li>
         </ul>
     </div>
