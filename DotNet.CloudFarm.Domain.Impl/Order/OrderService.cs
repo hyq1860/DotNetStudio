@@ -314,5 +314,15 @@ namespace DotNet.CloudFarm.Domain.Impl.Order
             }
             return result;
         }
+
+        public Result<PagedList<OrderViewModel>> GetSendOrderList(int userId, int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Result<PagedList<OrderViewModel>> GetReceiveOrderList(int userId, int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

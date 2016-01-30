@@ -539,6 +539,114 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 获取送出的红包订单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public PagedList<OrderViewModel> GetSendOrderList(int userId, int pageIndex, int pageSize)
+        {
+            var orderList = new List<OrderViewModel>();
+            var totalOrderCount = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetGiftOrderList"))
+            {
+                cmd.CommandText = string.Format("{0}", "o.SendUserId>0 and o.UserId="+userId);
+
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        var orderViewModel = new OrderViewModel();
+                        if (totalOrderCount == 0)
+                        {
+                            totalOrderCount = !Convert.IsDBNull(dr["TotalOrderCount"])
+                                ? int.Parse(dr["TotalOrderCount"].ToString())
+                                : 0;
+                        }
+                        orderViewModel.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? Convert.ToInt64(dr["OrderId"]) : 0;
+                        orderViewModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        orderViewModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        orderViewModel.ProductId = !Convert.IsDBNull(dr["ProductId"]) ? Convert.ToInt32(dr["ProductId"]) : 0;
+                        orderViewModel.ProductCount = !Convert.IsDBNull(dr["ProductCount"]) ? Convert.ToInt32(dr["ProductCount"]) : 0;
+                        orderViewModel.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
+                        orderViewModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
+                        orderViewModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
+                        orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
+                        orderViewModel.ProductImgUrl = !Convert.IsDBNull(dr["ImgUrl"]) ? dr["ImgUrl"].ToString() : string.Empty;
+                        orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+
+                        orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
+                        orderViewModel.StartTime = !Convert.IsDBNull(dr["StartTime"]) ? Convert.ToDateTime(dr["StartTime"]) : DateTime.MaxValue;
+                        orderViewModel.EndTime = !Convert.IsDBNull(dr["EndTime"]) ? Convert.ToDateTime(dr["EndTime"]) : DateTime.MaxValue;
+                        if (orderViewModel.OrderId > 0)
+                        {
+                            orderList.Add(orderViewModel);
+                        }
+                    }
+                }
+            }
+            var result = new PagedList<OrderViewModel>(orderList, pageIndex, pageSize, totalOrderCount);
+            return result;
+        }
+
+        /// <summary>
+        /// 获取收到的红包订单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public PagedList<OrderViewModel> GetReceiveOrderList(int userId, int pageIndex, int pageSize)
+        {
+            var orderList = new List<OrderViewModel>();
+            var totalOrderCount = 0;
+            using (var cmd = DataCommandManager.GetDataCommand("GetGiftOrderList"))
+            {
+                cmd.CommandText = string.Format("{0}", "o.SendUserId=" + userId);
+
+                cmd.SetParameterValue("@PageIndex", pageIndex);
+                cmd.SetParameterValue("@PageSize", pageSize);
+                using (var dr = cmd.ExecuteDataReader())
+                {
+                    while (dr.Read())
+                    {
+                        var orderViewModel = new OrderViewModel();
+                        if (totalOrderCount == 0)
+                        {
+                            totalOrderCount = !Convert.IsDBNull(dr["TotalOrderCount"])
+                                ? int.Parse(dr["TotalOrderCount"].ToString())
+                                : 0;
+                        }
+                        orderViewModel.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? Convert.ToInt64(dr["OrderId"]) : 0;
+                        orderViewModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? Convert.ToInt32(dr["UserId"]) : 0;
+                        orderViewModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? Convert.ToDateTime(dr["CreateTime"]) : DateTime.MinValue;
+                        orderViewModel.ProductId = !Convert.IsDBNull(dr["ProductId"]) ? Convert.ToInt32(dr["ProductId"]) : 0;
+                        orderViewModel.ProductCount = !Convert.IsDBNull(dr["ProductCount"]) ? Convert.ToInt32(dr["ProductCount"]) : 0;
+                        orderViewModel.Price = !Convert.IsDBNull(dr["Price"]) ? Convert.ToDecimal(dr["Price"]) : 0;
+                        orderViewModel.Status = !Convert.IsDBNull(dr["Status"]) ? Convert.ToInt32(dr["Status"]) : 0;
+                        orderViewModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? Convert.ToInt32(dr["PayType"]) : 0;
+                        orderViewModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
+                        orderViewModel.ProductImgUrl = !Convert.IsDBNull(dr["ImgUrl"]) ? dr["ImgUrl"].ToString() : string.Empty;
+                        orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
+
+                        orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
+                        orderViewModel.StartTime = !Convert.IsDBNull(dr["StartTime"]) ? Convert.ToDateTime(dr["StartTime"]) : DateTime.MaxValue;
+                        orderViewModel.EndTime = !Convert.IsDBNull(dr["EndTime"]) ? Convert.ToDateTime(dr["EndTime"]) : DateTime.MaxValue;
+                        if (orderViewModel.OrderId > 0)
+                        {
+                            orderList.Add(orderViewModel);
+                        }
+                    }
+                }
+            }
+            var result = new PagedList<OrderViewModel>(orderList, pageIndex, pageSize, totalOrderCount);
+            return result;
+        }
+
         //public Result<PagedList<PreSaleOrder>> GetPreSaleOrderList(int userId, int pageIndex, int pageSize)
         //{
         //    throw new NotImplementedException();

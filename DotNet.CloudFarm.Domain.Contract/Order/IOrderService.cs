@@ -161,5 +161,23 @@ namespace DotNet.CloudFarm.Domain.Contract.Order
         /// <param name="sendUserId"></param>
         /// <returns></returns>
         Result<OrderModel> SendGift(long orderId, int userId, int sendUserId,string remark);
+
+        /// <summary>
+        /// 获取送出的红包订单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        Result<PagedList<OrderViewModel>> GetSendOrderList(int userId, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// 获取收到的红包订单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        Result<PagedList<OrderViewModel>> GetReceiveOrderList(int userId, int pageIndex, int pageSize);
     }
 }
