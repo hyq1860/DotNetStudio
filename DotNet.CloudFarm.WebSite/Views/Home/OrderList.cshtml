@@ -195,7 +195,7 @@
                         orderViewModel.PayType(orderListServiceJson.Data[i].PayType);
                         orderViewModel.CanRedeem(orderListServiceJson.Data[i].CanRedeem);
                         orderViewModel.CanPay(orderListServiceJson.Data[i].CanPay);
-                        orderViewModel.CanSend(result.Data[i].CanSend);
+                        orderViewModel.CanSend(orderListServiceJson.Data[i].CanSend);
                         orderListViewModel.OrderList.push(orderViewModel);
                     }
                     //debugger;

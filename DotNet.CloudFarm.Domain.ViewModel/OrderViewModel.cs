@@ -104,7 +104,15 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         /// </summary>
         public bool CanSend
         {
-            get { return (Status == 1) && SendUserId <= 0; }
+            get { return (Status == OrderStatus.Paid.GetHashCode()) && SendUserId <= 0; }
+        }
+
+        /// <summary>
+        /// 是否是红包订单
+        /// </summary>
+        public bool IsSendOrder
+        {
+            get { return SendUserId > 0; }
         }
 
         /// <summary>
