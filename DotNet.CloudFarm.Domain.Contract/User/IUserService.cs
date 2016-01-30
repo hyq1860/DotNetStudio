@@ -1,4 +1,5 @@
-﻿using DotNet.CloudFarm.Domain.Model.Base;
+﻿using System.Collections.Generic;
+using DotNet.CloudFarm.Domain.Model.Base;
 using DotNet.CloudFarm.Domain.Model.Message;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Common.Collections;
@@ -158,5 +159,7 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="pageLog"></param>
         /// <returns></returns>
         bool InsertPageLog(PageLog pageLog);
+
+        List<UserModel> GetUsers(List<int> userIds);
     }
 }

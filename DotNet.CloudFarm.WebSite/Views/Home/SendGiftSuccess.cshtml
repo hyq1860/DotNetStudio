@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "赠送红包成功";
+    Layout = "~/Views/Shared/_LayoutSendGift.cshtml";
+}
+@model DotNet.CloudFarm.Domain.ViewModel.OrderViewModel
+<div class="layout layout_sendgiftsuccess">
+    <section class="sendgift_success">
+        <img class="sheep" src="/images/sendgift_successicon.png" alt="">
+        <div class="sendgift_successinfo">
+            <p class="color666">你已经成功将红包赠予用户</p>
+            <p class="colorred">@Model.SendUserName（@Model.SendUserMobile）</p>
+        </div>
+        <div class="sendgift_successnote">
+            <p class="color666">快把好消息告诉TA</p>
+            <a class="shareother_btn" id="tell">告诉TA</a>
+            <a class="return_btn" href="@Url.Action("OrderList", "Home", new {tab = 3})">返回订单列表</a>
+        </div>
+    </section>
+    <!---分享提示S-->
+    <div class="sharetips" style="display: none">
+        <img src="/images/sharetips.png" alt="">
+    </div>
+    <!---分享提示E-->
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#tell").on('click', function () {
+            $(".sharetips").show();
+        });
+    })
+</script>

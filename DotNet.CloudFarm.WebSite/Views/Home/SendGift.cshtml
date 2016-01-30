@@ -4,10 +4,50 @@
 }
 @using DotNet.Common.Utility
 @model DotNet.CloudFarm.Domain.Model.Order.OrderModel
-<div>
+@*<div>
     赠予人手机号<input type="tel" value="" data-bind="value:Mobile" maxlength="11"/><br/>
     赠言：<textarea id="remark" data-bind="value:Remark" maxlength="125"></textarea>
     <input type="button" value="赠送" data-bind="click:GetUserName"/>
+
+</div>*@
+<style type="text/css">
+    body {
+        overflow: hidden;
+    }
+</style>
+<div class="layout layout_sendgift">
+    <section class="sendgift_ordernum">订单编号：<!--ko text:OrderId--><!--/ko--></section>
+    <section class="sendgift_orderinfo">
+        <span class="sendgift_money">￥<strong><!--ko text:TotalPrice--><!--/ko--></strong></span>
+        <span class="sendgift_num">羊只数量：<!--ko text:Count--><!--/ko--></span>
+    </section>
+    <section class="sendgift_sendinfo">
+        <p>
+            <span class="txt">赠给：</span>
+            <input type="text" value="填写TA的手机号" data-bind="value:Mobile" maxlength="11">
+            <span class="note">请输入您想要赠送好友的手机号，该好友必须是登录过羊客的用户。</span>
+        </p>
+        <p>
+            <span class="txt">赠言：</span>
+            <textarea rows="4" cols="25" data-bind="value:Remark" maxlength="125">恭喜发财，羊羊得益！</textarea>
+        </p>
+    </section>
+    <section class="sendgift_enter"><a data-bind="click:GetUserName">把小羊装入红包</a></section>
+    <!--弹出层S-->
+    <section class="sendgift_pop" data-bind="visible:ShowConfirmSend">
+        <div class="pop_content">
+            <span class="topred"></span>
+            <div class="success_txt">
+                <p class="color666">你确认要把红包赠予如下好友吗？</p>
+                <p class="colorred"><!--ko text:SendUserName--><!--/ko-->（<!--ko text:Mobile--><!--/ko-->）</p>
+            </div>
+            <p class="sendgift_btn">
+                <a href="" class="sendcannel_btn" data-bind="click:Hide">取消</a>
+                <a href="" class="sendconfirm_btn" data-bind="click:SendGift">确认</a>
+            </p>
+        </div>
+    </section>
+    <!--弹出层E-->
 </div>
 <script type="text/javascript"> 
 
@@ -35,6 +75,14 @@
         //自己的手机号
         self.SelfMobile=ko.observable();
 
+        //是否显示赠送信息确认框
+        self.ShowConfirmSend=ko.observable(false);
+
+        //隐藏赠送信息确认框
+        self.Hide=function() {
+            self.ShowConfirmSend(false);
+        }
+
         self.GetUserName=function() {
             var mobile = self.Mobile();
             //手机号格式验证
@@ -57,11 +105,14 @@
                 data: { mobile: self.Mobile()},
                 success: function (result) {
                     console.log(result);
+                    debugger;
                     if (result.Status.Code == "0") {
                         alert(result.Status.Message);
                     } else {
                         //弹出对话框
-                        self.SendUserName(result.WxNickName);
+                        self.ShowConfirmSend(true);
+                        self.SendUserName(result.Data.WxNickName);
+                        self.Mobile(result.Data.Mobile);
                     }
                 }
             });

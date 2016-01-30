@@ -163,5 +163,10 @@ namespace DotNet.CloudFarm.Domain.Impl.User
         {
             return userDataAccess.InsertPageLog(pageLog);
         }
+
+        public List<UserModel> GetUsers(List<int> userIds)
+        {
+            return userDataAccess.GetUsers(userIds);
+        }
     }
 }

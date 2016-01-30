@@ -164,5 +164,12 @@ namespace DotNet.CloudFarm.Domain.Contract.User
         /// <param name="pageLog"></param>
         /// <returns></returns>
         bool InsertPageLog(PageLog pageLog);
+
+        /// <summary>
+        /// 根据用户id集合批量获取用户信息
+        /// </summary>
+        /// <param name="userIds"></param>
+        /// <returns></returns>
+        List<UserModel> GetUsers(List<int> userIds);
     }
 }

@@ -1,7 +1,94 @@
-﻿
+﻿@using DotNet.Common.Utility
+
 @{
-    ViewBag.Title = "送出的红包";
+    Layout = "~/Views/Shared/_LayoutSendGift.cshtml";
+    ViewBag.Title = "我的红包";
 }
 
-<h2>SendGiftList</h2>
+<div class="layout layout_giftList">
+    <section class="giftlist_tab">
+        <div class="giftlist_tabcont">
+            <span class="receivetab" data-bind="css:{on:ShowReceiveCss},click:ShowReceive"><em></em>收到的红包</span>
+            <span class="sendtab" data-bind="css:{on:ShowSendCss},click:ShowSend"><em></em>送出的红包</span>
+        </div>
+    </section>
+    <!--收到的红包S-->
+    <section class="receivecont" data-bind="visible: ShowReceiveCss">
+        <!--订单列表S-->
+        <div class="orderList" data-bind="foreach:ReceiveGiftList">
+            <div class="orderTitle">
+                <span class="orderBh">订单编号：<!--ko text:OrderId--><!--/ko--></span>
+            </div>
+            <div class="orderDetail">
+                <div class="orderProductInfo">
+                    <h4><!--ko text:SendUserName--><!--/ko-->（<!--ko text:SendUserMobile--><!--/ko-->）</h4>
+                </div>
+                <div class="orderOther">
+                    <p>羊只数量：<!--ko text:ProductCount--><!--/ko--></p>
+                    <p>合计金额：<!--ko text:TotalMoney--><!--/ko-->元</p>
+                </div>
+            </div>
+        </div>
+        <!--订单列表E-->
+    </section>
+    <!--收到的红包E-->
+
+    <!--发出去的红包S-->
+    <section class="sendcont" data-bind="visible: ShowSendCss">
+        <!--订单列表S-->
+        <div class="orderList" data-bind="foreach:SendGiftList">
+            <div class="orderTitle">
+                <span class="orderBh">订单编号：<!--ko text:OrderId--><!--/ko--></span>
+            </div>
+            <div class="orderDetail">
+                <div class="orderProductInfo">
+                    <h4><!--ko text:SendUserName--><!--/ko-->（<!--ko text:SendUserMobile--><!--/ko-->）</h4>
+                </div>
+                <div class="orderOther">
+                    <p>羊只数量：<!--ko text:ProductCount--><!--/ko--></p>
+                    <p>合计金额：<!--ko text:TotalMoney--><!--/ko-->元</p>
+                </div>
+            </div>
+        </div>
+        <!--订单列表E-->
+        
+    </section>
+    <!--发出去的红包E-->
+
+
+</div>
+
+    <script type="text/javascript">
+        var sendGiftListServiceJson=@Html.Raw(JsonHelper.ToJson(ViewBag.SendGiftList));
+        var receiveGiftListServiceJson=@Html.Raw(JsonHelper.ToJson(ViewBag.ReceiveGiftList));
+        function GiftListViewModel() {
+            var self = this;
+
+            self.SendGiftList = [];
+
+            self.ReceiveGiftList = [];
+
+            //显示收到的红包
+            self.ShowReceiveCss=ko.observable(true);
+            self.ShowReceive=function() {
+                self.ShowReceiveCss(true);
+                self.ShowSendCss(false);
+            };
+
+            //显示送出的红包
+            self.ShowSendCss=ko.observable(false);
+            self.ShowSend=function() {
+                self.ShowReceiveCss(false);
+                self.ShowSendCss(true);
+            };
+
+        }
+
+        $(function() {
+            var giftListViewModel = new GiftListViewModel();
+            giftListViewModel.SendGiftList = sendGiftListServiceJson;
+            giftListViewModel.ReceiveGiftList = receiveGiftListServiceJson;
+            ko.applyBindings(giftListViewModel);
+        });
+    </script>
 

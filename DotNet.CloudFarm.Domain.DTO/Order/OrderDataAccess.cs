@@ -89,17 +89,17 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                 {
                     while (dr.Read())
                     {
-                        orderModel.OrderId = !Convert.IsDBNull("OrderId") ? long.Parse(dr["OrderId"].ToString()) : 0;
-                        orderModel.UserId = !Convert.IsDBNull("UserId") ? int.Parse(dr["UserId"].ToString()) : 0;
+                        orderModel.OrderId = !Convert.IsDBNull(dr["OrderId"]) ? long.Parse(dr["OrderId"].ToString()) : 0;
+                        orderModel.UserId = !Convert.IsDBNull(dr["UserId"]) ? int.Parse(dr["UserId"].ToString()) : 0;
                         orderModel.ProductId = !Convert.IsDBNull("ProductId") ? int.Parse(dr["ProductId"].ToString()) : 0;
-                        orderModel.ProductCount = !Convert.IsDBNull("ProductCount") ? int.Parse(dr["ProductCount"].ToString()) : 0;
-                        orderModel.Price = !Convert.IsDBNull("Price") ? decimal.Parse(dr["Price"].ToString()) : 0;
-                        orderModel.Status = !Convert.IsDBNull("Status") ? int.Parse(dr["Status"].ToString()) : 0;
-                        orderModel.PayType = !Convert.IsDBNull("PayType") ? int.Parse(dr["PayType"].ToString()) : 0;
-                        orderModel.CreateTime = !Convert.IsDBNull("CreateTime") ? DateTime.Parse(dr["CreateTime"].ToString()) : DateTime.MinValue;
-                        orderModel.SendUserId = !Convert.IsDBNull("SendUserId") ? int.Parse(dr["SendUserId"].ToString()) : 0;
-                        orderModel.SendRemark = !Convert.IsDBNull("SendRemark") ? dr["SendRemark"].ToString() : string.Empty;
-                        orderModel.SendDate = !Convert.IsDBNull("SendDate") ? DateTime.Parse(dr["SendDate"].ToString()) : DateTime.MinValue;
+                        orderModel.ProductCount = !Convert.IsDBNull(dr["ProductCount"]) ? int.Parse(dr["ProductCount"].ToString()) : 0;
+                        orderModel.Price = !Convert.IsDBNull(dr["Price"]) ? decimal.Parse(dr["Price"].ToString()) : 0;
+                        orderModel.Status = !Convert.IsDBNull(dr["Status"]) ? int.Parse(dr["Status"].ToString()) : 0;
+                        orderModel.PayType = !Convert.IsDBNull(dr["PayType"]) ? int.Parse(dr["PayType"].ToString()) : 0;
+                        orderModel.CreateTime = !Convert.IsDBNull(dr["CreateTime"]) ? DateTime.Parse(dr["CreateTime"].ToString()) : DateTime.MinValue;
+                        orderModel.SendUserId = !Convert.IsDBNull(dr["SendUserId"]) ? int.Parse(dr["SendUserId"].ToString()) : 0;
+                        orderModel.SendRemark = !Convert.IsDBNull(dr["SendRemark"]) ? dr["SendRemark"].ToString() : string.Empty;
+                        orderModel.SendDate = !Convert.IsDBNull(dr["SendDate"]) ? DateTime.Parse(dr["SendDate"].ToString()) : DateTime.MinValue;
                     }
                 }
             }
@@ -300,6 +300,14 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderModel.ProductName = !Convert.IsDBNull(dr["ProductName"]) ? dr["ProductName"].ToString() : string.Empty;
                         orderModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
                         orderModel.CreateTime = !Convert.IsDBNull("CreateTime") ? DateTime.Parse(dr["CreateTime"].ToString()) : DateTime.MinValue;
+
+                        orderModel.SendUserId = !Convert.IsDBNull(dr["SendUserId"])
+                            ? Convert.ToInt32(dr["SendUserId"])
+                            : 0;
+                        orderModel.SendDate = !Convert.IsDBNull(dr["SendDate"]) ? Convert.ToDateTime(dr["SendDate"]) : DateTime.MinValue;
+                        orderModel.SendRemark = Convert.IsDBNull(dr["SendRemark"])
+                            ? dr["SendRemark"].ToString()
+                            : null;
                     }
                 }
             }
@@ -552,7 +560,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var totalOrderCount = 0;
             using (var cmd = DataCommandManager.GetDataCommand("GetGiftOrderList"))
             {
-                cmd.CommandText = string.Format("{0}", "o.SendUserId>0 and o.UserId="+userId);
+                cmd.CommandText = string.Format(cmd.CommandText, "o.SendUserId>0 and o.UserId="+userId);
 
                 cmd.SetParameterValue("@PageIndex", pageIndex);
                 cmd.SetParameterValue("@PageSize", pageSize);
@@ -582,6 +590,14 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
                         orderViewModel.StartTime = !Convert.IsDBNull(dr["StartTime"]) ? Convert.ToDateTime(dr["StartTime"]) : DateTime.MaxValue;
                         orderViewModel.EndTime = !Convert.IsDBNull(dr["EndTime"]) ? Convert.ToDateTime(dr["EndTime"]) : DateTime.MaxValue;
+
+                        orderViewModel.SendUserId = !Convert.IsDBNull(dr["SendUserId"])
+                            ? Convert.ToInt32(dr["SendUserId"])
+                            : 0;
+                        orderViewModel.SendDate = !Convert.IsDBNull(dr["SendDate"]) ? Convert.ToDateTime(dr["SendDate"]) : DateTime.MinValue;
+                        orderViewModel.SendRemark = Convert.IsDBNull(dr["SendRemark"])
+                            ? dr["SendRemark"].ToString()
+                            : null;
                         if (orderViewModel.OrderId > 0)
                         {
                             orderList.Add(orderViewModel);
@@ -606,7 +622,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var totalOrderCount = 0;
             using (var cmd = DataCommandManager.GetDataCommand("GetGiftOrderList"))
             {
-                cmd.CommandText = string.Format("{0}", "o.SendUserId=" + userId);
+                cmd.CommandText = string.Format(cmd.CommandText, "o.SendUserId=" + userId);
 
                 cmd.SetParameterValue("@PageIndex", pageIndex);
                 cmd.SetParameterValue("@PageSize", pageSize);
@@ -636,6 +652,14 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.EarningDay = !Convert.IsDBNull(dr["EarningDay"]) ? Convert.ToInt32(dr["EarningDay"]) : 0;
                         orderViewModel.StartTime = !Convert.IsDBNull(dr["StartTime"]) ? Convert.ToDateTime(dr["StartTime"]) : DateTime.MaxValue;
                         orderViewModel.EndTime = !Convert.IsDBNull(dr["EndTime"]) ? Convert.ToDateTime(dr["EndTime"]) : DateTime.MaxValue;
+
+                        orderViewModel.SendUserId = !Convert.IsDBNull(dr["SendUserId"])
+                            ? Convert.ToInt32(dr["SendUserId"])
+                            : 0;
+                        orderViewModel.SendDate = !Convert.IsDBNull(dr["SendDate"]) ? Convert.ToDateTime(dr["SendDate"]) : DateTime.MinValue;
+                        orderViewModel.SendRemark = Convert.IsDBNull(dr["SendRemark"])
+                            ? dr["SendRemark"].ToString()
+                            : null;
                         if (orderViewModel.OrderId > 0)
                         {
                             orderList.Add(orderViewModel);

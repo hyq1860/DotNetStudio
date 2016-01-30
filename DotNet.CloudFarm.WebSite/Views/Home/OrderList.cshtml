@@ -31,7 +31,9 @@
         <div class="how_about_order">
             <a href="#" class="a1" data-bind="click:$parent.CancelOrder,visible:Status()==0">取消订单</a>
             <a href="#" class="a2" data-bind="click:$parent.ToPay,visible:CanPay">去支付</a>
+            <a href="#" class="a1 reed_btn" data-bind="attr:{href:'/home/SendGift?OrderId='+OrderId()},visible:CanSend">结算</a>
             <a href="#" class="a1 reed_btn" data-bind="click:$parent.Redeem,visible:CanRedeem">结算</a>
+            
         </div>
     </section>
 </div>
@@ -116,6 +118,7 @@
                 self.PayType = ko.observable();
                 self.CanRedeem = ko.observable();
                 self.CanPay = ko.observable();
+                self.CanSend = ko.observable();
             }
 
             function scrollPageOrderList() {
@@ -155,6 +158,7 @@
                                         orderViewModel.PayType(result.Data[i].PayType);
                                         orderViewModel.CanRedeem(result.Data[i].CanRedeem);
                                         orderViewModel.CanPay(result.Data[i].CanPay);
+                                        orderViewModel.CanSend(result.Data[i].CanSend);
                                         orderListViewModel.OrderList.push(orderViewModel);
                                     }
                                 } else if (result.Status.Code == "-1") {
@@ -191,6 +195,7 @@
                         orderViewModel.PayType(orderListServiceJson.Data[i].PayType);
                         orderViewModel.CanRedeem(orderListServiceJson.Data[i].CanRedeem);
                         orderViewModel.CanPay(orderListServiceJson.Data[i].CanPay);
+                        orderViewModel.CanSend(result.Data[i].CanSend);
                         orderListViewModel.OrderList.push(orderViewModel);
                     }
                     //debugger;

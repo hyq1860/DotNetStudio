@@ -98,5 +98,23 @@ namespace DotNet.CloudFarm.Domain.ViewModel
         {
             get { return Status == OrderStatus.Init.GetHashCode() && DateTime.Now<EndTime; }
         }
+
+        /// <summary>
+        /// 是否可以赠送
+        /// </summary>
+        public bool CanSend
+        {
+            get { return (Status == 1) && SendUserId <= 0; }
+        }
+
+        /// <summary>
+        /// 赠送者昵称
+        /// </summary>
+        public string SendUserName { get; set; }
+
+        /// <summary>
+        /// 赠送这手机号
+        /// </summary>
+        public string SendUserMobile { get; set; }
     }
 }

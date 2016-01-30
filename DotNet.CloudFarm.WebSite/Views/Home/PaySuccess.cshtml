@@ -25,7 +25,7 @@
     <!--送红包S-->
     <div class="pay_sendgift">
         <p class="pay_giftnote">您可以将本次订单的所有小羊以红包的形式赠送给好友。</p>
-        <a class="pay_sendgiftbtn" href="">发红包</a>
+        <a class="pay_sendgiftbtn" href="@Url.Action("SendGift","Home",new {OrderId=Model.OrderId})">发红包</a>
     </div>
     <!--送红包E-->
 

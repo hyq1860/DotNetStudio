@@ -1070,7 +1070,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             {
                 //jsonResult.Data
                 var result = new Result<OrderModel>();
-                result.Status = new Status() { Code="0",Message="被赠送人尚未关注羊客，不能被赠送。"};
+                result.Status = new Status() { Code="0",Message= "被赠送人尚未登录过羊客，不能被赠送。" };
 
                 jsonResult.Data = result;
             }
@@ -1086,9 +1086,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var jsonResult = new JsonResult();
             var sendUser = UserService.GetUser(mobile);
             var result = new Result<UserModel>();
-            if (sendUser == null)
+            if (sendUser == null||sendUser.UserId<=0)
             {
-                result.Status = new Status() { Code = "0", Message = "被赠送人尚未关注羊客，不能被赠送。" };
+                result.Status = new Status() { Code = "0", Message = "被赠送人尚未登录过羊客，不能被赠送。" };
                 result.Data = sendUser;
             }
             else
@@ -1123,12 +1123,62 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         public ActionResult GiftList()
         {
-            OrderService.GetSendOrderList(this.UserInfo.UserId, 1, 100);
-            OrderService.GetReceiveOrderList(this.UserInfo.UserId, 1, 100);
+            var userIds=new List<int>();
+            var sendGiftList=OrderService.GetSendOrderList(this.UserInfo.UserId, 1, 100);
+            var receiveGiftList=OrderService.GetReceiveOrderList(this.UserInfo.UserId, 1, 100);
+            userIds.AddRange(sendGiftList.Data.Select(s => s.SendUserId).ToList());
+            userIds.AddRange(receiveGiftList.Data.Select(s => s.SendUserId).ToList());
+            var users = UserService.GetUsers(userIds);
+
+            foreach (var orderViewModel in sendGiftList.Data)
+            {
+                var user = users.FirstOrDefault(s => s.UserId == orderViewModel.SendUserId);
+                if (user != null)
+                {
+                    orderViewModel.SendUserName = user.WxNickName;
+                    orderViewModel.SendUserMobile = user.Mobile;
+                }
+            }
+
+            foreach (var orderViewModel in receiveGiftList.Data)
+            {
+                var user = users.FirstOrDefault(s => s.UserId == orderViewModel.UserId);
+                if (user != null)
+                {
+                    orderViewModel.SendUserName = user.WxNickName;
+                    orderViewModel.SendUserMobile = user.Mobile;
+                }
+            }
+            ViewBag.SendGiftList = sendGiftList.Data;
+            ViewBag.ReceiveGiftList = receiveGiftList.Data;
             return View();
         }
 
-        
+        /// <summary>
+        /// 赠送订单成功
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public ActionResult SendGiftSuccess(long? orderId)
+        {
+            var order = new OrderViewModel();
+            if (orderId.HasValue)
+            {
+                order = OrderService.GetOrderViewModel(this.UserInfo.UserId, orderId.Value);
+                if (order != null)
+                {
+                    var user = UserService.GetUserByUserId(order.SendUserId);
+                    if (user != null)
+                    {
+                        order.SendUserMobile = user.Mobile;
+                        order.SendUserName = user.WxNickName;
+                    }
+                }
+            }
+
+            return View(order);
+        }
+
         #endregion
     }
 }

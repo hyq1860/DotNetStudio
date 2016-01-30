@@ -1,4 +1,6 @@
-﻿/*支付成功页*/
+﻿.color666{color: #666;}
+.colorred{color: #fd5657;}
+/*支付成功页*/
 .search_order{border-bottom: 1px solid #d0d0d0;}
 /*赠送红包*/
 .pay_sendgift {
@@ -25,6 +27,76 @@
     text-align: center;
     line-height: 3rem;
 }
+/*赠送红包页面*/
+.layout_sendgift{
+	width:100%;
+	height:100%;
+	background: url(../images/sendgiftbg.jpg) no-repeat;
+	background-size:100% 100%;
+}
+.sendgift_ordernum{padding:0.8rem 0 0 1.0rem;color: #fff;font-size:1.4rem;line-height:2.0rem;}
+.sendgift_orderinfo{width:90%;margin: 8% auto 0;}
+.sendgift_money{display: block;color: #fd5657;text-align: center;font-size:1.6rem;}
+.sendgift_money strong{font-size:4.0rem;}
+.sendgift_num{display: block;width:22.0rem;height:3.0rem;margin:0.6rem auto 0; background:url(../images/sheepnumbg.png) no-repeat;background-size:100%; text-align: center;line-height:3.0rem;color: #fff;}
+.sendgift_sendinfo{width:85%;margin: 10% auto 0; height:200px;}
+.sendgift_sendinfo p{margin-bottom:1.0rem;}
+.sendgift_sendinfo .txt{display: block;margin-bottom:0.6rem;color: #666;}
+.sendgift_sendinfo input[type="text"] {
+	width:95%;
+	height:4.0rem;
+	padding:0 2%;
+    border: 1px solid #c7b14c;
+    color: #999;
+    font-size:1.6rem;
+}
+.sendgift_sendinfo .note{display: block; color: #c7b14c;line-height:2.0rem;margin-top:0.5rem;}
+.sendgift_sendinfo textarea{
+	width:95%;
+	height:5.5rem;
+	padding:2%;
+	color: #999;
+    border: 1px solid #c7b14c;
+    font-size:1.8rem;
+    line-height:2.0rem;
+}
+.sendgift_enter{ position: absolute;bottom:3.0rem;left:5%;width:90%;height:4.0rem;}
+.sendgift_enter a{display: block;background: #fed732;border-radius:5px; color: #f84d4e;text-align: center;line-height:4.0rem;font-size:2rem;}
+.sendgift_pop{position: absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);}
+.pop_content{position: fixed;top:50%;left:10%;width:80%;height:14rem;margin-top: -5rem;background: #fff;border-radius:5px;}
+.topred{display: block;width:100%;height:1.6rem;background: #fd5657;border-radius:5px 5px 0 0;}
+.pop_content .success_txt{width:95%;margin: 1.8rem auto 0;font-size:1.6rem;line-height:2.5rem;text-align: center;}
+.sendgift_btn{width:90%;margin: 1rem auto 0;}
+.sendgift_btn a{display:block;width:46%;height:3.0rem;border-radius:5px;text-align: center;line-height:3.0rem;font-size:1.6rem;overflow: hidden;}
+.sendgift_btn a.sendcannel_btn{float: left;background: #ddd;color: #999;}
+.sendgift_btn a.sendconfirm_btn{float: right;background: #fd5657;color: #fff;}
+/*赠送成功页*/
+.layout_sendgiftsuccess,.layout_sendgiftfailure{width:100%;height:100%;background: #fff;}
+.sendgift_success,.sendgift_failureinfo{width:80%;margin: 0 auto;padding-top:1.6rem;}
+.sheep{width:12.2rem;height:8.8rem;margin: 0 auto;}
+.sendgift_successinfo{margin-top:2.0rem;font-size:1.6rem;line-height:2.5rem;text-align: center;}
+.sendgift_successnote{margin-top:2.5rem;text-align: center;}
+.shareother_btn,.return_btn{display: block;width:86%;height:3.0rem;margin:0 auto 2.0rem;text-align: center;line-height:3.0rem;border-radius:3px;font-size:1.6rem;}
+.shareother_btn{background: #fd5657;color: #fff;margin-top:1.5rem;}
+.return_btn{border: 1px solid #ccc;color: #888;}
+.sharetips{position: absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);}
+.sharetips img{width:90%;margin: 0 auto;}
+/*赠送红包列表*/
+.giftlist_tab{background: #fd5657;padding:0.6rem 0;}
+.giftlist_tabcont{width:90%;margin: 0 auto;border: 1px solid #e3e2df;border-radius:5px;display: -webkit-box;}
+.giftlist_tab span{display: block; -webkit-box-flex: 1;width:50%;height:3.4rem;line-height:3.4rem;font-size:1.6rem;text-align: center;color: #fff;}
+.giftlist_tab span.on{background: #fff;color: #fd5657;}
+.receivetab{border-radius:5px 0 0 5px;}
+.sendtab{border-radius:0 5px 5px 0;}
+.layout_giftList .orderList{margin: 0 0 10px;}
+.giftlist_tab em{display: inline-block;width:1.5rem;height:1.4rem;margin-right:0.5rem;}
+.receivetab em{background: url(../images/receivegift_icon.png) no-repeat;background-size:100%;}
+.sendtab em{background: url(../images/sendgift_icon.png) no-repeat;background-size:100%;}
+
+.layout_giftList .orderProductInfo h4{font-weight:normal;}
+.layout_giftList .orderProductInfo{padding-top:1.0rem;}
+.layout_giftList .orderOther{width:40%;}
+
 
 /*媒体查询*/
 @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
@@ -32,10 +104,20 @@
     .search_order a{ height: 3.0rem;line-height: 3.0rem;}
     .pay_sendgift{padding: 1rem 1.5rem;}
     .pay_sendgiftbtn{ margin-top: 0.8rem;}
+    /*赠送红包页面*/
+    .sendgift_ordernum{padding:0.2rem 0 0 1.0rem;}
+    .sendgift_orderinfo{margin: 3% auto 0;}
+    .sendgift_sendinfo{margin-top:7%;}
+    .sendgift_sendinfo p{margin-bottom:0.5rem;}
+    .sendgift_sendinfo input[type="text"] {height:2.5rem;}
+    .sendgift_sendinfo textarea{height:4.0rem;}
+    .sendgift_btn{bottom:2.0rem;}
 }
 
 @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
-    .class{}
+    /*赠送红包页面*/
+    .sendgift_ordernum{padding:0.5rem 0 0 1.0rem;}
+    .sendgift_sendinfo textarea{height:4.5rem;}
 }
 
 @media (device-height:667px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 */
@@ -43,5 +125,10 @@
 }
 
 @media (device-height:736px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 Plus */
-    .class{}
+	/*赠送红包页面*/
+    .sendgift_orderinfo{margin: 12% auto 0;}
+    .sendgift_sendinfo{margin-top:12%;}
+     .sendgift_btn{bottom:7.0rem;}
+     .sendgift_btn{width:80%;}
+     .sharetips img{width:85%;margin-left:5%;}
 }

@@ -8,6 +8,7 @@ using DotNet.CloudFarm.Domain.Contract.User;
 using DotNet.CloudFarm.Domain.Model.User;
 using DotNet.Data;
 using System.Data;
+using DotNet.CloudFarm.Domain.Model;
 using DotNet.Common.Collections;
 using DotNet.CloudFarm.Domain.Model.Base;
 
@@ -463,6 +464,12 @@ namespace DotNet.CloudFarm.Domain.DTO.User
                 cmd.SetParameterValue("@PageSource", pageLog.PageSource);
                 return cmd.ExecuteNonQuery() > 0;
             }
+        }
+
+        public List<UserModel> GetUsers(List<int> userIds)
+        {
+            return DapperHelper.Query<UserModel>(ApplicationConfig.Instance.DbConnectionString,
+                "select ID as UserId,Mobile,WxNickName from [user] where id in @userIds", new {userIds = userIds});
         }
     }
 }
