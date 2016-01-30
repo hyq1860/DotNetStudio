@@ -1121,19 +1121,14 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// 送出的订单列表
         /// </summary>
         /// <returns></returns>
-        public ActionResult SendGiftList()
+        public ActionResult GiftList()
         {
+            OrderService.GetSendOrderList(this.UserInfo.UserId, 1, 100);
+            OrderService.GetReceiveOrderList(this.UserInfo.UserId, 1, 100);
             return View();
         }
 
-        /// <summary>
-        /// 收到的订单列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult ReceiveGiftList()
-        {
-            return View();
-        }
+        
         #endregion
     }
 }
