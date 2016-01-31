@@ -16,7 +16,7 @@
     background: url(/images/giftlable.png) no-repeat;
     background-size: 100%; 
 }
-
+.how_about_order .sendordergift_btn{margin-left: 3%;background: #fd5657;}
 </style>
 <div id="orderlist" class="sheep_guest my_order" style="display: none" data-bind="foreach:OrderList">
     <section class="my_order_section1" data-bind="attr:{id:'Order_'+OrderId()}">
@@ -45,7 +45,7 @@
             <a href="#" class="a1" data-bind="click:$parent.CancelOrder,visible:Status()==0">取消订单</a>
             <a href="#" class="a2" data-bind="click:$parent.ToPay,visible:CanPay">去支付</a>
             <a href="#" class="a1 reed_btn" data-bind="click:$parent.Redeem,visible:CanRedeem">结算</a>
-            <a href="#" class="a1 reed_btn" data-bind="attr:{href:'/home/SendGift?OrderId='+OrderId()},visible:CanSend">发红包</a>
+            <a href="#" class="sendordergift_btn reed_btn" data-bind="attr:{href:'/home/SendGift?OrderId='+OrderId()},visible:CanSend">发红包</a>
         </div>
 
         <span class="gift_lable" data-bind="visible:SendUserId()>0"></span>
