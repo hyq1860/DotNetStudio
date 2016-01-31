@@ -1122,7 +1122,9 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public ActionResult GiftList()
         {
             var userIds=new List<int>();
+            //送出的订单列表
             var sendGiftList=OrderService.GetSendOrderList(this.UserInfo.UserId, 1, 100);
+            //收到的订单列表
             var receiveGiftList=OrderService.GetReceiveOrderList(this.UserInfo.UserId, 1, 100);
             userIds.AddRange(sendGiftList.Data.Select(s => s.SendUserId).ToList());
             userIds.AddRange(receiveGiftList.Data.Select(s => s.SendUserId).ToList());

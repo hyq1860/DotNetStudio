@@ -524,22 +524,8 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
 
         public long SendGift(long orderId, int userId, int sendUserId,string remark)
         {
-            /*
-            using (var cmd = DataCommandManager.GetDataCommand("SendGift"))
-            {
-                cmd.SetParameterValue("@UserId", userId);//赠送人
-                cmd.SetParameterValue("@OrderId", orderId);
-                cmd.SetParameterValue("@SendUserId", sendUserId);//被赠送人
-                cmd.SetParameterValue("@SendDate", DateTime.Now);//赠送时间
-                var temp = cmd.ExecuteScalar();
-                if (temp != null)
-                {
-                    return orderId;
-                }
-                return 0;
-            }*/
             return DapperHelper.ExecuteNonQuery(ApplicationConfig.Instance.DbConnectionString,
-                "update OrderInfo set SendUserId=@SendUserId,SendDate=@SendDate,SendRemark=@SendRemark where OrderId=@OrderId and UserId=@UserId",
+                "update OrderInfo set SendUserId=@UserId,SendDate=@SendDate,SendRemark=@SendRemark,UserId=@SendUserId where OrderId=@OrderId and UserId=@UserId",
                 new
                 {
                     SendUserId = sendUserId,
@@ -568,7 +554,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var totalOrderCount = 0;
             using (var cmd = DataCommandManager.GetDataCommand("GetGiftOrderList"))
             {
-                cmd.CommandText = string.Format(cmd.CommandText, "o.SendUserId>0 and o.UserId="+userId);
+                cmd.CommandText = string.Format(cmd.CommandText, "o.SendUserId="+userId);
 
                 cmd.SetParameterValue("@PageIndex", pageIndex);
                 cmd.SetParameterValue("@PageSize", pageSize);
@@ -630,7 +616,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
             var totalOrderCount = 0;
             using (var cmd = DataCommandManager.GetDataCommand("GetGiftOrderList"))
             {
-                cmd.CommandText = string.Format(cmd.CommandText, "o.SendUserId=" + userId);
+                cmd.CommandText = string.Format(cmd.CommandText, " o.SendUserId>0 and o.UserId= " + userId);
 
                 cmd.SetParameterValue("@PageIndex", pageIndex);
                 cmd.SetParameterValue("@PageSize", pageSize);

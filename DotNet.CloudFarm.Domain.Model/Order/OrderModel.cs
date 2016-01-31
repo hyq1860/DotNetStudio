@@ -63,7 +63,7 @@ namespace DotNet.CloudFarm.Domain.Model.Order
         public DateTime? SendDate { get; set; } 
 
         /// <summary>
-        /// 被赠送人id
+        /// 赠送人id 谁赠送的
         /// </summary>
         public int SendUserId { get; set; }
     }
