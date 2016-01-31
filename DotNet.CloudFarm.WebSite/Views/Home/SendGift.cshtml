@@ -24,12 +24,12 @@
     <section class="sendgift_sendinfo">
         <p>
             <span class="txt">赠给：</span>
-            <input type="text" value="填写TA的手机号" data-bind="value:Mobile" maxlength="11">
+            <input type="text" value="填写TA的手机号" data-bind="value:Mobile" maxlength="11" placeholder="赠送好友的手机号">
             <span class="note">请输入您想要赠送好友的手机号，该好友必须是登录过羊客的用户。</span>
         </p>
         <p>
             <span class="txt">赠言：</span>
-            <textarea rows="4" cols="25" data-bind="value:Remark" maxlength="125">恭喜发财，羊羊得益！</textarea>
+            <textarea rows="4" cols="25" data-bind="value:Remark" placeholder="恭喜发财，羊羊得益！" maxlength="125"></textarea>
         </p>
     </section>
     <section class="sendgift_enter"><a data-bind="click:GetUserName">把小羊装入红包</a></section>
@@ -105,7 +105,7 @@
                 data: { mobile: self.Mobile()},
                 success: function (result) {
                     console.log(result);
-                    debugger;
+                    //debugger;
                     if (result.Status.Code == "0") {
                         alert(result.Status.Message);
                     } else {
