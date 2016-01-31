@@ -37,6 +37,7 @@ using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Helpers;
 using DotNet.CloudFarm.Domain.Contract.SMS;
 using System.Text.RegularExpressions;
+using DotNet.Common;
 
 namespace DotNet.CloudFarm.WebSite.Controllers
 {
@@ -1136,7 +1137,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 if (user != null)
                 {
                     orderViewModel.SendUserName = user.WxNickName;
-                    orderViewModel.SendUserMobile = user.Mobile;
+                    orderViewModel.SendUserMobile = user.Mobile.HideMiddle(3, 4);
                 }
             }
 
@@ -1146,7 +1147,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 if (user != null)
                 {
                     orderViewModel.SendUserName = user.WxNickName;
-                    orderViewModel.SendUserMobile = user.Mobile;
+                    orderViewModel.SendUserMobile = user.Mobile.HideMiddle(3, 4);
                 }
             }
             ViewBag.SendGiftList = sendGiftList.Data;

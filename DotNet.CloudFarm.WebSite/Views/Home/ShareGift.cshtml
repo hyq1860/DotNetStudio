@@ -1,6 +1,7 @@
 ﻿@using DotNet.CloudFarm.Domain.Model;
 @using DotNet.CloudFarm.Domain.Model.Order
 @using DotNet.CloudFarm.Domain.Model.User
+@using DotNet.Common
 @{
     Layout = "~/Views/Shared/_LayoutSendGift.cshtml";
     ViewBag.Title = "红包分享";
@@ -16,7 +17,7 @@
         <img class="giftshare_headbg" src="/images/giftshare_top.png" alt="">
         <img src="@SendUserInfo.WxHeadUrl" alt="图片头像" class="giftshare_headpic">
     </section>
-    <section class="giftshare_name">@SendUserInfo.WxNickName（@SendUserInfo.Mobile）</section>
+    <section class="giftshare_name">@SendUserInfo.WxNickName（@SendUserInfo.Mobile.HideMiddle(3,4)）</section>
     <section class="giftshare_info">
         <span>@string.Format("在羊客送你了{0}只小羊", orderModel.ProductCount)</span>
         <span class="gift_price">总价值￥<strong>@(orderModel.ProductCount * orderModel.Price)</strong></span>

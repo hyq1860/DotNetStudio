@@ -3,6 +3,7 @@
     ViewBag.Title = "赠送红包成功";
     Layout = "~/Views/Shared/_LayoutSendGift.cshtml";
 }
+@using DotNet.Common
 @model DotNet.CloudFarm.Domain.ViewModel.OrderViewModel
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <div class="layout layout_sendgiftsuccess">
@@ -10,7 +11,7 @@
         <img class="sheep" src="/images/sendgift_successicon.png" alt="">
         <div class="sendgift_successinfo">
             <p class="color666">你已经成功将红包赠予用户</p>
-            <p class="colorred">@Model.SendUserName（@Model.SendUserMobile）</p>
+            <p class="colorred">@Model.SendUserName（@Model.SendUserMobile.HideMiddle(3, 4)）</p>
         </div>
         <div class="sendgift_successnote">
             <p class="color666">快把好消息告诉TA</p>

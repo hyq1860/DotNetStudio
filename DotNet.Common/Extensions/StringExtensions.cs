@@ -255,5 +255,10 @@ namespace DotNet.Common
         {
             return regex.Matches(html);
         }
+
+        public static string HideMiddle(this string source, int showLeftLength = 1, int showRightLength = 1, char hideChar = '*')
+        {
+            return source.Replace(source.Substring(showLeftLength, source.Length - showRightLength - showLeftLength), "".PadRight(source.Length - showLeftLength - showRightLength, '*'));
+        }
     }
 }
