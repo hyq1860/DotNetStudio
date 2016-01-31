@@ -100,6 +100,7 @@
                             <th>支付方式</th>
                             <th>订单状态</th>
                             <th>下单时间</th>
+                            <th>赠送者手机号</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -129,7 +130,7 @@
                                 <!--/ko-->
                             </td>
                             <td class="center" data-bind="text:CreateTime"></td>
-
+                            <td class="center" data-bind="text:SendUserMobile"></td>
                             <td class="center">
                                 <!-- ko if: Status()==0 -->
                                 <a href="javascript:void(0);" class="btn btn-danger" data-bind="click:CancelOrder"><i class="icon-edit icon-white"></i>取消订单</a>
@@ -286,6 +287,8 @@
         self.Status = ko.observable();
         self.PayType = ko.observable();
         self.PayLogCount = ko.observable();
+        //赠送者手机号
+        self.SendUserMobile = ko.observable();
         self.OrderStatus = ko.computed(function () {
             return ConvertOrderStatus(self.Status());
         });
@@ -418,6 +421,7 @@
             orderViewModel.Status(item.Status);
             orderViewModel.PayType(item.PayType);
             orderViewModel.PayLogCount(item.PayLogCount);
+            orderViewModel.SendUserMobile(item.SendUserMobile);
             homeViewModel.List.push(orderViewModel);
         }
 

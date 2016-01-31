@@ -497,6 +497,10 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                         orderViewModel.TotalMoney = !Convert.IsDBNull(dr["TotalMoney"]) ? Convert.ToDecimal(dr["TotalMoney"]) : 0;
                         orderViewModel.Mobile = !Convert.IsDBNull(dr["Mobile"]) ? dr["Mobile"].ToString() : string.Empty;
                         orderViewModel.PayLogCount = !Convert.IsDBNull(dr["PayLogCount"]) ? Convert.ToInt32(dr["PayLogCount"]) : 0;
+
+                        orderViewModel.SendUserId = !Convert.IsDBNull(dr["SendUserId"]) ? int.Parse(dr["SendUserId"].ToString()) : 0;
+                        orderViewModel.SendRemark = !Convert.IsDBNull(dr["SendRemark"]) ? dr["SendRemark"].ToString() : string.Empty;
+                        orderViewModel.SendDate = !Convert.IsDBNull(dr["SendDate"]) ? DateTime.Parse(dr["SendDate"].ToString()) : DateTime.MinValue;
                         if (orderViewModel.OrderId > 0)
                         {
                             orderList.Add(orderViewModel);

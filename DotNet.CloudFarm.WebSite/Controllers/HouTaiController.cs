@@ -327,6 +327,20 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult GetOrderList(DateTime? startTime,DateTime? endTime,long? orderId, string mobile,int? status,int pageSize=20, int pageIndex=1)
         {
             var orderList = OrderService.GetOrderList(pageIndex, pageSize,startTime,endTime,orderId,mobile,status);
+            if (orderList.Data != null && orderList.Data.Any())
+            {
+                var sendUserIds = orderList.Data.Select(s => s.SendUserId).ToList();
+                var sendUsers = UserService.GetUsers(sendUserIds);
+                foreach (var order in orderList.Data)
+                {
+                    var sendUser = sendUsers.FirstOrDefault(s => s.UserId == order.SendUserId);
+                    if (sendUser != null)
+                    {
+                        order.SendUserMobile = sendUser.Mobile;
+                    }
+                }
+            }
+            
             var result = new
             {
                 PageIndex = orderList.Data.PageIndex,
