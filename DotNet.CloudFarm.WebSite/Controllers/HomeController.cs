@@ -1126,13 +1126,13 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var sendGiftList=OrderService.GetSendOrderList(this.UserInfo.UserId, 1, 100);
             //收到的订单列表
             var receiveGiftList=OrderService.GetReceiveOrderList(this.UserInfo.UserId, 1, 100);
-            userIds.AddRange(sendGiftList.Data.Select(s => s.SendUserId).ToList());
+            userIds.AddRange(sendGiftList.Data.Select(s => s.UserId).ToList());
             userIds.AddRange(receiveGiftList.Data.Select(s => s.SendUserId).ToList());
             var users = UserService.GetUsers(userIds);
 
             foreach (var orderViewModel in sendGiftList.Data)
             {
-                var user = users.FirstOrDefault(s => s.UserId == orderViewModel.SendUserId);
+                var user = users.FirstOrDefault(s => s.UserId == orderViewModel.UserId);
                 if (user != null)
                 {
                     orderViewModel.SendUserName = user.WxNickName;
@@ -1142,7 +1142,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
 
             foreach (var orderViewModel in receiveGiftList.Data)
             {
-                var user = users.FirstOrDefault(s => s.UserId == orderViewModel.UserId);
+                var user = users.FirstOrDefault(s => s.UserId == orderViewModel.SendUserId);
                 if (user != null)
                 {
                     orderViewModel.SendUserName = user.WxNickName;
