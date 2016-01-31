@@ -1164,14 +1164,15 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var order = new OrderViewModel();
             if (orderId.HasValue)
             {
-                order = OrderService.GetOrderViewModel(this.UserInfo.UserId, orderId.Value);
-                if (order != null)
+                var tempOrder = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value,false);
+                if (tempOrder != null)
                 {
-                    var user = UserService.GetUserByUserId(order.SendUserId);
+                    var user = UserService.GetUserByUserId(tempOrder.UserId);
                     if (user != null)
                     {
                         order.SendUserMobile = user.Mobile;
                         order.SendUserName = user.WxNickName;
+                        order.OrderId = tempOrder.OrderId;
 
                         //获取时间戳
                         var timestamp = JSSDKHelper.GetTimestamp();
