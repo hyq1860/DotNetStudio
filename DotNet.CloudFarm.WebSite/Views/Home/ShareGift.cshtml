@@ -12,7 +12,24 @@
     UserModel SendUserInfo = ViewBag.SendUserInfo ?? new UserModel();
 }
 
-<img src="@UserInfo.WxHeadUrl"/>
+<div class="layout layout_giftShare">
+    <section class="giftshare_head">
+        <img class="giftshare_headbg" src="/images/giftshare_top.png" alt="">
+        <img src="@UserInfo.WxHeadUrl" alt="图片头像" class="giftshare_headpic">
+    </section>
+    <section class="giftshare_name">@UserInfo.WxNickName（@UserInfo.Mobile）</section>
+    <section class="giftshare_info">
+        <span>@string.Format("在羊客送你了{0}只小羊", orderModel.ProductCount)</span>
+        <span class="gift_price">总价值￥<strong>@(orderModel.ProductCount * orderModel.Price)</strong></span>
+    </section>
+    <section class="giftshare_txt">
+        恭喜发财，羊羊得益！快去羊客领小羊，可以吃肉，也可以理财。
+    </section>
+    <section class="giftshare_btn"><a href="@Url.Action("OrderList", "Home", new {tab = 3})">去查看我的小羊</a></section>
+    <section class="giftshare_bt"><img src="/images/giftshare_bt.jpg" alt=""></section>
+</div>
+
+@*<img src="@UserInfo.WxHeadUrl"/>
 @UserInfo.WxNickName<br/>
 @UserInfo.Mobile<br/>
 
@@ -20,4 +37,4 @@
 <a href="@orderModel.OrderId">去查看我的小羊</a>
 <script type="text/javascript">
 
-</script>
+</script>*@

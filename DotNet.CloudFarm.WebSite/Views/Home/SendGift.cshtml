@@ -120,7 +120,7 @@
 
         //赠送礼物
         self.SendGift=function() {
-            var data = ko.toJSON(self);
+            //var data = ko.toJSON(self);
             
             $.ajax({
                 url: "/home/ProcessSendGift",
@@ -131,7 +131,7 @@
                     if (result.Status.Code == "0") {
                         alert(result.Status.Message);
                     } else {
-                        alert("赠送成功");
+                        window.location.href = "/Home/SendGiftSuccess?OrderId="+self.OrderId();
                     }
                 }
             });

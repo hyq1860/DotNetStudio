@@ -60,7 +60,7 @@
     font-size:1.8rem;
     line-height:2.0rem;
 }
-.sendgift_enter{ position: absolute;bottom:3.0rem;left:5%;width:90%;height:4.0rem;}
+.sendgift_enter{ position: absolute;bottom:4.0rem;left:5%;width:90%;height:4.0rem;}
 .sendgift_enter a{display: block;background: #fed732;border-radius:5px; color: #f84d4e;text-align: center;line-height:4.0rem;font-size:2rem;}
 .sendgift_pop{position: absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);}
 .pop_content{position: fixed;top:50%;left:10%;width:80%;height:14rem;margin-top: -5rem;background: #fff;border-radius:5px;}
@@ -71,7 +71,8 @@
 .sendgift_btn a.sendcannel_btn{float: left;background: #ddd;color: #999;}
 .sendgift_btn a.sendconfirm_btn{float: right;background: #fd5657;color: #fff;}
 /*赠送成功页*/
-.layout_sendgiftsuccess,.layout_sendgiftfailure{width:100%;height:100%;background: #fff;}
+.layout_sendgift{padding-bottom:0;}
+.layout_sendgiftsuccess,.layout_sendgiftfailure{width:100%;height:100%;background: #fff;padding-bottom:0;}
 .sendgift_success,.sendgift_failureinfo{width:80%;margin: 0 auto;padding-top:1.6rem;}
 .sheep{width:12.2rem;height:8.8rem;margin: 0 auto;}
 .sendgift_successinfo{margin-top:2.0rem;font-size:1.6rem;line-height:2.5rem;text-align: center;}
@@ -82,6 +83,7 @@
 .sharetips{position: absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);}
 .sharetips img{width:90%;margin: 0 auto;}
 /*赠送红包列表*/
+.layout_giftList{padding-bottom:0;min-height:100%;}
 .giftlist_tab{background: #fd5657;padding:0.6rem 0;}
 .giftlist_tabcont{width:90%;margin: 0 auto;border: 1px solid #e3e2df;border-radius:5px;display: -webkit-box;}
 .giftlist_tab span{display: block; -webkit-box-flex: 1;width:50%;height:3.4rem;line-height:3.4rem;font-size:1.6rem;text-align: center;color: #fff;}
@@ -92,12 +94,69 @@
 .giftlist_tab em{display: inline-block;width:1.5rem;height:1.4rem;margin-right:0.5rem;}
 .receivetab em{background: url(../images/receivegift_icon.png) no-repeat;background-size:100%;}
 .sendtab em{background: url(../images/sendgift_icon.png) no-repeat;background-size:100%;}
-
+.giftlist_tab span.receivetab.on em{background: url(../images/receivegift_iconon.png) no-repeat;background-size:100%;}
+.giftlist_tab span.sendtab.on em{background: url(../images/sendgift_iconon.png) no-repeat;background-size:100%;}
 .layout_giftList .orderProductInfo h4{font-weight:normal;}
 .layout_giftList .orderProductInfo{padding-top:1.0rem;}
 .layout_giftList .orderOther{width:40%;}
-
-
+/*分享红包*/
+.layout_giftShare{width:100%;height:100%;min-height:100%;position: relative;background: #fefcf3;padding: 0;}
+.giftshare_head{
+	width:100%;
+	position: relative;
+	/*background:url(../images/giftshare_top.png) no-repeat;
+	background-size:100%;*/
+}
+.giftshare_head .giftshare_headbg{width:100%;}
+.giftshare_head .giftshare_headpic{
+	position: absolute;
+	bottom:-3.0rem;
+	left:50%;
+	margin-left:-2.9rem;
+	width:5.8rem;
+	height:5.8rem;
+	border:0.2rem solid #fff;
+	border-radius:100%;
+}
+.giftshare_name{text-align: center;font-size:1.6rem;margin-top:4.0rem;color: #333;}
+.giftshare_info{
+	width:85%;
+	margin: 1.2rem auto 0;
+	background: url(../images/giftshare_note.png) no-repeat;
+	background-size:100%;
+	text-align: center;
+	padding: 1.5rem 0 0.5rem;
+	color: #795d19;
+	font-size:1.6rem;
+}
+.giftshare_info span{display: block;margin-bottom:0.5rem;}
+.giftshare_info span.gift_price{font-size:1.2rem;}
+.giftshare_info span.gift_price strong{color: #fd5657;font-size:4.0rem;}
+.giftshare_txt{
+	width:83%;
+	margin: 1.2rem auto 0;
+	padding: 0 1%;
+	background: url(../images/giftshare_txtbg.png) no-repeat;
+	background-size:100%;
+	font-size:1.4rem;
+	line-height:2.5rem;
+	color: #666;
+}
+.giftshare_btn{position: relative;z-index:2;}
+.giftshare_btn a{
+	display: block;
+	width:50%;
+	height:3.0rem;
+	margin:3.0rem auto 0;
+	text-align: center;
+	line-height:3.0rem;
+	border-radius:3px;
+	font-size:1.5rem;
+	border: 1px solid #ccc;
+	color: #888;
+}
+.giftshare_bt{position: absolute;bottom: 0;left: 0;width:100%;}
+.giftshare_bt img{width:100%;}
 /*媒体查询*/
 @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
     .sucess_logo{ height: 6rem;padding-top: 1rem;}
@@ -111,7 +170,8 @@
     .sendgift_sendinfo p{margin-bottom:0.5rem;}
     .sendgift_sendinfo input[type="text"] {height:2.5rem;}
     .sendgift_sendinfo textarea{height:4.0rem;}
-    .sendgift_btn{bottom:2.0rem;}
+    .sendgift_enter{bottom:3.0rem;}
+    .giftshare_btn a{margin-top:2.0rem;}
 }
 
 @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
@@ -121,14 +181,15 @@
 }
 
 @media (device-height:667px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 */
-    .class{}
+    .giftshare_txt{line-height:2.9rem;}
 }
 
 @media (device-height:736px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 Plus */
 	/*赠送红包页面*/
     .sendgift_orderinfo{margin: 12% auto 0;}
     .sendgift_sendinfo{margin-top:12%;}
-     .sendgift_btn{bottom:7.0rem;}
-     .sendgift_btn{width:80%;}
-     .sharetips img{width:85%;margin-left:5%;}
+    .sendgift_btn{bottom:7.0rem;}
+    .sendgift_btn{width:80%;}
+    .sharetips img{width:85%;margin-left:5%;}
+    .giftshare_txt{line-height:3.2rem;}
 }

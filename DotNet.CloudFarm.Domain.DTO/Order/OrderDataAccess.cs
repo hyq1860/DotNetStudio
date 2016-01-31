@@ -72,17 +72,21 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                 var resultInt = cmd.ExecuteNonQuery();
                 if (resultInt > 0)
                 {
-                    result = GetOrder(orderModel.OrderId, orderModel.UserId);
+                    result = GetOrder(orderModel.OrderId, orderModel.UserId,true);
                 }
             }
             return result;
         }
 
-        public OrderModel GetOrder(long orderId, int userId)
+        public OrderModel GetOrder(long orderId, int userId, bool needUserId)
         {
             var orderModel = new OrderModel();
             using (var cmd = DataCommandManager.GetDataCommand("GetOrder"))
             {
+                if (needUserId)
+                {
+                    cmd.CommandText += " and UserId=" + userId;
+                }
                 cmd.SetParameterValue("@UserId", userId);
                 cmd.SetParameterValue("@OrderId", orderId);
                 using (var dr = cmd.ExecuteDataReader())
@@ -186,7 +190,7 @@ namespace DotNet.CloudFarm.Domain.DTO.Order
                 var returnValue = cmd.ExecuteNonQuery();
 
                 result.Status = returnValue > 0 ? new Status() {Code = "1"} : new Status() { Code = "0" };
-                var orderModel = GetOrder(orderId, userId);
+                var orderModel = GetOrder(orderId, userId, true);
                 if (orderModel != null&&orderModel.ProductId>0)
                 {
                     var productModel = ProductDataAccess.GetProductById(orderModel.ProductId);

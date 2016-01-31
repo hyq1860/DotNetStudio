@@ -241,7 +241,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                 
                 if (orderId.HasValue)
                 {
-                    var orderModel = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                    var orderModel = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value, true);
 
                     if (orderModel != null)
                     {
@@ -483,7 +483,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var result = new JsonResult();
             if (orderId.HasValue)
             {
-                var order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                var order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value, true);
 
                 if (order.Status != OrderStatus.Paid.GetHashCode())
                 {
@@ -511,7 +511,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var result = new JsonResult();
             if (orderId.HasValue)
             {
-                var order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                var order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value, true);
 
                 if (order.Status != OrderStatus.Paid.GetHashCode())
                 {
@@ -1050,7 +1050,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var order=new OrderModel();
             if (orderId.HasValue)
             {
-                order=OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                order=OrderService.GetOrder(this.UserInfo.UserId, orderId.Value, true);
                 ViewBag.SelfMobile = this.UserInfo.Mobile;
             }
             return View(order);
@@ -1066,18 +1066,16 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         {
             var jsonResult = new JsonResult();
             var sendUser = UserService.GetUser(mobile);
-            if(sendUser==null)
+            var result = new Result<OrderModel>();
+            if (sendUser==null)
             {
-                //jsonResult.Data
-                var result = new Result<OrderModel>();
                 result.Status = new Status() { Code="0",Message= "被赠送人尚未登录过羊客，不能被赠送。" };
-
-                jsonResult.Data = result;
             }
             else
             {
-                jsonResult.Data=OrderService.SendGift(orderId, this.UserInfo.UserId, sendUser.UserId,remark);
+                result=OrderService.SendGift(orderId, this.UserInfo.UserId, sendUser.UserId,remark);
             }
+            jsonResult.Data = result;
             return jsonResult;
         }
 
@@ -1105,7 +1103,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
             var order = new OrderModel();
             if (orderId.HasValue)
             {
-                order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value);
+                order = OrderService.GetOrder(this.UserInfo.UserId, orderId.Value,false);
                 if (order != null)
                 {
                     ViewBag.UserInfo = this.UserInfo;
@@ -1172,6 +1170,20 @@ namespace DotNet.CloudFarm.WebSite.Controllers
                     {
                         order.SendUserMobile = user.Mobile;
                         order.SendUserName = user.WxNickName;
+
+                        //获取时间戳
+                        var timestamp = JSSDKHelper.GetTimestamp();
+                        //获取随机码
+                        var nonceStr = JSSDKHelper.GetNoncestr();
+                        string ticket = JsApiTicketContainer.TryGetTicket(AppId, AppSecret);
+                        JSSDKHelper jsHelper = new JSSDKHelper();
+                        //获取签名
+                        var signature = jsHelper.GetSignature(ticket, nonceStr, timestamp, Request.Url.AbsoluteUri);
+
+                        ViewData["AppId"] = AppId;
+                        ViewData["Timestamp"] = timestamp;
+                        ViewData["NonceStr"] = nonceStr;
+                        ViewData["Signature"] = signature;
                     }
                 }
             }

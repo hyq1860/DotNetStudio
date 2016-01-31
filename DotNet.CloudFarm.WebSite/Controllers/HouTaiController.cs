@@ -391,7 +391,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         public JsonResult ConfirmOrderPayReturn(long orderId, int userId, int pageIndex, int pageSize)
         {
             var status = OrderStatus.Complete.GetHashCode();
-            var order = OrderService.GetOrder(userId,orderId);
+            var order = OrderService.GetOrder(userId,orderId, true);
             var user = UserService.GetUserByUserId(userId);
             var product = ProductService.GetProductById(order.ProductId);
             Result<DotNet.Common.Collections.PagedList<OrderManageViewModel>> orderList = new Result<Common.Collections.PagedList<OrderManageViewModel>>();
@@ -541,7 +541,7 @@ namespace DotNet.CloudFarm.WebSite.Controllers
         /// <returns></returns>
         private IList<WeixinPayLog> createWeixinPayLog(long orderId,int userId,out string message)
         {
-            var order = OrderService.GetOrder(userId, orderId);
+            var order = OrderService.GetOrder(userId, orderId, true);
             var user = UserService.GetUserByUserId(order.UserId);
             var product = ProductService.GetProductById(order.ProductId);
             if (order.Status == OrderStatus.WaitingConfirm.GetHashCode() && product.EndTime.AddDays(product.EarningDay) < DateTime.Now)
