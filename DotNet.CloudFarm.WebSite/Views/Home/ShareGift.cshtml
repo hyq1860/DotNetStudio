@@ -23,7 +23,7 @@
         <span class="gift_price">总价值￥<strong>@(orderModel.ProductCount * orderModel.Price)</strong></span>
     </section>
     <section class="giftshare_txt">
-        恭喜发财，羊羊得益！快去羊客领小羊，可以吃肉，也可以理财。
+        @orderModel.SendRemark
     </section>
     <section class="giftshare_btn"><a href="@Url.Action("OrderList", "Home", new {tab = 3})">去查看我的小羊</a></section>
     <section class="giftshare_bt"><img src="/images/giftshare_bt.jpg" alt=""></section>
