@@ -6,18 +6,17 @@
     ViewBag.Title = "红包分享";
     //订单信息
     OrderModel orderModel = ViewBag.Order??new OrderModel();
+    
     //赠送人信息
-    UserModel UserInfo = ViewBag.UserInfo??new UserModel();
-    //被赠送人信息
     UserModel SendUserInfo = ViewBag.SendUserInfo ?? new UserModel();
 }
 
 <div class="layout layout_giftShare">
     <section class="giftshare_head">
         <img class="giftshare_headbg" src="/images/giftshare_top.png" alt="">
-        <img src="@UserInfo.WxHeadUrl" alt="图片头像" class="giftshare_headpic">
+        <img src="@SendUserInfo.WxHeadUrl" alt="图片头像" class="giftshare_headpic">
     </section>
-    <section class="giftshare_name">@UserInfo.WxNickName（@UserInfo.Mobile）</section>
+    <section class="giftshare_name">@SendUserInfo.WxNickName（@SendUserInfo.Mobile）</section>
     <section class="giftshare_info">
         <span>@string.Format("在羊客送你了{0}只小羊", orderModel.ProductCount)</span>
         <span class="gift_price">总价值￥<strong>@(orderModel.ProductCount * orderModel.Price)</strong></span>
