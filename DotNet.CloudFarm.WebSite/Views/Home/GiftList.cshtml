@@ -14,8 +14,12 @@
     </section>
     <!--收到的红包S-->
     <section class="receivecont" data-bind="visible: ShowReceiveCss">
+        <!-- ko if: ReceiveGiftList.length==0 -->
+        <div class="nogift">暂无收到的红包</div>
+        <!-- /ko -->
         <!--订单列表S-->
         <div class="orderList" data-bind="foreach:ReceiveGiftList">
+           
             <div class="orderTitle">
                 <span class="orderBh">订单编号：<!--ko text:OrderId--><!--/ko--></span>
             </div>
@@ -35,6 +39,9 @@
 
     <!--发出去的红包S-->
     <section class="sendcont" data-bind="visible: ShowSendCss">
+        <!-- ko if: SendGiftList.length==0 -->
+        <div class="nogift">暂无送出的红包</div>
+        <!-- /ko -->
         <!--订单列表S-->
         <div class="orderList" data-bind="foreach:SendGiftList">
             <div class="orderTitle">
@@ -51,7 +58,7 @@
             </div>
         </div>
         <!--订单列表E-->
-        
+
     </section>
     <!--发出去的红包E-->
 

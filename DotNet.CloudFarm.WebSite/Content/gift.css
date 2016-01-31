@@ -99,6 +99,7 @@
 .layout_giftList .orderProductInfo h4{font-weight:normal;}
 .layout_giftList .orderProductInfo{padding-top:1.0rem;}
 .layout_giftList .orderOther{width:40%;}
+.nogift{ background: #fff;text-align: center;padding: 1.5rem 0 0;color: #909496;}
 /*分享红包*/
 .layout_giftShare{width:100%;height:100%;min-height:100%;position: relative;background: #fefcf3;padding: 0;}
 .giftshare_head{
